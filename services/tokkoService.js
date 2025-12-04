@@ -50,10 +50,11 @@ async function createContact(contactData) {
     publication_id: contactData.publication_id,
     name: contactData.name,
     mail: contactData.mail,
-    comment: contactData.comment,
+    text: contactData.text || contactData.comment,
     phone: contactData.phone || '',
     cellphone: contactData.cellphone || '',
-    company: contactData.company || ''
+    company: contactData.company || '',
+    tags: contactData.tags || ''
   };
 
   console.log('Creando contacto en Tokko...');
@@ -87,7 +88,8 @@ async function createTestContacts() {
       mail: 'fedecuellos@gmail.com',
       phone: '541150131723',
       cellphone: '541150131723',
-      comment: 'Esto es un test para inyectar a tokko.'
+      text: 'Esto es un test para inyectar a tokko.',
+      tags: 'Federico_Cuellos'
     }
   ];
 
