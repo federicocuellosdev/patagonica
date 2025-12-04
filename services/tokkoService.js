@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const TOKKO_API_KEY = process.env.TOKKO_API_KEY;
 const BASE_URL = process.env.TOKKO_BASE_URL;
-const ALTERNATIVE_BASE_URL = 'http://www.tokkobroker.com/api/v1';
+const ALTERNATIVE_BASE_URL = 'https://www.tokkobroker.com/api/v1';
 
 async function testConnection() {
   const urls = [
@@ -49,7 +49,7 @@ async function createContact(contactData) {
     api_key: TOKKO_API_KEY,
     publication_id: contactData.publication_id,
     name: contactData.name,
-    mail: contactData.mail,
+    email: contactData.email || contactData.mail,
     text: contactData.text || contactData.comment,
     phone: contactData.phone || '',
     cellphone: contactData.cellphone || '',
@@ -85,11 +85,11 @@ async function createTestContacts() {
     {
       publication_id: '',
       name: 'Federico Cuellos (Test)',
-      mail: 'fedecuellos@gmail.com',
+      email: 'fedecuellos@gmail.com',
       phone: '541150131723',
       cellphone: '541150131723',
       text: 'Esto es un test para inyectar a tokko.',
-      tags: 'Federico_Cuellos'
+      tags: ['Federico_Cuellos']
     }
   ];
 
