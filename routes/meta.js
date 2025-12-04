@@ -24,20 +24,28 @@ router.post('/webhook', async (req, res) => {
     console.log('Webhook recibido:', JSON.stringify(body, null, 2));
 
     if (body.object === 'page') {
-      body.entry.forEach(async (entry) => {
+      for (const entry of body.entry) {
         console.log('Entry recibido:', JSON.stringify(entry, null, 2));
 
-        const leadgenId = entry.changes[0].value.leadgen_id;
-        const formId = entry.changes[0].value.form_id;
+        if (entry.changes) {
+          for (const change of entry.changes) {
+            console.log('Change:', JSON.stringify(change, null, 2));
 
-        console.log('Lead ID:', leadgenId, 'Form ID:', formId);
+            if (change.field === 'leadgen') {
+              const leadgenId = change.value.leadgen_id;
+              const formId = change.value.form_id;
 
-        const leadData = await metaService.getLeadData(leadgenId);
-        console.log('Lead Data:', JSON.stringify(leadData, null, 2));
+              console.log('Lead ID:', leadgenId, 'Form ID:', formId);
 
-        await metaService.processLead(leadData);
-        console.log('Lead procesado correctamente');
-      });
+              const leadData = await metaService.getLeadData(leadgenId);
+              console.log('Lead Data:', JSON.stringify(leadData, null, 2));
+
+              await metaService.processLead(leadData);
+              console.log('Lead procesado correctamente');
+            }
+          }
+        }
+      }
 
       res.status(200).send('EVENT_RECEIVED');
     } else {
