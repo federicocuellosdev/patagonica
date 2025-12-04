@@ -56,6 +56,10 @@ async function createContact(contactData) {
     company: contactData.company || ''
   };
 
+  console.log('Creando contacto en Tokko...');
+  console.log('URL:', `${BASE_URL}/contact/`);
+  console.log('Data:', JSON.stringify(data, null, 2));
+
   try {
     const response = await axios.post(
       `${BASE_URL}/contact/`,
@@ -66,8 +70,11 @@ async function createContact(contactData) {
         }
       }
     );
+    console.log('Respuesta de Tokko:', JSON.stringify(response.data, null, 2));
     return response.data;
   } catch (error) {
+    console.error('Error de Tokko:', error.response ? JSON.stringify(error.response.data, null, 2) : error.message);
+    console.error('Status:', error.response ? error.response.status : 'N/A');
     throw new Error(`Error creando contacto: ${error.message}`);
   }
 }
