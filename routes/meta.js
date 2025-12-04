@@ -7,9 +7,13 @@ router.get('/webhook', (req, res) => {
   const token = req.query['hub.verify_token'];
   const challenge = req.query['hub.challenge'];
 
-  if (mode && token === process.env.META_VERIFY_TOKEN) {
+  console.log('Verificación de webhook:', { mode, token, challenge });
+
+  if (mode === 'subscribe' && token === process.env.META_VERIFY_TOKEN) {
+    console.log('Webhook verificado correctamente');
     res.status(200).send(challenge);
   } else {
+    console.error('Verificación fallida');
     res.sendStatus(403);
   }
 });
