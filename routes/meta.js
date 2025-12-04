@@ -21,18 +21,27 @@ router.get('/webhook', (req, res) => {
 router.post('/webhook', async (req, res) => {
   try {
     const body = req.body;
+    console.log('Webhook recibido:', JSON.stringify(body, null, 2));
 
     if (body.object === 'page') {
       body.entry.forEach(async (entry) => {
+        console.log('Entry recibido:', JSON.stringify(entry, null, 2));
+
         const leadgenId = entry.changes[0].value.leadgen_id;
         const formId = entry.changes[0].value.form_id;
 
+        console.log('Lead ID:', leadgenId, 'Form ID:', formId);
+
         const leadData = await metaService.getLeadData(leadgenId);
+        console.log('Lead Data:', JSON.stringify(leadData, null, 2));
+
         await metaService.processLead(leadData);
+        console.log('Lead procesado correctamente');
       });
 
       res.status(200).send('EVENT_RECEIVED');
     } else {
+      console.log('Objeto no es page:', body.object);
       res.sendStatus(404);
     }
   } catch (error) {
