@@ -72,8 +72,43 @@ async function createContact(contactData) {
   }
 }
 
+async function createTestContacts() {
+  const testContacts = [
+    {
+      publication_id: '',
+      name: 'Federico Cuellos (Test)',
+      mail: 'fedecuellos@gmail.com',
+      phone: '541150131723',
+      cellphone: '541150131723',
+      comment: 'Esto es un test para inyectar a tokko.'
+    }
+  ];
+
+  const results = [];
+
+  for (const contact of testContacts) {
+    try {
+      const result = await createContact(contact);
+      results.push({
+        status: 'success',
+        contact: contact.name,
+        result
+      });
+    } catch (error) {
+      results.push({
+        status: 'error',
+        contact: contact.name,
+        error: error.message
+      });
+    }
+  }
+
+  return results;
+}
+
 module.exports = {
   testConnection,
   getProperties,
-  createContact
+  createContact,
+  createTestContacts
 };

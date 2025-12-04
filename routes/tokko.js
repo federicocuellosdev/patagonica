@@ -29,4 +29,13 @@ router.get('/properties', async (req, res) => {
   }
 });
 
+router.post('/test', async (req, res) => {
+  try {
+    const result = await tokkoService.createTestContacts();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
