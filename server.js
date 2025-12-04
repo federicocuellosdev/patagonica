@@ -1,3 +1,5 @@
+console.clear()
+
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -15,15 +17,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/tokko', tokkoRoutes);
 app.use('/api/meta', metaRoutes);
 
+
 app.get('/', (req, res) => {
   res.json({
-    status: 'online',
-    endpoints: {
-      tokko: '/api/tokko',
-      meta: '/api/meta'
-    }
-  });
-});
+    mensaje: 'pong'
+  })
+})
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
