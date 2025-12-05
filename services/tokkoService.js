@@ -1,8 +1,8 @@
 const axios = require('axios');
 
 const TOKKO_API_KEY = process.env.TOKKO_API_KEY;
-const BASE_URL = 'https://tokkobroker.com/portals/simple_portal/api/v1';
-const ALTERNATIVE_BASE_URL = 'https://www.tokkobroker.com/api/v1';
+const BASE_URL = 'https://www.tokkobroker.com/api/v1';
+const ALTERNATIVE_BASE_URL = 'https://tokkobroker.com/portals/simple_portal/api/v1';
 
 async function testConnection() {
   const urls = [
@@ -46,29 +46,24 @@ async function getProperties() {
 
 async function createContact(contactData) {
   const data = {
-    api_key: TOKKO_API_KEY,
     name: contactData.name,
-    mail: contactData.email || contactData.mail,
+    email: contactData.email || contactData.mail,
     comment: contactData.text || contactData.comment,
     phone: contactData.phone || '',
     cellphone: contactData.cellphone || ''
   };
 
-  if (contactData.publication_id) {
-    data.publication_id = contactData.publication_id;
-  }
-
-  if (contactData.company) {
-    data.company = contactData.company;
+  if (contactData.tags) {
+    data.tags = contactData.tags;
   }
 
   console.log('Creando contacto en Tokko...');
-  console.log('URL:', `${BASE_URL}/contact/`);
+  console.log('URL:', `${BASE_URL}/webcontact/?key=${TOKKO_API_KEY}`);
   console.log('Data:', JSON.stringify(data, null, 2));
 
   try {
     const response = await axios.post(
-      `${BASE_URL}/contact/`,
+      `${BASE_URL}/webcontact/?key=${TOKKO_API_KEY}`,
       data,
       {
         headers: {
@@ -88,7 +83,7 @@ async function createContact(contactData) {
 async function createTestContacts() {
   const testContacts = [
     {
-      publication_id: '5509901',
+      publication_id: '7585141',
       name: 'Federico Cuellos (Test)',
       email: 'fedecuellos@gmail.com',
       phone: '541150131723',
