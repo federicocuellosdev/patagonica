@@ -83,7 +83,7 @@ async function createContact(contactData) {
 async function createTestContacts() {
   const testContacts = [
     {
-      publication_id: '7585141',
+      publication_id: '',
       name: 'Federico Cuellos (Test)',
       email: 'fedecuellos@gmail.com',
       phone: '541150131723',
