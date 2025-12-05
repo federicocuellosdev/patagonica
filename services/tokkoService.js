@@ -92,13 +92,71 @@ async function createContact(contactData) {
 async function createTestContacts() {
   const testContacts = [
     {
-      publication_id: '',
-      name: 'Federico Cuellos (Test)',
-      email: 'fedecuellos@gmail.com',
-      phone: '541150131723',
-      cellphone: '541150131723',
-      text: 'Esto es un test para inyectar a tokko.',
-      tags: ['Federico_Cuellos']
+      name: 'Juan Pérez (Test)',
+      email: '',
+      phone: '+5491150131723',
+      cellphone: '1150131723',
+      text: `Respuestas del formulario:
+
+¿qué tipo de inversión te interesa?: proyecto_en_pozo
+¿cuál es tu presupuesto en usd?: hasta_$100_mil_usd
+¿cuál es tu número teléfono?: 1150131723
+
+Información de la campaña:
+Campaña: FORM - Generar oportunidades
+Campaign ID: 120236026777090238
+Ad Set: FORM - General - Invertí en VLA
+Ad Set ID: 120236026777100238
+Anuncio: FORM - Cuanto sale invertir hoy en día
+Ad ID: 120236026777080238
+Form ID: 2204681366609205
+Plataforma: ig`,
+      tags: ['FORM - General', 'Meta Ads']
+    },
+    {
+      name: 'María González (Test)',
+      email: '',
+      phone: '+542995500661',
+      cellphone: '2995500661',
+      text: `Respuestas del formulario:
+
+¿qué tipo de inversión te interesa?: lote
+¿cuál es tu presupuesto en usd?: más_de_$150_mil_usd
+¿cuál es tu número teléfono?: 2995500661
+
+Información de la campaña:
+Campaña: FORM - Generar oportunidades
+Campaign ID: 120236026777090238
+Ad Set: FORM - General - Invertí en VLA
+Ad Set ID: 120236026777100238
+Anuncio: FORM - Inversión en lotes
+Ad ID: 120236026777080239
+Form ID: 1349310240322714
+Plataforma: fb`,
+      tags: ['FORM - General', 'Meta Ads']
+    },
+    {
+      name: 'Carlos Rodríguez (Test)',
+      email: 'carlos.rodriguez@test.com',
+      phone: '+5493415825460',
+      cellphone: '3415825460',
+      text: `Respuestas del formulario:
+
+¿qué tipo de inversión te interesa?: inmueble_para_renta
+¿cuál es tu presupuesto en usd?: entre_$100_y_$150_mil_usd
+¿cuál es tu número teléfono?: 3415825460
+email: carlos.rodriguez@test.com
+
+Información de la campaña:
+Campaña: FORM - Generar oportunidades
+Campaign ID: 120236026777090238
+Ad Set: FORM - General - Invertí en VLA
+Ad Set ID: 120236026777100238
+Anuncio: FORM - Inmuebles para renta
+Ad ID: 120236026777080240
+Form ID: 2204681366609205
+Plataforma: ig`,
+      tags: ['FORM - General', 'Meta Ads']
     }
   ];
 

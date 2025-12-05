@@ -50,7 +50,7 @@ async function getLeadData(leadgenId) {
 
   try {
     const response = await axios.get(
-      `${META_BASE_URL}/${leadgenId}?access_token=${accessToken}`
+      `${META_BASE_URL}/${leadgenId}?access_token=${accessToken}&fields=id,created_time,ad_id,ad_name,adset_id,adset_name,campaign_id,campaign_name,form_id,is_organic,platform,field_data`
     );
     return response.data;
   } catch (error) {
@@ -59,29 +59,74 @@ async function getLeadData(leadgenId) {
 }
 
 async function processLead(leadData) {
+  console.log('\n=== PROCESANDO LEAD ===');
+  console.log('Lead ID:', leadData.id);
+  console.log('Created Time:', leadData.created_time);
+  console.log('Campaña:', leadData.campaign_name);
+  console.log('Anuncio:', leadData.ad_name);
+  console.log('Plataforma:', leadData.platform);
+
   const fieldData = {};
 
   if (leadData.field_data) {
+    console.log('\n--- Todos los campos del formulario ---');
     leadData.field_data.forEach(field => {
-      fieldData[field.name] = field.values[0];
+      const value = field.values[0];
+      fieldData[field.name] = value;
+      console.log(`${field.name}: ${value}`);
     });
   }
 
+  // Construir el texto con las preguntas y respuestas formateadas
+  let textContent = 'Respuestas del formulario:\n\n';
+
+  if (leadData.field_data) {
+    leadData.field_data.forEach(field => {
+      // Formatear el nombre del campo: reemplazar _ por espacios y capitalizar
+      const questionFormatted = field.name.replace(/_/g, ' ');
+      const answer = field.values[0];
+
+      // Solo agregar si no es full_name o phone (ya van en otros campos)
+      if (field.name !== 'full_name' && field.name !== 'phone') {
+        textContent += `${questionFormatted}: ${answer}\n`;
+      }
+    });
+  }
+
+  // Agregar información de la campaña
+  textContent += `\nInformación de la campaña:\n`;
+  textContent += `Campaña: ${leadData.campaign_name || 'N/A'}\n`;
+  textContent += `Campaign ID: ${leadData.campaign_id || 'N/A'}\n`;
+  textContent += `Ad Set: ${leadData.adset_name || 'N/A'}\n`;
+  textContent += `Ad Set ID: ${leadData.adset_id || 'N/A'}\n`;
+  textContent += `Anuncio: ${leadData.ad_name || 'N/A'}\n`;
+  textContent += `Ad ID: ${leadData.ad_id || 'N/A'}\n`;
+  textContent += `Form ID: ${leadData.form_id || 'N/A'}\n`;
+  textContent += `Plataforma: ${leadData.platform || 'N/A'}`;
+
+  // Mapear datos para Tokko
   const contactData = {
-    publication_id: process.env.DEFAULT_PUBLICATION_ID || '',
-    name: fieldData.full_name || fieldData.name || '',
-    mail: fieldData.email || '',
-    phone: fieldData.phone_number || '',
-    cellphone: fieldData.phone_number || '',
-    comment: `Lead de Facebook - ID: ${leadData.id}`
+    name: fieldData.full_name || fieldData.nombre_completo || '',
+    email: fieldData.email || '',
+    phone: fieldData.phone || fieldData.phone_number || '',
+    cellphone: fieldData['¿cuál_es_tu_número_teléfono?'] || fieldData.phone || fieldData.phone_number || '',
+    text: textContent,
+    tags: ['FORM - General', 'Meta Ads']
   };
+
+  console.log('\n--- Datos que se enviarán a Tokko ---');
+  console.log(JSON.stringify(contactData, null, 2));
 
   try {
     const result = await tokkoService.createContact(contactData);
+    console.log('\n--- Respuesta de Tokko ---');
     console.log('Lead procesado y enviado a Tokko:', result);
+    console.log('=== FIN PROCESAMIENTO ===\n');
     return result;
   } catch (error) {
+    console.error('\n--- Error en Tokko ---');
     console.error('Error procesando lead:', error);
+    console.log('=== FIN PROCESAMIENTO CON ERROR ===\n');
     throw error;
   }
 }
