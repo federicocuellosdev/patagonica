@@ -60,22 +60,4 @@ router.post('/webhook', async (req, res) => {
   }
 });
 
-router.get('/leads', async (req, res) => {
-  try {
-    const leads = await metaService.getLeads();
-    res.json(leads);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-router.get('/test', async (req, res) => {
-  try {
-    const result = await metaService.testConnection();
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
 module.exports = router;

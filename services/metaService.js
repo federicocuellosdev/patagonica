@@ -4,47 +4,6 @@ const tokkoService = require('./tokkoService');
 const META_API_VERSION = 'v20.0';
 const META_BASE_URL = `https://graph.facebook.com/${META_API_VERSION}`;
 
-async function testConnection() {
-  const accessToken = process.env.META_ACCESS_TOKEN;
-
-  if (!accessToken) {
-    return { error: 'META_ACCESS_TOKEN no configurado' };
-  }
-
-  try {
-    const response = await axios.get(
-      `${META_BASE_URL}/me?access_token=${accessToken}`
-    );
-    return {
-      status: 'success',
-      data: response.data
-    };
-  } catch (error) {
-    return {
-      status: 'error',
-      error: error.response ? error.response.data : error.message
-    };
-  }
-}
-
-async function getLeads() {
-  const formId = process.env.META_FORM_ID;
-  const accessToken = process.env.META_ACCESS_TOKEN;
-
-  if (!formId || !accessToken) {
-    throw new Error('META_FORM_ID o META_ACCESS_TOKEN no configurados');
-  }
-
-  try {
-    const response = await axios.get(
-      `${META_BASE_URL}/${formId}/leads?access_token=${accessToken}&limit=500`
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error(`Error obteniendo leads: ${error.response ? error.response.data.error.message : error.message}`);
-  }
-}
-
 async function getLeadData(leadgenId) {
   const accessToken = process.env.META_ACCESS_TOKEN;
 
@@ -116,8 +75,6 @@ async function processLead(leadData, customTags = ['FORM - General', 'Meta Ads']
 }
 
 module.exports = {
-  testConnection,
-  getLeads,
   getLeadData,
   processLead
 };
