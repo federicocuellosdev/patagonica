@@ -4,6 +4,7 @@ const TOKKO_API_KEY = process.env.TOKKO_API_KEY;
 const BASE_URL = 'https://www.tokkobroker.com/api/v1';
 const ALTERNATIVE_BASE_URL = 'https://tokkobroker.com/portals/simple_portal/api/v1';
 
+// test
 async function testConnection() {
   const urls = [
     `${BASE_URL}/property/?key=${TOKKO_API_KEY}&format=json&limit=1`,
@@ -33,6 +34,7 @@ async function testConnection() {
   return results;
 }
 
+// test
 async function getProperties() {
   try {
     const response = await axios.get(
@@ -80,6 +82,7 @@ async function createContact(contactData) {
   }
 }
 
+// test
 async function createTestContacts() {
   const testContacts = [
     {

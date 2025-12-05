@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const tokkoService = require('../services/tokkoService');
 
+// test
 router.get('/test', async (req, res) => {
   try {
     const result = await tokkoService.testConnection();
@@ -20,6 +21,7 @@ router.post('/contact', async (req, res) => {
   }
 });
 
+// test
 router.get('/properties', async (req, res) => {
   try {
     const result = await tokkoService.getProperties();
@@ -29,6 +31,7 @@ router.get('/properties', async (req, res) => {
   }
 });
 
+// test
 router.post('/test', async (req, res) => {
   try {
     const result = await tokkoService.createTestContacts();
