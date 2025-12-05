@@ -59,6 +59,7 @@ async function createContact(contactData) {
   if (messageText) {
     data.message = messageText;
     data.comment = messageText;
+    data.text = messageText;
   }
 
   if (contactData.tags) {
