@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const metaService = require('../services/metaService');
+const { getFormConfig } = require('../config/forms');
 
 router.get('/webhook', (req, res) => {
   const mode = req.query['hub.mode'];
@@ -21,27 +22,29 @@ router.get('/webhook', (req, res) => {
 router.post('/webhook', async (req, res) => {
   try {
     const body = req.body;
-    console.log('Webhook recibido:', JSON.stringify(body, null, 2));
 
     if (body.object === 'page') {
       for (const entry of body.entry) {
-        console.log('Entry recibido:', JSON.stringify(entry, null, 2));
-
         if (entry.changes) {
           for (const change of entry.changes) {
-            console.log('Change:', JSON.stringify(change, null, 2));
-
             if (change.field === 'leadgen') {
               const leadgenId = change.value.leadgen_id;
               const formId = change.value.form_id;
 
-              console.log('Lead ID:', leadgenId, 'Form ID:', formId);
-
+              // Obtener datos completos del lead
               const leadData = await metaService.getLeadData(leadgenId);
-              console.log('Lead Data:', JSON.stringify(leadData, null, 2));
 
-              await metaService.processLead(leadData);
-              console.log('Lead procesado correctamente');
+              // Obtener configuración del formulario
+              const formConfig = getFormConfig(formId);
+
+              // Log del lead recibido
+              console.log(`- FORM - ${formConfig.name} - ID: ${leadgenId}`);
+
+              // Procesar y enviar a Tokko (con tags del formulario)
+              const tokkoResult = await metaService.processLead(leadData, formConfig.tags);
+
+              // Log de la respuesta de Tokko
+              console.log(`- TOKKO - Status: ${tokkoResult.status} - Success: ${tokkoResult.success}\n`);
             }
           }
         }
@@ -49,11 +52,10 @@ router.post('/webhook', async (req, res) => {
 
       res.status(200).send('EVENT_RECEIVED');
     } else {
-      console.log('Objeto no es page:', body.object);
       res.sendStatus(404);
     }
   } catch (error) {
-    console.error('Error procesando webhook:', error);
+    console.error('✗ ERROR:', error.message);
     res.status(500).json({ error: error.message });
   }
 });

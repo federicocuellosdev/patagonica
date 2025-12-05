@@ -58,22 +58,12 @@ async function getLeadData(leadgenId) {
   }
 }
 
-async function processLead(leadData) {
-  console.log('\n=== PROCESANDO LEAD ===');
-  console.log('Lead ID:', leadData.id);
-  console.log('Created Time:', leadData.created_time);
-  console.log('Campaña:', leadData.campaign_name);
-  console.log('Anuncio:', leadData.ad_name);
-  console.log('Plataforma:', leadData.platform);
-
+async function processLead(leadData, customTags = ['FORM - General', 'Meta Ads']) {
   const fieldData = {};
 
   if (leadData.field_data) {
-    console.log('\n--- Todos los campos del formulario ---');
     leadData.field_data.forEach(field => {
-      const value = field.values[0];
-      fieldData[field.name] = value;
-      console.log(`${field.name}: ${value}`);
+      fieldData[field.name] = field.values[0];
     });
   }
 
@@ -82,13 +72,14 @@ async function processLead(leadData) {
 
   if (leadData.field_data) {
     leadData.field_data.forEach(field => {
-      // Formatear el nombre del campo: reemplazar _ por espacios y capitalizar
+      // Formatear el nombre del campo: reemplazar _ por espacios
       const questionFormatted = field.name.replace(/_/g, ' ');
-      const answer = field.values[0];
+      // Formatear la respuesta: reemplazar _ por espacios
+      const answerFormatted = field.values[0].replace(/_/g, ' ');
 
       // Solo agregar si no es full_name o phone (ya van en otros campos)
       if (field.name !== 'full_name' && field.name !== 'phone') {
-        textContent += `${questionFormatted}: ${answer}\n`;
+        textContent += `${questionFormatted}: ${answerFormatted}\n`;
       }
     });
   }
@@ -111,22 +102,15 @@ async function processLead(leadData) {
     phone: fieldData.phone || fieldData.phone_number || '',
     cellphone: fieldData['¿cuál_es_tu_número_teléfono?'] || fieldData.phone || fieldData.phone_number || '',
     text: textContent,
-    tags: ['FORM - General', 'Meta Ads']
+    tags: customTags
   };
 
-  console.log('\n--- Datos que se enviarán a Tokko ---');
-  console.log(JSON.stringify(contactData, null, 2));
+  console.log('Datos enviados a Tokko:', JSON.stringify(contactData, null, 2));
 
   try {
     const result = await tokkoService.createContact(contactData);
-    console.log('\n--- Respuesta de Tokko ---');
-    console.log('Lead procesado y enviado a Tokko:', result);
-    console.log('=== FIN PROCESAMIENTO ===\n');
     return result;
   } catch (error) {
-    console.error('\n--- Error en Tokko ---');
-    console.error('Error procesando lead:', error);
-    console.log('=== FIN PROCESAMIENTO CON ERROR ===\n');
     throw error;
   }
 }

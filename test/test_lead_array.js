@@ -138,16 +138,22 @@ async function processLeadsFromArray() {
 
   for (const leadData of testLeads) {
     try {
-      console.log(`\n--- Procesando Lead: ${leadData.id} ---`);
-      console.log(`Nombre: ${leadData.field_data.find(f => f.name === 'full_name')?.values[0]}`);
-      console.log(`Campaña: ${leadData.campaign_name}`);
-      console.log(`Plataforma: ${leadData.platform}`);
-
       // Procesar campos del formulario
       const fieldData = {};
       leadData.field_data.forEach(field => {
         fieldData[field.name] = field.values[0];
       });
+
+      // Determinar el nombre del formulario
+      let formName = 'Unknown Form';
+      if (leadData.form_id === '2204681366609205') {
+        formName = 'FORM - General - v2';
+      } else if (leadData.form_id === '1349310240322714') {
+        formName = 'FORM - General';
+      }
+
+      // Log del lead recibido
+      console.log(`- FORM - ${formName} - ID: ${leadData.id}`);
 
       // Construir el texto con las preguntas y respuestas formateadas
       let textContent = 'Respuestas del formulario:\n\n';
@@ -155,11 +161,12 @@ async function processLeadsFromArray() {
       leadData.field_data.forEach(field => {
         // Formatear el nombre del campo: reemplazar _ por espacios
         const questionFormatted = field.name.replace(/_/g, ' ');
-        const answer = field.values[0];
+        // Formatear la respuesta: reemplazar _ por espacios
+        const answerFormatted = field.values[0].replace(/_/g, ' ');
 
         // Solo agregar si no es full_name o phone
         if (field.name !== 'full_name' && field.name !== 'phone') {
-          textContent += `${questionFormatted}: ${answer}\n`;
+          textContent += `${questionFormatted}: ${answerFormatted}\n`;
         }
       });
 
@@ -184,15 +191,11 @@ async function processLeadsFromArray() {
         tags: ['FORM - General', 'Meta Ads']
       };
 
-      console.log('\nDatos a enviar:');
-      console.log(`  - Nombre: ${contactData.name}`);
-      console.log(`  - Phone: ${contactData.phone}`);
-      console.log(`  - Cellphone: ${contactData.cellphone}`);
-      console.log(`  - Email: ${contactData.email || 'N/A'}`);
-      console.log(`  - Tags: ${contactData.tags.join(', ')}`);
-
       // Enviar a Tokko
       const result = await tokkoService.createContact(contactData);
+
+      // Log de la respuesta de Tokko
+      console.log(`- TOKKO - Status: ${result.status} - Success: ${result.success}\n`);
 
       results.push({
         leadId: leadData.id,
@@ -201,10 +204,8 @@ async function processLeadsFromArray() {
         tokkoResponse: result
       });
 
-      console.log('✓ Lead enviado exitosamente a Tokko\n');
-
     } catch (error) {
-      console.error(`✗ Error procesando lead ${leadData.id}:`, error.message);
+      console.error(`✗ ERROR: ${error.message}\n`);
       results.push({
         leadId: leadData.id,
         status: 'error',

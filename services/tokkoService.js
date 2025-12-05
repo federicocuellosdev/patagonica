@@ -62,10 +62,6 @@ async function createContact(contactData) {
     data.tags = contactData.tags;
   }
 
-  console.log('Creando contacto en Tokko...');
-  console.log('URL:', `${BASE_URL}/webcontact/?key=${TOKKO_API_KEY}`);
-  console.log('Data:', JSON.stringify(data, null, 2));
-
   try {
     const response = await axios.post(
       `${BASE_URL}/webcontact/?key=${TOKKO_API_KEY}`,
@@ -76,14 +72,8 @@ async function createContact(contactData) {
         }
       }
     );
-    console.log('Status Code:', response.status);
-    console.log('Headers:', JSON.stringify(response.headers, null, 2));
-    console.log('Respuesta de Tokko:', JSON.stringify(response.data, null, 2));
-    console.log('Respuesta vacía?', response.data === '' || Object.keys(response.data).length === 0);
     return { success: true, data: response.data, status: response.status };
   } catch (error) {
-    console.error('Error de Tokko:', error.response ? JSON.stringify(error.response.data, null, 2) : error.message);
-    console.error('Status:', error.response ? error.response.status : 'N/A');
     throw new Error(`Error creando contacto: ${error.message}`);
   }
 }
