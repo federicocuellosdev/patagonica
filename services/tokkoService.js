@@ -47,8 +47,6 @@ async function getProperties() {
 }
 
 async function createContact(contactData) {
-  const messageText = contactData.text || contactData.comment || contactData.message;
-
   const data = {
     name: contactData.name,
     email: contactData.email || contactData.mail,
@@ -56,10 +54,8 @@ async function createContact(contactData) {
     cellphone: contactData.cellphone || ''
   };
 
-  if (messageText) {
-    data.message = messageText;
-    data.comment = messageText;
-    data.text = messageText;
+  if (contactData.text || contactData.comment || contactData.message) {
+    data.text = contactData.text || contactData.comment || contactData.message;
   }
 
   if (contactData.tags) {
