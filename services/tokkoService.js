@@ -47,15 +47,24 @@ async function getProperties() {
 async function createContact(contactData) {
   const data = {
     api_key: TOKKO_API_KEY,
-    publication_id: contactData.publication_id,
     name: contactData.name,
-    email: contactData.email || contactData.mail,
-    text: contactData.text || contactData.comment,
+    mail: contactData.email || contactData.mail,
+    comment: contactData.text || contactData.comment,
     phone: contactData.phone || '',
-    cellphone: contactData.cellphone || '',
-    company: contactData.company || '',
-    tags: contactData.tags || ''
+    cellphone: contactData.cellphone || ''
   };
+
+  if (contactData.publication_id) {
+    data.publication_id = contactData.publication_id;
+  }
+
+  if (contactData.company) {
+    data.company = contactData.company;
+  }
+
+  if (contactData.tags) {
+    data.tags = contactData.tags;
+  }
 
   console.log('Creando contacto en Tokko...');
   console.log('URL:', `${BASE_URL}/contact/`);
@@ -83,7 +92,7 @@ async function createContact(contactData) {
 async function createTestContacts() {
   const testContacts = [
     {
-      publication_id: '',
+      publication_id: '5509901',
       name: 'Federico Cuellos (Test)',
       email: 'fedecuellos@gmail.com',
       phone: '541150131723',
