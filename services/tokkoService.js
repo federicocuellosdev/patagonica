@@ -47,13 +47,19 @@ async function getProperties() {
 }
 
 async function createContact(contactData) {
+  const messageText = contactData.text || contactData.comment || contactData.message;
+
   const data = {
     name: contactData.name,
     email: contactData.email || contactData.mail,
-    message: contactData.text || contactData.comment || contactData.message,
     phone: contactData.phone || '',
     cellphone: contactData.cellphone || ''
   };
+
+  if (messageText) {
+    data.message = messageText;
+    data.comment = messageText;
+  }
 
   if (contactData.tags) {
     data.tags = contactData.tags;
