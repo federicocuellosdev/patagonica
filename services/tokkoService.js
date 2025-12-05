@@ -62,10 +62,6 @@ async function createContact(contactData) {
     data.company = contactData.company;
   }
 
-  if (contactData.tags) {
-    data.tags = contactData.tags;
-  }
-
   console.log('Creando contacto en Tokko...');
   console.log('URL:', `${BASE_URL}/contact/`);
   console.log('Data:', JSON.stringify(data, null, 2));
