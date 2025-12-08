@@ -64,8 +64,6 @@ async function processLead(leadData, customTags = ['FORM - General', 'Meta Ads']
     tags: customTags
   };
 
-  console.log('Datos enviados a Tokko:', JSON.stringify(contactData, null, 2));
-
   try {
     const result = await tokkoService.createContact(contactData);
     return result;
