@@ -23,6 +23,9 @@ router.post('/webhook', async (req, res) => {
   try {
     const body = req.body;
 
+    console.log('🔔 Webhook recibido de Meta');
+    console.log('Body:', JSON.stringify(body, null, 2));
+
     if (body.object === 'page') {
       for (const entry of body.entry) {
         if (entry.changes) {
