@@ -1,0 +1,14 @@
+
+ID	    Nombre
+52509	Quetrihue Condo
+52933	Diagonales
+53088	Domo II
+53184	Area Concordia
+57812	Peninsula Manzano
+57813	Akol Barrio Nautico
+58284	Cota 1000
+61408	Paseo Retamas
+62849	El Mirador Residences
+63142	Complejo Sayhueque
+64409	Mode
+68594	Haiku

@@ -19,6 +19,11 @@ async function createContact(contactData) {
     data.tags = contactData.tags;
   }
 
+  // Agregar publication_id si existe
+  if (contactData.publication_id) {
+    data.publication_id = contactData.publication_id;
+  }
+
   try {
     const response = await axios.post(
       `${BASE_URL}/webcontact/?key=${TOKKO_API_KEY}`,

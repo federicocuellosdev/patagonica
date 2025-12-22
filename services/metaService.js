@@ -18,7 +18,37 @@ async function getLeadData(leadgenId) {
 }
 
 
-async function processLead(leadData, customTags = ['FORM - General', 'Meta Ads']) {
+// Campos estándar de Meta (auto-completados)
+const STANDARD_FIELDS = {
+  NAME: ['full_name', 'nombre_completo', 'first_name', 'last_name'],
+  EMAIL: ['email'],
+  PHONE: ['phone', 'phone_number']
+};
+
+// Función para buscar un campo estándar (búsqueda exacta)
+function findStandardField(fieldData, standardKeys) {
+  for (const key of standardKeys) {
+    if (fieldData[key]) {
+      return fieldData[key];
+    }
+  }
+  return '';
+}
+
+// Función para buscar un campo personalizado por palabras clave (búsqueda parcial)
+function findCustomField(fieldData, keywords) {
+  for (const [key, value] of Object.entries(fieldData)) {
+    const keyLower = key.toLowerCase();
+    for (const keyword of keywords) {
+      if (keyLower.includes(keyword)) {
+        return value;
+      }
+    }
+  }
+  return '';
+}
+
+async function processLead(leadData, customTags = ['FORM - General', 'Meta Ads'], publicationId = null) {
   const fieldData = {};
 
   if (leadData.field_data) {
@@ -37,8 +67,13 @@ async function processLead(leadData, customTags = ['FORM - General', 'Meta Ads']
       // Formatear la respuesta: reemplazar _ por espacios
       const answerFormatted = field.values[0].replace(/_/g, ' ');
 
-      // Solo agregar si no es full_name o phone (ya van en otros campos)
-      if (field.name !== 'full_name' && field.name !== 'phone') {
+      // Solo agregar preguntas personalizadas (excluir campos estándar)
+      const isStandardField =
+        STANDARD_FIELDS.NAME.includes(field.name) ||
+        STANDARD_FIELDS.EMAIL.includes(field.name) ||
+        STANDARD_FIELDS.PHONE.includes(field.name);
+
+      if (!isStandardField) {
         textContent += `${questionFormatted}: ${answerFormatted}\n`;
       }
     });
@@ -55,15 +90,35 @@ async function processLead(leadData, customTags = ['FORM - General', 'Meta Ads']
   textContent += `Form ID: ${leadData.form_id || 'N/A'}\n`;
   textContent += `Plataforma: ${leadData.platform || 'N/A'}`;
 
+  // Buscar campos estándar
+  const name = findStandardField(fieldData, STANDARD_FIELDS.NAME);
+  const email = findStandardField(fieldData, STANDARD_FIELDS.EMAIL);
+  const phone = findStandardField(fieldData, STANDARD_FIELDS.PHONE);
+
+  // Buscar celular en preguntas personalizadas (busca por palabras clave)
+  const cellphone = findCustomField(fieldData, [
+    'teléfono',
+    'telefono',
+    'número',
+    'numero',
+    'celular',
+    'contacto'
+  ]) || phone; // fallback al phone estándar
+
   // Mapear datos para Tokko
   const contactData = {
-    name: fieldData.full_name || fieldData.nombre_completo || '',
-    email: fieldData.email || '',
-    phone: fieldData.phone || fieldData.phone_number || '',
-    cellphone: fieldData['¿cuál_es_tu_número_teléfono?'] || fieldData.phone || fieldData.phone_number || '',
+    name: name || 'Sin nombre',
+    email: email,
+    phone: phone,
+    cellphone: cellphone,
     text: textContent,
     tags: customTags
   };
+
+  // Agregar publication_id si existe
+  if (publicationId) {
+    contactData.publication_id = publicationId;
+  }
 
   try {
     const result = await tokkoService.createContact(contactData);

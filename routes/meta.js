@@ -46,8 +46,12 @@ router.post('/webhook', async (req, res) => {
               // Obtener configuración del formulario
               const formConfig = getFormConfig(formId);
 
-              // Procesar y enviar a Tokko (con tags del formulario)
-              const tokkoResult = await metaService.processLead(leadData, formConfig.tags);
+              // Procesar y enviar a Tokko (con tags y publication_id del formulario)
+              const tokkoResult = await metaService.processLead(
+                leadData,
+                formConfig.tags,
+                formConfig.publication_id
+              );
 
               // Log de la respuesta de Tokko
               console.log(`- Tokko - Envío de datos (Status: ${tokkoResult.status})\n`);
