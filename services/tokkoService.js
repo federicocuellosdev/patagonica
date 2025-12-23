@@ -19,9 +19,10 @@ async function createContact(contactData) {
     data.tags = contactData.tags;
   }
 
-  // Agregar publication_id si existe
+  // Agregar emprendimiento (development) si existe
+  // Tokko usa "developments" como array
   if (contactData.publication_id) {
-    data.publication_id = contactData.publication_id;
+    data.developments = [contactData.publication_id];
   }
 
   try {
