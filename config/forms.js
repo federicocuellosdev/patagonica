@@ -12,22 +12,22 @@ const FORMS = {
   },
   '10084737954984809': {
     name: 'FORM - Domo',
-    tags: ['Domo II', 'Meta Ads'],
+    tags: ['FORM - Domo II', 'Meta Ads'],
     publication_id: 53088 // Domo II
   },
   '840873388549182': {
     name: 'FORM - Cota',
-    tags: ['Loteo COTA 1000', 'Meta Ads'],
+    tags: ['FORM - Cota 1000', 'Meta Ads'],
     publication_id: 58284 // Loteo COTA 1000
   },
   '2358187311325644': {
     name: 'FORM - Retama',
-    tags: ['Paseo Retamas', 'Meta Ads'],
+    tags: ['FORM - Paseo Retamas', 'Meta Ads'],
     publication_id: 61408 // Paseo Retamas
   },
   '920882440271048': {
     name: 'FORM - Mode',
-    tags: ['MODE', 'Meta Ads'],
+    tags: ['FORM - MODE', 'Meta Ads'],
     publication_id: 64409 // MODE
   }
 };
