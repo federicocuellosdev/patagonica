@@ -1,34 +1,70 @@
 // Configuración de formularios de Meta
 const FORMS = {
+  // === FORMULARIOS GENERALES ===
   '2204681366609205': {
     name: 'FORM - General - v2',
     tags: ['FORM - General', 'Meta Ads'],
-    publication_id: null // Sin emprendimiento asignado
+    publication_id: null
   },
   '1349310240322714': {
     name: 'FORM - General',
     tags: ['FORM - General', 'Meta Ads'],
-    publication_id: null // Sin emprendimiento asignado
+    publication_id: null
+  },
+
+  // === DOMO II ===
+  '1495753971498609': {
+    name: 'FORM - Domo - v2',
+    tags: ['FORM - Domo II', 'Meta Ads'],
+    publication_id: 53088
   },
   '10084737954984809': {
     name: 'FORM - Domo',
     tags: ['FORM - Domo II', 'Meta Ads'],
-    publication_id: 53088 // Domo II
+    publication_id: 53088
+  },
+
+  // === COTA 1000 ===
+  '1613841792966460': {
+    name: 'FORM - Cota - v2',
+    tags: ['FORM - Cota 1000', 'Meta Ads'],
+    publication_id: 58284
   },
   '840873388549182': {
     name: 'FORM - Cota',
     tags: ['FORM - Cota 1000', 'Meta Ads'],
-    publication_id: 58284 // Loteo COTA 1000
+    publication_id: 58284
+  },
+
+  // === PASEO RETAMAS ===
+  '3420803411393792': {
+    name: 'FORM - Retama - v2',
+    tags: ['FORM - Paseo Retamas', 'Meta Ads'],
+    publication_id: 61408
   },
   '2358187311325644': {
     name: 'FORM - Retama',
     tags: ['FORM - Paseo Retamas', 'Meta Ads'],
-    publication_id: 61408 // Paseo Retamas
+    publication_id: 61408
+  },
+
+  // === MODE ===
+  '2040517946730591': {
+    name: 'FORM - Mode - v2',
+    tags: ['FORM - MODE', 'Meta Ads'],
+    publication_id: 64409
   },
   '920882440271048': {
     name: 'FORM - Mode',
     tags: ['FORM - MODE', 'Meta Ads'],
-    publication_id: 64409 // MODE
+    publication_id: 64409
+  },
+
+  // === ALTO CORRENTOSO ===
+  '1367537684435646': {
+    name: 'FORM - Altos de Correntoso',
+    tags: ['FORM - Alto Correntoso', 'Meta Ads'],
+    publication_id: null // Sin emprendimiento en Tokko
   }
 };
 
