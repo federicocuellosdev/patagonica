@@ -11,6 +11,11 @@ const FORMS = {
     tags: ['FORM - General', 'Meta Ads'],
     publication_id: null
   },
+  '1456771896016645': {
+    name: 'FORM - Casas',
+    tags: ['FORM - Casas', 'Meta Ads'],
+    publication_id: null
+  },
 
   // === DOMO II ===
   '1495753971498609': {
@@ -20,6 +25,11 @@ const FORMS = {
   },
   '10084737954984809': {
     name: 'FORM - Domo',
+    tags: ['FORM - Domo II', 'Meta Ads'],
+    publication_id: 53088
+  },
+  '1065057755786359': {
+    name: 'FORM - Domo - v3',
     tags: ['FORM - Domo II', 'Meta Ads'],
     publication_id: 53088
   },
@@ -35,6 +45,11 @@ const FORMS = {
     tags: ['FORM - Cota 1000', 'Meta Ads'],
     publication_id: 58284
   },
+  '33459394607008787': {
+    name: 'FORM - Cota - v3',
+    tags: ['FORM - Cota 1000', 'Meta Ads'],
+    publication_id: 58284
+  },
 
   // === PASEO RETAMAS ===
   '3420803411393792': {
@@ -44,6 +59,11 @@ const FORMS = {
   },
   '2358187311325644': {
     name: 'FORM - Retama',
+    tags: ['FORM - Paseo Retamas', 'Meta Ads'],
+    publication_id: 61408
+  },
+  '2470766109986009': {
+    name: 'FORM - Retamas - v3',
     tags: ['FORM - Paseo Retamas', 'Meta Ads'],
     publication_id: 61408
   },
@@ -59,12 +79,22 @@ const FORMS = {
     tags: ['FORM - MODE', 'Meta Ads'],
     publication_id: 64409
   },
+  '909134298136071': {
+    name: 'FORM - Mode - v3',
+    tags: ['FORM - MODE', 'Meta Ads'],
+    publication_id: 64409
+  },
 
   // === ALTO CORRENTOSO ===
   '1367537684435646': {
     name: 'FORM - Altos de Correntoso',
     tags: ['FORM - Alto Correntoso', 'Meta Ads'],
-    publication_id: null // Sin emprendimiento en Tokko
+    publication_id: null
+  },
+  '1490228819403640': {
+    name: 'FORM - Altos del Correntoso - v3',
+    tags: ['FORM - Alto Correntoso', 'Meta Ads'],
+    publication_id: null
   }
 };
 

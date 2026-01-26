@@ -3,3 +3,4 @@ v1.0.0 - 05/12/25 - Lanzamiento de la API.
 v1.0.1 - 11/12/25 - Correcciones, la API ya funciona.
 v1.0.2 - 22/12/25 - Se incorporó la lógica para procesar los nuevos formularios.
 v1.0.3 - 29/12/25 - Se modificaron los ID de los formularios.
+v1.0.4 - 26/01/26 - Se agregaron nuevos formularios.
