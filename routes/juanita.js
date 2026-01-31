@@ -2,10 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { agregarFilaASheetPorId } = require('../services/googleSheetsService');
 
-// ID del Google Sheet para Juanita
+// Hoja principal de Juanita
 const SPREADSHEET_ID = process.env.JUANITA_SPREADSHEET_ID;
-// ID de la hoja (sheetId/gid) - independiente del nombre de la hoja
 const SHEET_ID = process.env.JUANITA_SHEET_ID || '0';
+
+// Hoja secundaria (copia de respaldo)
+const SPREADSHEET_ID_2 = process.env.JUANITA_SPREADSHEET_ID_2 || '1z7A32DMLSYi3GfLr7QhGC_VjUwi8OoCN6BHRk8xJK-o';
+const SHEET_ID_2 = process.env.JUANITA_SHEET_ID_2 || '0';
 
 // POST /api/juanita/confirmar - Recibe confirmación de asistencia
 router.post('/confirmar', async (req, res) => {
@@ -33,14 +36,20 @@ router.post('/confirmar', async (req, res) => {
         console.log('Mensaje:', mensaje || '-');
         console.log('============================\n');
 
-        // Guardar en Google Sheets (usando ID de hoja en vez de nombre)
-        await agregarFilaASheetPorId(SPREADSHEET_ID, SHEET_ID, 'A:F', [
+        // Datos a guardar
+        const fila = [
             fecha,
             nombre,
             telefono,
             email || '',
             restriccion || '',
             mensaje || ''
+        ];
+
+        // Guardar en ambas hojas de Google Sheets en paralelo
+        await Promise.all([
+            agregarFilaASheetPorId(SPREADSHEET_ID, SHEET_ID, 'A:F', fila),
+            agregarFilaASheetPorId(SPREADSHEET_ID_2, SHEET_ID_2, 'A:F', fila)
         ]);
 
         res.status(200).json({
