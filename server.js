@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const tokkoRoutes = require('./routes/tokko');
 const metaRoutes = require('./routes/meta');
+const juanitaRoutes = require('./routes/juanita');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/tokko', tokkoRoutes);
 app.use('/api/meta', metaRoutes);
+app.use('/api/juanita', juanitaRoutes);
 
 
 app.get('/', (req, res) => {
