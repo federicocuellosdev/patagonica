@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { agregarFilaASheet } = require('../services/googleSheetsService');
+const { agregarFilaASheetPorId } = require('../services/googleSheetsService');
 
 // ID del Google Sheet para Juanita
 const SPREADSHEET_ID = process.env.JUANITA_SPREADSHEET_ID;
+// ID de la hoja (sheetId/gid) - independiente del nombre de la hoja
+const SHEET_ID = process.env.JUANITA_SHEET_ID || '0';
 
 // POST /api/juanita/confirmar - Recibe confirmación de asistencia
 router.post('/confirmar', async (req, res) => {
@@ -31,8 +33,8 @@ router.post('/confirmar', async (req, res) => {
         console.log('Mensaje:', mensaje || '-');
         console.log('============================\n');
 
-        // Guardar en Google Sheets
-        await agregarFilaASheet(SPREADSHEET_ID, 'Hoja 1!A:F', [
+        // Guardar en Google Sheets (usando ID de hoja en vez de nombre)
+        await agregarFilaASheetPorId(SPREADSHEET_ID, SHEET_ID, 'A:F', [
             fecha,
             nombre,
             telefono,
