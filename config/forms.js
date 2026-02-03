@@ -95,6 +95,13 @@ const FORMS = {
     name: 'FORM - Altos del Correntoso - v3',
     tags: ['FORM - Alto Correntoso', 'Meta Ads'],
     publication_id: null
+  },
+
+  // === HAIKU ===
+  '1997806671078652': {
+    name: 'FORM - Haiku - v3',
+    tags: ['FORM - Haiku', 'Meta Ads'],
+    publication_id: 68594
   }
 };
 
