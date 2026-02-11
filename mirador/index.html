@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mirador | Patagonica Propiedades</title>
-    <link rel="icon" type="image/png" href="/mirador/img/patagonica-icon.png">
+    <link rel="icon" type="image/png" href="img/patagonica-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap" rel="stylesheet">
@@ -153,6 +153,11 @@
             flex-wrap: wrap;
         }
 
+        .hero-buttons .btn {
+            min-width: 260px;
+            text-align: center;
+        }
+
         .btn {
             display: inline-block;
             padding: 0.875rem 2rem;
@@ -261,7 +266,7 @@
 
         .about-image img {
             width: 100%;
-            height: 520px;
+            aspect-ratio: 1 / 1;
             object-fit: cover;
             border-radius: var(--border-radius-lg);
         }
@@ -292,7 +297,7 @@
         }
 
         .about-text p {
-            color: var(--text-muted);
+            color: #545b61;
             margin-bottom: 1.25rem;
             font-size: 0.95rem;
         }
@@ -343,39 +348,39 @@
             color: var(--primary);
         }
 
-        /* Features */
-        .features {
+        /* Unidades */
+        .unidades {
             background-color: var(--primary);
             padding: 6rem 5%;
         }
 
-        .features-header {
+        .unidades-header {
             text-align: center;
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto 4rem;
         }
 
-        .features-header .section-title {
-            color: #fff;
-        }
+        .unidades-header .section-title { color: #fff; }
+        .unidades-header .section-subtitle { color: rgba(255,255,255,0.5); }
+        .unidades-header p { color: rgba(255,255,255,0.6); }
 
-        .features-header .section-subtitle {
-            color: rgba(255,255,255,0.5);
-        }
-
-        .features-header p {
-            color: rgba(255,255,255,0.6);
-        }
-
-        .features-grid {
+        .unidades-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
-        .feature-card {
+        @media (max-width: 768px) {
+            .unidades-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .unidades-grid { grid-template-columns: 1fr; }
+        }
+
+        .unit-card {
             background: rgba(255,255,255,0.06);
             padding: 2rem;
             border-radius: var(--border-radius-lg);
@@ -383,41 +388,141 @@
             transition: all 0.3s ease;
         }
 
-        .feature-card:hover {
+        .unit-card:hover {
             background: rgba(255,255,255,0.1);
             transform: translateY(-4px);
             border-color: rgba(5, 116, 136, 0.4);
         }
 
-        .feature-card-icon {
+        .unit-card {
+            text-align: center;
+        }
+
+        .unit-card-icon {
             width: 52px;
             height: 52px;
             background: linear-gradient(135deg, var(--secondary), #068a9f);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.25rem;
+            margin: 0 auto 1.25rem;
             border-radius: var(--border-radius);
         }
 
-        .feature-card-icon svg {
+        .unit-card-icon svg {
             width: 26px;
             height: 26px;
             fill: #fff;
         }
 
-        .feature-card h3 {
+        .unit-card-number {
             font-family: Gilroy, sans-serif;
-            font-size: 1.2rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
+        }
+
+        .unit-card-total {
+            font-family: Gilroy, sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
             color: #fff;
-            margin-bottom: 0.75rem;
+            line-height: 1.2;
+            margin-bottom: 0.25rem;
+        }
+
+        .unit-card-total small {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .unit-card-dorm {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(5, 116, 136, 0.2);
+            color: var(--secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.3rem 0.85rem;
+            border-radius: 50px;
+            margin: 0.75rem 0;
+        }
+
+        .unit-card-dorm svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--secondary);
+        }
+
+        .unit-card-details {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .unit-card-detail span {
+            display: block;
+            font-size: 0.95rem;
+            color: #fff;
             font-weight: 600;
         }
 
-        .feature-card p {
-            color: rgba(255,255,255,0.55);
-            font-size: 0.9rem;
-            line-height: 1.6;
+        .unit-card-detail small {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .unit-card-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 0.55rem 1.25rem;
+            background: rgba(5, 116, 136, 0.15);
+            color: var(--secondary);
+            border: 1px solid rgba(5, 116, 136, 0.3);
+            border-radius: 50px;
+            font-family: Gilroy, sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .unit-card-btn:hover {
+            background: rgba(5, 116, 136, 0.3);
+            border-color: var(--secondary);
+        }
+
+        .unit-card-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--secondary);
+        }
+
+        .unit-card-sold-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.5);
+            font-family: Gilroy, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            margin-top: 0.5rem;
         }
 
         /* Gallery */
@@ -1304,13 +1409,13 @@
     <!-- Header -->
     <header>
         <a href="#" class="logo">
-            <img src="/src/img/patagonica-logo-blanco.png" alt="Patagonica Propiedades">
+            <img src="img/patagonica-logo-blanco.png" alt="Patagonica Propiedades">
         </a>
         <nav>
             <ul>
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#proyecto">Proyecto</a></li>
-                <li><a href="#amenities">Amenities</a></li>
+                <li><a href="#unidades">Unidades</a></li>
                 <li><a href="#galeria">Galeria</a></li>
                 <li><a href="#estado-obra">Estado de Obra</a></li>
                 <li><a href="#ubicacion">Ubicacion</a></li>
@@ -1328,7 +1433,7 @@
     <section class="hero" id="inicio">
         <div class="hero-content">
             <span class="hero-badge">Villa La Angostura, Patagonia</span>
-            <h1 class="hero-title">El Mirador</h1>
+            <h1 class="hero-title">El Mirador Residences</h1>
             <p class="hero-description">Exclusivo desarrollo inmobiliario donde la naturaleza patagonica se fusiona con el diseno contemporaneo.</p>
             <div class="hero-buttons">
                 <a href="#contacto" class="btn btn-accent">Consultar Disponibilidad</a>
@@ -1343,7 +1448,7 @@
     <!-- About -->
     <section class="about" id="proyecto">
         <div class="about-image">
-            <img src="/mirador/img/patagonica-propiedades-mirador-principal-v2.png" alt="El Mirador">
+            <img src="img/patagonica-propiedades-mirador-principal-v2.png" alt="El Mirador Residences">
             <div class="about-image-badge">
                 <strong>+15</strong>
                 <span>anos en el mercado</span>
@@ -1351,31 +1456,39 @@
         </div>
         <div class="about-text">
             <p class="section-subtitle">El Proyecto</p>
-            <h2 class="section-title">Vivi la experiencia de la Patagonia en su maxima expresion</h2>
-            <p>El Mirador es un proyecto inmobiliario exclusivo ubicado en el corazon de Villa La Angostura, disenado para quienes buscan un refugio de paz y confort rodeado de la majestuosa naturaleza patagonica.</p>
-            <p>Cada lote ha sido cuidadosamente planificado para maximizar las vistas panoramicas del lago Nahuel Huapi y los bosques nativos, garantizando privacidad y conexion con el entorno natural.</p>
+            <h2 class="section-title">El Mirador Residences</h2>
+            <p>Un exclusivo desarrollo de 10 unidades premium en barrio Arauco.</p>
+            <p>Imagina despertar cada manana con una vista panoramica del majestuoso Lago Nahuel Huapi, disfrutando de la serenidad que solo la naturaleza puede ofrecer, mientras te preparas para un dia de disfrute en Villa La Angostura.</p>
+            <p>Cada residencia, disenada con terminaciones de primera calidad, cuenta con cochera cubierta y baulera, ofreciendo un refugio seguro y sofisticado para tus vehiculos y pertenencias.</p>
+            <p>Para esos momentos en los que el paladar reclama una experiencia gourmet, el renombrado "Mirador Lake Cuisine" se encuentra justo al lado, invitandote a deleitarte con cenas inolvidables sin tener que desplazarte.</p>
             <div class="about-stats">
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
                     </div>
-                    <span>Lotes desde 1.500m2</span>
+                    <span>Unidades desde 87 m2</span>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg>
                     </div>
-                    <span>Vista al lago</span>
+                    <span>1 a 3 Dormitorios</span>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                    </div>
+                    <span>Vista panoramica al Lago</span>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
                         <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
                     </div>
-                    <span>Entrega inmediata</span>
+                    <span>Entrega Diciembre 2027</span>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
-                        <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                        <svg viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"/><path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195z"/><path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"/><path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567"/></svg>
                     </div>
                     <span>Financiacion disponible</span>
                 </div>
@@ -1383,55 +1496,112 @@
         </div>
     </section>
 
-    <!-- Features -->
-    <section class="features" id="amenities">
-        <div class="features-header">
-            <p class="section-subtitle">Amenities</p>
-            <h2 class="section-title">Todo lo que necesitas para una vida extraordinaria</h2>
-            <p>Cada espacio disenado pensando en tu bienestar y el de tu familia.</p>
+    <!-- Unidades -->
+    <section class="unidades" id="unidades">
+        <div class="unidades-header">
+            <p class="section-subtitle">Unidades</p>
+            <h2 class="section-title">Encuentra tu unidad ideal</h2>
+            <p>9 unidades exclusivas con terrazas y vistas privilegiadas. 6 oportunidades disponibles.</p>
         </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+        <div class="unidades-grid">
+            <div class="unit-card">
+                <div class="unit-card-icon">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
                 </div>
-                <h3>Seguridad 24/7</h3>
-                <p>Acceso controlado y vigilancia permanente para tu tranquilidad y la de tu familia.</p>
+                <div class="unit-card-number">Unidad 1</div>
+                <div class="unit-card-sold-badge">Vendida</div>
             </div>
-            <div class="feature-card">
-                <div class="feature-card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/></svg>
+            <div class="unit-card">
+                <div class="unit-card-icon">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
                 </div>
-                <h3>Senderos Naturales</h3>
-                <p>Kilometros de senderos para caminatas, trekking y paseos en bicicleta entre bosques nativos.</p>
+                <div class="unit-card-number">Unidad 2</div>
+                <div class="unit-card-sold-badge">Vendida</div>
             </div>
-            <div class="feature-card">
-                <div class="feature-card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
+            <div class="unit-card">
+                <div class="unit-card-icon">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
                 </div>
-                <h3>Club House</h3>
-                <p>Espacios comunes de primer nivel con salon de eventos, quincho y area de parrillas.</p>
+                <div class="unit-card-number">Unidad 3</div>
+                <div class="unit-card-sold-badge">Vendida</div>
             </div>
-            <div class="feature-card">
-                <div class="feature-card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM5 15h14v3H5z"/></svg>
+            <div class="unit-card">
+                <div class="unit-card-icon">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
                 </div>
-                <h3>Infraestructura Premium</h3>
-                <p>Calles pavimentadas, iluminacion, agua potable y conexion a internet de alta velocidad.</p>
+                <div class="unit-card-number">Unidad 4</div>
+                <div class="unit-card-total">120,8 <small>m2</small></div>
+                <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 2 Dormitorios</div>
+                <div class="unit-card-details">
+                    <div class="unit-card-detail"><span>103,6</span><small>Cubierta</small></div>
+                    <div class="unit-card-detail"><span>34,4</span><small>Terraza</small></div>
+                </div>
+                <a href="#" class="unit-card-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5zM4.603 14.087a.5.5 0 0 1-.488-.608l.125-.609a.5.5 0 0 1 .141-.252l5.316-5.316a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1 0 .707L5.797 14.03a.5.5 0 0 1-.252.141l-.609.125a.5.5 0 0 1-.098.01z"/></svg> Ver plano</a>
             </div>
-            <div class="feature-card">
-                <div class="feature-card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <div class="unit-card">
+                <div class="unit-card-icon">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
                 </div>
-                <h3>Ubicacion Privilegiada</h3>
-                <p>A minutos del centro de Villa La Angostura y del acceso a los centros de ski.</p>
+                <div class="unit-card-number">Unidad 5</div>
+                <div class="unit-card-total">173,35 <small>m2</small></div>
+                <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 3 Dormitorios</div>
+                <div class="unit-card-details">
+                    <div class="unit-card-detail"><span>150,3</span><small>Cubierta</small></div>
+                    <div class="unit-card-detail"><span>46,1</span><small>Terraza</small></div>
+                </div>
+                <a href="#" class="unit-card-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5zM4.603 14.087a.5.5 0 0 1-.488-.608l.125-.609a.5.5 0 0 1 .141-.252l5.316-5.316a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1 0 .707L5.797 14.03a.5.5 0 0 1-.252.141l-.609.125a.5.5 0 0 1-.098.01z"/></svg> Ver plano</a>
             </div>
-            <div class="feature-card">
-                <div class="feature-card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            <div class="unit-card">
+                <div class="unit-card-icon">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
                 </div>
-                <h3>Normativas Arquitectonicas</h3>
-                <p>Reglamento de construccion que asegura la armonia visual del desarrollo.</p>
+                <div class="unit-card-number">Unidad 6</div>
+                <div class="unit-card-total">87,4 <small>m2</small></div>
+                <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 1 Dormitorio</div>
+                <div class="unit-card-details">
+                    <div class="unit-card-detail"><span>79,4</span><small>Cubierta</small></div>
+                    <div class="unit-card-detail"><span>16</span><small>Terraza</small></div>
+                </div>
+                <a href="#" class="unit-card-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5zM4.603 14.087a.5.5 0 0 1-.488-.608l.125-.609a.5.5 0 0 1 .141-.252l5.316-5.316a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1 0 .707L5.797 14.03a.5.5 0 0 1-.252.141l-.609.125a.5.5 0 0 1-.098.01z"/></svg> Ver plano</a>
+            </div>
+            <div class="unit-card">
+                <div class="unit-card-icon">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
+                </div>
+                <div class="unit-card-number">Unidad 7</div>
+                <div class="unit-card-total">87,25 <small>m2</small></div>
+                <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 2 Dormitorios</div>
+                <div class="unit-card-details">
+                    <div class="unit-card-detail"><span>83,5</span><small>Cubierta</small></div>
+                    <div class="unit-card-detail"><span>7,5</span><small>Terraza</small></div>
+                </div>
+                <a href="#" class="unit-card-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5zM4.603 14.087a.5.5 0 0 1-.488-.608l.125-.609a.5.5 0 0 1 .141-.252l5.316-5.316a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1 0 .707L5.797 14.03a.5.5 0 0 1-.252.141l-.609.125a.5.5 0 0 1-.098.01z"/></svg> Ver plano</a>
+            </div>
+            <div class="unit-card">
+                <div class="unit-card-icon">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
+                </div>
+                <div class="unit-card-number">Unidad 8</div>
+                <div class="unit-card-total">115,35 <small>m2</small></div>
+                <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 2 Dormitorios</div>
+                <div class="unit-card-details">
+                    <div class="unit-card-detail"><span>105,1</span><small>Cubierta</small></div>
+                    <div class="unit-card-detail"><span>20,5</span><small>Terraza</small></div>
+                </div>
+                <a href="#" class="unit-card-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5zM4.603 14.087a.5.5 0 0 1-.488-.608l.125-.609a.5.5 0 0 1 .141-.252l5.316-5.316a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1 0 .707L5.797 14.03a.5.5 0 0 1-.252.141l-.609.125a.5.5 0 0 1-.098.01z"/></svg> Ver plano</a>
+            </div>
+            <div class="unit-card">
+                <div class="unit-card-icon">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
+                </div>
+                <div class="unit-card-number">Unidad 9</div>
+                <div class="unit-card-total">160,65 <small>m2</small></div>
+                <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 2 Dormitorios</div>
+                <div class="unit-card-details">
+                    <div class="unit-card-detail"><span>149,6</span><small>Cubierta</small></div>
+                    <div class="unit-card-detail"><span>22,1</span><small>Terraza</small></div>
+                </div>
+                <a href="#" class="unit-card-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5zM4.603 14.087a.5.5 0 0 1-.488-.608l.125-.609a.5.5 0 0 1 .141-.252l5.316-5.316a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1 0 .707L5.797 14.03a.5.5 0 0 1-.252.141l-.609.125a.5.5 0 0 1-.098.01z"/></svg> Ver plano</a>
             </div>
         </div>
     </section>
@@ -1444,19 +1614,19 @@
         </div>
         <div class="gallery-grid">
             <div class="gallery-item">
-                <img src="/mirador/img/patagonica-propiedades-mirador-1.jpeg" alt="Mirador render 1">
+                <img src="img/patagonica-propiedades-mirador-1.jpeg" alt="Mirador render 1">
             </div>
             <div class="gallery-item">
-                <img src="/mirador/img/patagonica-propiedades-mirador-2.jpeg" alt="Mirador render 2">
+                <img src="img/patagonica-propiedades-mirador-2.jpeg" alt="Mirador render 2">
             </div>
             <div class="gallery-item">
-                <img src="/mirador/img/patagonica-propiedades-mirador-5.jpeg" alt="Mirador render 5">
+                <img src="img/patagonica-propiedades-mirador-5.jpeg" alt="Mirador render 5">
             </div>
             <div class="gallery-item">
-                <img src="/mirador/img/patagonica-propiedades-mirador-6.jpeg" alt="Mirador render 6">
+                <img src="img/patagonica-propiedades-mirador-6.jpeg" alt="Mirador render 6">
             </div>
             <div class="gallery-item">
-                <img src="/mirador/img/patagonica-propiedades-mirador-4.jpeg" alt="Mirador render 4">
+                <img src="img/patagonica-propiedades-mirador-4.jpeg" alt="Mirador render 4">
             </div>
         </div>
     </section>
@@ -1465,7 +1635,7 @@
     <section class="progress-section" id="estado-obra">
         <div class="progress-container">
             <div class="progress-image">
-                <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1476&q=80" alt="Estado de obra - El Mirador">
+                <img src="img/patagonica-propiedades-mirador-construccion.png" alt="Estado de obra - El Mirador Residences">
             </div>
             <div class="progress-info">
                 <p class="section-subtitle">Estado de Obra</p>
@@ -1474,7 +1644,7 @@
                     Ultima actualizacion: Febrero 2026
                 </span>
                 <h2>Avance del proyecto en tiempo real</h2>
-                <p>Seguimos avanzando con el desarrollo de El Mirador. Actualmente nos encontramos finalizando la etapa de obra gruesa, cumpliendo con los plazos establecidos.</p>
+                <p>Seguimos avanzando con el desarrollo de El Mirador Residences. Actualmente nos encontramos finalizando la etapa de obra gruesa, cumpliendo con los plazos establecidos.</p>
                 <div class="progress-timeline">
                     <div class="progress-step completed">
                         <div class="progress-step-indicator">
@@ -1528,8 +1698,8 @@
                             <div class="progress-step-line"></div>
                         </div>
                         <div class="progress-step-content">
-                            <h4>Detalles finales y entrega</h4>
-                            <span>Estimado - Jul 2026</span>
+                            <h4>Entrega Diciembre 2027</h4>
+                            <span>Estimado - Dic 2027</span>
                         </div>
                     </div>
                 </div>
@@ -1551,31 +1721,25 @@
         <div class="location-content">
             <p class="section-subtitle">Ubicacion</p>
             <h2 class="section-title">En el corazon de la Patagonia argentina</h2>
-            <p>Villa La Angostura es reconocida como una de las localidades mas bellas de Argentina, rodeada de lagos cristalinos, bosques milenarios y montanas imponentes.</p>
+            <p>Creamos este proyecto en base a lo que nuestros clientes pidieron. El Mirador Residences es el lugar para vivir Villa La Angostura al maximo.</p>
             <div class="location-list">
                 <div class="location-item">
                     <div class="location-item-icon">
                         <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                     </div>
-                    <span>5 km del centro de Villa La Angostura</span>
-                </div>
-                <div class="location-item">
-                    <div class="location-item-icon">
-                        <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
-                    </div>
-                    <span>80 km del Aeropuerto de Bariloche</span>
-                </div>
-                <div class="location-item">
-                    <div class="location-item-icon">
-                        <svg viewBox="0 0 24 24"><path d="M15.5 0l-3.5 7h-8l6.5 5-2.5 8 7-5 7 5-2.5-8 6.5-5h-8z"/></svg>
-                    </div>
-                    <span>15 km del Cerro Bayo (ski)</span>
+                    <span>A 5 km del centro de Villa La Angostura</span>
                 </div>
                 <div class="location-item">
                     <div class="location-item-icon">
                         <svg viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/></svg>
                     </div>
-                    <span>Acceso directo al Lago Nahuel Huapi</span>
+                    <span>A 9 km del Cerro Bayo</span>
+                </div>
+                <div class="location-item">
+                    <div class="location-item-icon">
+                        <svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+                    </div>
+                    <span>A 80 km del Aeropuerto de Bariloche</span>
                 </div>
             </div>
         </div>
@@ -1594,7 +1758,13 @@
                         <div class="contact-item-icon">
                             <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                         </div>
-                        <a href="tel:+5492944123456">+54 9 2944 123456</a>
+                        <a href="tel:+5492944231321">+54 9 2944 231321 - Ventas</a>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-item-icon">
+                            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.808 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/></svg>
+                        </div>
+                        <a href="https://wa.me/5492944231321" target="_blank">+54 9 2944 231321 - WhatsApp</a>
                     </div>
                     <div class="contact-item">
                         <div class="contact-item-icon">
@@ -1606,7 +1776,7 @@
                         <div class="contact-item-icon">
                             <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
                         </div>
-                        <span>Av. Arrayanes 256, Villa La Angostura</span>
+                        <span>Cerro Bayo 69, Villa La Angostura</span>
                     </div>
                 </div>
             </div>
@@ -1638,7 +1808,7 @@
                 </div>
                 <div class="form-group">
                     <label for="message">Mensaje</label>
-                    <textarea id="message" name="message" placeholder="Me interesa conocer mas sobre El Mirador..."></textarea>
+                    <textarea id="message" name="message" placeholder="Me interesa conocer mas sobre El Mirador Residences..."></textarea>
                 </div>
                 <button type="submit" class="btn btn-accent">Enviar Consulta</button>
             </form>
@@ -1649,7 +1819,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
-                <img src="/src/img/patagonica-logo-blanco.png" alt="Patagonica Propiedades">
+                <img src="img/patagonica-logo-blanco.png" alt="Patagonica Propiedades">
             </div>
             <div class="social-links">
                 <a href="https://www.instagram.com/patagonicapropiedades/" target="_blank" aria-label="Instagram">
@@ -1665,6 +1835,7 @@
         </div>
         <div class="footer-bottom">
             <p>Patagonica Propiedades. Todos los derechos reservados.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.7rem;">Aviso legal: Las imagenes son de caracter ilustrativo y no contractual. El desarrollo podria presentar variaciones respecto a lo exhibido.</p>
         </div>
     </footer>
 
