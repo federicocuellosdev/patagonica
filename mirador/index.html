@@ -1843,6 +1843,7 @@
                 <input type="hidden" name="fbclid">
                 <input type="hidden" name="gclid">
                 <button type="submit" class="btn btn-accent">Enviar Consulta</button>
+                <div id="form-status" style="display:none; margin-top:1rem; padding:0.75rem 1rem; border-radius:8px; font-size:0.9rem; text-align:center;"></div>
             </form>
         </div>
     </section>
@@ -2026,7 +2027,7 @@
         });
 
         // Form
-        const API_URL = 'https://api.patagonicapropiedades.com';
+        const API_URL = 'https://patagonica.onrender.com';
 
         document.querySelector('.contact-form').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -2051,6 +2052,9 @@
                 tracking: tracking
             };
 
+            const status = document.getElementById('form-status');
+            status.style.display = 'none';
+
             try {
                 const res = await fetch(`${API_URL}/api/web/contact`, {
                     method: 'POST',
@@ -2063,10 +2067,16 @@
                 fbq('track', 'Lead');
                 gtag('event', 'generate_lead', { event_category: 'conversion', event_label: 'mirador' });
 
-                alert('Gracias por tu consulta. Nos pondremos en contacto a la brevedad.');
+                status.textContent = 'Gracias por tu consulta. Nos pondremos en contacto a la brevedad.';
+                status.style.display = 'block';
+                status.style.background = '#d4edda';
+                status.style.color = '#155724';
                 this.reset();
             } catch (err) {
-                alert('Hubo un error al enviar tu consulta. Por favor intenta nuevamente.');
+                status.textContent = 'Hubo un error al enviar tu consulta. Por favor intenta nuevamente.';
+                status.style.display = 'block';
+                status.style.background = '#f8d7da';
+                status.style.color = '#721c24';
             } finally {
                 btn.disabled = false;
                 btn.textContent = btnText;
