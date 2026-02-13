@@ -2009,7 +2009,7 @@
         // Rotación de WhatsApp
         const WA_NUMBERS = ['5492945908123','5492216027851','5491163734990','5492944969700','5492944231321'];
         function getWhatsAppUrl() {
-            return 'https://wa.me/' + WA_NUMBERS[Math.floor(Math.random() * WA_NUMBERS.length)];
+            return 'https://wa.me/' + WA_NUMBERS[Math.floor(Math.random() * WA_NUMBERS.length)] + '?text=' + encodeURIComponent('Hola! Estoy viendo la página de El Mirador Residences y me gustaría recibir más información.');
         }
         document.querySelectorAll('a[href*="wa.me"]').forEach(function(el) {
             el.addEventListener('click', function(e) {
