@@ -787,6 +787,28 @@
             height: 450px;
             object-fit: cover;
             display: block;
+            cursor: pointer;
+        }
+
+        .progress-thumbs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .progress-thumbs img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .progress-thumbs img:hover {
+            opacity: 1;
         }
 
         .progress-badge {
@@ -977,6 +999,9 @@
             .progress-container {
                 grid-template-columns: 1fr;
                 gap: 3rem;
+            }
+            .progress-thumbs img {
+                height: 70px;
             }
         }
 
@@ -1663,7 +1688,13 @@
     <section class="progress-section" id="estado-obra">
         <div class="progress-container">
             <div class="progress-image">
-                <img src="mirador/img/patagonica-propiedades-mirador-construccion.webp" alt="Estado de obra - El Mirador Residences">
+                <img src="mirador/img/patagonica-propiedades-mirador-construccion-1.webp" alt="Estado de obra - El Mirador Residences" onclick="openConstructionLightbox(0)">
+                <div class="progress-thumbs">
+                    <img src="mirador/img/patagonica-propiedades-mirador-construccion-2.webp" alt="Construcción 2" onclick="openConstructionLightbox(1)">
+                    <img src="mirador/img/patagonica-propiedades-mirador-construccion-3.webp" alt="Construcción 3" onclick="openConstructionLightbox(2)">
+                    <img src="mirador/img/patagonica-propiedades-mirador-construccion-4.webp" alt="Construcción 4" onclick="openConstructionLightbox(3)">
+                    <img src="mirador/img/patagonica-propiedades-mirador-construccion-5.webp" alt="Construcción 5" onclick="openConstructionLightbox(4)">
+                </div>
             </div>
             <div class="progress-info">
                 <p class="section-subtitle">Estado de Obra</p>
@@ -1949,10 +1980,10 @@
         function updateLightbox() {
             lightboxImg.style.opacity = '0';
             setTimeout(() => {
-                lightboxImg.src = galleryItems[currentIndex].src;
+                lightboxImg.src = getActiveSrc(currentIndex);
                 lightboxImg.style.opacity = '1';
             }, 150);
-            lightboxCounter.textContent = (currentIndex + 1) + ' / ' + galleryItems.length;
+            lightboxCounter.textContent = (currentIndex + 1) + ' / ' + getActiveLength();
             document.querySelectorAll('.lightbox-thumb').forEach((t, i) => {
                 t.classList.toggle('active', i === currentIndex);
             });
@@ -1964,12 +1995,14 @@
         }
 
         function closeLightbox() {
+            isConstructionMode = false;
             lightbox.classList.remove('active');
             document.body.style.overflow = '';
         }
 
         galleryItems.forEach((img, index) => {
             img.parentElement.addEventListener('click', () => {
+                isConstructionMode = false;
                 currentIndex = index;
                 lightboxImg.src = img.src;
                 lightboxImg.style.opacity = '1';
@@ -1988,23 +2021,70 @@
             if (e.target === document.querySelector('.lightbox-main')) closeLightbox();
         });
 
+        // Carrusel de construcción
+        const constructionImages = [
+            'mirador/img/patagonica-propiedades-mirador-construccion-1.webp',
+            'mirador/img/patagonica-propiedades-mirador-construccion-2.webp',
+            'mirador/img/patagonica-propiedades-mirador-construccion-3.webp',
+            'mirador/img/patagonica-propiedades-mirador-construccion-4.webp',
+            'mirador/img/patagonica-propiedades-mirador-construccion-5.webp',
+            'mirador/img/patagonica-propiedades-mirador-construccion-6.webp',
+            'mirador/img/patagonica-propiedades-mirador-construccion-7.webp',
+            'mirador/img/patagonica-propiedades-mirador-construccion-8.webp',
+            'mirador/img/patagonica-propiedades-mirador-construccion-9.webp',
+            'mirador/img/patagonica-propiedades-mirador-construccion-10.webp',
+            'mirador/img/patagonica-propiedades-mirador-construccion-11.webp'
+        ];
+        let activeImages = galleryItems;
+        let isConstructionMode = false;
+
+        function getActiveList() {
+            return isConstructionMode ? constructionImages : galleryItems;
+        }
+
+        function getActiveSrc(index) {
+            return isConstructionMode ? constructionImages[index] : galleryItems[index].src;
+        }
+
+        function getActiveLength() {
+            return isConstructionMode ? constructionImages.length : galleryItems.length;
+        }
+
+        function openConstructionLightbox(index) {
+            isConstructionMode = true;
+            currentIndex = index;
+            lightboxImg.src = constructionImages[index];
+            lightboxImg.style.opacity = '1';
+            lightboxCounter.textContent = (index + 1) + ' / ' + constructionImages.length;
+            lightboxThumbs.innerHTML = '';
+            constructionImages.forEach((src, i) => {
+                const thumb = document.createElement('div');
+                thumb.className = 'lightbox-thumb' + (i === index ? ' active' : '');
+                thumb.innerHTML = '<img src="' + src + '" alt="Thumbnail">';
+                thumb.addEventListener('click', () => goToSlide(i));
+                lightboxThumbs.appendChild(thumb);
+            });
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
         document.getElementById('lightbox-prev').addEventListener('click', (e) => {
             e.stopPropagation();
-            currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+            currentIndex = (currentIndex - 1 + getActiveLength()) % getActiveLength();
             updateLightbox();
         });
 
         document.getElementById('lightbox-next').addEventListener('click', (e) => {
             e.stopPropagation();
-            currentIndex = (currentIndex + 1) % galleryItems.length;
+            currentIndex = (currentIndex + 1) % getActiveLength();
             updateLightbox();
         });
 
         document.addEventListener('keydown', (e) => {
             if (!lightbox.classList.contains('active')) return;
             if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length; updateLightbox(); }
-            if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % galleryItems.length; updateLightbox(); }
+            if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + getActiveLength()) % getActiveLength(); updateLightbox(); }
+            if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % getActiveLength(); updateLightbox(); }
         });
 
         // Rotación de WhatsApp
