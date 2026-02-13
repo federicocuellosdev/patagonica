@@ -2100,7 +2100,8 @@
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
     if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
     n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
+    t.src=v;t.onerror=function(){gtag('event','ad_blocker_detected',{event_category:'tech',event_label:'meta_pixel_blocked'});};
+    s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1129079111925410');
@@ -2114,7 +2115,7 @@
     <!-- Engagement tracking - 40s -->
     <script>
     setTimeout(function() {
-        fbq('track', 'ViewContent');
+        if (typeof fbq !== 'undefined') fbq('track', 'ViewContent');
         gtag('event', 'view_content', { event_category: 'engagement', event_label: '40s_session' });
     }, 40000);
     </script>
