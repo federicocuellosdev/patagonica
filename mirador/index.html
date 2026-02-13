@@ -2006,6 +2006,18 @@
             if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % galleryItems.length; updateLightbox(); }
         });
 
+        // Rotación de WhatsApp
+        const WA_NUMBERS = ['5492945908123','5492216027851','5491163734990','5492944969700','5492944231321'];
+        function getWhatsAppUrl() {
+            return 'https://wa.me/' + WA_NUMBERS[Math.floor(Math.random() * WA_NUMBERS.length)];
+        }
+        document.querySelectorAll('a[href*="wa.me"]').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.open(getWhatsAppUrl(), '_blank');
+            });
+        });
+
         // Captura de parámetros de tráfico pago
         const params = new URLSearchParams(window.location.search);
         ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'].forEach(function(key) {
