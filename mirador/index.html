@@ -1419,15 +1419,20 @@
             }
 
             .gallery-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 grid-template-rows: auto;
+                gap: 0.4rem;
             }
 
-            .gallery-item,
             .gallery-item:first-child {
-                grid-column: span 1;
+                grid-column: span 2;
                 grid-row: span 1;
                 height: 220px;
+            }
+
+            .gallery-item {
+                grid-column: span 1;
+                height: 150px;
             }
 
             .location-content {
@@ -1495,7 +1500,7 @@
     <section class="about" id="proyecto">
         <div class="about-image">
             <img src="mirador/img/patagonica-propiedades-mirador-principal-v2.webp" alt="El Mirador Residences">
-            <p style="font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-top: 0.75rem; line-height: 1.5;"><strong style="color: rgba(255,255,255,0.6);">Aviso legal:</strong> Las imagenes son de caracter ilustrativo y no contractual. El desarrollo podria presentar variaciones respecto a lo exhibido.</p>
+            <p style="font-size: 0.72rem; color: rgba(0,0,0,0.4); margin-top: 0.75rem; line-height: 1.5;"><strong style="color: rgba(0,0,0,0.55);">Aviso legal:</strong> Las imagenes son de caracter ilustrativo y no contractual. El desarrollo podria presentar variaciones respecto a lo exhibido.</p>
         </div>
         <div class="about-text">
             <p class="section-subtitle">El Proyecto</p>
