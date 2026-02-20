@@ -1000,14 +1000,26 @@
                 grid-template-columns: 1fr;
                 gap: 3rem;
             }
+            .progress-thumbs {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.4rem;
+            }
             .progress-thumbs img {
-                height: 70px;
+                height: 140px;
             }
         }
 
         @media (max-width: 768px) {
             .progress-image img {
-                height: 300px;
+                height: 260px;
+            }
+            .progress-thumbs {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.4rem;
+            }
+            .progress-thumbs img {
+                height: 130px;
+                border-radius: 6px;
             }
         }
 
@@ -1072,7 +1084,7 @@
         }
 
         .location-map {
-            background: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+            background: url('mirador/img/patagonica-propiedades-mirador-ubicacion-v2.webp') center/cover no-repeat;
         }
 
         /* Contact */
