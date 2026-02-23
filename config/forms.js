@@ -102,6 +102,13 @@ const FORMS = {
     name: 'FORM - Haiku - v3',
     tags: ['FORM - Haiku', 'Meta Ads'],
     publication_id: 68594
+  },
+
+  // === EMPRENDIMIENTOS ===
+  '2117316602140778': {
+    name: 'FORM - Emprendimientos - v3',
+    tags: ['Emprendimientos', 'Meta Ads'],
+    publication_id: null
   }
 };
 
