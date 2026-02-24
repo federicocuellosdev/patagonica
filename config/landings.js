@@ -2,6 +2,10 @@ const LANDINGS = {
   62849: {
     name: 'El Mirador Residences',
     tags: ['WEB - Mirador']
+  },
+  'loma-guacha': {
+    name: 'Loma Guacha',
+    tags: ['WEB - Loma Guacha']
   }
 };
 
