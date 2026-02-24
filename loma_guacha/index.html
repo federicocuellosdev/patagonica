@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loma Guacha | Patagonica Propiedades</title>
+    <link rel="icon" type="image/png" href="../mirador/img/patagonica-icon.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://d1v2p1s05qqabi.cloudfront.net/fonts/patagonica/fonts-patagonica.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #121C25;
+            --secondary: #057488;
+            --accent: #057488;
+            --light: #f7f7f7;
+            --white: #fff;
+            --dark: #0d1118;
+            --text: #212529;
+            --text-muted: #6c757d;
+            --border-radius: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-sm: 4px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: Gilroy, 'Source Sans Pro', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background-color: var(--light);
+        }
+
+        /* ── Header ── */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1.25rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        header.scrolled {
+            background-color: rgba(18, 28, 37, 0.97);
+            padding: 0.85rem 5%;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+        }
+        .logo { display: flex; align-items: center; text-decoration: none; gap: 1rem; }
+        .logo img { height: 80px; width: auto; }
+        header.scrolled .logo img { height: 70px; }
+        .logo-separator {
+            width: 1px;
+            height: 40px;
+            background: rgba(255,255,255,0.35);
+        }
+        header.scrolled .logo-separator { height: 35px; }
+        .logo-project {
+            height: 65px !important;
+            filter: brightness(0) invert(1);
+            position: relative;
+            top: -2px;
+        }
+        header.scrolled .logo-project { height: 52px !important; }
+
+        nav ul { display: flex; list-style: none; gap: 2rem; }
+        nav a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+        nav a:hover { color: #fff; }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .mobile-menu-btn span { display: block; width: 22px; height: 2px; background: #fff; transition: all 0.3s ease; }
+        .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+        .mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            font-family: Gilroy, sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: var(--border-radius);
+        }
+        .btn-accent { background-color: var(--secondary); color: #fff; }
+        .btn-accent:hover {
+            background-color: #068a9f;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(5, 116, 136, 0.35);
+        }
+        .btn-outline-light {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #fff;
+        }
+        .btn-outline-light:hover {
+            background-color: #fff;
+            color: var(--primary);
+            border-color: #fff;
+        }
+
+        /* ── 1. Hero Parallax ── */
+        .hero {
+            height: 100vh;
+            background: url('img/patagonica-propiedades-loma-guacha-hero.webp') center/cover no-repeat fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(18,28,37,0.7) 0%, rgba(5,116,136,0.35) 60%, rgba(18,28,37,0.8) 100%);
+        }
+        .hero-content {
+            position: relative;
+            max-width: 850px;
+            padding: 0 2rem;
+            color: #fff;
+        }
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(5, 116, 136, 0.3);
+            border: 1px solid rgba(5, 116, 136, 0.5);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.9);
+        }
+        .hero-title {
+            font-family: Gilroy, sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+        .hero-description {
+            font-size: 1.15rem;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            opacity: 0.85;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .hero-buttons .btn { min-width: 240px; text-align: center; }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .scroll-indicator span {
+            display: block;
+            width: 28px; height: 44px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 14px;
+            position: relative;
+        }
+        .scroll-indicator span::before {
+            content: '';
+            position: absolute;
+            top: 8px; left: 50%;
+            width: 4px; height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            animation: scrollAnim 2s infinite;
+        }
+        @keyframes scrollAnim {
+            0% { opacity: 1; top: 8px; }
+            100% { opacity: 0; top: 28px; }
+        }
+
+        /* ── 2. Proyecto – overlap card ── */
+        .proyecto {
+            position: relative;
+            z-index: 2;
+            margin-top: -100px;
+            padding: 0 5% 5rem;
+        }
+        .proyecto-card {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+        }
+        .proyecto-text {
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .proyecto-text .section-subtitle {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--secondary);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        .proyecto-text .section-title {
+            font-family: Gilroy, sans-serif;
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            color: var(--primary);
+            margin-bottom: 1.25rem;
+            line-height: 1.15;
+            font-weight: 700;
+        }
+        .proyecto-text p {
+            color: #545b61;
+            font-size: 0.9rem;
+            margin-bottom: 0.85rem;
+            line-height: 1.7;
+        }
+        .proyecto-image {
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+        }
+        .proyecto-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .proyecto-image-badge {
+            position: absolute;
+            bottom: 1.25rem;
+            right: 1.25rem;
+            background: var(--secondary);
+            color: #fff;
+            padding: 1.25rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(5,116,136,0.35);
+        }
+        .proyecto-image-badge strong {
+            display: block;
+            font-size: 2rem;
+            line-height: 1;
+        }
+        .proyecto-image-badge span {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.85;
+        }
+
+        /* ── 3. Stats ribbon ── */
+        .stats-ribbon {
+            background: var(--primary);
+            padding: 3.5rem 5%;
+        }
+        .stats-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 1rem 1.5rem;
+            position: relative;
+        }
+        .stat-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background: rgba(255,255,255,0.12);
+        }
+        .stat-number {
+            font-family: Gilroy, sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .stat-number small {
+            font-size: 0.5em;
+            font-weight: 500;
+            color: rgba(255,255,255,0.6);
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 500;
+        }
+
+        /* ── 4. Galería – bento grid ── */
+        .gallery {
+            padding: 6rem 5%;
+        }
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .gallery-header .section-subtitle {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--secondary);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        .gallery-header .section-title {
+            font-family: Gilroy, sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+            color: var(--primary);
+            line-height: 1.15;
+            font-weight: 700;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 280px 280px;
+            gap: 0.75rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .bento-grid .gallery-item:nth-child(1) {
+            grid-column: 1 / 3;
+            grid-row: 1 / 2;
+        }
+        .bento-grid .gallery-item:nth-child(2) {
+            grid-column: 3 / 4;
+            grid-row: 1 / 3;
+        }
+        .bento-grid .gallery-item:nth-child(3) {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+        }
+        .bento-grid .gallery-item:nth-child(4) {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+        }
+        .gallery-item {
+            overflow: hidden;
+            position: relative;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        .gallery-item:hover img { transform: scale(1.08); }
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(18,28,37,0.5), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: var(--border-radius);
+        }
+        .gallery-item:hover::after { opacity: 1; }
+
+        /* ── 5. Masterplan – dark section ── */
+        .masterplan {
+            padding: 6rem 5%;
+            background: var(--primary);
+        }
+        .masterplan-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .masterplan .section-subtitle {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        .masterplan .section-title {
+            font-family: Gilroy, sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+            color: #fff;
+            margin-bottom: 1rem;
+            line-height: 1.15;
+            font-weight: 700;
+        }
+        .masterplan-desc {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+        .masterplan-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .masterplan-images img {
+            width: 100%;
+            border-radius: var(--border-radius-lg);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .masterplan-images img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        /* ── 6. Ubicación – parallax + glassmorphism centrada ── */
+        .ubicacion {
+            position: relative;
+            height: 550px;
+            background: url('img/patagonica-propiedades-loma-guacha-ubicacion.webp') center top/cover no-repeat fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ubicacion::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(18,28,37,0.55);
+        }
+        .ubicacion-card {
+            position: relative;
+            max-width: 580px;
+            width: 90%;
+            background: rgba(18, 28, 37, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            text-align: center;
+        }
+        .ubicacion-card .section-subtitle {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        .ubicacion-card .section-title {
+            font-family: Gilroy, sans-serif;
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+        .ubicacion-card > p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .ubicacion-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            text-align: left;
+        }
+        .ubicacion-item {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            color: rgba(255,255,255,0.85);
+            font-size: 0.9rem;
+        }
+        .ubicacion-item-icon {
+            width: 34px; height: 34px;
+            background: rgba(5,116,136,0.25);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .ubicacion-item-icon svg {
+            width: 16px; height: 16px;
+            fill: var(--secondary);
+        }
+
+        /* ── 7. Contacto – minimal centrado ── */
+        .contact {
+            padding: 6rem 5%;
+            background: var(--white);
+        }
+        .contact-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .contact-inner .section-subtitle {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--secondary);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        .contact-inner .section-title {
+            font-family: Gilroy, sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.25rem);
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.15;
+            font-weight: 700;
+        }
+        .contact-inner > p {
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-size: 0.95rem;
+        }
+        .contact-form {
+            background: var(--light);
+            padding: 2.5rem;
+            border-radius: var(--border-radius-lg);
+            text-align: left;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.5px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: Gilroy, 'Source Sans Pro', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text);
+            background: var(--white);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(5,116,136,0.15);
+        }
+        .form-group textarea { height: 120px; resize: none; }
+        .contact-form .btn { width: 100%; padding: 0.9rem; font-size: 0.95rem; }
+
+        .contact-details-row {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .contact-detail-icon {
+            width: 36px; height: 36px;
+            background: rgba(5,116,136,0.1);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .contact-detail-icon svg {
+            width: 16px; height: 16px;
+            fill: var(--secondary);
+        }
+        .contact-detail a,
+        .contact-detail span {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+        .contact-detail a:hover { color: var(--secondary); }
+
+        /* ── Footer ── */
+        footer {
+            background-color: var(--primary);
+            padding: 3rem 5% 1.5rem;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .footer-logo img { height: 64px; width: auto; }
+        .social-links { display: flex; gap: 0.75rem; }
+        .social-links a {
+            width: 40px; height: 40px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        .social-links svg { width: 18px; height: 18px; fill: #fff; }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 1.5rem;
+            text-align: center;
+            color: rgba(255,255,255,0.35);
+            font-size: 0.8rem;
+        }
+
+        /* ── WhatsApp FAB ── */
+        .whatsapp-fab {
+            position: fixed;
+            bottom: 2rem; right: 2rem;
+            width: 56px; height: 56px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37,211,102,0.5);
+        }
+        .whatsapp-fab svg { width: 28px; height: 28px; fill: #fff; }
+
+        /* ── Lightbox ── */
+        .lightbox {
+            position: fixed; inset: 0; z-index: 2000;
+            background: rgba(18, 28, 37, 0.92);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox-main {
+            position: relative; width: 100%; flex: 1;
+            display: flex; align-items: center; justify-content: center;
+            padding: 1.5rem 5rem;
+        }
+        .lightbox-main img {
+            max-width: 100%; max-height: 70vh;
+            object-fit: contain;
+            border-radius: var(--border-radius-lg);
+            transition: opacity 0.35s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .lightbox-counter {
+            position: absolute; top: 1.5rem; left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem; font-weight: 500; letter-spacing: 2px;
+        }
+        .lightbox-close {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            width: 44px; height: 44px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease; z-index: 10;
+        }
+        .lightbox-close:hover { background: rgba(255,255,255,0.2); transform: rotate(90deg); }
+        .lightbox-close svg { width: 20px; height: 20px; fill: #fff; }
+        .lightbox-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 48px; height: 48px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease; z-index: 10;
+        }
+        .lightbox-nav:hover { background: rgba(255,255,255,0.2); transform: translateY(-50%) scale(1.1); }
+        .lightbox-nav svg { width: 22px; height: 22px; fill: #fff; }
+        .lightbox-prev { left: 1.5rem; }
+        .lightbox-next { right: 1.5rem; }
+        .lightbox-thumbs {
+            display: flex; gap: 0.5rem;
+            padding: 1.25rem 2rem 2rem;
+            justify-content: center; flex-wrap: wrap;
+        }
+        .lightbox-thumb {
+            width: 72px; height: 48px;
+            border-radius: var(--border-radius-sm);
+            overflow: hidden; cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.45; transition: all 0.3s ease;
+        }
+        .lightbox-thumb.active { border-color: var(--secondary); opacity: 1; }
+        .lightbox-thumb:hover { opacity: 0.85; }
+        .lightbox-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ── Video section ── */
+        .video-section {
+            padding: 6rem 5%;
+            background: var(--white);
+        }
+        .video-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .video-inner .section-subtitle {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--secondary);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        .video-inner .section-title {
+            font-family: Gilroy, sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+            color: var(--primary);
+            margin-bottom: 2rem;
+            line-height: 1.15;
+            font-weight: 700;
+        }
+        .video-wrapper {
+            position: relative;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+        }
+        .video-wrapper video {
+            width: 100%;
+            display: block;
+            border-radius: var(--border-radius-lg);
+        }
+
+        /* ── Plano button ── */
+        .plano-btn-row {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .plano-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.75rem 1.75rem;
+            background: rgba(5, 116, 136, 0.1);
+            color: var(--secondary);
+            border: 1px solid rgba(5, 116, 136, 0.3);
+            border-radius: 50px;
+            font-family: Gilroy, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        .plano-btn:hover {
+            background: var(--secondary);
+            color: #fff;
+            border-color: var(--secondary);
+        }
+        .plano-btn:hover svg { fill: #fff; }
+        .plano-btn svg {
+            width: 18px; height: 18px;
+            fill: var(--secondary);
+            transition: fill 0.3s ease;
+        }
+        .plano-btn--dark {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.85);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .plano-btn--dark svg { fill: rgba(255, 255, 255, 0.85); }
+        .plano-btn--dark:hover {
+            background: var(--secondary);
+            color: #fff;
+            border-color: var(--secondary);
+        }
+        .plano-btn--dark:hover svg { fill: #fff; }
+
+        /* ── PDF Viewer modal ── */
+        .pdf-viewer {
+            position: fixed; inset: 0; z-index: 2000;
+            background: rgba(18, 28, 37, 0.92);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .pdf-viewer.active { opacity: 1; visibility: visible; }
+        .pdf-viewer-header {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            z-index: 10;
+        }
+        .pdf-viewer-title {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .pdf-viewer-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        .pdf-viewer-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50px;
+            color: rgba(255,255,255,0.85);
+            font-family: Gilroy, sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        .pdf-viewer-download:hover {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: #fff;
+        }
+        .pdf-viewer-download svg {
+            width: 16px; height: 16px;
+            fill: currentColor;
+        }
+        .pdf-viewer-close {
+            width: 44px; height: 44px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .pdf-viewer-close:hover { background: rgba(255,255,255,0.2); transform: rotate(90deg); }
+        .pdf-viewer-close svg { width: 20px; height: 20px; fill: #fff; }
+        .pdf-viewer-body {
+            width: 90%;
+            height: 85vh;
+            margin-top: 3.5rem;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .pdf-viewer-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 1024px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+            .stat-item:not(:last-child)::after { display: none; }
+            .bento-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 220px 220px;
+            }
+            .bento-grid .gallery-item:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 2; }
+            .bento-grid .gallery-item:nth-child(2) { grid-column: 1 / 2; grid-row: 2 / 3; }
+            .bento-grid .gallery-item:nth-child(3) { grid-column: 2 / 3; grid-row: 2 / 3; }
+            .bento-grid .gallery-item:nth-child(4) { display: none; }
+            .masterplan-images { grid-template-columns: 1fr; }
+            .ubicacion-card { max-width: 100%; width: 92%; }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: flex; }
+            nav {
+                position: fixed; top: 0; right: -100%;
+                width: 75%; height: 100vh;
+                background-color: var(--primary);
+                padding: 5rem 2rem;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 30px rgba(0,0,0,0.3);
+            }
+            nav.active { right: 0; }
+            nav ul { flex-direction: column; gap: 1.5rem; }
+            nav a { font-size: 1rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .hero, .ubicacion { background-attachment: scroll; }
+            .proyecto-card { grid-template-columns: 1fr; }
+            .proyecto-text { padding: 2rem 1.5rem 1.5rem; }
+            .proyecto-image { min-height: 260px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .bento-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 180px 180px;
+                gap: 0.4rem;
+            }
+            .ubicacion { height: auto; min-height: 500px; padding: 4rem 0; }
+            .form-row { grid-template-columns: 1fr; }
+            .contact-details-row { flex-direction: column; align-items: center; gap: 1rem; }
+            .footer-content { flex-direction: column; gap: 1.5rem; text-align: center; }
+            .lightbox-main { padding: 1rem 3.5rem; }
+            .lightbox-nav { width: 36px; height: 36px; }
+            .lightbox-prev { left: 0.5rem; }
+            .lightbox-next { right: 0.5rem; }
+            .lightbox-thumb { width: 52px; height: 36px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">
+            <img src="../mirador/img/patagonica-logo-blanco.webp" alt="Patagonica Propiedades">
+            <span class="logo-separator"></span>
+            <img src="img/patagonica-propiedades-loma-guacha-logo.svg" alt="Loma Guacha" class="logo-project">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#proyecto">Proyecto</a></li>
+                <li><a href="#galeria">Galeria</a></li>
+                <li><a href="#masterplan">Masterplan</a></li>
+                <li><a href="#ubicacion">Ubicacion</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <!-- 1. Hero Parallax -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <span class="hero-badge">Villa La Angostura, Patagonia</span>
+            <h1 class="hero-title">Loma Guacha</h1>
+            <p class="hero-description">36 lotes exclusivos en bosque autoctono con vistas al lago. Servicios subterraneos, lotes desde 4.500 m2 y 3,6 hectareas de reserva natural intangible.</p>
+            <div class="hero-buttons">
+                <a href="#contacto" class="btn btn-accent">Consultar Disponibilidad</a>
+                <a href="#proyecto" class="btn btn-outline-light">Conocer el Proyecto</a>
+            </div>
+        </div>
+        <div class="scroll-indicator"><span></span></div>
+    </section>
+
+    <!-- 2. Proyecto – overlap card -->
+    <section class="proyecto" id="proyecto">
+        <div class="proyecto-card">
+            <div class="proyecto-text">
+                <p class="section-subtitle">El Proyecto</p>
+                <h2 class="section-title">Un loteo unico en la Patagonia</h2>
+                <p>Loma Guacha es un exclusivo loteo de 36 lotes emplazado en una ubicacion privilegiada por su bosque autoctono, su riqueza geografica y sus imponentes vistas al lago.</p>
+                <p>Todos los servicios seran subterraneos, preservando la estetica natural del entorno. Cada lote permite la construccion de hasta dos viviendas y ninguno posee menos de 4.500 m2, garantizando privacidad, amplitud y un entorno natural verdaderamente unico.</p>
+                <p>Ademas, 3,6 hectareas se destinaron a reserva de bosque autoctono intangible, asegurando la preservacion del paisaje para siempre.</p>
+            </div>
+            <div class="proyecto-image">
+                <img src="img/patagonica-propiedades-loma-guacha-galeria-1.webp" alt="Loma Guacha - Vista aerea">
+                <div class="proyecto-image-badge">
+                    <strong>36</strong>
+                    <span>Lotes</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Stats ribbon -->
+    <section class="stats-ribbon">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">36</div>
+                <div class="stat-label">Lotes exclusivos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">4.500 <small>m2</small></div>
+                <div class="stat-label">Superficie minima</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">3,6 <small>has</small></div>
+                <div class="stat-label">Reserva intangible</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">2</div>
+                <div class="stat-label">Viviendas por lote</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video -->
+    <section class="video-section">
+        <div class="video-inner">
+            <p class="section-subtitle">Recorre el terreno</p>
+            <h2 class="section-title">Vista aerea de Loma Guacha</h2>
+            <div class="video-wrapper">
+                <video controls preload="metadata" poster="img/patagonica-propiedades-loma-guacha-galeria-16.webp">
+                    <source src="otros/patagonica-propiedades-loma-guacha-video.webm" type="video/webm">
+                    <source src="otros/patagonica-propiedades-loma-guacha-video.mp4" type="video/mp4">
+                    Tu navegador no soporta video HTML5.
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Galería bento -->
+    <section class="gallery" id="galeria">
+        <div class="gallery-header">
+            <p class="section-subtitle">Galeria</p>
+            <h2 class="section-title">Descubri cada rincon de Loma Guacha</h2>
+        </div>
+        <div class="bento-grid">
+            <div class="gallery-item">
+                <img src="img/patagonica-propiedades-loma-guacha-galeria-16.webp" alt="Loma Guacha vista panoramica">
+            </div>
+            <div class="gallery-item">
+                <img src="img/patagonica-propiedades-loma-guacha-galeria-3.webp" alt="Loma Guacha vista aerea">
+            </div>
+            <div class="gallery-item">
+                <img src="img/patagonica-propiedades-loma-guacha-galeria-8.webp" alt="Loma Guacha terreno">
+            </div>
+            <div class="gallery-item">
+                <img src="img/patagonica-propiedades-loma-guacha-galeria-12.webp" alt="Loma Guacha casa">
+            </div>
+            <!-- Hidden images for lightbox -->
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-1.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-2.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-4.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-5.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-6.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-7.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-9.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-10.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-11.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-13.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-14.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-15.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-17.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img src="img/patagonica-propiedades-loma-guacha-galeria-18.webp" alt="Loma Guacha"></div>
+        </div>
+    </section>
+
+    <!-- 5. Masterplan -->
+    <section class="masterplan" id="masterplan">
+        <div class="masterplan-inner">
+            <p class="section-subtitle">Masterplan</p>
+            <h2 class="section-title">Plano cenital del loteo</h2>
+            <p class="masterplan-desc">Vista aerea del loteo con 36 lotes exclusivos, 3,6 hectareas de reserva de bosque autoctono intangible y acceso desde Ruta 40.</p>
+            <div class="masterplan-images">
+                <img src="img/patagonica-propiedades-loma-guacha-cenital-1.webp" alt="Masterplan Loma Guacha 1" onclick="openMasterplanLightbox(0)">
+                <img src="img/patagonica-propiedades-loma-guacha-cenital-2.webp" alt="Masterplan Loma Guacha 2" onclick="openMasterplanLightbox(1)">
+            </div>
+            <div class="plano-btn-row">
+                <a href="#" onclick="openPdfViewer(); return false;" class="plano-btn plano-btn--dark">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                    Ver Plano del Loteo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Ubicación parallax + glassmorphism centrada -->
+    <section class="ubicacion" id="ubicacion">
+        <div class="ubicacion-card">
+            <p class="section-subtitle">Ubicacion</p>
+            <h2 class="section-title">Sobre Ruta 40, a minutos de todo</h2>
+            <p>Estrategicamente ubicada con acceso directo y cercania al centro de Villa La Angostura.</p>
+            <div class="ubicacion-list">
+                <div class="ubicacion-item">
+                    <div class="ubicacion-item-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+                    <span>Sobre Ruta 40, acceso directo</span>
+                </div>
+                <div class="ubicacion-item">
+                    <div class="ubicacion-item-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+                    <span>A minutos del centro de Villa La Angostura</span>
+                </div>
+                <div class="ubicacion-item">
+                    <div class="ubicacion-item-icon"><svg viewBox="0 0 24 24"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/></svg></div>
+                    <span>Cercania al Cerro Bayo</span>
+                </div>
+                <div class="ubicacion-item">
+                    <div class="ubicacion-item-icon"><svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg></div>
+                    <span>A 80 km del Aeropuerto de Bariloche</span>
+                </div>
+                <div class="ubicacion-item">
+                    <div class="ubicacion-item-icon"><svg viewBox="0 0 24 24"><path d="M14 6l-4.22 5.63 1.25 1.67L14 9.33 19 16h-8.46l-4.01-5.37L1 18h22L14 6zM5 16l1.52-2.03L8.04 16H5z"/></svg></div>
+                    <span>Rodeado de bosque nativo patagonico</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Contacto minimal centrado -->
+    <section class="contact" id="contacto">
+        <div class="contact-inner">
+            <p class="section-subtitle">Contacto</p>
+            <h2 class="section-title">Asegura tu lote en la Patagonia</h2>
+            <p>Estamos para responder todas tus consultas y ayudarte a encontrar el lote perfecto.</p>
+            <form class="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefono</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Tu telefono">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Tu email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Mensaje</label>
+                    <textarea id="message" name="message" placeholder="Me interesa conocer mas sobre los lotes de Loma Guacha..."></textarea>
+                </div>
+                <input type="hidden" name="utm_source">
+                <input type="hidden" name="utm_medium">
+                <input type="hidden" name="utm_campaign">
+                <input type="hidden" name="utm_content">
+                <input type="hidden" name="utm_term">
+                <input type="hidden" name="fbclid">
+                <input type="hidden" name="gclid">
+                <button type="submit" class="btn btn-accent">Enviar Consulta</button>
+                <div id="form-status" style="display:none; margin-top:1rem; padding:0.75rem 1rem; border-radius:8px; font-size:0.9rem; text-align:center;"></div>
+            </form>
+            <div class="contact-details-row">
+                <div class="contact-detail">
+                    <div class="contact-detail-icon"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div>
+                    <a href="tel:+5492944231321" onclick="fbq('track','Lead');gtag('event','generate_lead',{event_category:'conversion',event_label:'lomaguacha-telefono'});">+54 9 2944 231321</a>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-detail-icon"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.808 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/></svg></div>
+                    <a href="https://wa.me/5492944231321" target="_blank" onclick="fbq('track','Lead');gtag('event','generate_lead',{event_category:'conversion',event_label:'lomaguacha-whatsapp'});">WhatsApp</a>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-detail-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+                    <span>Villa La Angostura</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="../mirador/img/patagonica-logo-blanco.webp" alt="Patagonica Propiedades">
+            </div>
+            <div class="social-links">
+                <a href="https://www.instagram.com/patagonicapropiedades/" target="_blank" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://wa.me/5492944231321" target="_blank" aria-label="WhatsApp" onclick="fbq('track','Lead');gtag('event','generate_lead',{event_category:'conversion',event_label:'lomaguacha-whatsapp-footer'});">
+                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </a>
+                <a href="#" target="_blank" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Patagonica Propiedades. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp FAB -->
+    <a href="https://wa.me/5492944231321" class="whatsapp-fab" target="_blank" aria-label="WhatsApp" onclick="fbq('track','Lead');gtag('event','generate_lead',{event_category:'conversion',event_label:'lomaguacha-whatsapp-fab'});">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <!-- PDF Viewer -->
+    <div class="pdf-viewer" id="pdf-viewer">
+        <div class="pdf-viewer-header">
+            <span class="pdf-viewer-title">Plano del Loteo</span>
+            <div class="pdf-viewer-actions">
+                <a href="otros/patagonica-propiedades-loma-guacha-plano.pdf" download class="pdf-viewer-download" onclick="gtag('event','download_pdf',{event_category:'engagement',event_label:'lomaguacha-plano'});if(typeof fbq!=='undefined')fbq('trackCustom','DownloadPDF',{pdf_name:'lomaguacha-plano'});">
+                    <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                    Descargar
+                </a>
+                <div class="pdf-viewer-close" onclick="closePdfViewer()">
+                    <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </div>
+            </div>
+        </div>
+        <div class="pdf-viewer-body">
+            <iframe id="pdf-iframe" src=""></iframe>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-main">
+            <span class="lightbox-counter" id="lightbox-counter"></span>
+            <div class="lightbox-close" id="lightbox-close">
+                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </div>
+            <div class="lightbox-nav lightbox-prev" id="lightbox-prev">
+                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            </div>
+            <img src="" alt="Galeria" id="lightbox-img">
+            <div class="lightbox-nav lightbox-next" id="lightbox-next">
+                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+            </div>
+        </div>
+        <div class="lightbox-thumbs" id="lightbox-thumbs"></div>
+    </div>
+
+    <script>
+        // Header scroll
+        window.addEventListener('scroll', function() {
+            document.querySelector('header').classList.toggle('scrolled', window.scrollY > 80);
+        });
+
+        // Mobile menu
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+        mobileMenuBtn.addEventListener('click', function() {
+            nav.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+        });
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCounter = document.getElementById('lightbox-counter');
+        const lightboxThumbs = document.getElementById('lightbox-thumbs');
+        const galleryItems = document.querySelectorAll('.gallery-item img');
+        let currentIndex = 0;
+        let isMasterplanMode = false;
+
+        const masterplanImages = ['img/patagonica-propiedades-loma-guacha-cenital-1.webp', 'img/patagonica-propiedades-loma-guacha-cenital-2.webp'];
+
+        function getActiveSrc(i) { return isMasterplanMode ? masterplanImages[i] : galleryItems[i].src; }
+        function getActiveLength() { return isMasterplanMode ? masterplanImages.length : galleryItems.length; }
+
+        galleryItems.forEach((img, i) => {
+            const thumb = document.createElement('div');
+            thumb.className = 'lightbox-thumb' + (i === 0 ? ' active' : '');
+            thumb.innerHTML = '<img src="' + img.src + '" alt="Thumbnail">';
+            thumb.addEventListener('click', () => goToSlide(i));
+            lightboxThumbs.appendChild(thumb);
+        });
+
+        function updateLightbox() {
+            lightboxImg.style.opacity = '0';
+            setTimeout(() => { lightboxImg.src = getActiveSrc(currentIndex); lightboxImg.style.opacity = '1'; }, 150);
+            lightboxCounter.textContent = (currentIndex + 1) + ' / ' + getActiveLength();
+            document.querySelectorAll('.lightbox-thumb').forEach((t, i) => t.classList.toggle('active', i === currentIndex));
+        }
+
+        function goToSlide(i) { currentIndex = i; updateLightbox(); }
+
+        function closeLightbox() {
+            isMasterplanMode = false;
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        galleryItems.forEach((img, index) => {
+            img.parentElement.addEventListener('click', () => {
+                isMasterplanMode = false;
+                currentIndex = index;
+                lightboxImg.src = img.src;
+                lightboxImg.style.opacity = '1';
+                lightboxCounter.textContent = (index + 1) + ' / ' + galleryItems.length;
+                lightboxThumbs.innerHTML = '';
+                galleryItems.forEach((gImg, i) => {
+                    const thumb = document.createElement('div');
+                    thumb.className = 'lightbox-thumb' + (i === index ? ' active' : '');
+                    thumb.innerHTML = '<img src="' + gImg.src + '" alt="Thumbnail">';
+                    thumb.addEventListener('click', () => goToSlide(i));
+                    lightboxThumbs.appendChild(thumb);
+                });
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function openMasterplanLightbox(index) {
+            isMasterplanMode = true;
+            currentIndex = index;
+            lightboxImg.src = masterplanImages[index];
+            lightboxImg.style.opacity = '1';
+            lightboxCounter.textContent = (index + 1) + ' / ' + masterplanImages.length;
+            lightboxThumbs.innerHTML = '';
+            masterplanImages.forEach((src, i) => {
+                const thumb = document.createElement('div');
+                thumb.className = 'lightbox-thumb' + (i === index ? ' active' : '');
+                thumb.innerHTML = '<img src="' + src + '" alt="Thumbnail">';
+                thumb.addEventListener('click', () => goToSlide(i));
+                lightboxThumbs.appendChild(thumb);
+            });
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+        document.querySelector('.lightbox-main').addEventListener('click', (e) => {
+            if (e.target === document.querySelector('.lightbox-main')) closeLightbox();
+        });
+        document.getElementById('lightbox-prev').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentIndex = (currentIndex - 1 + getActiveLength()) % getActiveLength();
+            updateLightbox();
+        });
+        document.getElementById('lightbox-next').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentIndex = (currentIndex + 1) % getActiveLength();
+            updateLightbox();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + getActiveLength()) % getActiveLength(); updateLightbox(); }
+            if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % getActiveLength(); updateLightbox(); }
+        });
+
+        // Video play tracking
+        const video = document.querySelector('.video-wrapper video');
+        if (video) {
+            video.addEventListener('play', function() {
+                gtag('event', 'video_play', { event_category: 'engagement', event_label: 'lomaguacha-video' });
+                if (typeof fbq !== 'undefined') fbq('trackCustom', 'VideoPlay');
+            }, { once: true });
+        }
+
+        // PDF Viewer
+        function openPdfViewer() {
+            document.getElementById('pdf-iframe').src = 'otros/patagonica-propiedades-loma-guacha-plano.pdf';
+            document.getElementById('pdf-viewer').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            gtag('event', 'view_pdf', { event_category: 'engagement', event_label: 'lomaguacha-plano' });
+            if (typeof fbq !== 'undefined') fbq('trackCustom', 'ViewPDF');
+        }
+        function closePdfViewer() {
+            document.getElementById('pdf-viewer').classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('pdf-iframe').src = '';
+        }
+        document.getElementById('pdf-viewer').addEventListener('click', function(e) {
+            if (e.target === this) closePdfViewer();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('pdf-viewer').classList.contains('active')) closePdfViewer();
+        });
+
+        // WhatsApp rotation
+        const WA_NUMBERS = ['5492945908123','5492216027851','5491163734990','5492944969700','5492944231321'];
+        function getWhatsAppUrl() {
+            return 'https://wa.me/' + WA_NUMBERS[Math.floor(Math.random() * WA_NUMBERS.length)] + '?text=' + encodeURIComponent('Hola! Estoy viendo la pagina de Loma Guacha y me gustaria recibir mas informacion sobre los lotes.');
+        }
+        document.querySelectorAll('a[href*="wa.me"]').forEach(function(el) {
+            el.addEventListener('click', function(e) { e.preventDefault(); window.open(getWhatsAppUrl(), '_blank'); });
+        });
+
+        // UTM capture
+        const params = new URLSearchParams(window.location.search);
+        ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'].forEach(function(key) {
+            const val = params.get(key);
+            if (val) document.querySelector('input[name="' + key + '"]').value = val;
+        });
+
+        // Form
+        const API_URL = 'https://patagonica.onrender.com';
+        document.querySelector('.contact-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const btnText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Enviando...';
+            const form = this;
+            const tracking = {};
+            ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'].forEach(function(key) {
+                const val = form.querySelector('input[name="' + key + '"]').value;
+                if (val) tracking[key] = val;
+            });
+            const data = {
+                name: this.name.value, phone: this.phone.value,
+                email: this.email.value, message: this.message.value,
+                landing: 'loma-guacha', tracking: tracking
+            };
+            const status = document.getElementById('form-status');
+            status.style.display = 'none';
+            try {
+                const res = await fetch(API_URL + '/api/web/contact', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (!res.ok) throw new Error('Error');
+                fbq('track', 'Lead');
+                gtag('event', 'generate_lead', { event_category: 'conversion', event_label: 'lomaguacha' });
+                status.textContent = 'Gracias por tu consulta. Nos pondremos en contacto a la brevedad.';
+                status.style.display = 'block'; status.style.background = '#d4edda'; status.style.color = '#155724';
+                this.reset();
+            } catch (err) {
+                status.textContent = 'Hubo un error al enviar tu consulta. Por favor intenta nuevamente.';
+                status.style.display = 'block'; status.style.background = '#f8d7da'; status.style.color = '#721c24';
+            } finally { btn.disabled = false; btn.textContent = btnText; }
+        });
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SY02RHT35W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-SY02RHT35W');
+    </script>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;t.onerror=function(){gtag('event','ad_blocker_detected',{event_category:'tech',event_label:'meta_pixel_blocked'});};
+    s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1129079111925410');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1129079111925410&ev=PageView&noscript=1"
+    /></noscript>
+
+    <!-- Engagement tracking - 40s -->
+    <script>
+    setTimeout(function() {
+        if (typeof fbq !== 'undefined') fbq('track', 'ViewContent');
+        gtag('event', 'view_content', { event_category: 'engagement', event_label: '40s_session' });
+    }, 40000);
+
+    // Scroll section tracking
+    const sectionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                gtag('event', 'scroll_section', { event_category: 'engagement', event_label: 'lomaguacha-' + entry.target.id });
+                sectionObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('section[id]').forEach(function(s) { sectionObserver.observe(s); });
+    </script>
+</body>
+</html>
