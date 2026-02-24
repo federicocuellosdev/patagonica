@@ -964,13 +964,44 @@
             height: 85vh;
             margin-top: 3.5rem;
             border-radius: var(--border-radius-lg);
-            overflow: hidden;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
         .pdf-viewer-body iframe {
             width: 100%;
             height: 100%;
             border: none;
+            transform-origin: top center;
+            transition: transform 0.2s ease;
+        }
+        .pdf-zoom-controls {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .pdf-zoom-btn {
+            width: 36px; height: 36px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .pdf-zoom-btn:hover { background: rgba(255,255,255,0.2); }
+        .pdf-zoom-level {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.75rem;
+            min-width: 40px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .pdf-zoom-controls { display: flex; }
+            .pdf-viewer-body iframe { height: 200%; }
         }
 
         /* ── Responsive ── */
@@ -1328,6 +1359,11 @@
         <div class="pdf-viewer-header">
             <span class="pdf-viewer-title">Plano del Loteo</span>
             <div class="pdf-viewer-actions">
+                <div class="pdf-zoom-controls">
+                    <button class="pdf-zoom-btn" id="pdf-zoom-out">−</button>
+                    <span class="pdf-zoom-level" id="pdf-zoom-level">100%</span>
+                    <button class="pdf-zoom-btn" id="pdf-zoom-in">+</button>
+                </div>
                 <a href="loma-guacha/otros/patagonica-propiedades-loma-guacha-plano.pdf" download class="pdf-viewer-download" onclick="gtag('event','download_pdf',{event_category:'engagement',event_label:'lomaguacha-plano'});if(typeof fbq!=='undefined')fbq('trackCustom','DownloadPDF',{pdf_name:'lomaguacha-plano'});">
                     <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
                     Descargar
@@ -1502,10 +1538,22 @@
             gtag('event', 'view_pdf', { event_category: 'engagement', event_label: 'lomaguacha-plano' });
             if (typeof fbq !== 'undefined') fbq('trackCustom', 'ViewPDF');
         }
+        var pdfZoom = 1;
+        var pdfIframe = document.getElementById('pdf-iframe');
+        var pdfZoomLevel = document.getElementById('pdf-zoom-level');
+        function setPdfZoom(val) {
+            pdfZoom = Math.max(0.5, Math.min(3, val));
+            pdfIframe.style.transform = 'scale(' + pdfZoom + ')';
+            pdfZoomLevel.textContent = Math.round(pdfZoom * 100) + '%';
+        }
+        document.getElementById('pdf-zoom-in').addEventListener('click', function() { setPdfZoom(pdfZoom + 0.25); });
+        document.getElementById('pdf-zoom-out').addEventListener('click', function() { setPdfZoom(pdfZoom - 0.25); });
+
         function closePdfViewer() {
             document.getElementById('pdf-viewer').classList.remove('active');
             document.body.style.overflow = '';
             document.getElementById('pdf-iframe').src = '';
+            setPdfZoom(1);
         }
         document.getElementById('pdf-viewer').addEventListener('click', function(e) {
             if (e.target === this) closePdfViewer();
