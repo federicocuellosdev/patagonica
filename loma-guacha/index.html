@@ -458,6 +458,7 @@
             border-radius: var(--border-radius);
         }
         .gallery-item:hover::after { opacity: 1; }
+        .gallery-mobile-counter { display: none; }
 
         /* ── 5. Masterplan – dark section ── */
         .masterplan {
@@ -765,15 +766,15 @@
             padding: 1.5rem 5rem;
         }
         .lightbox-main img {
-            max-width: 100%; max-height: 70vh;
+            max-width: 100%; max-height: 85vh;
             object-fit: contain;
             border-radius: var(--border-radius-lg);
             transition: opacity 0.35s ease;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
         .lightbox-counter {
-            position: absolute; top: 1.5rem; left: 50%;
-            transform: translateX(-50%);
+            position: absolute; left: 50%;
+            transform: translate(-50%, -40%);
             color: rgba(255,255,255,0.5);
             font-size: 0.8rem; font-weight: 500; letter-spacing: 2px;
         }
@@ -801,21 +802,7 @@
         .lightbox-nav svg { width: 22px; height: 22px; fill: #fff; }
         .lightbox-prev { left: 1.5rem; }
         .lightbox-next { right: 1.5rem; }
-        .lightbox-thumbs {
-            display: flex; gap: 0.5rem;
-            padding: 1.25rem 2rem 2rem;
-            justify-content: center; flex-wrap: wrap;
-        }
-        .lightbox-thumb {
-            width: 72px; height: 48px;
-            border-radius: var(--border-radius-sm);
-            overflow: hidden; cursor: pointer;
-            border: 2px solid transparent;
-            opacity: 0.45; transition: all 0.3s ease;
-        }
-        .lightbox-thumb.active { border-color: var(--secondary); opacity: 1; }
-        .lightbox-thumb:hover { opacity: 0.85; }
-        .lightbox-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .lightbox-thumbs { display: none; }
 
         /* ── Video section ── */
         .video-section {
@@ -1082,9 +1069,34 @@
             .stats-ribbon { display: none; }
             .stats-cards { display: flex; }
             .bento-grid {
-                grid-template-columns: 1fr 1fr;
-                grid-template-rows: 180px 180px;
-                gap: 0.4rem;
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                gap: 0;
+                padding-bottom: 0;
+                position: relative;
+            }
+            .bento-grid .gallery-item {
+                min-width: 100%;
+                flex-shrink: 0;
+                scroll-snap-align: start;
+                display: block !important;
+                height: 260px;
+                border-radius: 0;
+            }
+            .bento-grid .gallery-item img {
+                border-radius: 0;
+            }
+            .bento-grid::-webkit-scrollbar { display: none; }
+            .gallery-mobile-counter {
+                display: block;
+                text-align: center;
+                padding: 0.75rem 0 0;
+                color: var(--text-muted);
+                font-size: 0.85rem;
+                font-weight: 500;
+                letter-spacing: 1px;
             }
             .ubicacion { height: auto; min-height: 500px; padding: 4rem 0; }
             .form-row { grid-template-columns: 1fr; }
@@ -1095,7 +1107,8 @@
             .lightbox-nav { width: 36px; height: 36px; }
             .lightbox-prev { left: 0.5rem; }
             .lightbox-next { right: 0.5rem; }
-            .lightbox-thumb { width: 52px; height: 36px; }
+            .lightbox-main { padding: 1rem 2.5rem; }
+            .lightbox-main img { max-height: 85vh; }
         }
     </style>
 </head>
@@ -1232,33 +1245,38 @@
         </div>
         <div class="bento-grid">
             <div class="gallery-item">
-                <img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-16.webp" alt="Loma Guacha vista panoramica">
+                <img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-1.webp" alt="Loma Guacha vista panoramica">
             </div>
             <div class="gallery-item">
-                <img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-3.webp" alt="Loma Guacha vista aerea">
+                <img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-2.webp" alt="Loma Guacha vista aerea">
             </div>
             <div class="gallery-item">
-                <img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-8.webp" alt="Loma Guacha terreno">
+                <img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-3.webp" alt="Loma Guacha terreno">
             </div>
             <div class="gallery-item">
-                <img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-12.webp" alt="Loma Guacha casa">
+                <img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-4.webp" alt="Loma Guacha lotes">
             </div>
             <!-- Hidden images for lightbox -->
-            <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-1.webp" alt="Loma Guacha"></div>
-            <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-2.webp" alt="Loma Guacha"></div>
-            <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-4.webp" alt="Loma Guacha"></div>
             <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-5.webp" alt="Loma Guacha"></div>
             <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-6.webp" alt="Loma Guacha"></div>
             <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-7.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-8.webp" alt="Loma Guacha"></div>
             <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-9.webp" alt="Loma Guacha"></div>
             <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-10.webp" alt="Loma Guacha"></div>
             <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-11.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-12.webp" alt="Loma Guacha"></div>
             <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-13.webp" alt="Loma Guacha"></div>
             <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-14.webp" alt="Loma Guacha"></div>
             <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-15.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-16.webp" alt="Loma Guacha"></div>
             <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-17.webp" alt="Loma Guacha"></div>
             <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-18.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-19.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-20.webp" alt="Loma Guacha"></div>
+            <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-21.webp" alt="Loma Guacha panoramica"></div>
+            <div class="gallery-item" style="display:none;"><img loading="lazy" src="loma-guacha/img/patagonica-propiedades-loma-guacha-galeria-22.webp" alt="Loma Guacha panoramica"></div>
         </div>
+        <div class="gallery-mobile-counter" id="gallery-mobile-counter">1 / 22</div>
     </section>
 
     <!-- 5. Masterplan -->
@@ -1406,7 +1424,6 @@
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox">
         <div class="lightbox-main">
-            <span class="lightbox-counter" id="lightbox-counter"></span>
             <div class="lightbox-close" id="lightbox-close">
                 <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
             </div>
@@ -1418,6 +1435,7 @@
                 <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
             </div>
         </div>
+        <span class="lightbox-counter" id="lightbox-counter"></span>
         <div class="lightbox-thumbs" id="lightbox-thumbs"></div>
     </div>
 
@@ -1472,11 +1490,21 @@
             lightboxThumbs.appendChild(thumb);
         });
 
+        function positionCounter() {
+            var rect = lightboxImg.getBoundingClientRect();
+            var imgBottom = rect.bottom;
+            var vpHeight = window.innerHeight;
+            lightboxCounter.style.top = (imgBottom + (vpHeight - imgBottom) / 2) + 'px';
+        }
+
         function updateLightbox() {
             lightboxImg.style.opacity = '0';
-            setTimeout(() => { lightboxImg.src = getActiveSrc(currentIndex); lightboxImg.style.opacity = '1'; }, 150);
+            setTimeout(() => {
+                lightboxImg.src = getActiveSrc(currentIndex);
+                lightboxImg.style.opacity = '1';
+                lightboxImg.onload = positionCounter;
+            }, 150);
             lightboxCounter.textContent = (currentIndex + 1) + ' / ' + getActiveLength();
-            document.querySelectorAll('.lightbox-thumb').forEach((t, i) => t.classList.toggle('active', i === currentIndex));
         }
 
         function goToSlide(i) { currentIndex = i; updateLightbox(); }
@@ -1494,16 +1522,10 @@
                 lightboxImg.src = img.src;
                 lightboxImg.style.opacity = '1';
                 lightboxCounter.textContent = (index + 1) + ' / ' + galleryItems.length;
-                lightboxThumbs.innerHTML = '';
-                galleryItems.forEach((gImg, i) => {
-                    const thumb = document.createElement('div');
-                    thumb.className = 'lightbox-thumb' + (i === index ? ' active' : '');
-                    thumb.innerHTML = '<img src="' + gImg.src + '" alt="Thumbnail">';
-                    thumb.addEventListener('click', () => goToSlide(i));
-                    lightboxThumbs.appendChild(thumb);
-                });
                 lightbox.classList.add('active');
                 document.body.style.overflow = 'hidden';
+                lightboxImg.onload = positionCounter;
+                if (lightboxImg.complete) positionCounter();
             });
         });
 
@@ -1513,16 +1535,10 @@
             lightboxImg.src = masterplanImages[index];
             lightboxImg.style.opacity = '1';
             lightboxCounter.textContent = (index + 1) + ' / ' + masterplanImages.length;
-            lightboxThumbs.innerHTML = '';
-            masterplanImages.forEach((src, i) => {
-                const thumb = document.createElement('div');
-                thumb.className = 'lightbox-thumb' + (i === index ? ' active' : '');
-                thumb.innerHTML = '<img src="' + src + '" alt="Thumbnail">';
-                thumb.addEventListener('click', () => goToSlide(i));
-                lightboxThumbs.appendChild(thumb);
-            });
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
+            lightboxImg.onload = positionCounter;
+            if (lightboxImg.complete) positionCounter();
         }
 
         document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
@@ -1545,6 +1561,20 @@
             if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + getActiveLength()) % getActiveLength(); updateLightbox(); }
             if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % getActiveLength(); updateLightbox(); }
         });
+
+        // Mobile gallery carousel
+        (function() {
+            var grid = document.querySelector('.bento-grid');
+            var counter = document.getElementById('gallery-mobile-counter');
+            var items = grid.querySelectorAll('.gallery-item');
+            var total = items.length;
+            function isMobile() { return window.innerWidth <= 768; }
+            grid.addEventListener('scroll', function() {
+                if (!isMobile()) return;
+                var idx = Math.round(grid.scrollLeft / grid.offsetWidth);
+                counter.textContent = (idx + 1) + ' / ' + total;
+            });
+        })();
 
         // Video play tracking
         const video = document.querySelector('.video-wrapper video');
