@@ -639,7 +639,7 @@
 
         .lightbox-main img {
             max-width: 100%;
-            max-height: 70vh;
+            max-height: 85vh;
             object-fit: contain;
             border-radius: var(--border-radius-lg);
             transition: opacity 0.35s ease;
@@ -647,14 +647,10 @@
         }
 
         .lightbox-counter {
-            position: absolute;
-            top: 1.5rem;
-            left: 50%;
-            transform: translateX(-50%);
+            position: absolute; left: 50%;
+            transform: translate(-50%, -40%);
             color: rgba(255,255,255,0.5);
-            font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 2px;
+            font-size: 0.8rem; font-weight: 500; letter-spacing: 2px;
         }
 
         .lightbox-close {
@@ -721,39 +717,8 @@
             right: 1.5rem;
         }
 
-        .lightbox-thumbs {
-            display: flex;
-            gap: 0.5rem;
-            padding: 1.25rem 2rem 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .lightbox-thumb {
-            width: 72px;
-            height: 48px;
-            border-radius: var(--border-radius-sm);
-            overflow: hidden;
-            cursor: pointer;
-            border: 2px solid transparent;
-            opacity: 0.45;
-            transition: all 0.3s ease;
-        }
-
-        .lightbox-thumb.active {
-            border-color: var(--secondary);
-            opacity: 1;
-        }
-
-        .lightbox-thumb:hover {
-            opacity: 0.85;
-        }
-
-        .lightbox-thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .lightbox-thumbs { display: none; }
+        .gallery-mobile-cta { display: none; }
 
         @media (max-width: 768px) {
             .lightbox-main {
@@ -768,10 +733,8 @@
             .lightbox-prev { left: 0.5rem; }
             .lightbox-next { right: 0.5rem; }
 
-            .lightbox-thumb {
-                width: 52px;
-                height: 36px;
-            }
+            .lightbox-main { padding: 1rem 2.5rem; }
+            .lightbox-main img { max-height: 85vh; }
         }
 
         /* Progress / Estado de Obra */
@@ -1620,20 +1583,32 @@
             }
 
             .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: auto;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 240px 170px;
                 gap: 0.4rem;
             }
 
             .gallery-item:first-child {
-                grid-column: span 2;
-                grid-row: span 1;
-                height: 220px;
+                grid-column: 1 / 3;
+                grid-row: 1 / 2;
+                height: auto;
             }
 
+            .gallery-item:nth-child(2) { grid-column: 1 / 2; grid-row: 2 / 3; }
+            .gallery-item:nth-child(3) { grid-column: 2 / 3; grid-row: 2 / 3; }
+            .gallery-item:nth-child(n+4) { display: none !important; }
+
             .gallery-item {
-                grid-column: span 1;
-                height: 150px;
+                height: auto;
+            }
+
+            .gallery-mobile-cta {
+                display: block;
+                text-align: center;
+                padding: 1rem 0 0;
+                color: var(--text-muted);
+                font-size: 0.8rem;
+                letter-spacing: 0.5px;
             }
 
             .location-content {
@@ -1906,6 +1881,7 @@
                 <img src="mirador/img/patagonica-propiedades-mirador-9.webp" alt="Mirador render 9" loading="lazy">
             </div>
         </div>
+        <p class="gallery-mobile-cta">Toca una imagen para ver la galeria completa</p>
         <p style="text-align: center; font-size: 0.7rem; color: rgba(0,0,0,0.75); margin-top: 1.5rem; padding: 0 1rem;">Aviso legal: Las imagenes son de caracter ilustrativo y no contractual. El desarrollo podria presentar variaciones respecto a lo exhibido.</p>
     </section>
 
@@ -2148,7 +2124,6 @@
     <!-- Lightbox / Carrusel -->
     <div class="lightbox" id="lightbox">
         <div class="lightbox-main">
-            <span class="lightbox-counter" id="lightbox-counter"></span>
             <div class="lightbox-close" id="lightbox-close">
                 <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
             </div>
@@ -2160,6 +2135,7 @@
                 <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
             </div>
         </div>
+        <span class="lightbox-counter" id="lightbox-counter"></span>
         <div class="lightbox-thumbs" id="lightbox-thumbs"></div>
     </div>
 
@@ -2214,16 +2190,21 @@
             lightboxThumbs.appendChild(thumb);
         });
 
+        function positionCounter() {
+            var rect = lightboxImg.getBoundingClientRect();
+            var imgBottom = rect.bottom;
+            var vpHeight = window.innerHeight;
+            lightboxCounter.style.top = (imgBottom + (vpHeight - imgBottom) / 2) + 'px';
+        }
+
         function updateLightbox() {
             lightboxImg.style.opacity = '0';
             setTimeout(() => {
                 lightboxImg.src = getActiveSrc(currentIndex);
                 lightboxImg.style.opacity = '1';
+                lightboxImg.onload = positionCounter;
             }, 150);
             lightboxCounter.textContent = (currentIndex + 1) + ' / ' + getActiveLength();
-            document.querySelectorAll('.lightbox-thumb').forEach((t, i) => {
-                t.classList.toggle('active', i === currentIndex);
-            });
         }
 
         function goToSlide(index) {
@@ -2244,11 +2225,10 @@
                 lightboxImg.src = img.src;
                 lightboxImg.style.opacity = '1';
                 lightboxCounter.textContent = (index + 1) + ' / ' + galleryItems.length;
-                document.querySelectorAll('.lightbox-thumb').forEach((t, i) => {
-                    t.classList.toggle('active', i === index);
-                });
                 lightbox.classList.add('active');
                 document.body.style.overflow = 'hidden';
+                lightboxImg.onload = positionCounter;
+                if (lightboxImg.complete) positionCounter();
             });
         });
 
@@ -2293,16 +2273,10 @@
             lightboxImg.src = constructionImages[index];
             lightboxImg.style.opacity = '1';
             lightboxCounter.textContent = (index + 1) + ' / ' + constructionImages.length;
-            lightboxThumbs.innerHTML = '';
-            constructionImages.forEach((src, i) => {
-                const thumb = document.createElement('div');
-                thumb.className = 'lightbox-thumb' + (i === index ? ' active' : '');
-                thumb.innerHTML = '<img src="' + src + '" alt="Thumbnail">';
-                thumb.addEventListener('click', () => goToSlide(i));
-                lightboxThumbs.appendChild(thumb);
-            });
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
+            lightboxImg.onload = positionCounter;
+            if (lightboxImg.complete) positionCounter();
         }
 
         document.getElementById('lightbox-prev').addEventListener('click', (e) => {
