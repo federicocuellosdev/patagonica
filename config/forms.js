@@ -116,6 +116,20 @@ const FORMS = {
     name: 'FORM - Emprendimientos - v3 - Remarketing',
     tags: ['Remarketing', 'Emprendimientos', 'Meta Ads'],
     publication_id: null
+  },
+
+  // === LOTES (GENERAL) ===
+  '932915609665775': {
+    name: 'FORM - Lotes - v1',
+    tags: ['FORM - Lotes', 'Meta Ads'],
+    publication_id: null
+  },
+
+  // === CAPTACIÓN ===
+  '1451384923322014': {
+    name: 'Captación - v1',
+    tags: ['FORM - Captación', 'Meta Ads'],
+    publication_id: null
   }
 };
 
