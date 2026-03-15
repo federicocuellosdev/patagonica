@@ -453,6 +453,22 @@
             color: rgba(255,255,255,0.65);
         }
 
+        .unit-card-price {
+            font-family: Gilroy, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #7ee6d6;
+            margin-top: 0.35rem;
+            margin-bottom: 0.1rem;
+        }
+
+        .unit-card-badges {
+            display: flex;
+            justify-content: center;
+            gap: 0.4rem;
+            margin: 1.25rem 0;
+        }
+
         .unit-card-dorm {
             display: inline-flex;
             align-items: center;
@@ -463,7 +479,6 @@
             font-weight: 500;
             padding: 0.3rem 0.85rem;
             border-radius: 50px;
-            margin: 0.75rem 0;
             text-transform: uppercase;
         }
 
@@ -481,27 +496,56 @@
             fill: #0897b1;
         }
 
-        .unit-card-details {
+        .unit-card-metros {
             display: flex;
+            align-items: center;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 0.6rem;
             margin-top: 0.75rem;
+            margin-bottom: 1.25rem;
             padding-top: 0.75rem;
             border-top: 1px solid rgba(255,255,255,0.12);
         }
 
-        .unit-card-detail span {
+        .unit-card-metros-col {
+            text-align: center;
+        }
+
+        .unit-card-metros-col span {
             display: block;
             font-size: 0.95rem;
             color: #fff;
             font-weight: 600;
         }
 
-        .unit-card-detail small {
+        .unit-card-metros-col span small {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.55);
+        }
+
+        .unit-card-metros-col > small {
+            display: block;
             font-size: 0.7rem;
             color: rgba(255,255,255,0.55);
             text-transform: uppercase;
             letter-spacing: 0.03em;
+        }
+
+        .unit-card-metros-op {
+            color: rgba(255,255,255,0.35);
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding-top: 0.1rem;
+        }
+
+        .unit-card-planta {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.45);
+            letter-spacing: 0.03em;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
         }
 
         .unit-card-btn {
@@ -1767,13 +1811,19 @@
                     <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
                 </div>
                 <div class="unit-card-number">Unidad 4</div>
-                <div class="unit-card-total">120,8 <small>m2</small></div>
-                <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 2 <small>Dormitorios</small></div>
-                <div class="unit-card-details">
-                    <div class="unit-card-detail"><span>103,6</span><small>Cubierta</small></div>
-                    <div class="unit-card-detail"><span>34,4</span><small>Terraza</small></div>
-                    <div class="unit-card-detail"><span>1</span><small>Planta</small></div>
+                <div class="unit-card-total">USD 490.000</div>
+                <div class="unit-card-badges">
+                    <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 2 <small>Dormitorios</small></div>
+                    <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg> 1 <small>Planta</small></div>
                 </div>
+                <div class="unit-card-metros">
+                    <div class="unit-card-metros-col"><span>103,6</span><small>cubierta</small></div>
+                    <div class="unit-card-metros-op">+</div>
+                    <div class="unit-card-metros-col"><span>34,4</span><small>terraza</small></div>
+                    <div class="unit-card-metros-op">=</div>
+                    <div class="unit-card-metros-col"><span>120,8 <small>m²</small></span><small>total</small></div>
+                </div>
+
                 <a href="#" onclick="openPdfViewer('mirador/planos/depto_4.pdf','Plano Unidad 4');return false;" class="unit-card-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5zM4.603 14.087a.5.5 0 0 1-.488-.608l.125-.609a.5.5 0 0 1 .141-.252l5.316-5.316a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1 0 .707L5.797 14.03a.5.5 0 0 1-.252.141l-.609.125a.5.5 0 0 1-.098.01z"/></svg> Ver plano</a>
             </div>
             <div class="unit-card">
@@ -1781,13 +1831,19 @@
                     <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
                 </div>
                 <div class="unit-card-number">Unidad 5</div>
-                <div class="unit-card-total">173,35 <small>m2</small></div>
-                <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 3 <small>Dormitorios</small></div>
-                <div class="unit-card-details">
-                    <div class="unit-card-detail"><span>150,3</span><small>Cubierta</small></div>
-                    <div class="unit-card-detail"><span>46,1</span><small>Terraza</small></div>
-                    <div class="unit-card-detail"><span>1</span><small>Planta</small></div>
+                <div class="unit-card-total">USD 750.000</div>
+                <div class="unit-card-badges">
+                    <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 3 <small>Dormitorios</small></div>
+                    <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg> 1 <small>Planta</small></div>
                 </div>
+                <div class="unit-card-metros">
+                    <div class="unit-card-metros-col"><span>150,3</span><small>cubierta</small></div>
+                    <div class="unit-card-metros-op">+</div>
+                    <div class="unit-card-metros-col"><span>46,1</span><small>terraza</small></div>
+                    <div class="unit-card-metros-op">=</div>
+                    <div class="unit-card-metros-col"><span>173,35 <small>m²</small></span><small>total</small></div>
+                </div>
+
                 <a href="#" onclick="openPdfViewer('mirador/planos/depto_5.pdf','Plano Unidad 5');return false;" class="unit-card-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5zM4.603 14.087a.5.5 0 0 1-.488-.608l.125-.609a.5.5 0 0 1 .141-.252l5.316-5.316a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1 0 .707L5.797 14.03a.5.5 0 0 1-.252.141l-.609.125a.5.5 0 0 1-.098.01z"/></svg> Ver plano</a>
             </div>
             <div class="unit-card">
@@ -1795,13 +1851,19 @@
                     <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
                 </div>
                 <div class="unit-card-number">Unidad 6</div>
-                <div class="unit-card-total">87,4 <small>m2</small></div>
-                <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 1 <small>Dormitorio</small></div>
-                <div class="unit-card-details">
-                    <div class="unit-card-detail"><span>79,4</span><small>Cubierta</small></div>
-                    <div class="unit-card-detail"><span>16</span><small>Terraza</small></div>
-                    <div class="unit-card-detail"><span>2</span><small>Plantas</small></div>
+                <div class="unit-card-total">USD 290.000</div>
+                <div class="unit-card-badges">
+                    <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 1 <small>Dormitorio</small></div>
+                    <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg> 2 <small>Plantas</small></div>
                 </div>
+                <div class="unit-card-metros">
+                    <div class="unit-card-metros-col"><span>79,4</span><small>cubierta</small></div>
+                    <div class="unit-card-metros-op">+</div>
+                    <div class="unit-card-metros-col"><span>16</span><small>terraza</small></div>
+                    <div class="unit-card-metros-op">=</div>
+                    <div class="unit-card-metros-col"><span>87,4 <small>m²</small></span><small>total</small></div>
+                </div>
+
                 <a href="#" onclick="openPdfViewer('mirador/planos/depto_6.pdf','Plano Unidad 6');return false;" class="unit-card-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5zM4.603 14.087a.5.5 0 0 1-.488-.608l.125-.609a.5.5 0 0 1 .141-.252l5.316-5.316a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1 0 .707L5.797 14.03a.5.5 0 0 1-.252.141l-.609.125a.5.5 0 0 1-.098.01z"/></svg> Ver plano</a>
             </div>
             <div class="unit-card">
@@ -1809,13 +1871,19 @@
                     <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
                 </div>
                 <div class="unit-card-number">Unidad 7</div>
-                <div class="unit-card-total">87,25 <small>m2</small></div>
-                <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 2 <small>Dormitorios</small></div>
-                <div class="unit-card-details">
-                    <div class="unit-card-detail"><span>83,5</span><small>Cubierta</small></div>
-                    <div class="unit-card-detail"><span>7,5</span><small>Terraza</small></div>
-                    <div class="unit-card-detail"><span>2</span><small>Plantas</small></div>
+                <div class="unit-card-total">USD 350.000</div>
+                <div class="unit-card-badges">
+                    <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 2 <small>Dormitorios</small></div>
+                    <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg> 2 <small>Plantas</small></div>
                 </div>
+                <div class="unit-card-metros">
+                    <div class="unit-card-metros-col"><span>83,5</span><small>cubierta</small></div>
+                    <div class="unit-card-metros-op">+</div>
+                    <div class="unit-card-metros-col"><span>7,5</span><small>terraza</small></div>
+                    <div class="unit-card-metros-op">=</div>
+                    <div class="unit-card-metros-col"><span>87,25 <small>m²</small></span><small>total</small></div>
+                </div>
+
                 <a href="#" onclick="openPdfViewer('mirador/planos/depto_7.pdf','Plano Unidad 7');return false;" class="unit-card-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5zM4.603 14.087a.5.5 0 0 1-.488-.608l.125-.609a.5.5 0 0 1 .141-.252l5.316-5.316a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1 0 .707L5.797 14.03a.5.5 0 0 1-.252.141l-.609.125a.5.5 0 0 1-.098.01z"/></svg> Ver plano</a>
             </div>
             <div class="unit-card">
@@ -1823,13 +1891,19 @@
                     <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
                 </div>
                 <div class="unit-card-number">Unidad 8</div>
-                <div class="unit-card-total">115,35 <small>m2</small></div>
-                <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 2 <small>Dormitorios</small></div>
-                <div class="unit-card-details">
-                    <div class="unit-card-detail"><span>105,1</span><small>Cubierta</small></div>
-                    <div class="unit-card-detail"><span>20,5</span><small>Terraza</small></div>
-                    <div class="unit-card-detail"><span>2</span><small>Plantas</small></div>
+                <div class="unit-card-total">USD 430.000</div>
+                <div class="unit-card-badges">
+                    <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 2 <small>Dormitorios</small></div>
+                    <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg> 2 <small>Plantas</small></div>
                 </div>
+                <div class="unit-card-metros">
+                    <div class="unit-card-metros-col"><span>105,1</span><small>cubierta</small></div>
+                    <div class="unit-card-metros-op">+</div>
+                    <div class="unit-card-metros-col"><span>20,5</span><small>terraza</small></div>
+                    <div class="unit-card-metros-op">=</div>
+                    <div class="unit-card-metros-col"><span>115,35 <small>m²</small></span><small>total</small></div>
+                </div>
+
                 <a href="#" onclick="openPdfViewer('mirador/planos/depto_8.pdf','Plano Unidad 8');return false;" class="unit-card-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5zM4.603 14.087a.5.5 0 0 1-.488-.608l.125-.609a.5.5 0 0 1 .141-.252l5.316-5.316a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1 0 .707L5.797 14.03a.5.5 0 0 1-.252.141l-.609.125a.5.5 0 0 1-.098.01z"/></svg> Ver plano</a>
             </div>
             <div class="unit-card">
@@ -1837,13 +1911,19 @@
                     <svg viewBox="0 0 16 16" fill="currentColor"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg>
                 </div>
                 <div class="unit-card-number">Unidad 9</div>
-                <div class="unit-card-total">160,65 <small>m2</small></div>
-                <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 2 <small>Dormitorios</small></div>
-                <div class="unit-card-details">
-                    <div class="unit-card-detail"><span>149,6</span><small>Cubierta</small></div>
-                    <div class="unit-card-detail"><span>22,1</span><small>Terraza</small></div>
-                    <div class="unit-card-detail"><span>2</span><small>Plantas</small></div>
+                <div class="unit-card-total">USD 650.000</div>
+                <div class="unit-card-badges">
+                    <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V7H1v10h2v-3h18v3h2V9c0-2.21-1.79-4-4-4z"/></svg> 2 <small>Dormitorios</small></div>
+                    <div class="unit-card-dorm"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg> 2 <small>Plantas</small></div>
                 </div>
+                <div class="unit-card-metros">
+                    <div class="unit-card-metros-col"><span>149,6</span><small>cubierta</small></div>
+                    <div class="unit-card-metros-op">+</div>
+                    <div class="unit-card-metros-col"><span>22,1</span><small>terraza</small></div>
+                    <div class="unit-card-metros-op">=</div>
+                    <div class="unit-card-metros-col"><span>160,65 <small>m²</small></span><small>total</small></div>
+                </div>
+
                 <a href="#" onclick="openPdfViewer('mirador/planos/depto_9.pdf','Plano Unidad 9');return false;" class="unit-card-btn"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5zM4.603 14.087a.5.5 0 0 1-.488-.608l.125-.609a.5.5 0 0 1 .141-.252l5.316-5.316a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1 0 .707L5.797 14.03a.5.5 0 0 1-.252.141l-.609.125a.5.5 0 0 1-.098.01z"/></svg> Ver plano</a>
             </div>
         </div>

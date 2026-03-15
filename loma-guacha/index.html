@@ -509,6 +509,128 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.4);
         }
 
+        /* ── 5b. Lotes – cards grid ── */
+        .lotes {
+            padding: 6rem 5%;
+            background: var(--primary);
+        }
+        .lotes-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .lotes-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .lotes-header .section-subtitle {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        .lotes-header .section-title {
+            font-family: Gilroy, sans-serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+            color: #fff;
+            line-height: 1.15;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .lotes-desc {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+        .lotes-manzana-title {
+            font-family: Gilroy, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .lotes-manzana + .lotes-manzana {
+            margin-top: 3rem;
+        }
+        .lotes-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        .lote-card {
+            background: rgba(255,255,255,0.07);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .lote-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-4px);
+            border-color: rgba(5, 116, 136, 0.4);
+        }
+        .lote-card-number {
+            font-family: Gilroy, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
+        }
+        .lote-card-price {
+            font-family: Gilroy, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+        }
+        .lote-card-sup {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(5, 116, 136, 0.3);
+            color: #7da9b1;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+        }
+        .lote-card-sup svg {
+            width: 16px;
+            height: 16px;
+            fill: #0897b1;
+        }
+        .lote-card-sold {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.06);
+            opacity: 0.6;
+        }
+        .lote-card-sold:hover {
+            transform: none;
+            border-color: rgba(255,255,255,0.06);
+        }
+        .lote-card-sold-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.7);
+            font-family: Gilroy, sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+        }
+
         /* ── 6. Ubicación – parallax + glassmorphism centrada ── */
         .ubicacion {
             position: relative;
@@ -1042,6 +1164,7 @@
             .bento-grid .gallery-item:nth-child(3) { grid-column: 2 / 3; grid-row: 2 / 3; }
             .bento-grid .gallery-item:nth-child(4) { display: none; }
             .masterplan-images { grid-template-columns: 1fr; }
+            .lotes-grid { grid-template-columns: repeat(3, 1fr); }
             .ubicacion-card { max-width: 100%; width: 92%; }
         }
 
@@ -1087,6 +1210,7 @@
                 font-size: 0.8rem;
                 letter-spacing: 0.5px;
             }
+            .lotes-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
             .ubicacion { height: auto; min-height: 500px; padding: 4rem 0; }
             .form-row { grid-template-columns: 1fr; }
             .contact-details-row { flex-direction: column; align-items: center; gap: 0.75rem; }
@@ -1115,7 +1239,7 @@
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#proyecto">Proyecto</a></li>
                 <li><a href="#galeria">Galeria</a></li>
-                <li><a href="#masterplan">Masterplan</a></li>
+                <li><a href="#lotes">Lotes</a></li>
                 <li><a href="#ubicacion">Ubicacion</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
@@ -1269,17 +1393,192 @@
         <p class="gallery-mobile-cta">Toca una imagen para ver la galeria completa</p>
     </section>
 
-    <!-- 5. Masterplan -->
-    <section class="masterplan" id="masterplan">
-        <div class="masterplan-inner">
-            <p class="section-subtitle">Masterplan</p>
-            <h2 class="section-title">Plano cenital del loteo</h2>
-            <p class="masterplan-desc">Vista aerea del loteo con 36 lotes exclusivos, 3,6 hectareas de reserva de bosque autoctono intangible y acceso desde Ruta 40.</p>
-            <div class="plano-btn-row">
-                <a href="#" onclick="openPdfViewer(); return false;" class="plano-btn plano-btn--dark">
-                    <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-                    Ver Plano del Loteo
-                </a>
+    <!-- 5. Lotes -->
+    <section class="lotes" id="lotes">
+        <div class="lotes-inner">
+            <div class="lotes-header">
+                <p class="section-subtitle">Lotes disponibles</p>
+                <h2 class="section-title">Encuentra tu lote ideal</h2>
+                <p class="lotes-desc">36 lotes exclusivos, 3,6 hectareas de reserva de bosque autoctono intangible y acceso desde Ruta 40.</p>
+                <div class="plano-btn-row">
+                    <a href="#" onclick="openPdfViewer(); return false;" class="plano-btn plano-btn--dark">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                        Ver Plano del Loteo
+                    </a>
+                </div>
+            </div>
+
+            <!-- Manzana A -->
+            <div class="lotes-manzana">
+                <div class="lotes-manzana-title">Manzana A</div>
+                <div class="lotes-grid">
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 1</div>
+                        <div class="lote-card-price">USD 230.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.507 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 2</div>
+                        <div class="lote-card-price">USD 230.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.509 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 3</div>
+                        <div class="lote-card-price">USD 230.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.879 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 4</div>
+                        <div class="lote-card-price">USD 230.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.550 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 5</div>
+                        <div class="lote-card-price">USD 230.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.500 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 6</div>
+                        <div class="lote-card-price">USD 230.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.500 m²</div>
+                    </div>
+                    <div class="lote-card lote-card-sold">
+                        <div class="lote-card-number">Lote 7</div>
+                        <div class="lote-card-sold-badge">Vendido</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 8</div>
+                        <div class="lote-card-price">USD 230.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.502 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 9</div>
+                        <div class="lote-card-price">USD 230.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.504 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 10</div>
+                        <div class="lote-card-price">USD 280.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.502 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 11</div>
+                        <div class="lote-card-price">USD 280.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.561 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 12</div>
+                        <div class="lote-card-price">USD 270.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.501 m²</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manzana B -->
+            <div class="lotes-manzana">
+                <div class="lotes-manzana-title">Manzana B</div>
+                <div class="lotes-grid">
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 1</div>
+                        <div class="lote-card-price">USD 160.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.598 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 2</div>
+                        <div class="lote-card-price">USD 180.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.533 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 3</div>
+                        <div class="lote-card-price">USD 180.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 5.154 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 4</div>
+                        <div class="lote-card-price">USD 200.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.500 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 5</div>
+                        <div class="lote-card-price">USD 230.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.504 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 6</div>
+                        <div class="lote-card-price">USD 230.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.506 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 7</div>
+                        <div class="lote-card-price">USD 230.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.502 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 8</div>
+                        <div class="lote-card-price">USD 380.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.512 m²</div>
+                    </div>
+                    <div class="lote-card lote-card-sold">
+                        <div class="lote-card-number">Lote 9</div>
+                        <div class="lote-card-sold-badge">Vendido</div>
+                    </div>
+                    <div class="lote-card lote-card-sold">
+                        <div class="lote-card-number">Lote 10</div>
+                        <div class="lote-card-sold-badge">Vendido</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 11</div>
+                        <div class="lote-card-price">USD 400.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.701 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 12</div>
+                        <div class="lote-card-price">USD 380.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 5.419 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 13</div>
+                        <div class="lote-card-price">USD 230.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.502 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 14</div>
+                        <div class="lote-card-price">USD 350.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.510 m²</div>
+                    </div>
+                    <div class="lote-card lote-card-sold">
+                        <div class="lote-card-number">Lote 15</div>
+                        <div class="lote-card-sold-badge">Vendido</div>
+                    </div>
+                    <div class="lote-card lote-card-sold">
+                        <div class="lote-card-number">Lote 16</div>
+                        <div class="lote-card-sold-badge">Vendido</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 17</div>
+                        <div class="lote-card-price">USD 180.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.851 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 18</div>
+                        <div class="lote-card-price">USD 400.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 5.266 m²</div>
+                    </div>
+                    <div class="lote-card lote-card-sold">
+                        <div class="lote-card-number">Lote 19</div>
+                        <div class="lote-card-sold-badge">Vendido</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 20</div>
+                        <div class="lote-card-price">USD 250.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 5.214 m²</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-number">Lote 21</div>
+                        <div class="lote-card-price">USD 250.000</div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.502 m²</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
