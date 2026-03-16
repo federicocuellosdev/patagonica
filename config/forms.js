@@ -16,6 +16,16 @@ const FORMS = {
     tags: ['FORM - Casas', 'Meta Ads'],
     publication_id: null
   },
+  '2425964241190065': {
+    name: 'FORM - Deptos',
+    tags: ['FORM - Deptos', 'Meta Ads'],
+    publication_id: null
+  },
+  '1593056478478447': {
+    name: 'FORM - Casas - Quetrihue',
+    tags: ['FORM - Casas', 'Meta Ads', 'Quetrihue'],
+    publication_id: null
+  },
 
   // === DOMO II ===
   '1495753971498609': {
@@ -126,9 +136,9 @@ const FORMS = {
   },
 
   // === CAPTACIÓN ===
-  '1451384923322014': {
-    name: 'Captación - v1',
-    tags: ['FORM - Captación', 'Meta Ads'],
+  '4233857163502711': {
+    name: 'FORM - Captacion',
+    tags: ['FORM - Captacion', 'Meta Ads'],
     publication_id: null
   }
 };

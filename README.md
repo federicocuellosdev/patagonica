@@ -10,3 +10,4 @@ v1.0.7 - 13/02/26 - Se agregó el endpoint para procesar datos de las landing.
 v1.0.8 - 22/02/26 - Se agregó los datos del formulario de emprendimientos.
 v1.0.9 - 23/02/26 - Se agregó lo necesario para poder recibir datos de la web Loma Guacha para enviarlo a Tokko.
 v1.0.10 - 05/03/26 - Se agregaron dos formularios: Lotes y Captación.
+v1.0.11 - 16/03/26 - Se agregaron los formularios para Deptos, Casas - Quetrihue y se modificó el de captación.
