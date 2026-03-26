@@ -8,6 +8,8 @@ const tokkoRoutes = require('./routes/tokko');
 const metaRoutes = require('./routes/meta');
 const juanitaRoutes = require('./routes/juanita');
 const webRoutes = require('./routes/web');
+const federicoRoutes = require('./routes/federico');
+const tiendanubeRoutes = require('./routes/tiendanube');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,6 +22,8 @@ app.use('/api/tokko', tokkoRoutes);
 app.use('/api/meta', metaRoutes);
 app.use('/api/juanita', juanitaRoutes);
 app.use('/api/web', webRoutes);
+app.use('/api/federico', federicoRoutes);
+app.use('/api/tiendanube', tiendanubeRoutes);
 
 
 app.get('/', (req, res) => {
