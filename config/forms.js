@@ -17,12 +17,22 @@ const FORMS = {
     publication_id: null
   },
   '2425964241190065': {
-    name: 'FORM - Deptos',
+    name: 'FORM - Deptos - v2',
+    tags: ['FORM - Deptos', 'Meta Ads'],
+    publication_id: null
+  },
+  '2707595222930014': {
+    name: 'FORM - Deptos - v4',
     tags: ['FORM - Deptos', 'Meta Ads'],
     publication_id: null
   },
   '1593056478478447': {
-    name: 'FORM - Casas - Quetrihue',
+    name: 'FORM - Casas - Quetrihue - v2',
+    tags: ['FORM - Casas', 'Meta Ads', 'Quetrihue'],
+    publication_id: null
+  },
+  '4333694990183076': {
+    name: 'FORM - Casas - Quetrihue - v4',
     tags: ['FORM - Casas', 'Meta Ads', 'Quetrihue'],
     publication_id: null
   },
@@ -43,6 +53,11 @@ const FORMS = {
     tags: ['FORM - Domo II', 'Meta Ads'],
     publication_id: 53088
   },
+  '1959090311665065': {
+    name: 'FORM - Domo - v4',
+    tags: ['FORM - Domo II', 'Meta Ads'],
+    publication_id: 53088
+  },
 
   // === COTA 1000 ===
   '1613841792966460': {
@@ -57,6 +72,11 @@ const FORMS = {
   },
   '33459394607008787': {
     name: 'FORM - Cota - v3',
+    tags: ['FORM - Cota 1000', 'Meta Ads'],
+    publication_id: 58284
+  },
+  '1467123281583461': {
+    name: 'FORM - Cota - v4',
     tags: ['FORM - Cota 1000', 'Meta Ads'],
     publication_id: 58284
   },
@@ -77,6 +97,11 @@ const FORMS = {
     tags: ['FORM - Paseo Retamas', 'Meta Ads'],
     publication_id: 61408
   },
+  '1982832109257985': {
+    name: 'FORM - Retamas - v4',
+    tags: ['FORM - Paseo Retamas', 'Meta Ads'],
+    publication_id: 61408
+  },
 
   // === MODE ===
   '2040517946730591': {
@@ -94,6 +119,16 @@ const FORMS = {
     tags: ['FORM - MODE', 'Meta Ads'],
     publication_id: 64409
   },
+  '1271226275150030': {
+    name: 'FORM - Mode - v4',
+    tags: ['FORM - MODE', 'Meta Ads'],
+    publication_id: 64409
+  },
+  '715572164916402': {
+    name: 'FORM -Mode - v4',
+    tags: ['FORM - MODE', 'Meta Ads'],
+    publication_id: 64409
+  },
 
   // === ALTO CORRENTOSO ===
   '1367537684435646': {
@@ -106,10 +141,20 @@ const FORMS = {
     tags: ['FORM - Alto Correntoso', 'Meta Ads'],
     publication_id: null
   },
+  '1271950871080822': {
+    name: 'FORM - Altos del Correntoso - v4',
+    tags: ['FORM - Alto Correntoso', 'Meta Ads'],
+    publication_id: null
+  },
 
   // === HAIKU ===
   '1997806671078652': {
     name: 'FORM - Haiku - v3',
+    tags: ['FORM - Haiku', 'Meta Ads'],
+    publication_id: 68594
+  },
+  '1560918948333142': {
+    name: 'FORM - Haiku - v4',
     tags: ['FORM - Haiku', 'Meta Ads'],
     publication_id: 68594
   },
@@ -120,10 +165,20 @@ const FORMS = {
     tags: ['Emprendimientos', 'Meta Ads'],
     publication_id: null
   },
+  '1269419584668001': {
+    name: 'FORM - Emprendimientos - v4',
+    tags: ['Emprendimientos', 'Meta Ads'],
+    publication_id: null
+  },
 
   // === REMARKETING ===
   '3086848588189470': {
     name: 'FORM - Emprendimientos - v3 - Remarketing',
+    tags: ['Remarketing', 'Emprendimientos', 'Meta Ads'],
+    publication_id: null
+  },
+  '931365826467992': {
+    name: 'FORM - Emprendimientos - v4 - Remarketing',
     tags: ['Remarketing', 'Emprendimientos', 'Meta Ads'],
     publication_id: null
   },
