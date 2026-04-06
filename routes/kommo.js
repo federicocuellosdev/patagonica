@@ -50,6 +50,17 @@ function extractDerivar(lead) {
   return field?.values?.[0]?.value || null;
 }
 
+// Intenta extraer un teléfono del texto de las notas
+function extractPhoneFromNotes(notes) {
+  const phoneRegex = /(\+?[\d\s\-().]{8,20})/;
+  for (const note of notes) {
+    const text = note.params?.text || '';
+    const match = text.match(/(?:teléfono|telefono|celular|cel|tel)[^\d+]*(\+?[\d\s\-().]{8,20})/i);
+    if (match) return match[1].trim();
+  }
+  return '';
+}
+
 // POST /api/kommo/webhook
 router.post('/webhook', async (req, res) => {
   res.sendStatus(200);
@@ -65,7 +76,6 @@ router.post('/webhook', async (req, res) => {
       const leadId = lead.id;
       console.log(`- Kommo Webhook - Lead ${leadId} movido a PARA DERIVAR`);
 
-      // Obtener lead completo, contacto y notas en paralelo
       const fullLead = await getLeadWithContact(leadId);
       const contactRef = fullLead._embedded?.contacts?.[0];
       if (!contactRef) {
@@ -78,35 +88,34 @@ router.post('/webhook', async (req, res) => {
         getAllNotes(leadId)
       ]);
 
-      // Etiquetas del lead + campo Derivar como etiqueta extra
+      // Etiquetas + campo Derivar
       const tags = fullLead._embedded?.tags?.map(t => t.name) || [];
       const derivar = extractDerivar(fullLead);
       if (derivar) tags.push(derivar);
 
-      // Teléfonos (puede haber dos: nativo Meta + form)
+      // Teléfonos del contacto, con fallback en las notas
       const phones = extractPhones(contact);
-      const phone = phones[0] || '';
-      const cellphone = phones[1] || phones[0] || '';
+      let phone = phones[0] || '';
+      let cellphone = phones[1] || phones[0] || '';
+      if (!phone) {
+        const phoneFromNotes = extractPhoneFromNotes(notes);
+        phone = phoneFromNotes;
+        cellphone = phoneFromNotes;
+      }
 
-      // Texto completo: datos del lead + contacto + todas las notas
+      const email = extractEmail(contact);
+
+      // Texto: encabezado + TODAS las notas
       let text = `Lead: ${fullLead.name || ''}\n`;
       if (derivar) text += `Derivar a: ${derivar}\n`;
-      text += `Pipeline: Venta | Etapa: PARA DERIVAR\n`;
       text += `\n`;
 
       if (notes.length) {
-        // La primera nota tiene las respuestas del formulario
-        text += notes[0].params?.text || '';
+        text += notes
+          .map((n, i) => (notes.length > 1 ? `--- Nota ${i + 1} ---\n` : '') + (n.params?.text || ''))
+          .join('\n\n');
       }
 
-      // Validar que haya al menos un dato de contacto
-      const email = extractEmail(contact);
-      if (!phone && !email) {
-        console.error(`- Kommo Webhook - Lead ${leadId} sin teléfono ni email, no se puede enviar a Tokko`);
-        continue;
-      }
-
-      // Enviar a Tokko
       await tokkoService.createContact({
         name: contact.name,
         email,
