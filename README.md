@@ -16,4 +16,4 @@ v1.0.13 - 26/03/26 - Se agregó el endpoint /api/tiendanube con flujo OAuth para
 v1.0.14 - 05/04/26 - Se crearon 11 formularios v4 en Meta con preguntas actualizadas y se registraron en config/forms.js junto con sus etiquetas y publication_id correspondientes.
 v1.0.15 - 05/04/26 - Se agregó el formulario FORM - Lotes - v4 en config/forms.js.
 v1.0.16 - 05/04/26 - Se agregó generación automática de catálogo XML para Meta Ads (home_listings). El archivo se regenera cada 24hs vía cron y se sirve en /public/meta-catalog.xml.
-v1.0.17 - 06/04/26 - Se integró Kommo CRM. Los leads de Meta ahora se envían en paralelo a Tokko y a Kommo (pipeline Venta, etapa NUEVO), con las mismas etiquetas del formulario.
+v1.0.17 - 06/04/26 - Se integró Kommo CRM. Los leads de Meta ahora se envían únicamente a Kommo (pipeline Venta, etapa NUEVO), con las mismas etiquetas del formulario.
