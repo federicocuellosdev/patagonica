@@ -8,6 +8,7 @@ const path = require('path');
 const cron = require('node-cron');
 const tokkoRoutes = require('./routes/tokko');
 const metaRoutes = require('./routes/meta');
+const kommoRoutes = require('./routes/kommo');
 const juanitaRoutes = require('./routes/juanita');
 const webRoutes = require('./routes/web');
 const federicoRoutes = require('./routes/federico');
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use('/api/tokko', tokkoRoutes);
+app.use('/api/kommo', kommoRoutes);
 app.use('/api/meta', metaRoutes);
 app.use('/api/juanita', juanitaRoutes);
 app.use('/api/web', webRoutes);
