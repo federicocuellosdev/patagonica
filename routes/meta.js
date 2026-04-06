@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const metaService = require('../services/metaService');
+const kommoService = require('../services/kommoService');
 const { getFormConfig } = require('../config/forms');
 
 router.get('/webhook', (req, res) => {
@@ -46,15 +47,14 @@ router.post('/webhook', async (req, res) => {
               // Obtener configuración del formulario
               const formConfig = getFormConfig(formId);
 
-              // Procesar y enviar a Tokko (con tags y publication_id del formulario)
-              const tokkoResult = await metaService.processLead(
-                leadData,
-                formConfig.tags,
-                formConfig.publication_id
-              );
+              // Enviar a Tokko y Kommo en paralelo
+              const [tokkoResult, kommoResult] = await Promise.allSettled([
+                metaService.processLead(leadData, formConfig.tags, formConfig.publication_id),
+                kommoService.processLead(leadData, formConfig.name || 'FORM - General', formConfig.tags || [])
+              ]);
 
-              // Log de la respuesta de Tokko
-              console.log(`- Tokko - Envío de datos (Status: ${tokkoResult.status})\n`);
+              console.log(`- Tokko - Envío de datos (Status: ${tokkoResult.value?.status ?? tokkoResult.reason?.message})`);
+              console.log(`- Kommo - Lead ID: ${kommoResult.value?.lead?.id ?? kommoResult.reason?.message}\n`);
             }
           }
         }
