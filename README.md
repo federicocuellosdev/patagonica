@@ -14,3 +14,4 @@ v1.0.11 - 16/03/26 - Se agregaron los formularios para Deptos, Casas - Quetrihue
 v1.0.12 - 26/03/26 - Se agregó el endpoint /api/federico para registrar solicitudes en Google Sheets.
 v1.0.13 - 26/03/26 - Se agregó el endpoint /api/tiendanube con flujo OAuth para vincular una tienda de Tienda Nube.
 v1.0.14 - 05/04/26 - Se crearon 11 formularios v4 en Meta con preguntas actualizadas y se registraron en config/forms.js junto con sus etiquetas y publication_id correspondientes.
+v1.0.15 - 05/04/26 - Se agregó el formulario FORM - Lotes - v4 en config/forms.js.
