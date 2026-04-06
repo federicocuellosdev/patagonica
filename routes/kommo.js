@@ -87,11 +87,14 @@ router.post('/webhook', async (req, res) => {
       console.log(`- Kommo Webhook - Lead ${leadId} movido a PARA DERIVAR`);
 
       const fullLead = await getLeadWithContact(leadId);
+      console.log(`- Kommo - embedded keys: ${Object.keys(fullLead._embedded || {}).join(',')}`);
+      console.log(`- Kommo - contacts via with: ${JSON.stringify(fullLead._embedded?.contacts)}`);
 
       // Intentar obtener contacto del lead — con fallback via /links
       let contactRef = fullLead._embedded?.contacts?.[0];
       if (!contactRef) {
         const linkedContacts = await getLeadContacts(leadId);
+        console.log(`- Kommo - contacts via links: ${JSON.stringify(linkedContacts)}`);
         contactRef = linkedContacts[0];
       }
       if (!contactRef) {
