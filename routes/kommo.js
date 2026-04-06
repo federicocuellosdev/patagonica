@@ -99,10 +99,17 @@ router.post('/webhook', async (req, res) => {
         text += notes[0].params?.text || '';
       }
 
+      // Validar que haya al menos un dato de contacto
+      const email = extractEmail(contact);
+      if (!phone && !email) {
+        console.error(`- Kommo Webhook - Lead ${leadId} sin teléfono ni email, no se puede enviar a Tokko`);
+        continue;
+      }
+
       // Enviar a Tokko
       await tokkoService.createContact({
         name: contact.name,
-        email: extractEmail(contact),
+        email,
         phone,
         cellphone,
         text,
