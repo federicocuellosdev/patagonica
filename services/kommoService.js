@@ -17,14 +17,14 @@ async function createContact({ name, email, phone }) {
   if (phone) {
     body.custom_fields_values.push({
       field_code: 'PHONE',
-      values: [{ value: phone, enum_code: 'MOBILEPHONE' }]
+      values: [{ value: phone, enum_id: 844844 }]  // MOB
     });
   }
 
   if (email) {
     body.custom_fields_values.push({
       field_code: 'EMAIL',
-      values: [{ value: email, enum_code: 'WORK' }]
+      values: [{ value: email, enum_id: 844852 }]  // WORK
     });
   }
 
