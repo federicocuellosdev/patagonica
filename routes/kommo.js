@@ -105,6 +105,11 @@ router.post('/webhook', async (req, res) => {
 
       const email = extractEmail(contact);
 
+      // Tokko requiere al menos un dato de contacto — fallback si no hay nada
+      if (!phone && !cellphone && !email) {
+        phone = 'sin-dato';
+      }
+
       // Texto: encabezado + TODAS las notas
       let text = `Lead: ${fullLead.name || ''}\n`;
       if (derivar) text += `Derivar a: ${derivar}\n`;
