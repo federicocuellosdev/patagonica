@@ -19,6 +19,16 @@ async function getLeadWithContact(leadId) {
   return res.data;
 }
 
+async function getLeadContacts(leadId) {
+  // Fallback: buscar contactos vinculados al lead via /links
+  const res = await axios.get(
+    `${KOMMO_BASE_URL}/leads/${leadId}/links`,
+    { headers: getKommoHeaders() }
+  );
+  const links = res.data._embedded?.links || [];
+  return links.filter(l => l.to_entity_type === 'contacts').map(l => ({ id: l.to_entity_id }));
+}
+
 async function getContact(contactId) {
   const res = await axios.get(
     `${KOMMO_BASE_URL}/contacts/${contactId}`,
@@ -77,7 +87,13 @@ router.post('/webhook', async (req, res) => {
       console.log(`- Kommo Webhook - Lead ${leadId} movido a PARA DERIVAR`);
 
       const fullLead = await getLeadWithContact(leadId);
-      const contactRef = fullLead._embedded?.contacts?.[0];
+
+      // Intentar obtener contacto del lead — con fallback via /links
+      let contactRef = fullLead._embedded?.contacts?.[0];
+      if (!contactRef) {
+        const linkedContacts = await getLeadContacts(leadId);
+        contactRef = linkedContacts[0];
+      }
       if (!contactRef) {
         console.error(`- Kommo Webhook - Lead ${leadId} sin contacto`);
         continue;
