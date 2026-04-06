@@ -8,17 +8,19 @@ function getHeaders() {
   return { Authorization: `Bearer ${process.env.KOMMO_TOKEN}` };
 }
 
-async function createContact({ name, email, phone }) {
+async function createContact({ name, email, phone, phoneForm }) {
   const body = {
     name: name || 'Sin nombre',
     custom_fields_values: []
   };
 
-  if (phone) {
-    body.custom_fields_values.push({
-      field_code: 'PHONE',
-      values: [{ value: phone, enum_id: 844844 }]  // MOB
-    });
+  // Armar valores de teléfono: nativo Meta + respuesta del form (si son distintos)
+  const phoneValues = [];
+  if (phone) phoneValues.push({ value: phone, enum_id: 844844 });  // MOB
+  if (phoneForm && phoneForm !== phone) phoneValues.push({ value: phoneForm, enum_id: 844840 });  // WORK
+
+  if (phoneValues.length) {
+    body.custom_fields_values.push({ field_code: 'PHONE', values: phoneValues });
   }
 
   if (email) {
@@ -64,11 +66,18 @@ async function processLead(leadData, formLabel = 'General', tags = []) {
   }
 
   const STANDARD = ['full_name', 'nombre_completo', 'first_name', 'last_name', 'email', 'phone', 'phone_number'];
+  const PHONE_KEYWORDS = ['teléfono', 'telefono', 'número', 'numero', 'celular', 'contacto'];
 
   const name = fieldData.full_name || fieldData.nombre_completo ||
     [fieldData.first_name, fieldData.last_name].filter(Boolean).join(' ') || 'Sin nombre';
   const email = fieldData.email || '';
+  // Teléfono nativo de Meta
   const phone = fieldData.phone || fieldData.phone_number || '';
+  // Teléfono respondido en el formulario (pregunta personalizada)
+  const phoneFormEntry = leadData.field_data?.find(f =>
+    !STANDARD.includes(f.name) && PHONE_KEYWORDS.some(k => f.name.toLowerCase().includes(k))
+  );
+  const phoneForm = phoneFormEntry?.values?.[0] || '';
 
   // Nota: respuestas del formulario
   let note = 'Respuestas del formulario\n--\n';
@@ -88,7 +97,7 @@ async function processLead(leadData, formLabel = 'General', tags = []) {
   note += `• Ad Set: ${leadData.adset_name || 'N/A'}\n`;
   note += `• Ad: ${leadData.ad_name || 'N/A'}`;
 
-  const contact = await createContact({ name, email, phone });
+  const contact = await createContact({ name, email, phone, phoneForm });
   const lead = await createLead({
     title: `${formLabel} - ${name}`,
     contactId: contact.id,
