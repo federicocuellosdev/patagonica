@@ -6,7 +6,8 @@ const SPREADSHEET_ID = '1YxziTp1qNQCTr39q6PQ4jhYbhCxMgWlU0XQT7Ckz7ro';
 
 router.post('/ia', async (req, res) => {
     try {
-        const { nombre, email } = req.body;
+        const { nombre: nombreRaw, email } = req.body;
+        const nombre = nombreRaw.trim().toLowerCase().replace(/^\w/, c => c.toUpperCase());
 
         if (!nombre || !email) {
             return res.status(400).json({ error: 'Nombre y email son requeridos' });
