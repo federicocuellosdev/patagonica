@@ -18,7 +18,7 @@ router.post('/ia', async (req, res) => {
 
         await agregarFilaASheet(
             SPREADSHEET_ID,
-            "'Hoja 1'!A:D",
+            'A:D',
             [fecha, nombre, email, ip]
         );
 
