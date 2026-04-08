@@ -2,8 +2,9 @@ const { google } = require('googleapis');
 
 // Crear cliente de autenticación
 const getAuthClient = () => {
+    const raw = process.env.GOOGLE_CREDENTIALS.replace(/\n/g, '\\n');
     return new google.auth.GoogleAuth({
-        credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS),
+        credentials: JSON.parse(raw),
         scopes: ['https://www.googleapis.com/auth/spreadsheets']
     });
 };
