@@ -25,8 +25,8 @@ router.post('/ia', async (req, res) => {
 
         res.json({ success: true, mensaje: 'Solicitud registrada' });
     } catch (error) {
-        console.error('Error en /federico/ia:', error.message);
-        res.status(500).json({ error: 'Error al registrar la solicitud' });
+        console.error('Error en /federico/ia:', error.message, error.stack);
+        res.status(500).json({ error: error.message });
     }
 });
 
