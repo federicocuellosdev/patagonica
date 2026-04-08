@@ -14,14 +14,15 @@ router.post('/ia', async (req, res) => {
 
         const nombre = nombreRaw.trim().toLowerCase().replace(/^\w/, c => c.toUpperCase());
         const fecha = new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });
+        const ip = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || '';
 
         await agregarFilaASheet(
             SPREADSHEET_ID,
-            'Hoja 1!A:C',
-            [fecha, nombre, email]
+            'Hoja 1!A:D',
+            [fecha, nombre, email, ip]
         );
 
-        console.log(`- Federico IA - Solicitud: ${nombre} (${email})`);
+        console.log(`- Federico IA - Solicitud: ${nombre} (${email}) [${ip}]`);
 
         res.json({ success: true, mensaje: 'Solicitud registrada' });
     } catch (error) {
