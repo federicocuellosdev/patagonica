@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200">
+    <title>OG Portada – El Mirador Residences</title>
+    <link href="https://d1v2p1s05qqabi.cloudfront.net/fonts/patagonica/fonts-patagonica.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            width: 1200px;
+            height: 630px;
+            overflow: hidden;
+            font-family: 'Source Sans Pro', sans-serif;
+            background: #121C25;
+        }
+
+        .portada {
+            position: relative;
+            width: 1200px;
+            height: 630px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 56px 64px;
+        }
+
+        .bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('../mirador/img/patagonica-propiedades-mirador-principal-v3.webp');
+            background-size: cover;
+            background-position: center 30%;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(10, 17, 24, 0.92) 0%,
+                rgba(10, 17, 24, 0.55) 45%,
+                rgba(10, 17, 24, 0.15) 100%
+            );
+        }
+
+        .logo {
+            position: absolute;
+            top: 48px;
+            left: 64px;
+            height: 36px;
+            opacity: 0.9;
+        }
+
+        .tag {
+            position: relative;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #057488;
+            margin-bottom: 14px;
+        }
+
+        .titulo {
+            position: relative;
+            font-family: Gilroy, sans-serif;
+            font-size: 64px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.05;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .subtitulo {
+            position: relative;
+            font-size: 21px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.4;
+            max-width: 680px;
+        }
+
+        .chips {
+            position: absolute;
+            top: 48px;
+            right: 64px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .chip {
+            background: rgba(5,116,136,0.20);
+            border: 1px solid rgba(5,116,136,0.40);
+            color: rgba(255,255,255,0.80);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 7px 16px;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="portada">
+        <div class="bg"></div>
+        <div class="overlay"></div>
+
+        <img class="logo" src="../mirador/img/patagonica-logo-blanco.webp" alt="Patagonica Propiedades">
+
+        <div class="chips">
+            <div class="chip">9 unidades premium</div>
+            <div class="chip">Barrio Arauco</div>
+            <div class="chip">Villa La Angostura</div>
+        </div>
+
+        <p class="tag">El Proyecto</p>
+        <h1 class="titulo">El Mirador Residences</h1>
+        <p class="subtitulo">Un exclusivo desarrollo de 9 unidades funcionales premium en barrio Arauco.</p>
+    </div>
+</body>
+</html>
