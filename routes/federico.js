@@ -35,7 +35,14 @@ router.post('/ia', async (req, res) => {
         const fecha = new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });
         const ip = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket.remoteAddress || '';
 
-        await agregarFilaASheet(SPREADSHEET_ID, 'A:D', [fecha, nombre, email, ip]);
+        let lat = '', lon = '', pais = '', ciudad = '';
+        try {
+            const geo = await fetch(`http://ip-api.com/json/${ip}?fields=lat,lon,country,city`);
+            const geoData = await geo.json();
+            if (geoData.status !== 'fail') { lat = geoData.lat; lon = geoData.lon; pais = geoData.country; ciudad = geoData.city; }
+        } catch {}
+
+        await agregarFilaASheet(SPREADSHEET_ID, 'A:H', [fecha, nombre, email, ip, lat, lon, pais, ciudad]);
         await agregarSuscriptorMailerLite(nombre, email);
 
         console.log(`- Federico IA - Solicitud: ${nombre} (${email}) [${ip}]`);
