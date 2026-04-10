@@ -20,7 +20,7 @@ const agregarSuscriptorMailerLite = async (nombre, email) => {
     });
     const data = await res.json();
     console.log(`- MailerLite - Suscriptor agregado: ${email}`, res.status);
-    return data;
+    return res.ok;
 };
 
 router.post('/ia', async (req, res) => {
@@ -42,8 +42,8 @@ router.post('/ia', async (req, res) => {
             if (geoData.status !== 'fail') { lat = geoData.lat; lon = geoData.lon; pais = geoData.country; ciudad = geoData.city; }
         } catch {}
 
-        await agregarFilaASheet(SPREADSHEET_ID, 'A:H', [fecha, nombre, email, ip, lat, lon, pais, ciudad]);
-        await agregarSuscriptorMailerLite(nombre, email);
+        const mailerOk = await agregarSuscriptorMailerLite(nombre, email);
+        await agregarFilaASheet(SPREADSHEET_ID, 'A:I', [fecha, nombre, email, ip, lat, lon, pais, ciudad, mailerOk]);
 
         console.log(`- Federico IA - Solicitud: ${nombre} (${email}) [${ip}]`);
 
