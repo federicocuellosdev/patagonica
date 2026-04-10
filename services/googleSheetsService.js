@@ -2,7 +2,9 @@ const { google } = require('googleapis');
 
 // Crear cliente de autenticación
 const getAuthClient = () => {
-    const raw = process.env.GOOGLE_CREDENTIALS.replace(/\n/g, '\\n');
+    const creds = process.env.GOOGLE_CREDENTIALS;
+    if (!creds) throw new Error('GOOGLE_CREDENTIALS no está definido en las variables de entorno');
+    const raw = creds.replace(/\n/g, '\\n');
     return new google.auth.GoogleAuth({
         credentials: JSON.parse(raw),
         scopes: ['https://www.googleapis.com/auth/spreadsheets']
