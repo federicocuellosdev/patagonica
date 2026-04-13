@@ -25,7 +25,7 @@ const agregarSuscriptorMailerLite = async (nombre, email) => {
 
 router.post('/ia', async (req, res) => {
     try {
-        const { nombre: nombreRaw, email } = req.body;
+        const { nombre: nombreRaw, email, whatsapp = '' } = req.body;
 
         if (!nombreRaw || !email) {
             return res.status(400).json({ error: 'Nombre y email son requeridos' });
@@ -43,7 +43,7 @@ router.post('/ia', async (req, res) => {
         } catch {}
 
         const mailerOk = await agregarSuscriptorMailerLite(nombre, email);
-        await agregarFilaASheet(SPREADSHEET_ID, 'A:I', [fecha, nombre, email, ip, lat, lon, pais, ciudad, mailerOk]);
+        await agregarFilaASheet(SPREADSHEET_ID, 'A:K', [fecha, nombre, email, ip, lat, lon, pais, ciudad, mailerOk, whatsapp, 'v2']);
 
         console.log(`- Federico IA - Solicitud: ${nombre} (${email}) [${ip}]`);
 
