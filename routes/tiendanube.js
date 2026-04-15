@@ -1,10 +1,13 @@
 const express = require('express');
-const router = express.Router();
-const axios = require('axios');
+const router  = express.Router();
+const axios   = require('axios');
+const tn      = require('../services/tiendanubeService');
 
-const APP_ID       = process.env.TN_APP_ID;
+const APP_ID        = process.env.TN_APP_ID;
 const CLIENT_SECRET = process.env.TN_APP_CLIENT_SECRET;
 const REDIRECT_URI  = process.env.TN_REDIRECT_URI;
+
+// ─── OAuth ──────────────────────────────────────────────────────────────────
 
 // GET /api/tiendanube/auth
 // Redirige al panel de autorización de Tienda Nube
@@ -49,6 +52,71 @@ router.get('/callback', async (req, res) => {
     const msg = err.response?.data || err.message;
     console.error('[TiendaNube] Error en callback:', msg);
     res.status(500).json({ error: msg });
+  }
+});
+
+// ─── Datos de la tienda ──────────────────────────────────────────────────────
+
+// GET /api/tiendanube/store
+router.get('/store', async (req, res) => {
+  try {
+    const data = await tn.getStoreInfo();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/tiendanube/orders?page=1&per_page=50&since=2026-01-01&status=paid
+router.get('/orders', async (req, res) => {
+  try {
+    const { page, per_page, since, status } = req.query;
+    const data = await tn.getOrders({ page, perPage: per_page, since, status });
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/tiendanube/orders/:id
+router.get('/orders/:id', async (req, res) => {
+  try {
+    const data = await tn.getOrder(req.params.id);
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/tiendanube/products?page=1&per_page=50
+router.get('/products', async (req, res) => {
+  try {
+    const { page, per_page } = req.query;
+    const data = await tn.getProducts({ page, perPage: per_page });
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/tiendanube/products/:id
+router.get('/products/:id', async (req, res) => {
+  try {
+    const data = await tn.getProduct(req.params.id);
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/tiendanube/customers?page=1&per_page=50
+router.get('/customers', async (req, res) => {
+  try {
+    const { page, per_page } = req.query;
+    const data = await tn.getCustomers({ page, perPage: per_page });
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
