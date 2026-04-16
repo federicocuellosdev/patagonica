@@ -57,6 +57,7 @@ function csvRow(arr) {
 const HEADERS = [
   'id',
   'home_listing_id',
+  'title',
   'name',
   'description',
   'availability',
@@ -95,12 +96,14 @@ function buildPropertyRow(prop) {
   const priceData = operation?.prices?.[0];
   if (!priceData?.price) return null;
 
-  const coverPhoto = prop.photos?.find(p => p.is_front_cover) || prop.photos?.[0];
-  if (!coverPhoto) return null;
+  // Portada: usar la segunda foto segun el orden de Tokko (la primera suele ser
+  // la marcada is_front_cover pero el cliente la quiere descartar como cover).
+  const sortedPhotos = [...(prop.photos || [])].sort((a, b) => (a.order || 0) - (b.order || 0));
+  if (sortedPhotos.length === 0) return null;
+  const coverPhoto = sortedPhotos[1] || sortedPhotos[0];
 
-  const extraPhotos = (prop.photos || [])
-    .filter(p => !p.is_front_cover)
-    .slice(0, 9);
+  // Resto de imagenes: todas menos la nueva portada, en orden (max 9)
+  const extraPhotos = sortedPhotos.filter(p => p !== coverPhoto).slice(0, 9);
 
   // Llenar slots de imagen hasta 10 posiciones (portada + 9 extras)
   const imageSlots = new Array(10).fill('');
@@ -122,10 +125,13 @@ function buildPropertyRow(prop) {
   // Normalizar saltos de linea en textos para evitar problemas de parsing
   const flatten = s => (s || '').replace(/\r?\n/g, ' ').replace(/\s+/g, ' ').trim();
 
+  const title = flatten(prop.publication_title || prop.address);
+
   return [
     prop.id,
     prop.id,
-    flatten(prop.publication_title || prop.address),
+    title,
+    title,
     flatten(prop.description),
     availability,
     listingType,
