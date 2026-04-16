@@ -4,7 +4,20 @@ const path = require('path');
 
 const TOKKO_API_KEY = process.env.TOKKO_API_KEY;
 const BASE_URL = 'https://www.tokkobroker.com/api/v1';
-const XML_PATH = path.join(__dirname, '../public/meta-catalog.xml');
+const CSV_PATH = path.join(__dirname, '../public/meta-catalog.csv');
+
+const PROPERTY_TYPE_MAP = {
+  'Casa': 'house',
+  'Departamento': 'apartment',
+  'PH': 'townhouse',
+  'Terreno': 'land',
+  'Campo': 'land',
+  'Local': 'other',
+  'Hotel': 'other',
+  'Oficina': 'other',
+  'Galpón': 'other',
+  'Cochera': 'other'
+};
 
 async function fetchAllProperties() {
   const limit = 100;
@@ -25,45 +38,75 @@ async function fetchAllProperties() {
   return allProperties;
 }
 
-function escapeXml(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+// Escapa un valor para CSV según RFC 4180:
+// Si contiene coma, comillas o salto de linea, se encierra en comillas
+// y las comillas internas se duplican.
+function csvCell(v) {
+  if (v === null || v === undefined) return '';
+  const s = String(v);
+  if (/[",\r\n]/.test(s)) {
+    return '"' + s.replace(/"/g, '""') + '"';
+  }
+  return s;
 }
 
-const PROPERTY_TYPE_MAP = {
-  'Casa': 'house',
-  'Departamento': 'apartment',
-  'PH': 'townhouse',
-  'Terreno': 'land',
-  'Campo': 'land',
-  'Local': 'other',
-  'Hotel': 'other',
-  'Oficina': 'other',
-  'Galpón': 'other',
-  'Cochera': 'other'
-};
+function csvRow(arr) {
+  return arr.map(csvCell).join(',');
+}
 
-function buildPropertyXml(prop) {
+const HEADERS = [
+  'home_listing_id',
+  'name',
+  'description',
+  'availability',
+  'listing_type',
+  'property_type',
+  'price',
+  'url',
+  'image[0].url',
+  'image[1].url',
+  'image[2].url',
+  'image[3].url',
+  'image[4].url',
+  'image[5].url',
+  'image[6].url',
+  'image[7].url',
+  'image[8].url',
+  'image[9].url',
+  'address.addr1',
+  'address.city',
+  'address.region',
+  'address.postal_code',
+  'address.country',
+  'neighborhood[0]',
+  'latitude',
+  'longitude',
+  'num_beds',
+  'num_baths',
+  'num_units',
+  'year_built',
+  'area_size',
+  'area_size_unit'
+];
+
+function buildPropertyRow(prop) {
   const operation = prop.operations?.[0];
   const priceData = operation?.prices?.[0];
   if (!priceData?.price) return null;
 
-  // Foto de portada
   const coverPhoto = prop.photos?.find(p => p.is_front_cover) || prop.photos?.[0];
   if (!coverPhoto) return null;
 
-  // Fotos adicionales (excluye la portada, máx 10)
   const extraPhotos = (prop.photos || [])
     .filter(p => !p.is_front_cover)
-    .slice(0, 10);
+    .slice(0, 9);
+
+  // Llenar slots de imagen hasta 10 posiciones (portada + 9 extras)
+  const imageSlots = new Array(10).fill('');
+  imageSlots[0] = coverPhoto.image || '';
+  extraPhotos.forEach((p, i) => { imageSlots[i + 1] = p.image || ''; });
 
   const location = prop.location || {};
-  // full_location: "Argentina | Neuquen | Villa La Angostura | Puerto"
   const locationParts = location.full_location?.split(' | ') || [];
   const country = locationParts[0] || 'Argentina';
   const region = locationParts[1] || '';
@@ -75,60 +118,52 @@ function buildPropertyXml(prop) {
   const listingType = isRent ? 'for_rent_by_agent' : 'for_sale_by_agent';
   const propertyType = PROPERTY_TYPE_MAP[prop.type?.name] || 'other';
 
-  const additionalImages = extraPhotos
-    .map(p => `      <g:additional_image_link>${escapeXml(p.image)}</g:additional_image_link>`)
-    .join('\n');
+  // Normalizar saltos de linea en textos para evitar problemas de parsing
+  const flatten = s => (s || '').replace(/\r?\n/g, ' ').replace(/\s+/g, ' ').trim();
 
-  return `    <item>
-      <g:home_listing_id>${escapeXml(String(prop.id))}</g:home_listing_id>
-      <g:name>${escapeXml(prop.publication_title || prop.address)}</g:name>
-      <g:description>${escapeXml(prop.description)}</g:description>
-      <g:price>${priceData.price} ${priceData.currency}</g:price>
-      <g:listing_type>${listingType}</g:listing_type>
-      <g:property_type>${propertyType}</g:property_type>
-      <g:availability>${availability}</g:availability>
-      <g:url>${escapeXml(prop.public_url || `https://patagonicapropiedades.com/propiedades/${prop.id}`)}</g:url>
-      <g:image_link>${escapeXml(coverPhoto.image)}</g:image_link>
-${additionalImages ? additionalImages + '\n' : ''}      <g:street_address>${escapeXml(prop.address)}</g:street_address>
-      <g:city>${escapeXml(city)}</g:city>
-      <g:region>${escapeXml(region)}</g:region>
-      <g:postal_code>${escapeXml(location.zip_code || '')}</g:postal_code>
-      <g:country>${escapeXml(country)}</g:country>
-      <g:latitude>${prop.geo_lat || ''}</g:latitude>
-      <g:longitude>${prop.geo_long || ''}</g:longitude>
-      <g:neighborhood>${escapeXml(neighborhood)}</g:neighborhood>
-      <g:num_beds>${prop.room_amount || 0}</g:num_beds>
-      <g:num_baths>${prop.bathroom_amount || 0}</g:num_baths>
-      <g:num_units>1</g:num_units>
-      <g:year_built>${prop.age ? new Date().getFullYear() - prop.age : ''}</g:year_built>
-      <g:area_size>${prop.roofed_surface || prop.total_surface || ''}</g:area_size>
-      <g:area_size_unit>square_meters</g:area_size_unit>
-    </item>`;
+  return [
+    prop.id,
+    flatten(prop.publication_title || prop.address),
+    flatten(prop.description),
+    availability,
+    listingType,
+    propertyType,
+    `${priceData.price} ${priceData.currency}`,
+    prop.public_url || `https://patagonicapropiedades.com/propiedades/${prop.id}`,
+    ...imageSlots,
+    prop.address || '',
+    city,
+    region,
+    location.zip_code || '',
+    country,
+    neighborhood,
+    prop.geo_lat || '',
+    prop.geo_long || '',
+    prop.room_amount || 0,
+    prop.bathroom_amount || 0,
+    1,
+    prop.age ? new Date().getFullYear() - prop.age : '',
+    prop.roofed_surface || prop.total_surface || '',
+    'square_meters'
+  ];
 }
 
-async function generateCatalogXml() {
-  console.log('[meta-catalog] Iniciando generación de XML...');
+async function generateCatalog() {
+  console.log('[meta-catalog] Iniciando generación de CSV...');
   const properties = await fetchAllProperties();
 
   // Solo propiedades activas (status 2 = activa en Tokko)
   const active = properties.filter(p => p.status === 2);
   console.log(`[meta-catalog] ${active.length} propiedades activas de ${properties.length} totales`);
 
-  const items = active.map(buildPropertyXml).filter(Boolean).join('\n');
+  const rows = active.map(buildPropertyRow).filter(Boolean);
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
-  <channel>
-    <title>Patagónica Propiedades - Catálogo</title>
-    <link>https://patagonicapropiedades.com</link>
-    <description>Listado de propiedades para Meta Ads</description>
-${items}
-  </channel>
-</rss>`;
+  const lines = [csvRow(HEADERS), ...rows.map(csvRow)];
+  const csv = lines.join('\r\n') + '\r\n';
 
-  fs.writeFileSync(XML_PATH, xml, 'utf8');
-  console.log(`[meta-catalog] XML generado: ${XML_PATH} (${active.length} propiedades)`);
-  return { count: active.length, path: XML_PATH };
+  fs.writeFileSync(CSV_PATH, csv, 'utf8');
+  console.log(`[meta-catalog] CSV generado: ${CSV_PATH} (${rows.length} propiedades)`);
+  return { count: rows.length, path: CSV_PATH };
 }
 
-module.exports = { generateCatalogXml };
+module.exports = { generateCatalog };
