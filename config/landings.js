@@ -6,6 +6,10 @@ const LANDINGS = {
   'loma-guacha': {
     name: 'Loma Guacha',
     tags: ['WEB - Loma Guacha']
+  },
+  'cota-1000': {
+    name: 'Cota Mil',
+    tags: ['WEB - Cota Mil']
   }
 };
 
