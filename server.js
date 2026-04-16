@@ -22,7 +22,13 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Servir archivos estáticos (incluye meta-catalog.xml)
+// Meta requiere content-type application/rss+xml para feeds RSS
+app.get('/public/meta-catalog.xml', (req, res) => {
+  res.setHeader('Content-Type', 'application/rss+xml; charset=utf-8');
+  res.sendFile(path.join(__dirname, 'public/meta-catalog.xml'));
+});
+
+// Servir archivos estáticos
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use('/api/tokko', tokkoRoutes);
