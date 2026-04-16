@@ -55,6 +55,7 @@ function csvRow(arr) {
 }
 
 const HEADERS = [
+  'id',
   'home_listing_id',
   'name',
   'description',
@@ -122,6 +123,7 @@ function buildPropertyRow(prop) {
   const flatten = s => (s || '').replace(/\r?\n/g, ' ').replace(/\s+/g, ' ').trim();
 
   return [
+    prop.id,
     prop.id,
     flatten(prop.publication_title || prop.address),
     flatten(prop.description),
