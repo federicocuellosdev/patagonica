@@ -70,7 +70,9 @@ function buildPropertyXml(prop) {
   const city = locationParts[2] || '';
   const neighborhood = locationParts[3] || '';
 
-  const availability = operation?.operation_type === 'Alquiler' ? 'for_rent' : 'for_sale';
+  const isRent = operation?.operation_type === 'Alquiler';
+  const availability = isRent ? 'for_rent' : 'for_sale';
+  const listingType = isRent ? 'for_rent_by_agent' : 'for_sale_by_agent';
   const propertyType = PROPERTY_TYPE_MAP[prop.type?.name] || 'other';
 
   const additionalImages = extraPhotos
@@ -82,7 +84,7 @@ function buildPropertyXml(prop) {
       <g:name>${escapeXml(prop.publication_title || prop.address)}</g:name>
       <g:description>${escapeXml(prop.description)}</g:description>
       <g:price>${priceData.price} ${priceData.currency}</g:price>
-      <g:listing_type>ad_listing</g:listing_type>
+      <g:listing_type>${listingType}</g:listing_type>
       <g:property_type>${propertyType}</g:property_type>
       <g:availability>${availability}</g:availability>
       <g:url>${escapeXml(prop.public_url || `https://patagonicapropiedades.com/propiedades/${prop.id}`)}</g:url>
