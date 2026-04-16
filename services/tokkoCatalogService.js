@@ -35,6 +35,19 @@ function escapeXml(str) {
     .replace(/'/g, '&apos;');
 }
 
+const PROPERTY_TYPE_MAP = {
+  'Casa': 'house',
+  'Departamento': 'apartment',
+  'PH': 'townhouse',
+  'Terreno': 'land',
+  'Campo': 'land',
+  'Local': 'other',
+  'Hotel': 'other',
+  'Oficina': 'other',
+  'Galpón': 'other',
+  'Cochera': 'other'
+};
+
 function buildPropertyXml(prop) {
   const operation = prop.operations?.[0];
   const priceData = operation?.prices?.[0];
@@ -57,8 +70,8 @@ function buildPropertyXml(prop) {
   const city = locationParts[2] || '';
   const neighborhood = locationParts[3] || '';
 
-  const listingType = operation?.operation_type === 'Alquiler' ? 'for_rent' : 'for_sale';
-  const availability = listingType;
+  const availability = operation?.operation_type === 'Alquiler' ? 'for_rent' : 'for_sale';
+  const propertyType = PROPERTY_TYPE_MAP[prop.type?.name] || 'other';
 
   const additionalImages = extraPhotos
     .map(p => `      <g:additional_image_link>${escapeXml(p.image)}</g:additional_image_link>`)
@@ -69,7 +82,8 @@ function buildPropertyXml(prop) {
       <g:name>${escapeXml(prop.publication_title || prop.address)}</g:name>
       <g:description>${escapeXml(prop.description)}</g:description>
       <g:price>${priceData.price} ${priceData.currency}</g:price>
-      <g:listing_type>${listingType}</g:listing_type>
+      <g:listing_type>ad_listing</g:listing_type>
+      <g:property_type>${propertyType}</g:property_type>
       <g:availability>${availability}</g:availability>
       <g:url>${escapeXml(prop.public_url || `https://patagonicapropiedades.com/propiedades/${prop.id}`)}</g:url>
       <g:image_link>${escapeXml(coverPhoto.image)}</g:image_link>
