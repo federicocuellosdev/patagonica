@@ -34,7 +34,7 @@ async function createContact({ name, email, phone, phoneForm }) {
   return res.data._embedded.contacts[0];
 }
 
-async function createLead({ title, contactId, note, tags = [] }) {
+async function createLead({ title, contactId, note, whatsappNote, tags = [] }) {
   const leadBody = {
     name: title,
     pipeline_id: PIPELINE_ID,
@@ -48,15 +48,46 @@ async function createLead({ title, contactId, note, tags = [] }) {
   const res = await axios.post(`${KOMMO_BASE_URL}/leads`, [leadBody], { headers: getHeaders() });
   const lead = res.data._embedded.leads[0];
 
-  if (note) {
+  const notes = [];
+  if (note) notes.push({ note_type: 'common', params: { text: note } });
+  if (whatsappNote) notes.push({ note_type: 'common', params: { text: whatsappNote } });
+
+  if (notes.length) {
     await axios.post(
       `${KOMMO_BASE_URL}/leads/${lead.id}/notes`,
-      [{ note_type: 'common', params: { text: note } }],
+      notes,
       { headers: getHeaders() }
     );
   }
 
   return lead;
+}
+
+// Normaliza un numero para wa.me (solo digitos, formato movil internacional).
+// Asume Argentina por defecto cuando falta codigo de pais.
+function normalizeWhatsApp(raw) {
+  if (!raw) return null;
+  let n = String(raw).replace(/\D/g, '');
+  if (!n) return null;
+
+  // Prefijo internacional '00' -> quitar
+  if (n.startsWith('00')) n = n.slice(2);
+
+  if (n.startsWith('54')) {
+    // Ya tiene codigo de pais Argentina
+    let rest = n.slice(2);
+    if (rest.startsWith('0')) rest = rest.slice(1);
+    if (!rest.startsWith('9')) rest = '9' + rest;
+    n = '54' + rest;
+  } else {
+    // Sin codigo de pais: asumir Argentina movil (549 + numero)
+    if (n.startsWith('0')) n = n.slice(1);
+    n = '549' + n;
+  }
+
+  // Validar longitud razonable para un movil internacional
+  if (n.length < 11 || n.length > 15) return null;
+  return n;
 }
 
 async function processLead(leadData, formLabel = 'General', tags = []) {
@@ -97,11 +128,28 @@ async function processLead(leadData, formLabel = 'General', tags = []) {
   note += `• Ad Set: ${leadData.adset_name || 'N/A'}\n`;
   note += `• Ad: ${leadData.ad_name || 'N/A'}`;
 
+  // Nota de WhatsApp con enlaces clickeables por cada numero distinto
+  const phonesForWa = [];
+  if (phone) phonesForWa.push({ label: 'Teléfono', raw: phone });
+  if (phoneForm && phoneForm !== phone) phonesForWa.push({ label: 'Teléfono del formulario', raw: phoneForm });
+
+  const waLines = phonesForWa
+    .map(p => {
+      const wa = normalizeWhatsApp(p.raw);
+      return wa ? `• ${p.label} (${p.raw}): https://wa.me/${wa}` : null;
+    })
+    .filter(Boolean);
+
+  const whatsappNote = waLines.length
+    ? 'Para hablar por WhatsApp, hacé clic en el enlace:\n' + waLines.join('\n')
+    : null;
+
   const contact = await createContact({ name, email, phone, phoneForm });
   const lead = await createLead({
     title: `${formLabel} - ${name}`,
     contactId: contact.id,
     note,
+    whatsappNote,
     tags
   });
 
