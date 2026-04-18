@@ -136,7 +136,7 @@ async function processLead(leadData, formLabel = 'General', tags = []) {
   const waLines = phonesForWa
     .map(p => {
       const wa = normalizeWhatsApp(p.raw);
-      return wa ? `• ${p.label} (${p.raw}): https://wa.me/${wa}` : null;
+      return wa ? `• ${p.label} (${p.raw}): https://web.whatsapp.com/send/?phone=${wa}&text&type=phone_number&app_absent=0` : null;
     })
     .filter(Boolean);
 
