@@ -141,7 +141,7 @@ async function processLead(leadData, formLabel = 'General', tags = []) {
     .filter(Boolean);
 
   const whatsappNote = waLines.length
-    ? 'Para hablar por WhatsApp, hacé clic en el enlace:\n' + waLines.join('\n')
+    ? 'Para hablar por WhatsApp, hacé clic en el enlace:\n--\n' + waLines.join('\n--\n')
     : null;
 
   const contact = await createContact({ name, email, phone, phoneForm });
