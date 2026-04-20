@@ -5,6 +5,7 @@ const tokkoService = require('../services/tokkoService');
 
 const STAGE_PARA_DERIVAR = 103741151;
 const FIELD_DERIVAR_ID = 1275244;
+const TAG_DERIVADO = 'Derivado';
 const KOMMO_BASE_URL = `https://${process.env.KOMMO_SUBDOMINIO}.kommo.com/api/v4`;
 
 function getKommoHeaders() {
@@ -60,6 +61,16 @@ function extractDerivar(lead) {
   return field?.values?.[0]?.value || null;
 }
 
+// Agrega un tag al lead en Kommo (manteniendo los existentes)
+async function addTagToLead(leadId, existingTags, newTag) {
+  const allTags = [...new Set([...existingTags, newTag])];
+  await axios.patch(
+    `${KOMMO_BASE_URL}/leads/${leadId}`,
+    { _embedded: { tags: allTags.map(name => ({ name })) } },
+    { headers: getKommoHeaders() }
+  );
+}
+
 // Intenta extraer un teléfono del texto de las notas
 function extractPhoneFromNotes(notes) {
   const phoneRegex = /(\+?[\d\s\-().]{8,20})/;
@@ -87,6 +98,14 @@ router.post('/webhook', async (req, res) => {
       console.log(`- Kommo Webhook - Lead ${leadId} movido a PARA DERIVAR`);
 
       const fullLead = await getLeadWithContact(leadId);
+
+      // Idempotencia: si ya tiene el tag 'Derivado', no procesar de nuevo
+      const existingTagsForCheck = fullLead._embedded?.tags?.map(t => t.name) || [];
+      if (existingTagsForCheck.includes(TAG_DERIVADO)) {
+        console.log(`- Kommo - Lead ${leadId} ya fue derivado, se omite`);
+        continue;
+      }
+
       console.log(`- Kommo - embedded keys: ${Object.keys(fullLead._embedded || {}).join(',')}`);
       console.log(`- Kommo - contacts via with: ${JSON.stringify(fullLead._embedded?.contacts)}`);
 
@@ -148,6 +167,9 @@ router.post('/webhook', async (req, res) => {
         text,
         tags
       });
+
+      // Marcar el lead como derivado para evitar duplicados en próximas llamadas
+      await addTagToLead(leadId, tags, TAG_DERIVADO);
 
       console.log(`- Tokko - Contacto derivado a ${derivar || 'sin asignar'} (Lead ${leadId})\n`);
     }
