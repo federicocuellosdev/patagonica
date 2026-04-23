@@ -132,9 +132,7 @@
     }
     .ah-avatar {
       width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0;
-      background: var(--secondary); color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-family: Gilroy; font-size: 1.3rem; font-weight: 700;
+      object-fit: cover;
       box-shadow: 0 4px 14px rgba(5,116,136,0.35);
     }
     .ah-text { text-align: left; }
@@ -326,8 +324,7 @@
     }
     .author-avatar {
       width: 54px; height: 54px; border-radius: 50%; flex-shrink: 0;
-      background: var(--secondary); color: #fff; font-family: Gilroy; font-size: 1.25rem;
-      font-weight: 700; display: flex; align-items: center; justify-content: center;
+      object-fit: cover;
     }
     .author-name { font-weight: 700; font-size: 0.92rem; color: var(--primary); margin-bottom: 0.15rem; }
     .author-role { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary); margin-bottom: 0.4rem; }
@@ -428,7 +425,7 @@
       <!-- Bloque autor + metadatos -->
       <div class="article-header">
         <div class="article-header-author">
-          <div class="ah-avatar">T</div>
+          <img class="ah-avatar" src="../../recursos/patagonica-propiedades-tomas-badia-jaspe.jpg" alt="Tomás Badía Jaspe">
           <div class="ah-text">
             <p class="ah-name">Tomás Badía Jaspe</p>
             <p class="ah-role">CEO · Patagónica Propiedades</p>
@@ -651,7 +648,7 @@
 
       <!-- Author -->
       <div class="author-box">
-        <div class="author-avatar">T</div>
+        <img class="author-avatar" src="../../recursos/patagonica-propiedades-tomas-badia-jaspe.jpg" alt="Tomás Badía Jaspe">
         <div>
           <p class="author-name">Tomás Badía Jaspe</p>
           <p class="author-role">CEO · Patagónica Propiedades</p>
