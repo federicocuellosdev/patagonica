@@ -124,30 +124,34 @@
 
     /* ── Article header (encima del TOC) ── */
     .article-header {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 1.75rem;
+      text-align: center;
+      padding: 2.25rem 0 2rem;
       margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
     }
     .article-header-author {
-      display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1rem;
+      display: inline-flex; align-items: center; gap: 0.85rem;
+      margin-bottom: 1.1rem;
     }
     .ah-avatar {
-      width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+      width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
       background: var(--secondary); color: #fff;
       display: flex; align-items: center; justify-content: center;
       font-family: Gilroy; font-size: 1.1rem; font-weight: 700;
+      box-shadow: 0 2px 8px rgba(5,116,136,0.3);
     }
+    .ah-text { text-align: left; }
     .ah-name { font-weight: 700; font-size: 0.92rem; color: var(--primary); line-height: 1.3; }
-    .ah-role { font-size: 0.73rem; color: var(--text-muted); margin-top: 0.1rem; }
+    .ah-role { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.1rem; }
     .article-header-meta {
-      display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
-      font-size: 0.78rem; color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.65rem; flex-wrap: wrap;
+      font-size: 0.77rem; color: var(--text-muted);
     }
     .ah-tag {
-      display: inline-block; font-size: 0.65rem; font-weight: 700;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      padding: 0.2rem 0.8rem; border-radius: 50px;
-      background: rgba(44,95,74,0.1); color: #2c5f4a;
+      font-size: 0.63rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 0.25rem 0.85rem; border-radius: 50px;
+      background: rgba(44,95,74,0.08); color: #2c5f4a;
       border: 1px solid rgba(44,95,74,0.2);
     }
     .ah-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
@@ -442,7 +446,7 @@
       <div class="article-header">
         <div class="article-header-author">
           <div class="ah-avatar">T</div>
-          <div>
+          <div class="ah-text">
             <p class="ah-name">Tomás Badía Jaspe</p>
             <p class="ah-role">Patagónica Propiedades · Villa La Angostura</p>
           </div>
