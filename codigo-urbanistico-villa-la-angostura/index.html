@@ -228,12 +228,25 @@
 
     .data-box {
       background: var(--primary); color: #fff; border-radius: var(--br-lg);
-      padding: 1.75rem 2rem; margin: 2rem 0;
-      display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; text-align: center;
+      padding: 2.5rem 2rem; margin: 2rem 0;
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 0; text-align: center;
     }
-    .data-stat { font-family: Gilroy,sans-serif; font-size: 1.85rem; font-weight: 300; color: var(--secondary); letter-spacing: -1px; }
-    .data-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-top: 0.2rem; }
-    .data-detail { font-size: 0.72rem; opacity: 0.4; margin-top: 0.1rem; }
+    .data-box > div {
+      padding: 0.5rem 1.5rem;
+      position: relative;
+    }
+    .data-box > div:not(:last-child)::after {
+      content: ''; position: absolute; right: 0; top: 10%; height: 80%;
+      width: 1px; background: rgba(255,255,255,0.12);
+    }
+    .data-stat {
+      font-family: Gilroy, sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700; color: #fff; line-height: 1; margin-bottom: 0.55rem;
+    }
+    .data-stat small { font-size: 0.5em; font-weight: 500; color: rgba(255,255,255,0.55); }
+    .data-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.5); font-weight: 500; }
+    .data-detail { font-size: 0.68rem; color: rgba(255,255,255,0.3); margin-top: 0.2rem; }
 
     .info-box {
       background: var(--light); border: 1px solid var(--border); border-radius: var(--br);
@@ -501,7 +514,7 @@
 
       <div class="data-box">
         <div>
-          <div class="data-stat">$5.300M</div>
+          <div class="data-stat">$5.300<small>M</small></div>
           <div class="data-label">Pavimentación urbana</div>
           <div class="data-detail">800 m adoquines + 140 LED</div>
         </div>
@@ -511,7 +524,7 @@
           <div class="data-detail">Ene-Feb 2026 · −5,7% i.a.</div>
         </div>
         <div>
-          <div class="data-stat">35K+</div>
+          <div class="data-stat">35<small>K+</small></div>
           <div class="data-label">Créditos hipotecarios</div>
           <div class="data-detail">Otorgados a nivel nacional, 2025</div>
         </div>
