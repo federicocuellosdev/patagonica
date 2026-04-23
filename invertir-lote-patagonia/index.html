@@ -109,7 +109,11 @@
     /* ── Hero ── */
     .hero {
       min-height: 60vh;
-      background: url('img/patagonica-blog-invertir-lote-patagonia-hero.webp') center/cover no-repeat fixed;
+      background-color: #0d1820;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 75% 20%, rgba(5,116,136,0.22) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 15% 85%, rgba(5,116,136,0.10) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
       display: flex;
       align-items: flex-end;
       justify-content: center;
@@ -119,7 +123,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(18,28,37,0.55) 0%, rgba(18,28,37,0.85) 100%);
+      background: linear-gradient(170deg, transparent 30%, rgba(10,18,26,0.7) 70%, rgba(10,18,26,0.95) 100%);
     }
     .hero-content {
       position: relative;
@@ -138,6 +142,7 @@
       font-size: 0.78rem;
       color: rgba(255,255,255,0.65);
     }
+    .breadcrumb span, .breadcrumb a { font-size: 0.78rem; }
     .breadcrumb a { color: var(--secondary); text-decoration: none; }
     .breadcrumb a:hover { text-decoration: underline; }
     .breadcrumb-sep { opacity: 0.4; }
@@ -174,16 +179,6 @@
       margin-bottom: 1.5rem;
     }
 
-    .article-meta {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.6);
-    }
-    .article-meta span { display: flex; align-items: center; gap: 0.35rem; }
-    .meta-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.3); flex-shrink: 0; }
 
     /* ── Main layout ── */
     .main-wrap {
@@ -380,54 +375,16 @@
       align-items: flex-start;
     }
     .author-avatar {
-      width: 60px;
-      height: 60px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
       object-fit: cover;
       flex-shrink: 0;
-      background: var(--secondary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: Gilroy;
-      font-size: 1.4rem;
-      color: #fff;
-      font-weight: 300;
     }
     .author-name { font-weight: 700; font-size: 0.95rem; color: var(--primary); margin-bottom: 0.2rem; }
     .author-role { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary); margin-bottom: 0.5rem; }
     .author-bio { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
 
-    /* Share */
-    .share {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin: 2rem 0;
-      flex-wrap: wrap;
-    }
-    .share-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); }
-    .share-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.5rem 1rem;
-      border-radius: 50px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s;
-      cursor: pointer;
-      border: none;
-    }
-    .share-wa  { background: #e7f9ed; color: #25a244; }
-    .share-wa:hover { background: #25a244; color: #fff; }
-    .share-fb  { background: #e8f0ff; color: #1877f2; }
-    .share-fb:hover { background: #1877f2; color: #fff; }
-    .share-x   { background: #f0f0f0; color: #1a1a1a; }
-    .share-x:hover { background: #1a1a1a; color: #fff; }
-    .share-copy { background: var(--light); color: var(--text-muted); border: 1px solid var(--border); }
-    .share-copy:hover { background: var(--border); }
 
     /* Related */
     .related { margin: 2.5rem 0 0; }
@@ -574,22 +531,15 @@
 <section class="hero">
   <div class="hero-content">
     <nav class="breadcrumb" aria-label="breadcrumb">
-      <a href="../../">Inicio</a>
+      <a href="../../">inicio</a>
       <span class="breadcrumb-sep">›</span>
-      <a href="../">Blog</a>
+      <a href="../">blog</a>
       <span class="breadcrumb-sep">›</span>
       <span>Invertir en lotes en la Patagonia</span>
     </nav>
     <span class="article-category">Inversiones</span>
     <h1 class="hero-title">Por qué invertir en un lote en la Patagonia en 2025</h1>
     <p class="hero-excerpt">Los lotes en Villa La Angostura y el corredor del lago Nahuel Huapi reúnen tres condiciones que raramente convergen en un solo activo: escasez real de tierra, demanda turística creciente y precio dolarizado con bajo umbral de entrada.</p>
-    <div class="article-meta">
-      <span>Inversiones</span>
-      <span class="meta-dot"></span>
-      <span><time datetime="2025-04-23">23 de abril, 2025</time></span>
-      <span class="meta-dot"></span>
-      <span>8 min de lectura</span>
-    </div>
   </div>
 </section>
 
@@ -769,39 +719,11 @@
 
       <!-- Author box -->
       <div class="author-box">
-        <div class="author-avatar">P</div>
+        <img class="author-avatar" src="../recursos/patagonica-propiedades-tomas-badia-jaspe.jpg" alt="Tomás Badía Jaspe">
         <div>
-          <p class="author-name">Equipo Patagónica Propiedades</p>
-          <p class="author-role">Inmobiliaria · Villa La Angostura</p>
-          <p class="author-bio">Comercializamos proyectos de loteo exclusivos en el corredor Villa La Angostura. Acompañamos a inversores en cada etapa: selección, due diligence, escrituración y construcción.</p>
+          <p class="author-name">Tomás Badía Jaspe</p>
+          <p class="author-role">CEO · Patagónica Propiedades</p>
         </div>
-      </div>
-
-      <!-- Share -->
-      <div class="share">
-        <span class="share-label">Compartir</span>
-        <a class="share-btn share-wa"
-           href="https://api.whatsapp.com/send?text=Por%20qu%C3%A9%20invertir%20en%20un%20lote%20en%20la%20Patagonia%20en%202025%20%7C%20Patag%C3%B3nica%20Propiedades%20https%3A%2F%2Fl.patagonicapropiedades.com.ar%2Fblog%2Finvertir-lote-patagonia%2F"
-           target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.52 5.847L0 24l6.335-1.502A11.952 11.952 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.007-1.37l-.36-.214-3.727.977.994-3.634-.234-.374A9.818 9.818 0 1 1 12 21.818z"/></svg>
-          WhatsApp
-        </a>
-        <a class="share-btn share-fb"
-           href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fl.patagonicapropiedades.com.ar%2Fblog%2Finvertir-lote-patagonia%2F"
-           target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
-          Facebook
-        </a>
-        <a class="share-btn share-x"
-           href="https://x.com/intent/tweet?text=Por%20qu%C3%A9%20invertir%20en%20un%20lote%20en%20la%20Patagonia%20en%202025&url=https%3A%2F%2Fl.patagonicapropiedades.com.ar%2Fblog%2Finvertir-lote-patagonia%2F"
-           target="_blank" rel="noopener">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-          X
-        </a>
-        <button class="share-btn share-copy" onclick="copyLink(this)">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          Copiar enlace
-        </button>
       </div>
 
       <!-- Related articles -->
