@@ -43,6 +43,15 @@ app.get('/', (req, res) => {
   res.json({ mensaje: 'pong' });
 });
 
+app.post('/admin/regenerar-catalogo', async (req, res) => {
+  try {
+    const result = await generateCatalog();
+    res.json({ ok: true, ...result });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
 // Cron: regenerar catálogo CSV cada 24 horas (3am hora Argentina, UTC-3)
 cron.schedule('0 6 * * *', async () => {
   try {
