@@ -88,8 +88,19 @@ const HEADERS = [
   'num_units',
   'year_built',
   'area_size',
-  'area_size_unit'
+  'area_size_unit',
+  'custom_label_0',
+  'custom_label_1',
+  'custom_label_2',
+  'custom_label_3'
 ];
+
+function priceRange(price) {
+  if (price < 100000)  return 'Hasta USD 100.000';
+  if (price < 200000)  return 'USD 100.000 - 200.000';
+  if (price < 400000)  return 'USD 200.000 - 400.000';
+  return 'Mas de USD 400.000';
+}
 
 function buildPropertyRow(prop) {
   const operation = prop.operations?.[0];
@@ -127,6 +138,11 @@ function buildPropertyRow(prop) {
 
   const title = flatten(prop.publication_title || prop.address);
 
+  const customLabel0 = prop.type?.name || 'Otro';
+  const customLabel1 = neighborhood || city || '';
+  const customLabel2 = isRent ? 'Alquiler' : 'Venta';
+  const customLabel3 = priceRange(priceData.price);
+
   return [
     prop.id,
     prop.id,
@@ -152,7 +168,11 @@ function buildPropertyRow(prop) {
     1,
     prop.age ? new Date().getFullYear() - prop.age : '',
     prop.roofed_surface || prop.total_surface || '',
-    'square_meters'
+    'square_meters',
+    customLabel0,
+    customLabel1,
+    customLabel2,
+    customLabel3
   ];
 }
 
