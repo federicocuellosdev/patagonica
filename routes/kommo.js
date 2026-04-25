@@ -82,6 +82,9 @@ function extractPhoneFromNotes(notes) {
   return '';
 }
 
+// Lock en memoria: evita que dos webhooks simultáneos del mismo lead pasen el check
+const procesando = new Set();
+
 // POST /api/kommo/webhook
 router.post('/webhook', async (req, res) => {
   res.sendStatus(200);
@@ -95,83 +98,80 @@ router.post('/webhook', async (req, res) => {
       if (statusId !== STAGE_PARA_DERIVAR) continue;
 
       const leadId = lead.id;
-      console.log(`- Kommo Webhook - Lead ${leadId} movido a PARA DERIVAR`);
 
-      const fullLead = await getLeadWithContact(leadId);
-
-      // Idempotencia: si ya tiene el tag 'Derivado', no procesar de nuevo
-      const existingTagsForCheck = fullLead._embedded?.tags?.map(t => t.name) || [];
-      if (existingTagsForCheck.includes(TAG_DERIVADO)) {
-        console.log(`- Kommo - Lead ${leadId} ya fue derivado, se omite`);
+      // Lock síncrono: si ya se está procesando este lead, ignorar
+      if (procesando.has(leadId)) {
+        console.log(`- Kommo - Lead ${leadId} ya en proceso, webhook duplicado ignorado`);
         continue;
       }
+      procesando.add(leadId);
 
-      console.log(`- Kommo - embedded keys: ${Object.keys(fullLead._embedded || {}).join(',')}`);
-      console.log(`- Kommo - contacts via with: ${JSON.stringify(fullLead._embedded?.contacts)}`);
+      try {
+        console.log(`- Kommo Webhook - Lead ${leadId} movido a PARA DERIVAR`);
 
-      // Intentar obtener contacto del lead — con fallback via /links
-      let contactRef = fullLead._embedded?.contacts?.[0];
-      if (!contactRef) {
-        const linkedContacts = await getLeadContacts(leadId);
-        console.log(`- Kommo - contacts via links: ${JSON.stringify(linkedContacts)}`);
-        contactRef = linkedContacts[0];
+        const fullLead = await getLeadWithContact(leadId);
+
+        // Idempotencia: si ya tiene el tag 'Derivado', no procesar de nuevo
+        const existingTags = fullLead._embedded?.tags?.map(t => t.name) || [];
+        if (existingTags.includes(TAG_DERIVADO)) {
+          console.log(`- Kommo - Lead ${leadId} ya fue derivado, se omite`);
+          continue;
+        }
+
+        // Intentar obtener contacto del lead — con fallback via /links
+        let contactRef = fullLead._embedded?.contacts?.[0];
+        if (!contactRef) {
+          const linkedContacts = await getLeadContacts(leadId);
+          contactRef = linkedContacts[0];
+        }
+        if (!contactRef) {
+          console.error(`- Kommo Webhook - Lead ${leadId} sin contacto`);
+          continue;
+        }
+
+        const [contact, notes] = await Promise.all([
+          getContact(contactRef.id),
+          getAllNotes(leadId)
+        ]);
+
+        // Etiquetas + campo Derivar
+        const tags = [...existingTags];
+        const derivar = extractDerivar(fullLead);
+        if (derivar) tags.push(derivar);
+
+        // Marcar como derivado ANTES de enviar a Tokko — evita duplicados ante reinicios
+        await addTagToLead(leadId, tags, TAG_DERIVADO);
+
+        // Teléfonos del contacto, con fallback en las notas
+        const phones = extractPhones(contact);
+        let phone = phones[0] || '';
+        let cellphone = phones[1] || phones[0] || '';
+        if (!phone) {
+          const phoneFromNotes = extractPhoneFromNotes(notes);
+          phone = phoneFromNotes;
+          cellphone = phoneFromNotes;
+        }
+
+        const email = extractEmail(contact);
+        if (!phone && !cellphone && !email) phone = 'sin-dato';
+
+        // Texto: encabezado + TODAS las notas
+        let text = `Lead: ${fullLead.name || ''}\n`;
+        if (derivar) text += `Derivar a: ${derivar}\n`;
+        text += `\n`;
+        if (notes.length) {
+          text += notes
+            .map((n, i) => (notes.length > 1 ? `--- Nota ${i + 1} ---\n` : '') + (n.params?.text || ''))
+            .join('\n\n');
+        }
+
+        await tokkoService.createContact({ name: contact.name, email, phone, cellphone, text, tags });
+
+        console.log(`- Tokko - Contacto derivado a ${derivar || 'sin asignar'} (Lead ${leadId})\n`);
+
+      } finally {
+        procesando.delete(leadId);
       }
-      if (!contactRef) {
-        console.error(`- Kommo Webhook - Lead ${leadId} sin contacto`);
-        continue;
-      }
-
-      const [contact, notes] = await Promise.all([
-        getContact(contactRef.id),
-        getAllNotes(leadId)
-      ]);
-
-      // Etiquetas + campo Derivar
-      const tags = fullLead._embedded?.tags?.map(t => t.name) || [];
-      const derivar = extractDerivar(fullLead);
-      if (derivar) tags.push(derivar);
-
-      // Teléfonos del contacto, con fallback en las notas
-      const phones = extractPhones(contact);
-      let phone = phones[0] || '';
-      let cellphone = phones[1] || phones[0] || '';
-      if (!phone) {
-        const phoneFromNotes = extractPhoneFromNotes(notes);
-        phone = phoneFromNotes;
-        cellphone = phoneFromNotes;
-      }
-
-      const email = extractEmail(contact);
-
-      // Tokko requiere al menos un dato de contacto — fallback si no hay nada
-      if (!phone && !cellphone && !email) {
-        phone = 'sin-dato';
-      }
-
-      // Texto: encabezado + TODAS las notas
-      let text = `Lead: ${fullLead.name || ''}\n`;
-      if (derivar) text += `Derivar a: ${derivar}\n`;
-      text += `\n`;
-
-      if (notes.length) {
-        text += notes
-          .map((n, i) => (notes.length > 1 ? `--- Nota ${i + 1} ---\n` : '') + (n.params?.text || ''))
-          .join('\n\n');
-      }
-
-      await tokkoService.createContact({
-        name: contact.name,
-        email,
-        phone,
-        cellphone,
-        text,
-        tags
-      });
-
-      // Marcar el lead como derivado para evitar duplicados en próximas llamadas
-      await addTagToLead(leadId, tags, TAG_DERIVADO);
-
-      console.log(`- Tokko - Contacto derivado a ${derivar || 'sin asignar'} (Lead ${leadId})\n`);
     }
   } catch (err) {
     console.error('- Kommo Webhook - Error:', err.response?.data || err.message);
