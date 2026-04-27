@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const axios = require('axios');
 const metaService = require('../services/metaService');
 const kommoService = require('../services/kommoService');
 const { getFormConfig } = require('../config/forms');
+
+const CAPI_PIXEL_ID = '1129079111925410';
 
 
 router.get('/webhook', (req, res) => {
@@ -68,6 +71,39 @@ router.post('/webhook', async (req, res) => {
   } catch (error) {
     console.error('✗ ERROR:', error.message);
     res.status(500).json({ error: error.message });
+  }
+});
+
+// POST /api/meta/capi-lead — dispara evento Lead via Conversions API
+router.post('/capi-lead', async (req, res) => {
+  try {
+    const { event_id, url, fbc, fbp } = req.body;
+
+    const payload = {
+      data: [{
+        event_name: 'Lead',
+        event_time: Math.floor(Date.now() / 1000),
+        event_id: event_id || undefined,
+        event_source_url: url || undefined,
+        action_source: 'website',
+        user_data: {
+          fbc: fbc || undefined,
+          fbp: fbp || undefined
+        }
+      }]
+    };
+
+    await axios.post(
+      `https://graph.facebook.com/v21.0/${CAPI_PIXEL_ID}/events`,
+      payload,
+      { params: { access_token: process.env.META_ACCESS_TOKEN } }
+    );
+
+    console.log(`[CAPI] Lead enviado — event_id: ${event_id}`);
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('[CAPI Lead]', err.response?.data || err.message);
+    res.status(500).json({ ok: false });
   }
 });
 
