@@ -203,6 +203,36 @@
       color: var(--secondary); margin-bottom: 0.75rem;
     }
 
+    /* ── Notas rápidas ── */
+    .notas-section { background: var(--light); border-top: 1px solid var(--border); }
+    .notas-inner { max-width: 1080px; margin: 0 auto; padding: 3rem 5%; }
+
+    .notas-list { display: flex; flex-direction: column; }
+    .nota-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 0; border-bottom: 1px solid var(--border);
+      text-decoration: none; color: inherit;
+      transition: background 0.15s;
+    }
+    .nota-item:last-child { border-bottom: none; }
+    .nota-item:hover .nota-item-title { color: var(--secondary); }
+
+    .nota-pill {
+      flex-shrink: 0;
+      padding: 0.2rem 0.8rem; border-radius: 50px;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: #fff;
+    }
+    .nota-pill.obras  { background: #5b3a8c; }
+    .nota-pill.alerta { background: #c0392b; }
+    .nota-pill.datos  { background: #7c5c30; }
+
+    .nota-item-title {
+      flex: 1; font-size: 0.92rem; font-weight: 500; color: var(--primary);
+      transition: color 0.2s;
+    }
+    .nota-item-date { flex-shrink: 0; font-size: 0.72rem; color: var(--text-muted); }
+
     /* ── Footer ── */
     footer {
       background: var(--primary); color: rgba(255,255,255,0.55);
@@ -296,6 +326,36 @@
         </div>
       </a>
 
+    </div>
+  </section>
+
+  <section class="notas-section">
+    <div class="notas-inner">
+      <div class="section-header">
+        <span class="section-title">Notas rápidas</span>
+        <span class="articles-count">3 notas</span>
+      </div>
+      <div class="notas-list">
+
+        <a href="nota/obras-pavimentacion-villa-la-angostura.html" class="nota-item">
+          <span class="nota-pill obras">Obras</span>
+          <span class="nota-item-title">Obras en marcha que ya valorizan la zona</span>
+          <span class="nota-item-date">15 abr 2026 · 3 min</span>
+        </a>
+
+        <a href="nota/loteos-irregulares-villa-la-angostura.html" class="nota-item">
+          <span class="nota-pill alerta">Alerta</span>
+          <span class="nota-item-title">Loteos irregulares: dos casos que encendieron las alarmas en marzo</span>
+          <span class="nota-item-date">15 abr 2026 · 3 min</span>
+        </a>
+
+        <a href="nota/mercado-inmobiliario-2026.html" class="nota-item">
+          <span class="nota-pill datos">Datos</span>
+          <span class="nota-item-title">El mercado en 2026: corrección leve, crédito activo</span>
+          <span class="nota-item-date">15 abr 2026 · 3 min</span>
+        </a>
+
+      </div>
     </div>
   </section>
 
