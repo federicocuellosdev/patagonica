@@ -151,9 +151,9 @@
     .card-category {
       position: absolute; top: 1rem; left: 1rem;
       padding: 0.25rem 0.85rem; border-radius: 50px;
-      background: rgba(5,116,136,0.85); backdrop-filter: blur(4px);
+      background: #fff;
       font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-      color: #fff;
+      color: var(--secondary);
     }
 
     .card-body {
@@ -185,6 +185,7 @@
     .article-card.featured {
       grid-column: 1 / -1;
       flex-direction: row;
+      height: 300px;
     }
     .article-card.featured .card-img {
       width: 48%; flex-shrink: 0; aspect-ratio: auto;
