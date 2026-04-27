@@ -184,8 +184,19 @@
       font-size: 0.68rem; font-weight: 700; letter-spacing: 2px;
       text-transform: uppercase; color: var(--secondary); margin-bottom: 0.9rem;
     }
-    .toc ol { padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.4rem; }
-    .toc li { font-size: 0.88rem; }
+    .toc ol { padding-left: 0; list-style: none; display: flex; flex-direction: column; }
+    .toc li {
+      font-size: 0.88rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+      counter-increment: toc-counter;
+    }
+    .toc li:last-child { border-bottom: none; padding-bottom: 0; }
+    .toc li::before {
+      content: counter(toc-counter) ". ";
+      color: var(--secondary); font-weight: 700; margin-right: 0.25rem;
+    }
+    .toc ol { counter-reset: toc-counter; }
     .toc a { color: var(--text); text-decoration: none; transition: color 0.2s; }
     .toc a:hover { color: var(--secondary); }
 
