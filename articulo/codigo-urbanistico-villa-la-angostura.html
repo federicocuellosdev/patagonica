@@ -284,6 +284,27 @@
       border-bottom: 1px solid rgba(5,116,136,0.3) !important; margin-top: 0.25rem;
     }
 
+    .notas-ref {
+      border: 1px solid var(--border); border-radius: var(--br-lg);
+      overflow: hidden; margin-bottom: 2.5rem;
+    }
+    .notas-ref-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--text-muted); padding: 0.9rem 1.25rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .nota-ref-item {
+      display: flex; align-items: center; gap: 0.85rem;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none; color: inherit;
+      transition: background 0.15s;
+    }
+    .nota-ref-item:last-child { border-bottom: none; }
+    .nota-ref-item:hover { background: var(--light); }
+    .nota-ref-title { flex: 1; font-size: 0.88rem; color: var(--primary); }
+    .nota-ref-arrow { font-size: 0.85rem; color: var(--text-muted); flex-shrink: 0; }
+
     .section-sep {
       display: flex; align-items: center; margin: 2.75rem 0 2rem;
     }
@@ -549,85 +570,23 @@
         <a href="../../#contacto" class="btn btn-accent">Consultar ahora</a>
       </div>
 
-      <div class="prose">
-
-        <h2 id="pavimentacion">
-          <span class="tag tag-obras">Obras</span><br>
-          Obras en marcha que ya valorizan la zona
-        </h2>
-
-        <p>En paralelo al debate normativo, dos obras concretas van a impactar el mapa de valorización de la villa en 2026.</p>
-
-        <p>La primera es la relicitación de una obra de pavimentación que había quedado paralizada en 2024 tras la rescisión del contrato. El proyecto incluye <strong>800 metros de pavimento articulado con adoquines, cordones cuneta y 140 postes con luminarias LED</strong>, con un presupuesto de $5.300 millones y financiamiento internacional.</p>
-
-        <p>La segunda: <strong>$3.400 millones para pavimentar el barrio Las Piedritas</strong> — unas 35 cuadras nuevas de asfalto más 6.200 metros lineales de cordón cuneta. La licitación ya fue convocada.</p>
-
-        <div class="info-box">
-          <p class="info-box-title">Para el inversor</p>
-          <p>Las zonas donde llega pavimento e iluminación son históricamente las que más se valorizan en el corto plazo. Si venías mirando Las Piedritas con algo de escepticismo, esta obra puede ser el catalizador que faltaba.</p>
-        </div>
-
-        <a href="https://www.diarioandino.com.ar/noticias/2026/02/09/233870-el-municipio-anuncio-que-retomara-y-finalizara-una-obra-clave-de-pavimentacion-e-iluminacion" class="source-link" target="_blank" rel="noopener">
-          Fuente: Diario Andino →
+      <div class="notas-ref">
+        <p class="notas-ref-label">Notas relacionadas</p>
+        <a href="../nota/obras-pavimentacion-villa-la-angostura.html" class="nota-ref-item">
+          <span class="tag tag-obras">Obras</span>
+          <span class="nota-ref-title">Obras en marcha que ya valorizan la zona</span>
+          <span class="nota-ref-arrow">→</span>
         </a>
-
-      </div>
-
-      <div class="section-sep"><span class="section-sep-label">Investigación</span></div>
-
-      <div class="prose">
-
-        <h2 id="alerta">
-          <span class="tag tag-alerta">Alerta</span><br>
-          Loteos irregulares: dos casos que encendieron las alarmas en marzo
-        </h2>
-
-        <p>El mercado crece — y con él, los riesgos para compradores desprevenidos. En marzo salieron a la luz dos situaciones que cualquier inversor en la villa debería conocer.</p>
-
-        <p><strong>Caso 1 — Rasva SAS:</strong> la empresa, representada por Rodrigo Segovia, comenzó a comercializar parcelas en una zona de bosque nativo sin contar con la aprobación municipal. El municipio exigió formalmente que el emprendimiento se ajuste a la Ordenanza 2659/2012, que regula las presentaciones de loteos en la localidad.</p>
-
-        <p><strong>Caso 2 — Loteo Quetrihué:</strong> persiste la investigación judicial sobre este emprendimiento, donde un arquitecto denunció la falsificación de su firma en documentación técnica. Si la causa avanza, la legalidad del loteo completo podría quedar comprometida — afectando a quienes ya adquirieron alguno de sus 10 lotes de 407 m².</p>
-
-        <div class="alert-box">
-          <p><strong>Regla básica:</strong> en un mercado en expansión, la debida diligencia no es un lujo. Antes de firmar cualquier boleto, verificá aprobaciones municipales, documentación técnica y situación dominial con un abogado especializado. Pedí el número de expediente en la Dirección de Catastro municipal.</p>
-        </div>
-
-        <a href="https://www.diarioandino.com.ar/noticias/2026/03/09/234055-venden-terrenos-en-un-loteo-que-aun-no-esta-aprobado" class="source-link" target="_blank" rel="noopener">
-          Fuente: Diario Andino →
+        <a href="../nota/loteos-irregulares-villa-la-angostura.html" class="nota-ref-item">
+          <span class="tag tag-alerta">Alerta</span>
+          <span class="nota-ref-title">Loteos irregulares: dos casos que encendieron las alarmas en marzo</span>
+          <span class="nota-ref-arrow">→</span>
         </a>
-
-      </div>
-
-      <div class="section-sep"><span class="section-sep-label">Pulso del Mercado</span></div>
-
-      <div class="prose">
-
-        <h2 id="mercado">
-          <span class="tag tag-datos">Datos</span><br>
-          El mercado en 2026: corrección leve, crédito activo
-        </h2>
-
-        <p>El primer bimestre de 2026 cerró con <strong>1.716 compraventas en Río Negro</strong>, un 5,7% por debajo del mismo período de 2025. Para contexto: 2025 fue excepcional — entre enero y octubre se concretaron 8.701 escrituras, un 26,6% más que en 2024, traccionadas por el regreso del crédito hipotecario.</p>
-
-        <p>La corrección es un ajuste natural, no una señal de alarma. Lo que importa: <strong>el crédito sigue activo</strong>. Los más de 35.000 créditos hipotecarios otorgados a nivel nacional en 2025 — el número más alto en años — están empezando a traccionar también en la Patagonia. Los bancos públicos ofrecen tasas más competitivas y las consultas de financiamiento crecen.</p>
-
-        <div class="two-col">
-          <div class="mini-card">
-            <span class="tag tag-urbanismo">Suelo urbano</span>
-            <h3 class="mini-card-title">Neuquén proyecta 1.570+ lotes con servicios para 2026</h3>
-            <p>El Instituto Municipal de Urbanismo y Hábitat de la capital neuquina lanzó un ambicioso plan de loteos. La señal: la región apuesta al suelo urbano como motor económico. Paradójicamente, esta oferta puede <strong>revalorizar aún más los terrenos premium de Villa La Angostura</strong>, donde el stock es naturalmente limitado.</p>
-          </div>
-          <div class="mini-card">
-            <span class="tag tag-datos">Alquiler temporario</span>
-            <h3 class="mini-card-title">Villa La Angostura: $151.000/noche de promedio</h3>
-            <p>El mercado temporario se mantiene firme. Las zonas más cotizadas siguen siendo el Centro y Las Balsas. Una casa de 3 dormitorios bien ubicada puede rentar entre USD 150 y USD 350 por noche en temporada alta — con un retorno bruto del 5–8% anual en dólares sobre la inversión total.</p>
-          </div>
-        </div>
-
-        <a href="https://www.rionegro.com.ar/economia/en-el-primer-bimestre-del-2026-las-ventas-de-inmuebles-en-rio-negro-bajaron-pero-aparecen-indicios-de-recuperacion/" class="source-link" target="_blank" rel="noopener">
-          Fuente: Río Negro →
+        <a href="../nota/mercado-inmobiliario-2026.html" class="nota-ref-item">
+          <span class="tag tag-datos">Datos</span>
+          <span class="nota-ref-title">El mercado en 2026: corrección leve, crédito activo</span>
+          <span class="nota-ref-arrow">→</span>
         </a>
-
       </div>
 
       <!-- FAQ -->
