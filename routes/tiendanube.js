@@ -149,4 +149,27 @@ router.get('/customers', async (req, res) => {
   }
 });
 
+// POST /api/tiendanube/shipping/quote
+// Body: { zipcode, product_id, variant_id, quantity }
+router.post('/shipping/quote', async (req, res) => {
+  const { zipcode, product_id, variant_id, quantity = 1 } = req.body;
+  if (!zipcode || !variant_id) {
+    return res.status(400).json({ error: 'Faltan zipcode o variant_id' });
+  }
+
+  const storeId = process.env.TN_STORE_ID;
+  const token   = process.env.TN_TOKEN || process.env.TN_ACCESS_TOKEN;
+
+  try {
+    const { data } = await axios.post(
+      `https://api.tiendanube.com/v1/${storeId}/shipping_carriers/quote`,
+      { zipcode: String(zipcode), products: [{ product_id, variant_id, quantity }] },
+      { headers: { Authentication: `bearer ${token}`, 'User-Agent': 'VLA-API/1.0', 'Content-Type': 'application/json' } }
+    );
+    res.json(data);
+  } catch (err) {
+    res.status(err.response?.status || 500).json(err.response?.data || { error: err.message });
+  }
+});
+
 module.exports = router;
