@@ -18,7 +18,14 @@ const { generateCatalog } = require('./services/tokkoCatalogService');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://tienda.chavelaba.com.ar',
+    'http://localhost:3000',
+    /\.github\.io$/,
+  ],
+  credentials: true,
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
