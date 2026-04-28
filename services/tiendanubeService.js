@@ -58,4 +58,15 @@ async function getStoreInfo() {
   return data;
 }
 
-module.exports = { getOrders, getOrder, getProducts, getProduct, getCustomers, getStoreInfo };
+// products: [{ variant_id, quantity }]
+async function createOrder({ products, contact = {} } = {}) {
+  const payload = { products };
+  if (contact.email) payload.contact_email = contact.email;
+  if (contact.name)  payload.contact_name  = contact.name;
+  if (contact.phone) payload.contact_phone = contact.phone;
+
+  const { data } = await client().post('/orders', payload);
+  return data;
+}
+
+module.exports = { getOrders, getOrder, getProducts, getProduct, getCustomers, getStoreInfo, createOrder };

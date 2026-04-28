@@ -78,6 +78,35 @@ router.get('/orders', async (req, res) => {
   }
 });
 
+// POST /api/tiendanube/orders
+// Body: { variant_id, quantity, contact? }
+// Crea la orden en TN y devuelve checkout_url para redirigir al cliente
+router.post('/orders', async (req, res) => {
+  const { variant_id, quantity = 1, contact } = req.body;
+
+  if (!variant_id) {
+    return res.status(400).json({ error: 'Falta variant_id' });
+  }
+
+  try {
+    const order = await tn.createOrder({
+      products: [{ variant_id: Number(variant_id), quantity: Number(quantity) }],
+      contact,
+    });
+
+    const checkoutUrl = order.checkout_url || order.storefront_url;
+
+    if (!checkoutUrl) {
+      return res.status(502).json({ error: 'TN no devolvió checkout_url', order });
+    }
+
+    res.json({ ok: true, order_id: order.id, checkout_url: checkoutUrl });
+  } catch (err) {
+    const msg = err.response?.data || err.message;
+    res.status(500).json({ error: msg });
+  }
+});
+
 // GET /api/tiendanube/orders/:id
 router.get('/orders/:id', async (req, res) => {
   try {
