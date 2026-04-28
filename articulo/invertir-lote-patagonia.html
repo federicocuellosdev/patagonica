@@ -13,13 +13,13 @@
   <meta property="og:url"         content="https://l.patagonicapropiedades.com.ar/blog/articulo/invertir-lote-patagonia.html">
   <meta property="og:title"       content="Por qué invertir en un lote en la Patagonia en 2025">
   <meta property="og:description" content="Los lotes en Villa La Angostura combinan escasez de tierra, demanda turística creciente y dolarización natural. Todo lo que necesitás saber.">
-  <meta property="og:image"       content="https://l.patagonicapropiedades.com.ar/blog/articulo/invertir-lote-patagonia.htmlimg/patagonica-blog-invertir-lote-patagonia-og.webp">
+  <meta property="og:image"       content="https://l.patagonicapropiedades.com.ar/blog/articulo/invertir-lote-patagonia/img/patagonica-blog-invertir-lote-patagonia-og.webp">
   <meta property="og:image:alt"   content="Vista aérea de lotes en la Patagonia — Patagónica Propiedades">
   <!-- Twitter / X -->
   <meta name="twitter:card"        content="summary_large_image">
   <meta name="twitter:title"       content="Por qué invertir en un lote en la Patagonia en 2025">
   <meta name="twitter:description" content="Escasez de tierra, demanda turística creciente y dolarización natural. La guía para inversores.">
-  <meta name="twitter:image"       content="https://l.patagonicapropiedades.com.ar/blog/articulo/invertir-lote-patagonia.htmlimg/patagonica-blog-invertir-lote-patagonia-og.webp">
+  <meta name="twitter:image"       content="https://l.patagonicapropiedades.com.ar/blog/articulo/invertir-lote-patagonia/img/patagonica-blog-invertir-lote-patagonia-og.webp">
 
   <!-- Article metadata -->
   <meta property="article:published_time" content="2025-04-23T09:00:00-03:00">
@@ -142,9 +142,8 @@
       font-size: 0.78rem;
       color: rgba(255,255,255,0.65);
     }
-    .breadcrumb span, .breadcrumb a { font-size: 0.78rem; }
-    .breadcrumb a { color: var(--secondary); text-decoration: none; }
-    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span, .breadcrumb a { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-decoration: none; }
+    .breadcrumb a:hover { color: rgba(255,255,255,0.8); }
     .breadcrumb-sep { opacity: 0.4; }
 
     .article-category {
@@ -209,18 +208,19 @@
       color: var(--secondary);
       margin-bottom: 0.9rem;
     }
-    .toc ol {
-      padding-left: 1.1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
+    .toc ol { padding-left: 0; list-style: none; display: flex; flex-direction: column; counter-reset: toc-counter; }
+    .toc li {
+      font-size: 0.88rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+      counter-increment: toc-counter;
     }
-    .toc li { font-size: 0.9rem; }
-    .toc a {
-      color: var(--text);
-      text-decoration: none;
-      transition: color 0.2s;
+    .toc li:last-child { border-bottom: none; padding-bottom: 0; }
+    .toc li::before {
+      content: counter(toc-counter) ". ";
+      color: var(--secondary); font-weight: 700; margin-right: 0.25rem;
     }
+    .toc a { color: var(--text); text-decoration: none; transition: color 0.2s; }
     .toc a:hover { color: var(--secondary); }
 
     /* Prose */
@@ -423,11 +423,11 @@
     }
     .related-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
     .related-img {
-      width: 100%;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-      background: #e8edf5;
+      width: 100%; aspect-ratio: 16/9; overflow: hidden;
+      background: linear-gradient(135deg, var(--primary), #1a3547);
     }
+    .related-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .related-card:hover .related-img img { transform: scale(1.04); }
     .related-info { padding: 0.85rem 1rem; }
     .related-cat { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--secondary); margin-bottom: 0.3rem; }
     .related-card-title { font-size: 0.88rem; font-weight: 600; color: var(--primary); line-height: 1.4; }
@@ -532,7 +532,7 @@
     <ul>
       <li><a href="../../">Proyectos</a></li>
       <li><a href="../index.html" class="active">Blog</a></li>
-      <li><a href="https://patagonicapropiedades.com.ar/#contacto" class="nav-cta">Contacto</a></li>
+      <li><a href="https://patagonicapropiedades.com.ar/contacto" class="nav-cta">Contacto</a></li>
     </ul>
   </nav>
   <button class="mobile-menu-btn" aria-label="Menú">
@@ -624,9 +624,9 @@
       <div class="cta-mid">
         <div class="cta-mid-text">
           <h3>Conocé nuestros lotes disponibles</h3>
-          <p>Loma Guacha, Cota Mil y Mirador del Lago — proyectos activos en Villa La Angostura.</p>
+          <p>Loma Guacha, Cota Mil y otros lotes — proyectos activos en Villa La Angostura.</p>
         </div>
-        <a href="../../" class="btn btn-accent">Ver proyectos</a>
+        <a href="https://patagonicapropiedades.com.ar/propiedades/terrenos+o+lotes/venta?order=1" class="btn btn-accent">Ver lotes disponibles</a>
       </div>
 
       <div class="prose">
@@ -744,21 +744,29 @@
         <p class="related-title">También te puede interesar</p>
         <div class="related-grid">
           <a class="related-card" href="https://l.patagonicapropiedades.com.ar/loma-guacha/">
-            <div class="related-img" style="background: linear-gradient(135deg,#121C25,#057488); display:flex; align-items:center; justify-content:center;">
-              <span style="font-family:Gilroy;font-size:1.1rem;color:#fff;opacity:.6;letter-spacing:1px">Loma Guacha</span>
+            <div class="related-img">
+              <img src="https://l.patagonicapropiedades.com.ar/loma-guacha/img/patagonica-propiedades-loma-guacha-og.webp" alt="Loma Guacha" loading="lazy">
             </div>
             <div class="related-info">
-              <p class="related-cat">Proyectos</p>
+              <p class="related-cat">Proyecto · Lotes</p>
               <p class="related-card-title">Loma Guacha — 36 lotes en la meseta con reserva de bosque autóctono</p>
             </div>
           </a>
           <a class="related-card" href="https://l.patagonicapropiedades.com.ar/cota-1000/">
-            <div class="related-img" style="background: linear-gradient(135deg,#1a3547,#068a9f); display:flex; align-items:center; justify-content:center;">
-              <span style="font-family:Gilroy;font-size:1.1rem;color:#fff;opacity:.6;letter-spacing:1px">Cota Mil</span>
+            <div class="related-img">
             </div>
             <div class="related-info">
-              <p class="related-cat">Proyectos</p>
+              <p class="related-cat">Proyecto · Lotes</p>
               <p class="related-card-title">Cota Mil — 20 lotes con vistas al lago desde la cota 1.000 m</p>
+            </div>
+          </a>
+          <a class="related-card" href="https://l.patagonicapropiedades.com.ar/mirador/">
+            <div class="related-img">
+              <img src="https://l.patagonicapropiedades.com.ar/mirador/img/patagonica-propiedades-mirador-og.webp" alt="Mirador del Lago" loading="lazy">
+            </div>
+            <div class="related-info">
+              <p class="related-cat">Proyecto · Departamentos</p>
+              <p class="related-card-title">Mirador del Lago — departamentos con vista al lago en Villa La Angostura</p>
             </div>
           </a>
         </div>
@@ -768,7 +776,7 @@
       <div class="cta-final">
         <h2>¿Te interesa invertir en la Patagonia?</h2>
         <p>Nuestro equipo puede asesorarte sobre proyectos disponibles, condiciones de compra y financiación. Sin compromiso.</p>
-        <a href="https://patagonicapropiedades.com.ar/#contacto" class="btn btn-accent">Hablar con un asesor</a>
+        <a href="https://patagonicapropiedades.com.ar/contacto" class="btn btn-accent">Hablar con un asesor</a>
       </div>
 
     </article><!-- /article-body -->
@@ -780,7 +788,7 @@
 <!-- ── Footer ── -->
 <footer>
   <p><strong>Patagónica Propiedades</strong> · Villa La Angostura, Neuquén, Argentina</p>
-  <p style="margin-top:0.5rem"><a href="../../">Proyectos</a> · <a href="../">Blog</a> · <a href="https://patagonicapropiedades.com.ar/#contacto">Contacto</a></p>
+  <p style="margin-top:0.5rem"><a href="../../">Proyectos</a> · <a href="../">Blog</a> · <a href="https://patagonicapropiedades.com.ar/contacto">Contacto</a></p>
 </footer>
 
 <!-- ── Schema LD+JSON ── -->
@@ -790,7 +798,7 @@
   "@type": "Article",
   "headline": "Por qué invertir en un lote en la Patagonia en 2025",
   "description": "Los lotes en Villa La Angostura y el corredor del lago Nahuel Huapi combinan escasez de tierra, demanda turística creciente y dolarización natural. Guía completa para inversores 2025.",
-  "image": "https://l.patagonicapropiedades.com.ar/blog/articulo/invertir-lote-patagonia.htmlimg/patagonica-blog-invertir-lote-patagonia-og.webp",
+  "image": "https://l.patagonicapropiedades.com.ar/blog/articulo/invertir-lote-patagonia/img/patagonica-blog-invertir-lote-patagonia-og.webp",
   "datePublished": "2025-04-23T09:00:00-03:00",
   "dateModified": "2025-04-23T09:00:00-03:00",
   "author": {

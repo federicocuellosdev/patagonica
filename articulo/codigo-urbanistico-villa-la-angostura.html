@@ -13,12 +13,12 @@
   <meta property="og:url"         content="https://l.patagonicapropiedades.com.ar/blog/articulo/codigo-urbanistico-villa-la-angostura.html">
   <meta property="og:title"       content="Nuevo código urbanístico en Villa La Angostura: qué cambia para compradores e inversores">
   <meta property="og:description" content="El Tríptico VLA redefinirá zonificaciones, alturas y subdivisiones. Más: obras de pavimentación, alerta por loteos irregulares y pulso del mercado 2026.">
-  <meta property="og:image"       content="https://l.patagonicapropiedades.com.ar/blog/articulo/codigo-urbanistico-villa-la-angostura.htmlimg/og.webp">
+  <meta property="og:image"       content="https://l.patagonicapropiedades.com.ar/blog/articulo/codigo-urbanistico-villa-la-angostura/img/og.webp">
   <!-- Twitter / X -->
   <meta name="twitter:card"        content="summary_large_image">
   <meta name="twitter:title"       content="Nuevo código urbanístico en Villa La Angostura: qué cambia para inversores">
   <meta name="twitter:description" content="El Tríptico VLA redefinirá zonificaciones, alturas y subdivisiones en Villa La Angostura. Todo lo que necesitás saber antes de invertir.">
-  <meta name="twitter:image"       content="https://l.patagonicapropiedades.com.ar/blog/articulo/codigo-urbanistico-villa-la-angostura.htmlimg/og.webp">
+  <meta name="twitter:image"       content="https://l.patagonicapropiedades.com.ar/blog/articulo/codigo-urbanistico-villa-la-angostura/img/og.webp">
 
   <meta property="article:published_time" content="2026-04-15T09:00:00-03:00">
   <meta property="article:modified_time"  content="2026-04-15T09:00:00-03:00">
@@ -102,9 +102,8 @@
       display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;
       font-size: 0.75rem; color: rgba(255,255,255,0.5);
     }
-    .breadcrumb span, .breadcrumb a { font-size: 0.75rem; }
-    .breadcrumb a { color: var(--secondary); text-decoration: none; }
-    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span, .breadcrumb a { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-decoration: none; }
+    .breadcrumb a:hover { color: rgba(255,255,255,0.8); }
 
     .article-category {
       display: inline-block;
@@ -390,11 +389,11 @@
     }
     .related-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
     .related-thumb {
-      width: 100%; aspect-ratio: 16/9;
+      width: 100%; aspect-ratio: 16/9; overflow: hidden;
       background: linear-gradient(135deg, var(--primary), #1a3547);
-      display: flex; align-items: center; justify-content: center;
     }
-    .related-thumb span { font-family: Gilroy; font-size: 0.85rem; color: rgba(255,255,255,0.4); letter-spacing: 1px; }
+    .related-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .related-card:hover .related-thumb img { transform: scale(1.04); }
     .related-info { padding: 0.85rem 1rem; }
     .related-cat { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--secondary); margin-bottom: 0.3rem; }
     .related-card-title { font-size: 0.84rem; font-weight: 600; color: var(--primary); line-height: 1.4; }
@@ -446,7 +445,7 @@
     <ul>
       <li><a href="../../">Proyectos</a></li>
       <li><a href="../index.html" class="active">Blog</a></li>
-      <li><a href="../../#contacto" class="nav-cta">Contacto</a></li>
+      <li><a href="https://patagonicapropiedades.com.ar/contacto" class="nav-cta">Contacto</a></li>
     </ul>
   </nav>
   <button class="mobile-menu-btn" aria-label="Menú"><span></span><span></span><span></span></button>
@@ -567,7 +566,7 @@
           <h3>Tomá decisiones informadas</h3>
           <p>Nuestro equipo sigue de cerca cada cambio normativo. Consultanos antes de tu próxima inversión.</p>
         </div>
-        <a href="../../#contacto" class="btn btn-accent">Consultar ahora</a>
+        <a href="https://patagonicapropiedades.com.ar/contacto" class="btn btn-accent">Consultar ahora</a>
       </div>
 
       <div class="notas-ref">
@@ -648,17 +647,30 @@
         <p class="related-title">También te puede interesar</p>
         <div class="related-grid">
           <a class="related-card" href="invertir-lote-patagonia.html">
-            <div class="related-thumb"><span>Por qué invertir en la Patagonia</span></div>
+            <div class="related-thumb">
+              <img src="src/patagonica-propiedades-invertir-lote-patagonia.webp" alt="Invertir en un lote en la Patagonia" loading="lazy">
+            </div>
             <div class="related-info">
               <p class="related-cat">Inversiones</p>
               <p class="related-card-title">Por qué invertir en un lote en la Patagonia en 2025</p>
             </div>
           </a>
           <a class="related-card" href="https://l.patagonicapropiedades.com.ar/loma-guacha/">
-            <div class="related-thumb"><span>Loma Guacha</span></div>
+            <div class="related-thumb">
+              <img src="https://l.patagonicapropiedades.com.ar/loma-guacha/img/patagonica-propiedades-loma-guacha-og.webp" alt="Loma Guacha" loading="lazy">
+            </div>
             <div class="related-info">
-              <p class="related-cat">Proyectos</p>
+              <p class="related-cat">Proyecto · Lotes</p>
               <p class="related-card-title">Loma Guacha — 36 lotes con reserva de bosque autóctono</p>
+            </div>
+          </a>
+          <a class="related-card" href="https://l.patagonicapropiedades.com.ar/mirador/">
+            <div class="related-thumb">
+              <img src="https://l.patagonicapropiedades.com.ar/mirador/img/patagonica-propiedades-mirador-og.webp" alt="Mirador del Lago" loading="lazy">
+            </div>
+            <div class="related-info">
+              <p class="related-cat">Proyecto · Departamentos</p>
+              <p class="related-card-title">Mirador del Lago — departamentos con vista al lago en Villa La Angostura</p>
             </div>
           </a>
         </div>
@@ -668,7 +680,7 @@
       <div class="cta-final">
         <h2>¿Querés invertir con las reglas claras?</h2>
         <p>Nuestro equipo sigue de cerca cada cambio normativo. Te asesoramos antes de que tome tu decisión.</p>
-        <a href="https://patagonicapropiedades.com.ar/#contacto" class="btn btn-accent">Hablar con un asesor</a>
+        <a href="https://patagonicapropiedades.com.ar/contacto" class="btn btn-accent">Hablar con un asesor</a>
       </div>
 
     </article>
@@ -679,7 +691,7 @@
 
 <footer>
   <p><strong>Patagónica Propiedades</strong> · Villa La Angostura, Neuquén, Argentina</p>
-  <p style="margin-top:0.5rem"><a href="../../">Proyectos</a> · <a href="../">Blog</a> · <a href="../../#contacto">Contacto</a></p>
+  <p style="margin-top:0.5rem"><a href="../../">Proyectos</a> · <a href="../">Blog</a> · <a href="https://patagonicapropiedades.com.ar/contacto">Contacto</a></p>
 </footer>
 
 <!-- Schema LD+JSON -->
@@ -689,7 +701,7 @@
   "@type": "Article",
   "headline": "Nuevo código urbanístico en Villa La Angostura: qué cambia para compradores e inversores",
   "description": "El Tríptico VLA redefinirá zonificaciones, alturas y subdivisiones en Villa La Angostura. Qué necesitás saber antes de comprar o construir en 2026.",
-  "image": "https://l.patagonicapropiedades.com.ar/blog/articulo/codigo-urbanistico-villa-la-angostura.htmlimg/og.webp",
+  "image": "https://l.patagonicapropiedades.com.ar/blog/articulo/codigo-urbanistico-villa-la-angostura/img/og.webp",
   "datePublished": "2026-04-15T09:00:00-03:00",
   "dateModified": "2026-04-15T09:00:00-03:00",
   "author": { "@type": "Person", "name": "Tomás Badía Jaspe", "email": "tomasbadia.j@gmail.com" },
