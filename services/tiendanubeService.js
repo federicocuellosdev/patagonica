@@ -4,10 +4,10 @@ const BASE_URL = 'https://api.tiendanube.com/v1';
 
 function client() {
   const storeId = process.env.TN_STORE_ID;
-  const token   = process.env.TN_ACCESS_TOKEN;
+  const token   = process.env.TN_TOKEN || process.env.TN_ACCESS_TOKEN;
 
   if (!storeId || !token) {
-    throw new Error('Faltan TN_STORE_ID o TN_ACCESS_TOKEN en las variables de entorno.');
+    throw new Error('Faltan TN_STORE_ID o TN_TOKEN en las variables de entorno.');
   }
 
   return axios.create({
