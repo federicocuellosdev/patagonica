@@ -94,7 +94,7 @@ router.post('/orders', async (req, res) => {
       contact,
     });
 
-    const checkoutUrl = `https://chavelaba.com.ar/checkout/v3/start/${order.token}`;
+    const checkoutUrl = `https://chavela33.mitiendanube.com/checkout/v3/start/${order.token}`;
 
     res.json({ ok: true, order_id: order.id, checkout_url: checkoutUrl });
   } catch (err) {
