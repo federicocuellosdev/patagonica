@@ -94,7 +94,7 @@ router.post('/orders', async (req, res) => {
       contact,
     });
 
-    const checkoutUrl = order.checkout_url || order.storefront_url;
+    const checkoutUrl = order.checkout_url || order.storefront_url || order.gateway_link;
 
     if (!checkoutUrl) {
       return res.status(502).json({ error: 'TN no devolvió checkout_url', order });
