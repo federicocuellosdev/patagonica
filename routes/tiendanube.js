@@ -94,11 +94,8 @@ router.post('/orders', async (req, res) => {
       contact,
     });
 
-    const checkoutUrl = order.checkout_url || order.storefront_url || order.gateway_link;
-
-    if (!checkoutUrl) {
-      return res.status(502).json({ error: 'TN no devolvió checkout_url', order });
-    }
+    const storeDomain = process.env.TN_STORE_DOMAIN || 'chavelaba.com.ar';
+    const checkoutUrl = `https://${storeDomain}/checkout/v3/start/${order.token}`;
 
     res.json({ ok: true, order_id: order.id, checkout_url: checkoutUrl });
   } catch (err) {
