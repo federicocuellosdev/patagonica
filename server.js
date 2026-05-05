@@ -21,10 +21,13 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({
   origin: [
     'https://tienda.chavelaba.com.ar',
+    'https://chavelaba.com.ar',
+    'https://www.chavelaba.com.ar',
     'https://federicocuellos.ar',
     'https://www.federicocuellos.ar',
     'http://localhost:3000',
     /\.github\.io$/,
+    /\.mitiendanube\.com$/,
   ],
   credentials: true,
 }));
