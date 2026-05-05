@@ -56,10 +56,10 @@ router.post('/ia', async (req, res) => {
 
 router.post('/encuesta-asech', async (req, res) => {
     try {
-        const { nombre: nombreRaw, email, p1, p2, p3 } = req.body;
+        const { nombre: nombreRaw, email = '', p1, p2, p3 } = req.body;
 
-        if (!nombreRaw || !email || !p1 || !p2 || !p3) {
-            return res.status(400).json({ error: 'Todos los campos son requeridos' });
+        if (!nombreRaw || !p1 || !p2 || !p3) {
+            return res.status(400).json({ error: 'Nombre y respuestas son requeridos' });
         }
 
         const nombre = nombreRaw.trim().toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
