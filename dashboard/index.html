@@ -109,11 +109,8 @@
     }
     .logout-link:hover { color: var(--rose); }
 
-    /* Welcome + headline metrics */
-    .welcome-row {
-      display: grid; grid-template-columns: 1fr 1.4fr; gap: 1rem; align-items: end;
-      margin-bottom: 1.5rem;
-    }
+    /* Welcome */
+    .welcome { margin-bottom: 1.5rem; }
     .welcome h1 {
       font-family: 'Inter', sans-serif;
       font-weight: 700; font-size: 2.1rem; line-height: 1.15; color: var(--text);
@@ -121,16 +118,24 @@
     }
     .welcome .lead { color: var(--text-muted); font-size: 0.92rem; }
 
+    /* Headline metrics — fila horizontal de 4 KPIs */
     .headline-metrics {
-      display: flex; gap: 1.25rem; justify-content: flex-end; flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
     }
-    .headline-metric { text-align: left; min-width: 0; }
+    .headline-metric { text-align: left; min-width: 0; padding: 0 0.5rem; border-right: 1px solid var(--border); }
+    .headline-metric:last-child { border-right: none; }
     .headline-metric .label {
-      font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;
-      font-weight: 500; white-space: nowrap;
+      font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.45rem;
+      font-weight: 500; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.5px;
     }
     .headline-metric .value {
-      font-size: 1.95rem; font-weight: 700; line-height: 1; color: var(--text);
+      font-size: 2rem; font-weight: 700; line-height: 1; color: var(--text);
       letter-spacing: -0.8px;
     }
 
@@ -227,22 +232,22 @@
     }
 
     /* Progress bars */
-    .progress-bars { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 1rem; }
-    .progress-row { display: flex; align-items: center; gap: 0.7rem; font-size: 0.78rem; }
+    .progress-bars { display: flex; flex-direction: column; gap: 1.15rem; margin-top: 1.25rem; }
+    .progress-row { display: flex; align-items: center; gap: 0.85rem; font-size: 0.82rem; padding: 0.25rem 0; }
     .progress-row .name {
       width: 220px; color: var(--text-muted); font-weight: 500; flex-shrink: 0;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .progress-row .bar {
-      flex: 1; height: 24px; background: var(--bg-2); border-radius: var(--br-pill); overflow: hidden;
+      flex: 1; height: 32px; background: var(--bg-2); border-radius: var(--br-pill); overflow: hidden;
       position: relative;
     }
     .progress-row .bar-fill {
       position: absolute; left: 0; top: 0; bottom: 0;
       border-radius: var(--br-pill);
-      display: flex; align-items: center; padding-left: 0.85rem;
-      color: #fff; font-size: 0.7rem; font-weight: 700;
-      min-width: 30px;
+      display: flex; align-items: center; padding-left: 1rem;
+      color: #fff; font-size: 0.76rem; font-weight: 700;
+      min-width: 36px;
     }
     .bar-fill.blue { background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%); }
     .bar-fill.teal { background: linear-gradient(90deg, var(--teal) 0%, #044451 100%); }
@@ -368,8 +373,8 @@
       .card.row-span-2 { grid-row: span 1; }
     }
     @media (max-width: 960px) {
-      .welcome-row { grid-template-columns: 1fr; gap: 1.5rem; }
-      .headline-metrics { justify-content: flex-start; }
+      .headline-metrics { grid-template-columns: repeat(2, 1fr); }
+      .headline-metric:nth-child(2) { border-right: none; }
     }
     @media (max-width: 640px) {
       body { padding: 0.5rem; }
@@ -407,14 +412,14 @@
         </div>
       </div>
 
-      <!-- Welcome + headline -->
-      <div class="welcome-row">
-        <div class="welcome">
-          <h1 id="welcome-title">Hola</h1>
-          <p class="lead" id="welcome-lead">Performance de Meta Ads y leads de Kommo en el período seleccionado.</p>
-        </div>
-        <div class="headline-metrics" id="headline-metrics"></div>
+      <!-- Welcome -->
+      <div class="welcome">
+        <h1 id="welcome-title">Hola</h1>
+        <p class="lead" id="welcome-lead">Performance de Meta Ads y leads de Kommo en el período seleccionado.</p>
       </div>
+
+      <!-- Headline metrics: 4 KPIs horizontales -->
+      <div class="headline-metrics" id="headline-metrics"></div>
 
       <!-- Filter bar -->
       <div class="filter-bar">
