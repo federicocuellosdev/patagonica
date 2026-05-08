@@ -551,9 +551,9 @@
     }
 
     function objectiveMeta(o) {
-      if (o === 'OUTCOME_LEADS') return { label: 'Leads', icon: 'L', cls: 'icon-leads' };
-      if (o === 'OUTCOME_AWARENESS') return { label: 'Awareness', icon: 'A', cls: 'icon-awareness' };
-      if (o === 'OUTCOME_TRAFFIC' || o === 'LINK_CLICKS') return { label: 'Tráfico', icon: 'T', cls: 'icon-traffic' };
+      if (o === 'OUTCOME_LEADS') return { label: 'Conversión', icon: 'C', cls: 'icon-leads' };
+      if (o === 'OUTCOME_AWARENESS') return { label: 'Reconocimiento', icon: 'R', cls: 'icon-awareness' };
+      if (o === 'OUTCOME_TRAFFIC' || o === 'LINK_CLICKS' || o === 'OUTCOME_ENGAGEMENT') return { label: 'Interacción', icon: 'I', cls: 'icon-traffic' };
       return { label: o, icon: '?', cls: 'icon-traffic' };
     }
 
