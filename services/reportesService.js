@@ -260,6 +260,7 @@ function aggregateMeta({ desde, hasta }) {
   const filtered = store.days.filter((d) => d.date >= desde && d.date <= hasta);
 
   const byCampaign = new Map();
+  const byDate = new Map();
   for (const d of filtered) {
     const key = d.campaign_id;
     if (!byCampaign.has(key)) {
@@ -282,6 +283,18 @@ function aggregateMeta({ desde, hasta }) {
     // reach no es perfectamente aditivo entre días (puede haber overlap de usuarios),
     // pero la suma diaria es la convención típica en dashboards y comparativa entre períodos.
     c.reach += d.reach;
+
+    // Daily totals
+    if (!byDate.has(d.date)) {
+      byDate.set(d.date, { date: d.date, spend: 0, leads: 0, landing_page_views: 0, thruplays: 0, reach: 0, impressions: 0 });
+    }
+    const dayRow = byDate.get(d.date);
+    dayRow.spend += d.spend;
+    dayRow.leads += d.leads;
+    dayRow.landing_page_views += d.landing_page_views;
+    dayRow.thruplays += d.thruplays;
+    dayRow.reach += d.reach;
+    dayRow.impressions += d.impressions;
   }
 
   const campaigns = Array.from(byCampaign.values()).map((c) => ({
@@ -311,9 +324,12 @@ function aggregateMeta({ desde, hasta }) {
   totals.cost_per_landing_page_view = totals.landing_page_views > 0 ? totals.spend / totals.landing_page_views : null;
   totals.cost_per_thruplay = totals.thruplays > 0 ? totals.spend / totals.thruplays : null;
 
+  const daily = Array.from(byDate.values()).sort((a, b) => (a.date < b.date ? -1 : 1));
+
   return {
     campaigns,
     totals,
+    daily,
     store_meta: {
       earliest: store.earliest,
       latest: store.latest,
@@ -332,9 +348,21 @@ function aggregateKommo({ desde, hasta }) {
   const created = filtered.length;
   const derived = filtered.filter((l) => l.tags.includes(TAG_DERIVADO) || l.status_id === STAGE_DERIVADO).length;
 
+  const byDate = new Map();
+  for (const l of filtered) {
+    const isDerived = l.tags.includes(TAG_DERIVADO) || l.status_id === STAGE_DERIVADO;
+    const date = new Date(l.created_at * 1000).toLocaleDateString('en-CA', { timeZone: 'America/Argentina/Buenos_Aires' });
+    if (!byDate.has(date)) byDate.set(date, { date, created: 0, derived: 0 });
+    const row = byDate.get(date);
+    row.created += 1;
+    if (isDerived) row.derived += 1;
+  }
+  const daily = Array.from(byDate.values()).sort((a, b) => (a.date < b.date ? -1 : 1));
+
   return {
     created,
     derived,
+    daily,
     store_meta: {
       total_leads_stored: store.leads.length,
       last_synced_at: store.last_synced_at,
