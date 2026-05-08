@@ -304,6 +304,7 @@ function aggregateMeta({ desde, hasta }) {
     ...c,
     ctr: c.impressions > 0 ? (c.clicks / c.impressions) * 100 : 0,
     cpm: c.impressions > 0 ? (c.spend / c.impressions) * 1000 : 0,
+    frequency: c.reach > 0 ? c.impressions / c.reach : 0,
     cost_per_lead: c.leads > 0 ? c.spend / c.leads : null,
     cost_per_landing_page_view: c.landing_page_views > 0 ? c.spend / c.landing_page_views : null,
     cost_per_thruplay: c.thruplays > 0 ? c.spend / c.thruplays : null,
