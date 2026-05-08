@@ -7,140 +7,327 @@
   <link rel="icon" type="image/png" href="/mirador/img/patagonica-icon.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://d1v2p1s05qqabi.cloudfront.net/fonts/patagonica/fonts-patagonica.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
-      --primary: #121C25;
-      --secondary: #057488;
-      --accent: #d4a85a;
-      --light: #f7f7f7;
-      --text: #2a2a2a;
-      --text-muted: #6c757d;
-      --border: #e4ddd4;
-      --br: 6px;
+      --bg:           #e7ebf3;
+      --bg-2:         #f1f4f9;
+      --card:         #ffffff;
+      --primary:      #1a3a6e;
+      --accent:       #4a90e2;
+      --accent-soft:  #cfe1f5;
+      --teal:         #057488;
+      --teal-soft:    #d6eef1;
+      --warm:         #f3e9d7;
+      --warm-strong:  #d4a85a;
+      --green-soft:   #d4ecdf;
+      --green:        #3aa676;
+      --rose-soft:    #f4dadf;
+      --rose:         #c0526a;
+      --text:         #1a3a6e;
+      --text-muted:   #6e7b96;
+      --text-soft:    #93a1bd;
+      --border:       #e3e8ef;
+      --br-card:      22px;
+      --br-pill:      50px;
+      --br-input:     14px;
+      --shadow:       0 2px 14px rgba(26, 58, 110, 0.05);
+      --shadow-lg:    0 4px 24px rgba(26, 58, 110, 0.08);
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Gilroy, 'Source Sans Pro', sans-serif; color: var(--text); background: var(--light); line-height: 1.5; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 1.25rem;
+    }
 
-    header {
-      background: var(--primary); color: #fff;
-      padding: 1rem 2rem;
-      display: flex; justify-content: space-between; align-items: center;
+    /* Shell */
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 28px;
+      padding: 1.5rem 1.75rem 2rem;
+      box-shadow: var(--shadow);
     }
-    header img { height: 28px; }
-    .user-bar { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: rgba(255,255,255,0.7); }
-    .user-bar button {
-      background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.85);
-      padding: 0.4rem 0.85rem; border-radius: 4px; cursor: pointer; font-family: inherit; font-size: 0.78rem;
-    }
-    .user-bar button:hover { background: rgba(255,255,255,0.08); }
 
-    main { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-    h1 { font-family: Gilroy; font-weight: 400; font-size: 1.7rem; color: var(--primary); margin-bottom: 0.4rem; }
-    .lead { color: var(--text-muted); margin-bottom: 1.75rem; font-size: 0.92rem; }
+    /* Top bar */
+    .topbar {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.5rem; width: 100%;
+    }
+    .topbar .nav-pills { flex: 1; justify-content: center; }
+    .topbar > .topbar-left,
+    .topbar > .topbar-right { flex-shrink: 0; }
+    .brand-pill {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      padding: 0.35rem 0.95rem 0.35rem 0.4rem;
+      background: var(--bg-2); border-radius: var(--br-pill);
+      font-weight: 600; font-size: 0.82rem; color: var(--text);
+    }
+    .brand-pill .dot {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--primary); display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 0.75rem;
+    }
+    .nav-pills {
+      display: flex; gap: 0.3rem; padding: 0.3rem; background: var(--bg-2);
+      border-radius: var(--br-pill);
+    }
+    .nav-pill {
+      padding: 0.45rem 1rem; border-radius: var(--br-pill); font-size: 0.78rem;
+      color: var(--text-muted); cursor: pointer; border: none; background: transparent;
+      font-family: inherit; font-weight: 500; transition: all 0.15s;
+    }
+    .nav-pill.active { background: var(--primary); color: #fff; box-shadow: 0 2px 8px rgba(26, 58, 110, 0.2); }
+    .nav-pill:not(.active):hover { color: var(--text); }
+    .topbar-right { display: flex; align-items: center; gap: 0.6rem; }
+    .icon-btn {
+      width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border);
+      background: var(--card); cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); transition: all 0.15s;
+    }
+    .icon-btn:hover { background: var(--bg-2); }
+    .user-chip {
+      display: flex; align-items: center; gap: 0.55rem;
+      padding: 0.3rem 0.85rem 0.3rem 0.3rem;
+      background: var(--bg-2); border-radius: var(--br-pill);
+    }
+    .user-chip .avatar {
+      width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: #fff;
+      display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700;
+    }
+    .user-chip .email { font-size: 0.78rem; color: var(--text); font-weight: 500; }
+    .logout-link {
+      font-size: 0.75rem; color: var(--text-muted); text-decoration: none; padding-left: 0.5rem;
+      border-left: 1px solid var(--border); cursor: pointer;
+    }
+    .logout-link:hover { color: var(--rose); }
 
-    /* Filters */
-    .filters {
-      background: #fff; border: 1px solid var(--border); border-radius: 10px;
-      padding: 1.25rem; margin-bottom: 2rem;
-      display: flex; flex-wrap: wrap; gap: 1rem; align-items: end;
+    /* Welcome + headline metrics */
+    .welcome-row {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem; align-items: end;
+      margin-bottom: 1.5rem;
     }
-    .filter-group { display: flex; flex-direction: column; gap: 0.35rem; }
-    .filter-group label {
-      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-      color: var(--text-muted);
+    .welcome h1 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700; font-size: 2.1rem; line-height: 1.15; color: var(--text);
+      letter-spacing: -0.5px; margin-bottom: 0.35rem;
     }
-    .filter-group input {
-      padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: var(--br);
-      font-family: inherit; font-size: 0.92rem; min-width: 160px;
+    .welcome .lead { color: var(--text-muted); font-size: 0.92rem; }
+
+    .headline-metrics {
+      display: flex; gap: 1.5rem; justify-content: flex-end;
     }
-    .preset-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-    .preset-btn {
-      background: transparent; border: 1px solid var(--border); border-radius: 50px;
-      padding: 0.3rem 0.85rem; font-family: inherit; font-size: 0.78rem; color: var(--text-muted);
-      cursor: pointer; transition: all 0.15s;
+    .headline-metric { text-align: left; }
+    .headline-metric .label {
+      font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.25rem;
+      font-weight: 500;
     }
-    .preset-btn:hover { border-color: var(--secondary); color: var(--secondary); }
-    .filters button.update {
-      background: var(--secondary); color: #fff; border: none; border-radius: var(--br);
-      padding: 0.65rem 1.4rem; font-family: inherit; font-size: 0.88rem; font-weight: 700; cursor: pointer;
+    .headline-metric .value {
+      font-size: 2.4rem; font-weight: 700; line-height: 1; color: var(--text);
+      letter-spacing: -1px;
+    }
+
+    /* Filters bar */
+    .filter-bar {
+      display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center;
+      padding: 0.7rem 0.9rem; background: var(--bg-2); border-radius: var(--br-pill);
+      margin-bottom: 1.5rem;
+    }
+    .filter-bar .preset-btn {
+      padding: 0.45rem 1rem; border-radius: var(--br-pill); font-size: 0.78rem;
+      color: var(--text-muted); cursor: pointer; border: none; background: transparent;
+      font-family: inherit; font-weight: 500;
+    }
+    .filter-bar .preset-btn.active,
+    .filter-bar .preset-btn:hover { background: var(--card); color: var(--text); box-shadow: var(--shadow); }
+    .filter-bar .sep { width: 1px; height: 22px; background: var(--border); margin: 0 0.3rem; }
+    .filter-bar .date-input {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.35rem 0.85rem; background: var(--card); border-radius: var(--br-pill);
+      box-shadow: var(--shadow);
+    }
+    .filter-bar .date-input label { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; }
+    .filter-bar .date-input input {
+      border: none; background: transparent; font-family: inherit;
+      font-size: 0.82rem; color: var(--text); font-weight: 500;
+      outline: none; cursor: pointer; padding: 0;
+    }
+    .filter-bar .resync-btn {
+      margin-left: auto; padding: 0.5rem 1rem; border-radius: var(--br-pill);
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--text-muted); font-family: inherit; font-size: 0.78rem; font-weight: 500;
+      cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .filter-bar .resync-btn:hover { color: var(--teal); border-color: var(--teal); }
+    .filter-bar .resync-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+    }
+    .card {
+      background: var(--card); border-radius: var(--br-card); padding: 1.25rem;
+      border: 1px solid var(--border);
+    }
+    .card.col-span-2 { grid-column: span 2; }
+    .card.row-span-2 { grid-row: span 2; }
+    .card-tinted { color: var(--text); }
+    .card.tint-blue { background: linear-gradient(135deg, #e8f1ff 0%, #cfe1f5 100%); border-color: transparent; }
+    .card.tint-teal { background: linear-gradient(135deg, var(--teal-soft), #b9e0e4); border-color: transparent; }
+    .card.tint-warm { background: linear-gradient(135deg, var(--warm), #ecdcb8); border-color: transparent; }
+    .card.tint-green { background: linear-gradient(135deg, var(--green-soft), #b6dcc7); border-color: transparent; }
+    .card.dark { background: var(--primary); color: #fff; border-color: transparent; }
+    .card.dark .card-title,
+    .card.dark .muted { color: rgba(255,255,255,0.7); }
+
+    .card-title {
+      font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
+      margin-bottom: 0.65rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .card-title .pct {
       margin-left: auto;
+      background: var(--card); color: var(--accent);
+      font-size: 0.7rem; padding: 0.15rem 0.6rem; border-radius: var(--br-pill); font-weight: 700;
     }
-    .filters button.update:hover { background: #04606f; }
-    .filters button.update:disabled { opacity: 0.5; cursor: not-allowed; }
+    .card-value {
+      font-size: 1.85rem; font-weight: 700; letter-spacing: -0.6px;
+      line-height: 1; margin-bottom: 0.35rem;
+    }
+    .card-sub {
+      font-size: 0.78rem; color: var(--text-muted);
+    }
 
-    /* Sections */
-    .section { margin-bottom: 2.5rem; }
-    .section-title {
-      font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
-      color: var(--text-muted); margin-bottom: 0.85rem;
+    /* Progress bars */
+    .progress-bars { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 1rem; }
+    .progress-row { display: flex; align-items: center; gap: 0.7rem; font-size: 0.78rem; }
+    .progress-row .name { width: 130px; color: var(--text-muted); font-weight: 500; flex-shrink: 0; }
+    .progress-row .bar {
+      flex: 1; height: 24px; background: var(--bg-2); border-radius: var(--br-pill); overflow: hidden;
+      position: relative;
     }
+    .progress-row .bar-fill {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      border-radius: var(--br-pill);
+      display: flex; align-items: center; padding-left: 0.85rem;
+      color: #fff; font-size: 0.7rem; font-weight: 700;
+      min-width: 30px;
+    }
+    .bar-fill.blue { background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%); }
+    .bar-fill.teal { background: linear-gradient(90deg, var(--teal) 0%, #044451 100%); }
+    .bar-fill.warm { background: linear-gradient(90deg, var(--warm-strong) 0%, #8a6f33 100%); }
+    .progress-row .pct-end { width: 50px; text-align: right; color: var(--text); font-weight: 600; }
 
-    /* KPI cards */
-    .kpi-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.85rem;
+    /* Campaign list */
+    .campaign-list {
+      display: flex; flex-direction: column;
     }
-    .kpi {
-      background: #fff; border: 1px solid var(--border); border-radius: 10px;
-      padding: 1.1rem 1.25rem;
+    .campaign-item {
+      display: grid; grid-template-columns: 36px 1fr auto auto auto auto; gap: 1rem; align-items: center;
+      padding: 0.85rem 0; border-bottom: 1px solid var(--border);
     }
-    .kpi-label {
-      font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-      color: var(--text-muted); margin-bottom: 0.4rem;
+    .campaign-item:last-child { border-bottom: none; }
+    .campaign-item .icon {
+      width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-weight: 700; font-size: 0.78rem;
     }
-    .kpi-value {
-      font-family: Gilroy; font-weight: 400; font-size: 1.55rem; color: var(--primary); line-height: 1.1;
-    }
-    .kpi-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.3rem; }
+    .icon-leads { background: var(--teal-soft); color: var(--teal); }
+    .icon-awareness { background: var(--warm); color: var(--warm-strong); }
+    .icon-traffic { background: var(--accent-soft); color: var(--primary); }
+    .campaign-item .info .name { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+    .campaign-item .info .obj { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.1rem; }
+    .campaign-item .num-cell { text-align: right; min-width: 70px; }
+    .campaign-item .num-cell .num { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+    .campaign-item .num-cell .lbl { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 0.1rem; }
 
-    /* Table */
-    .table-wrap { background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
-    thead th {
-      background: #fafafa; padding: 0.75rem 1rem; text-align: left; font-weight: 700;
-      color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;
-      border-bottom: 1px solid var(--border); white-space: nowrap;
+    /* Onboarding-style breakdown */
+    .breakdown-rows { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.85rem; }
+    .br-row {
+      display: grid; grid-template-columns: 36px 1fr auto; gap: 0.7rem; align-items: center;
+      padding: 0.6rem 0.75rem; background: var(--bg-2); border-radius: 14px;
     }
-    thead th.num, tbody td.num { text-align: right; }
-    tbody td {
-      padding: 0.85rem 1rem; border-bottom: 1px solid #f0f0f0; vertical-align: top;
+    .br-row .br-icon {
+      width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
     }
-    tbody tr:last-child td { border-bottom: none; }
-    tbody tr:hover { background: #fafafa; }
-    .obj-tag {
-      display: inline-block; font-size: 0.67rem; font-weight: 700; text-transform: uppercase;
-      padding: 0.15rem 0.55rem; border-radius: 50px; letter-spacing: 0.5px;
-    }
-    .obj-OUTCOME_LEADS { background: #f0fafa; color: var(--secondary); }
-    .obj-OUTCOME_AWARENESS { background: #fdf6e7; color: #a37a1f; }
-    .obj-LINK_CLICKS, .obj-OUTCOME_TRAFFIC { background: #f3eef9; color: #5b3a8c; }
+    .br-icon.blue { background: var(--accent-soft); color: var(--primary); }
+    .br-icon.teal { background: var(--teal-soft); color: var(--teal); }
+    .br-icon.green { background: var(--green-soft); color: var(--green); }
+    .br-icon.warm { background: var(--warm); color: var(--warm-strong); }
+    .br-icon.rose { background: var(--rose-soft); color: var(--rose); }
+    .br-row .br-name { font-size: 0.86rem; font-weight: 600; color: var(--text); }
+    .br-row .br-meta { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.1rem; }
+    .br-row .br-value { font-size: 0.92rem; font-weight: 700; color: var(--text); }
 
-    /* States */
-    .loading, .error-box {
-      background: #fff; border: 1px solid var(--border); border-radius: 10px;
-      padding: 2.5rem; text-align: center; color: var(--text-muted);
-    }
-    .error-box { background: #fff5f5; border-color: #ffd0d0; color: #c0392b; }
-    .spinner-inline {
-      display: inline-block; width: 16px; height: 16px;
-      border: 2px solid var(--border); border-top-color: var(--secondary);
-      border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 0.5rem;
-    }
+    /* Loading / states */
     .full-loading {
-      display: flex; align-items: center; justify-content: center; min-height: 60vh;
+      display: flex; align-items: center; justify-content: center; min-height: 70vh;
       flex-direction: column; gap: 1rem;
     }
     .spinner {
       width: 32px; height: 32px;
-      border: 3px solid var(--border); border-top-color: var(--secondary);
+      border: 3px solid var(--border); border-top-color: var(--accent);
       border-radius: 50%; animation: spin 0.7s linear infinite;
+    }
+    .spinner-inline {
+      display: inline-block; width: 14px; height: 14px;
+      border: 2px solid var(--border); border-top-color: var(--accent);
+      border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 0.4rem;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     .hidden { display: none !important; }
 
-    .meta-info { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.6rem; }
-    .meta-info code { background: #f0f0f0; padding: 0.05rem 0.3rem; border-radius: 3px; font-size: 0.85em; }
+    .state-box {
+      grid-column: 1 / -1;
+      background: var(--bg-2); border-radius: var(--br-card); padding: 2.5rem; text-align: center;
+      color: var(--text-muted); font-size: 0.92rem;
+    }
+    .state-box.error { background: var(--rose-soft); color: var(--rose); }
+
+    .meta-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 1rem; margin-top: 1.5rem; border-top: 1px solid var(--border);
+      font-size: 0.74rem; color: var(--text-soft);
+    }
+    .meta-footer code { background: var(--bg-2); padding: 0.1rem 0.45rem; border-radius: 4px; font-family: 'Inter', monospace; font-size: 0.95em; }
+
+    /* Toggle switch */
+    .switch-group {
+      display: inline-flex; gap: 0; padding: 3px; background: var(--bg-2); border-radius: var(--br-pill);
+      margin-left: auto;
+    }
+    .switch-opt {
+      padding: 0.4rem 0.95rem; border-radius: var(--br-pill);
+      font-size: 0.74rem; font-weight: 600; color: var(--text-muted); cursor: pointer;
+      border: none; background: transparent; font-family: inherit; transition: all 0.15s;
+    }
+    .switch-opt.active { background: var(--card); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+
+    .chart-wrap { position: relative; height: 280px; margin-top: 0.85rem; }
+    .chart-legend { display: flex; gap: 1.25rem; margin-top: 0.5rem; font-size: 0.78rem; color: var(--text-muted); }
+    .chart-legend .lg-dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 0.4rem; vertical-align: middle; }
+
+    @media (max-width: 960px) {
+      .welcome-row { grid-template-columns: 1fr; gap: 1.5rem; }
+      .headline-metrics { justify-content: flex-start; }
+      .dashboard-grid { grid-template-columns: 1fr 1fr; }
+      .nav-pills { display: none; }
+    }
+    @media (max-width: 640px) {
+      body { padding: 0.5rem; }
+      .shell { padding: 1rem; border-radius: 18px; }
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .card.col-span-2 { grid-column: span 1; }
+      .topbar { flex-wrap: wrap; }
+    }
   </style>
 </head>
 <body>
@@ -151,54 +338,74 @@
   </div>
 
   <div id="app" class="hidden">
-    <header>
-      <img src="/mirador/img/patagonica-logo-blanco.webp" alt="Patagónica Propiedades">
-      <div class="user-bar">
-        <span id="user-email"></span>
-        <button id="logout-btn">Cerrar sesión</button>
-      </div>
-    </header>
+    <div class="shell">
 
-    <main>
-      <h1>Dashboard de reportes</h1>
-      <p class="lead">Performance de Meta Ads y leads de Kommo por período.</p>
-
-      <div class="filters">
-        <div class="filter-group">
-          <label for="desde">Desde</label>
-          <input type="date" id="desde">
-        </div>
-        <div class="filter-group">
-          <label for="hasta">Hasta</label>
-          <input type="date" id="hasta">
-        </div>
-        <div class="filter-group">
-          <label>Atajos</label>
-          <div class="preset-btns">
-            <button type="button" class="preset-btn" data-range="7">Últimos 7 días</button>
-            <button type="button" class="preset-btn" data-range="30">Últimos 30 días</button>
-            <button type="button" class="preset-btn" data-range="month">Mes actual</button>
-            <button type="button" class="preset-btn" data-range="lastmonth">Mes anterior</button>
+      <!-- Topbar -->
+      <div class="topbar">
+        <div class="topbar-left">
+          <div class="brand-pill">
+            <span class="dot">P</span>
+            Patagónica
           </div>
         </div>
-        <button type="button" class="update" id="update-btn">Cargar</button>
-        <button type="button" class="update" id="refresh-btn" style="background:transparent;color:var(--secondary);border:1px solid var(--secondary);">Re-sync histórico</button>
+        <nav class="nav-pills">
+          <button class="nav-pill active">Dashboard</button>
+          <button class="nav-pill" disabled>Campañas</button>
+          <button class="nav-pill" disabled>Leads</button>
+          <button class="nav-pill" disabled>Reportes</button>
+        </nav>
+        <div class="topbar-right">
+          <div class="user-chip">
+            <span class="avatar" id="user-avatar">F</span>
+            <span class="email" id="user-email"></span>
+          </div>
+          <a class="logout-link" id="logout-btn">Salir</a>
+        </div>
       </div>
 
-      <div id="report-area">
-        <div class="loading">Elegí un período y presioná Actualizar.</div>
+      <!-- Welcome + headline -->
+      <div class="welcome-row">
+        <div class="welcome">
+          <h1 id="welcome-title">Hola</h1>
+          <p class="lead" id="welcome-lead">Performance de Meta Ads y leads de Kommo en el período seleccionado.</p>
+        </div>
+        <div class="headline-metrics" id="headline-metrics"></div>
       </div>
-    </main>
+
+      <!-- Filter bar -->
+      <div class="filter-bar">
+        <button class="preset-btn" data-range="7">Últ. 7 días</button>
+        <button class="preset-btn active" data-range="30">Últ. 30 días</button>
+        <button class="preset-btn" data-range="month">Este mes</button>
+        <button class="preset-btn" data-range="lastmonth">Mes anterior</button>
+        <button class="preset-btn" data-range="ytd">Este año</button>
+        <span class="sep"></span>
+        <span class="date-input">
+          <label>Desde</label>
+          <input type="date" id="desde">
+        </span>
+        <span class="date-input">
+          <label>Hasta</label>
+          <input type="date" id="hasta">
+        </span>
+        <button class="resync-btn" id="refresh-btn">↻ Re-sync histórico</button>
+      </div>
+
+      <!-- Grid -->
+      <div class="dashboard-grid" id="report-area">
+        <div class="state-box"><span class="spinner-inline"></span> Cargando...</div>
+      </div>
+
+      <div class="meta-footer" id="meta-footer"></div>
+    </div>
   </div>
 
   <script>
     const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
       ? 'http://localhost:3000'
       : 'https://patagonica.onrender.com';
-
     const TOKEN_KEY = 'patagonica_dashboard_token';
 
-    // ---------- Auth ----------
     async function verifyToken(token) {
       const r = await fetch(`${API_BASE}/api/auth/verify`, {
         headers: { Authorization: 'Bearer ' + token }
@@ -212,23 +419,13 @@
       location.href = 'login.html';
     });
 
-    // ---------- Helpers ----------
-    function formatUSD(n) {
-      if (n == null || isNaN(n)) return '—';
-      return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
-    function formatNum(n) {
-      if (n == null || isNaN(n)) return '—';
-      return Number(n).toLocaleString('es-AR');
-    }
-    function formatPct(n) {
-      if (n == null || isNaN(n)) return '—';
-      return Number(n).toFixed(2) + '%';
-    }
+    function formatUSD(n) { if (n == null || isNaN(n)) return '—'; return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: n < 100 ? 2 : 0 }); }
+    function formatUSD2(n) { if (n == null || isNaN(n)) return '—'; return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    function formatNum(n) { if (n == null || isNaN(n)) return '—'; return Number(n).toLocaleString('es-AR'); }
+    function formatPct(n) { if (n == null || isNaN(n)) return '—'; return Number(n).toFixed(2) + '%'; }
     function pad(n) { return String(n).padStart(2, '0'); }
     function isoDate(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
 
-    // ---------- Date presets ----------
     function applyPreset(kind) {
       const today = new Date();
       let desde, hasta;
@@ -243,9 +440,13 @@
       } else if (kind === 'lastmonth') {
         desde = new Date(today.getFullYear(), today.getMonth() - 1, 1);
         hasta = new Date(today.getFullYear(), today.getMonth(), 0);
+      } else if (kind === 'ytd') {
+        desde = new Date(today.getFullYear(), 0, 1);
+        hasta = new Date(today);
       }
       document.getElementById('desde').value = isoDate(desde);
       document.getElementById('hasta').value = isoDate(hasta);
+      document.querySelectorAll('.preset-btn').forEach((b) => b.classList.toggle('active', b.dataset.range === kind));
     }
 
     document.querySelectorAll('.preset-btn').forEach((btn) => {
@@ -254,37 +455,35 @@
         fetchReport(false);
       });
     });
+    document.getElementById('desde').addEventListener('change', () => {
+      document.querySelectorAll('.preset-btn').forEach((b) => b.classList.remove('active'));
+      fetchReport(false);
+    });
+    document.getElementById('hasta').addEventListener('change', () => {
+      document.querySelectorAll('.preset-btn').forEach((b) => b.classList.remove('active'));
+      fetchReport(false);
+    });
+    document.getElementById('refresh-btn').addEventListener('click', () => fetchReport(true));
 
-    // Auto-fetch al cambiar las fechas
-    document.getElementById('desde').addEventListener('change', () => fetchReport(false));
-    document.getElementById('hasta').addEventListener('change', () => fetchReport(false));
-
-    // Default: last 30 days
     applyPreset('30');
 
-    // ---------- Fetch report ----------
     async function fetchReport(forceRefresh = false) {
       const token = sessionStorage.getItem(TOKEN_KEY);
       const desde = document.getElementById('desde').value;
       const hasta = document.getElementById('hasta').value;
       if (!desde || !hasta) return;
 
-      const updateBtn = document.getElementById('update-btn');
       const refreshBtn = document.getElementById('refresh-btn');
-      updateBtn.disabled = true;
       refreshBtn.disabled = true;
-      const activeBtn = forceRefresh ? refreshBtn : updateBtn;
-      const originalText = activeBtn.textContent;
-      activeBtn.textContent = forceRefresh ? 'Re-syncing...' : 'Cargando...';
-      document.getElementById('report-area').innerHTML = forceRefresh
-        ? '<div class="loading"><span class="spinner-inline"></span>Re-sincronizando todo el histórico desde Meta y Kommo...</div>'
-        : '<div class="loading"><span class="spinner-inline"></span>Sincronizando días faltantes y filtrando...</div>';
+      const originalRefreshText = refreshBtn.textContent;
+      if (forceRefresh) refreshBtn.textContent = '↻ Re-sincronizando...';
+
+      const reportArea = document.getElementById('report-area');
+      reportArea.innerHTML = `<div class="state-box"><span class="spinner-inline"></span>${forceRefresh ? 'Re-sincronizando histórico Meta + Kommo...' : 'Cargando...'}</div>`;
 
       try {
-        const url = `${API_BASE}/api/reportes/dashboard?desde=${desde}&hasta=${hasta}` + (forceRefresh ? '&sync=force' : '&sync=auto');
-        const r = await fetch(url, {
-          headers: { Authorization: 'Bearer ' + token }
-        });
+        const url = `${API_BASE}/api/reportes/dashboard?desde=${desde}&hasta=${hasta}&sync=${forceRefresh ? 'force' : 'auto'}`;
+        const r = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
         if (r.status === 401) {
           sessionStorage.removeItem(TOKEN_KEY);
           location.replace('login.html');
@@ -294,113 +493,332 @@
         if (!r.ok) throw new Error(data.error || 'Error al obtener reporte');
         renderReport(data);
       } catch (err) {
-        document.getElementById('report-area').innerHTML =
-          `<div class="error-box"><strong>Error:</strong> ${err.message}</div>`;
+        reportArea.innerHTML = `<div class="state-box error"><strong>Error:</strong> ${err.message}</div>`;
+        document.getElementById('meta-footer').innerHTML = '';
       } finally {
-        updateBtn.disabled = false;
         refreshBtn.disabled = false;
-        updateBtn.textContent = 'Cargar';
-        refreshBtn.textContent = 'Re-sync histórico';
+        refreshBtn.textContent = originalRefreshText;
       }
     }
 
-    document.getElementById('update-btn').addEventListener('click', () => fetchReport(false));
-    document.getElementById('refresh-btn').addEventListener('click', () => fetchReport(true));
+    function objectiveMeta(o) {
+      if (o === 'OUTCOME_LEADS') return { label: 'Leads', icon: 'L', cls: 'icon-leads' };
+      if (o === 'OUTCOME_AWARENESS') return { label: 'Awareness', icon: 'A', cls: 'icon-awareness' };
+      if (o === 'OUTCOME_TRAFFIC' || o === 'LINK_CLICKS') return { label: 'Tráfico', icon: 'T', cls: 'icon-traffic' };
+      return { label: o, icon: '?', cls: 'icon-traffic' };
+    }
 
-    // ---------- Render ----------
     function renderReport(data) {
       const t = data.meta.totals;
       const k = data.kommo;
       const d = data.derived;
+      const campaigns = data.meta.campaigns.slice().sort((a, b) => b.spend - a.spend);
 
-      const kpis = [
-        { label: 'Inversión Meta', value: formatUSD(t.spend) },
-        { label: 'Alcance', value: formatNum(t.reach) },
-        { label: 'Impresiones', value: formatNum(t.impressions) },
-        { label: 'Formularios completos (Meta)', value: formatNum(t.leads), sub: t.cost_per_lead != null ? formatUSD(t.cost_per_lead) + ' / lead' : '' },
-        { label: 'Visitas a la página', value: formatNum(t.landing_page_views), sub: t.cost_per_landing_page_view != null ? formatUSD(t.cost_per_landing_page_view) + ' / visita' : '' },
-        { label: 'ThruPlay (videos)', value: formatNum(t.thruplays), sub: t.cost_per_thruplay != null ? formatUSD(t.cost_per_thruplay) + ' / thruplay' : '' },
-      ];
+      // Headline metrics
+      document.getElementById('headline-metrics').innerHTML = `
+        <div class="headline-metric">
+          <div class="label">Inversión</div>
+          <div class="value">${formatUSD(t.spend)}</div>
+        </div>
+        <div class="headline-metric">
+          <div class="label">Leads (Meta)</div>
+          <div class="value">${formatNum(t.leads)}</div>
+        </div>
+        <div class="headline-metric">
+          <div class="label">Leads (Kommo)</div>
+          <div class="value">${formatNum(k.created || 0)}</div>
+        </div>
+      `;
 
-      const kommoCards = [
-        { label: 'Leads creados (Kommo)', value: k.error ? '—' : formatNum(k.created), sub: k.error ? 'Error: ' + k.error : (d.cost_per_kommo_lead != null ? formatUSD(d.cost_per_kommo_lead) + ' / lead' : '') },
-        { label: 'Leads derivados (Kommo)', value: k.error ? '—' : formatNum(k.derived), sub: k.error ? '' : (d.cost_per_derived != null ? formatUSD(d.cost_per_derived) + ' / derivado' : '') },
-      ];
+      // Welcome subtitle
+      const today = new Date();
+      const greeting = today.getHours() < 12 ? 'Buen día' : today.getHours() < 19 ? 'Buenas tardes' : 'Buenas noches';
+      document.getElementById('welcome-title').textContent = `${greeting}, Federico`;
 
-      const campaignsHtml = data.meta.campaigns
-        .sort((a, b) => b.spend - a.spend)
-        .map((c) => `
-          <tr>
-            <td>${c.campaign_name}<div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.2rem;"><span class="obj-tag obj-${c.objective}">${c.objective.replace('OUTCOME_', '')}</span></div></td>
-            <td class="num">${formatUSD(c.spend)}</td>
-            <td class="num">${formatNum(c.reach)}</td>
-            <td class="num">${formatNum(c.impressions)}</td>
-            <td class="num">${formatNum(c.leads)}</td>
-            <td class="num">${c.cost_per_lead != null ? formatUSD(c.cost_per_lead) : '—'}</td>
-            <td class="num">${formatNum(c.landing_page_views)}</td>
-            <td class="num">${formatNum(c.thruplays)}</td>
-            <td class="num">${formatPct(c.ctr)}</td>
-          </tr>
-        `).join('');
+      // Spend share by campaign for progress bars
+      const totalSpend = t.spend || 1;
+      const campaignBars = campaigns.map((c) => {
+        const pct = (c.spend / totalSpend) * 100;
+        const cls = c.objective === 'OUTCOME_LEADS' ? 'teal'
+                  : c.objective === 'OUTCOME_AWARENESS' ? 'warm' : 'blue';
+        const short = c.campaign_name.replace(/^FORM - |^TRAFICO - |^RM - /, '');
+        return `
+          <div class="progress-row">
+            <div class="name" title="${c.campaign_name}">${short}</div>
+            <div class="bar"><div class="bar-fill ${cls}" style="width: ${pct.toFixed(1)}%;">${pct.toFixed(0)}%</div></div>
+            <div class="pct-end">${formatUSD2(c.spend)}</div>
+          </div>
+        `;
+      }).join('');
 
+      // Visitas/leads ratio
+      const conversionPct = t.landing_page_views > 0 ? (t.leads / t.landing_page_views) * 100 : 0;
+      const kommoFromMetaPct = t.leads > 0 ? ((k.created || 0) / t.leads) * 100 : 0;
+      const derivedPct = (k.created || 0) > 0 ? ((k.derived || 0) / k.created) * 100 : 0;
+
+      // Build grid
       document.getElementById('report-area').innerHTML = `
-        <div class="section">
-          <div class="section-title">Meta Ads · totales del período</div>
-          <div class="kpi-grid">
-            ${kpis.map(k => `
-              <div class="kpi">
-                <div class="kpi-label">${k.label}</div>
-                <div class="kpi-value">${k.value}</div>
-                ${k.sub ? `<div class="kpi-sub">${k.sub}</div>` : ''}
-              </div>
-            `).join('')}
+        <!-- LINE CHART · formularios + derivados -->
+        <div class="card col-span-2 row-span-2">
+          <div class="card-title">
+            Evolución diaria
+            <span class="switch-group" id="chart-mode-switch">
+              <button class="switch-opt active" data-mode="cantidad">Cantidad</button>
+              <button class="switch-opt" data-mode="costo">Costo</button>
+            </span>
+          </div>
+          <div class="chart-legend">
+            <span><span class="lg-dot" style="background: var(--teal);"></span>Formularios completos (Meta)</span>
+            <span><span class="lg-dot" style="background: var(--accent);"></span>Leads derivados (Kommo)</span>
+          </div>
+          <div class="chart-wrap"><canvas id="evolution-chart"></canvas></div>
+        </div>
+
+        <!-- Inversión Meta with breakdown -->
+        <div class="card col-span-2">
+          <div class="card-title">
+            Inversión Meta · distribución por campaña
+            <span class="pct">${formatUSD2(t.spend)}</span>
+          </div>
+          <div class="card-value" style="font-size: 1.1rem; color: var(--text-muted); font-weight: 500; margin-bottom: 0.5rem;">
+            ${campaigns.length} campañas activas
+          </div>
+          <div class="progress-bars">${campaignBars || '<div class="card-sub">Sin datos en este período</div>'}</div>
+        </div>
+
+        <!-- Alcance card (tinted) -->
+        <div class="card tint-blue">
+          <div class="card-title" style="color: var(--primary);">Alcance · personas (suma diaria)</div>
+          <div class="card-value">${formatNum(t.reach)}</div>
+          <div class="card-sub">${formatNum(t.impressions)} impresiones · CPM ${t.impressions > 0 ? formatUSD2((t.spend / t.impressions) * 1000) : '—'}</div>
+        </div>
+
+        <!-- Visitas a la página -->
+        <div class="card tint-teal">
+          <div class="card-title" style="color: var(--teal);">Visitas a la página</div>
+          <div class="card-value">${formatNum(t.landing_page_views)}</div>
+          <div class="card-sub">${t.cost_per_landing_page_view != null ? formatUSD2(t.cost_per_landing_page_view) + ' / visita' : '—'}</div>
+        </div>
+
+        <!-- ThruPlay -->
+        <div class="card tint-warm">
+          <div class="card-title" style="color: var(--warm-strong);">ThruPlay (videos)</div>
+          <div class="card-value">${formatNum(t.thruplays)}</div>
+          <div class="card-sub">${t.cost_per_thruplay != null ? formatUSD2(t.cost_per_thruplay) + ' / thruplay' : '—'}</div>
+        </div>
+
+        <!-- Leads Meta + CPL -->
+        <div class="card dark">
+          <div class="card-title">Formularios completos (Meta)</div>
+          <div class="card-value">${formatNum(t.leads)}</div>
+          <div class="card-sub muted">${t.cost_per_lead != null ? formatUSD2(t.cost_per_lead) + ' por lead' : '—'}</div>
+          <div style="margin-top: 1rem; height: 6px; background: rgba(255,255,255,0.15); border-radius: 50px;">
+            <div style="height: 100%; width: ${Math.min(conversionPct * 5, 100)}%; background: var(--accent); border-radius: 50px;"></div>
+          </div>
+          <div class="card-sub muted" style="margin-top: 0.4rem;">
+            ${formatPct(conversionPct)} de conversión sobre visitas
           </div>
         </div>
 
-        <div class="section">
-          <div class="section-title">Kommo · leads del período</div>
-          <div class="kpi-grid">
-            ${kommoCards.map(k => `
-              <div class="kpi">
-                <div class="kpi-label">${k.label}</div>
-                <div class="kpi-value">${k.value}</div>
-                ${k.sub ? `<div class="kpi-sub">${k.sub}</div>` : ''}
+        <!-- Kommo breakdown -->
+        <div class="card col-span-2">
+          <div class="card-title">
+            Funnel Kommo · pipeline de leads
+            <span class="pct" style="color: var(--teal);">${formatNum(k.created || 0)} leads</span>
+          </div>
+          <div class="breakdown-rows">
+            <div class="br-row">
+              <div class="br-icon blue">→</div>
+              <div>
+                <div class="br-name">Leads creados (entran al CRM)</div>
+                <div class="br-meta">${d.cost_per_kommo_lead != null ? formatUSD2(d.cost_per_kommo_lead) + ' costo atribuido por lead' : 'Sin atribución'}</div>
               </div>
-            `).join('')}
+              <div class="br-value">${formatNum(k.created || 0)}</div>
+            </div>
+            <div class="br-row">
+              <div class="br-icon green">✓</div>
+              <div>
+                <div class="br-name">Leads derivados (asignados a sucursal)</div>
+                <div class="br-meta">${formatPct(derivedPct)} del total · ${d.cost_per_derived != null ? formatUSD2(d.cost_per_derived) + ' por derivado' : ''}</div>
+              </div>
+              <div class="br-value">${formatNum(k.derived || 0)}</div>
+            </div>
+            <div class="br-row">
+              <div class="br-icon warm">M</div>
+              <div>
+                <div class="br-name">Leads Meta vs Kommo</div>
+                <div class="br-meta">${formatPct(kommoFromMetaPct)} de los formularios Meta entran al CRM (resto: dupes / test)</div>
+              </div>
+              <div class="br-value">${formatNum(t.leads)} → ${formatNum(k.created || 0)}</div>
+            </div>
           </div>
         </div>
 
-        <div class="section">
-          <div class="section-title">Campañas Meta</div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Campaña</th>
-                  <th class="num">Spend</th>
-                  <th class="num">Alcance</th>
-                  <th class="num">Impresiones</th>
-                  <th class="num">Leads</th>
-                  <th class="num">CPL</th>
-                  <th class="num">Visitas</th>
-                  <th class="num">ThruPlay</th>
-                  <th class="num">CTR</th>
-                </tr>
-              </thead>
-              <tbody>${campaignsHtml}</tbody>
-            </table>
+        <!-- Campaign list -->
+        <div class="card col-span-2">
+          <div class="card-title">Campañas · detalle</div>
+          <div class="campaign-list">
+            ${campaigns.map((c) => {
+              const meta = objectiveMeta(c.objective);
+              return `
+                <div class="campaign-item">
+                  <div class="icon ${meta.cls}">${meta.icon}</div>
+                  <div class="info">
+                    <div class="name">${c.campaign_name}</div>
+                    <div class="obj">${meta.label} · CTR ${formatPct(c.ctr)}</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${formatUSD2(c.spend)}</div>
+                    <div class="lbl">Spend</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${formatNum(c.reach)}</div>
+                    <div class="lbl">Alcance</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${formatNum(c.leads || c.landing_page_views || c.thruplays)}</div>
+                    <div class="lbl">${c.leads ? 'Leads' : c.landing_page_views ? 'Visitas' : 'ThruPlay'}</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${c.cost_per_lead != null ? formatUSD2(c.cost_per_lead) : c.cost_per_landing_page_view != null ? formatUSD2(c.cost_per_landing_page_view) : c.cost_per_thruplay != null ? formatUSD2(c.cost_per_thruplay) : '—'}</div>
+                    <div class="lbl">Costo</div>
+                  </div>
+                </div>
+              `;
+            }).join('') || '<div class="card-sub">Sin campañas activas en este período</div>'}
           </div>
-          <div class="meta-info">
-            Período: <code>${data.desde}</code> → <code>${data.hasta}</code>
-            ${data.meta.store_meta?.last_synced_at ? ` · histórico Meta sincronizado al ${new Date(data.meta.store_meta.last_synced_at).toLocaleString('es-AR')}` : ''}
-            ${data.meta.store_meta?.earliest && data.meta.store_meta?.latest ? ` · cubre ${data.meta.store_meta.earliest} → ${data.meta.store_meta.latest}` : ''}
-            ${data.sync?.meta_sync?.fetched ? ` · agregaron ${data.sync.meta_sync.fetched} filas Meta` : ''}
+        </div>
+
+        <!-- Quick stats card -->
+        <div class="card">
+          <div class="card-title">Resumen</div>
+          <div class="card-value" style="font-size: 1.4rem;">${formatNum(t.leads + (k.derived || 0))}</div>
+          <div class="card-sub">eventos clave (leads Meta + derivados Kommo)</div>
+          <div class="progress-bars" style="margin-top: 1rem;">
+            <div class="progress-row">
+              <div class="name">Frecuencia</div>
+              <div class="bar"><div class="bar-fill blue" style="width: ${Math.min((t.impressions / Math.max(t.reach, 1)) * 25, 100)}%;">${(t.impressions / Math.max(t.reach, 1)).toFixed(2)}x</div></div>
+            </div>
           </div>
         </div>
       `;
+
+      // Footer meta
+      const sm = data.meta.store_meta || {};
+      document.getElementById('meta-footer').innerHTML = `
+        <span>Período: <code>${data.desde}</code> → <code>${data.hasta}</code></span>
+        <span>
+          ${sm.last_synced_at ? `Histórico Meta sincronizado al ${new Date(sm.last_synced_at).toLocaleString('es-AR')}` : ''}
+          ${sm.earliest && sm.latest ? ` · cubre <code>${sm.earliest}</code> → <code>${sm.latest}</code>` : ''}
+        </span>
+      `;
+
+      // Chart
+      renderEvolutionChart(data, 'cantidad');
+      document.querySelectorAll('#chart-mode-switch .switch-opt').forEach((b) => {
+        b.addEventListener('click', () => {
+          document.querySelectorAll('#chart-mode-switch .switch-opt').forEach((x) => x.classList.toggle('active', x === b));
+          renderEvolutionChart(data, b.dataset.mode);
+        });
+      });
     }
 
-    // ---------- Boot ----------
+    let evolutionChart = null;
+    function renderEvolutionChart(data, mode) {
+      const ctx = document.getElementById('evolution-chart');
+      if (!ctx) return;
+
+      // Build a unified date axis from desde → hasta
+      const dates = [];
+      const start = new Date(data.desde + 'T12:00:00Z');
+      const end = new Date(data.hasta + 'T12:00:00Z');
+      for (let d = new Date(start); d <= end; d.setUTCDate(d.getUTCDate() + 1)) {
+        dates.push(isoDate(d));
+      }
+
+      const metaDaily = new Map((data.meta.daily || []).map((r) => [r.date, r]));
+      const kommoDaily = new Map((data.kommo.daily || []).map((r) => [r.date, r]));
+
+      const isCost = mode === 'costo';
+      const formData = dates.map((d) => {
+        const m = metaDaily.get(d);
+        if (!m) return 0;
+        if (isCost) return m.leads > 0 ? +(m.spend / m.leads).toFixed(2) : 0;
+        return m.leads || 0;
+      });
+      const derivData = dates.map((d) => {
+        const m = metaDaily.get(d);
+        const k = kommoDaily.get(d);
+        if (!k) return 0;
+        if (isCost) {
+          const spend = m ? m.spend : 0;
+          return k.derived > 0 ? +(spend / k.derived).toFixed(2) : 0;
+        }
+        return k.derived || 0;
+      });
+
+      const labels = dates.map((d) => {
+        const dt = new Date(d + 'T12:00:00Z');
+        return dt.toLocaleDateString('es-AR', { day: '2-digit', month: 'short' });
+      });
+
+      const yLabel = isCost ? 'USD por lead' : 'Cantidad';
+      const tooltipFmt = isCost
+        ? (v) => '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+        : (v) => Number(v).toLocaleString('es-AR');
+
+      const cfg = {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: 'Formularios (Meta)',
+              data: formData,
+              borderColor: '#057488',
+              backgroundColor: 'rgba(5, 116, 136, 0.12)',
+              tension: 0.35, fill: true, pointRadius: 2.5, pointHoverRadius: 5, borderWidth: 2.5,
+            },
+            {
+              label: 'Derivados (Kommo)',
+              data: derivData,
+              borderColor: '#4a90e2',
+              backgroundColor: 'rgba(74, 144, 226, 0.10)',
+              tension: 0.35, fill: true, pointRadius: 2.5, pointHoverRadius: 5, borderWidth: 2.5,
+            },
+          ],
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.dataset.label}: ${tooltipFmt(ctx.parsed.y)}`,
+              },
+              backgroundColor: '#1a3a6e', titleColor: '#fff', bodyColor: '#fff', padding: 10, cornerRadius: 8,
+            },
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { color: '#6e7b96', font: { size: 10 }, maxRotation: 0, autoSkipPadding: 16 } },
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(110, 123, 150, 0.08)' },
+              ticks: {
+                color: '#6e7b96', font: { size: 10 },
+                callback: (v) => isCost ? '$' + v : Number(v).toLocaleString('es-AR'),
+              },
+              title: { display: true, text: yLabel, color: '#93a1bd', font: { size: 10, weight: 500 } },
+            },
+          },
+        },
+      };
+
+      if (evolutionChart) evolutionChart.destroy();
+      evolutionChart = new Chart(ctx, cfg);
+    }
+
     (async () => {
       const token = sessionStorage.getItem(TOKEN_KEY);
       if (!token) {
@@ -410,9 +828,9 @@
       try {
         const data = await verifyToken(token);
         document.getElementById('user-email').textContent = data.email;
+        document.getElementById('user-avatar').textContent = (data.email[0] || 'U').toUpperCase();
         document.getElementById('auth-loading').classList.add('hidden');
         document.getElementById('app').classList.remove('hidden');
-        // Auto-load on first render
         fetchReport();
       } catch (e) {
         sessionStorage.removeItem(TOKEN_KEY);
