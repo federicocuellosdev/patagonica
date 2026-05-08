@@ -622,10 +622,8 @@
         </div>
       `;
 
-      // Welcome subtitle
-      const today = new Date();
-      const greeting = today.getHours() < 12 ? 'Buen día' : today.getHours() < 19 ? 'Buenas tardes' : 'Buenas noches';
-      document.getElementById('welcome-title').textContent = `${greeting}, Federico`;
+      // Welcome subtitle (saludo dinámico según la hora + nombre del usuario)
+      document.getElementById('welcome-title').textContent = `${greetingForNow()}, ${currentUserName || ''}`.trim().replace(/,\s*$/, '');
 
       // Spend share by campaign for progress bars
       const totalSpend = t.spend || 1;
@@ -875,12 +873,31 @@
     }
 
     let lastReportData = null;
+    let currentUserName = '';
     const seriesState = {
       forms_count: true,
       forms_cost: false,
       derived_count: true,
       derived_cost: false,
     };
+
+    function firstNameFromEmail(email) {
+      const map = {
+        'dev.federicocuellos@gmail.com': 'Federico',
+        'tomasbadia.j@gmail.com': 'Tomás',
+      };
+      if (map[email]) return map[email];
+      const local = (email || '').split('@')[0];
+      const first = local.split(/[._]/)[0] || '';
+      return first.charAt(0).toUpperCase() + first.slice(1);
+    }
+
+    function greetingForNow() {
+      const h = new Date().getHours();
+      if (h < 12) return 'Buen día';
+      if (h < 19) return 'Buenas tardes';
+      return 'Buenas noches';
+    }
 
     let evolutionChart = null;
     function renderEvolutionChart(data, state) {
@@ -1015,8 +1032,9 @@
       }
       try {
         const data = await verifyToken(token);
+        currentUserName = firstNameFromEmail(data.email);
         document.getElementById('user-email').textContent = data.email;
-        document.getElementById('user-avatar').textContent = (data.email[0] || 'U').toUpperCase();
+        document.getElementById('user-avatar').textContent = (currentUserName[0] || data.email[0] || 'U').toUpperCase();
         document.getElementById('auth-loading').classList.add('hidden');
         document.getElementById('app').classList.remove('hidden');
         fetchReport();
