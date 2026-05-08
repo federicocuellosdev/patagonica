@@ -182,7 +182,7 @@
           </div>
         </div>
         <button type="button" class="update" id="update-btn">Cargar</button>
-        <button type="button" class="update" id="refresh-btn" style="background:transparent;color:var(--secondary);border:1px solid var(--secondary);">Forzar refresh</button>
+        <button type="button" class="update" id="refresh-btn" style="background:transparent;color:var(--secondary);border:1px solid var(--secondary);">Re-sync histórico</button>
       </div>
 
       <div id="report-area">
@@ -268,13 +268,13 @@
       refreshBtn.disabled = true;
       const activeBtn = forceRefresh ? refreshBtn : updateBtn;
       const originalText = activeBtn.textContent;
-      activeBtn.textContent = forceRefresh ? 'Refrescando...' : 'Cargando...';
+      activeBtn.textContent = forceRefresh ? 'Re-syncing...' : 'Cargando...';
       document.getElementById('report-area').innerHTML = forceRefresh
-        ? '<div class="loading"><span class="spinner-inline"></span>Consultando Meta y Kommo (sin caché)...</div>'
-        : '<div class="loading"><span class="spinner-inline"></span>Cargando datos...</div>';
+        ? '<div class="loading"><span class="spinner-inline"></span>Re-sincronizando todo el histórico desde Meta y Kommo...</div>'
+        : '<div class="loading"><span class="spinner-inline"></span>Sincronizando días faltantes y filtrando...</div>';
 
       try {
-        const url = `${API_BASE}/api/reportes/dashboard?desde=${desde}&hasta=${hasta}` + (forceRefresh ? '&refresh=1' : '');
+        const url = `${API_BASE}/api/reportes/dashboard?desde=${desde}&hasta=${hasta}` + (forceRefresh ? '&sync=force' : '&sync=auto');
         const r = await fetch(url, {
           headers: { Authorization: 'Bearer ' + token }
         });
@@ -293,7 +293,7 @@
         updateBtn.disabled = false;
         refreshBtn.disabled = false;
         updateBtn.textContent = 'Cargar';
-        refreshBtn.textContent = 'Forzar refresh';
+        refreshBtn.textContent = 'Re-sync histórico';
       }
     }
 
@@ -385,8 +385,9 @@
           </div>
           <div class="meta-info">
             Período: <code>${data.desde}</code> → <code>${data.hasta}</code>
-            ${data.fetched_at ? ` · datos del ${new Date(data.fetched_at).toLocaleString('es-AR')}` : ''}
-            ${data.cached ? ' · <span style="color:var(--secondary);">desde caché</span>' : ' · <span style="color:var(--accent);">recién consultado</span>'}
+            ${data.meta.store_meta?.last_synced_at ? ` · histórico Meta sincronizado al ${new Date(data.meta.store_meta.last_synced_at).toLocaleString('es-AR')}` : ''}
+            ${data.meta.store_meta?.earliest && data.meta.store_meta?.latest ? ` · cubre ${data.meta.store_meta.earliest} → ${data.meta.store_meta.latest}` : ''}
+            ${data.sync?.meta_sync?.fetched ? ` · agregaron ${data.sync.meta_sync.fetched} filas Meta` : ''}
           </div>
         </div>
       `;
