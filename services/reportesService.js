@@ -391,12 +391,32 @@ function buildReport({ desde, hasta }) {
   const cost_per_kommo_lead = kommo.created > 0 ? meta.totals.spend / kommo.created : null;
   const cost_per_derived = kommo.derived > 0 ? meta.totals.spend / kommo.derived : null;
 
+  // Previous period (mismo largo, inmediatamente anterior)
+  const startMs = new Date(desde + 'T12:00:00Z').getTime();
+  const endMs = new Date(hasta + 'T12:00:00Z').getTime();
+  const dayMs = 86400000;
+  const lengthDays = Math.round((endMs - startMs) / dayMs) + 1;
+  const prevHasta = isoDate(new Date(startMs - dayMs));
+  const prevDesde = isoDate(new Date(startMs - dayMs * lengthDays));
+
+  const prevMeta = aggregateMeta({ desde: prevDesde, hasta: prevHasta });
+  const prevKommo = aggregateKommo({ desde: prevDesde, hasta: prevHasta });
+  const prevCostPerKommo = prevKommo.created > 0 ? prevMeta.totals.spend / prevKommo.created : null;
+  const prevCostPerDerived = prevKommo.derived > 0 ? prevMeta.totals.spend / prevKommo.derived : null;
+
   return {
     desde,
     hasta,
     meta,
     kommo,
     derived: { cost_per_kommo_lead, cost_per_derived },
+    previous: {
+      desde: prevDesde,
+      hasta: prevHasta,
+      meta: { totals: prevMeta.totals },
+      kommo: { created: prevKommo.created, derived: prevKommo.derived },
+      derived: { cost_per_kommo_lead: prevCostPerKommo, cost_per_derived: prevCostPerDerived },
+    },
   };
 }
 
