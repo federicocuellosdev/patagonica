@@ -171,7 +171,7 @@
     /* Grid */
     .dashboard-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
     }
     .card {
@@ -179,7 +179,24 @@
       border: 1px solid var(--border);
     }
     .card.col-span-2 { grid-column: span 2; }
+    .card.col-span-3 { grid-column: span 3; }
+    .card.col-span-4 { grid-column: span 4; }
     .card.row-span-2 { grid-row: span 2; }
+
+    /* Delta indicator */
+    .card-delta {
+      font-size: 0.7rem; font-weight: 600; margin-top: 0.45rem;
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.2rem 0.55rem; border-radius: var(--br-pill);
+    }
+    .delta-up    { background: var(--green-soft); color: var(--green); }
+    .delta-down  { background: var(--rose-soft);  color: var(--rose); }
+    .delta-flat  { background: var(--bg-2);       color: var(--text-muted); }
+    .card.dark .card-delta {
+      background: rgba(255,255,255,0.12);
+    }
+    .card.dark .delta-up { color: #7be0ad; }
+    .card.dark .delta-down { color: #ff9aa8; }
     .card-tinted { color: var(--text); }
     .card.tint-blue { background: linear-gradient(135deg, #e8f1ff 0%, #cfe1f5 100%); border-color: transparent; }
     .card.tint-teal { background: linear-gradient(135deg, var(--teal-soft), #b9e0e4); border-color: transparent; }
@@ -251,12 +268,24 @@
     /* Onboarding-style breakdown */
     .breakdown-rows { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.85rem; }
     .br-row {
-      display: grid; grid-template-columns: 36px 1fr auto; gap: 0.7rem; align-items: center;
-      padding: 0.6rem 0.75rem; background: var(--bg-2); border-radius: 14px;
+      display: grid; grid-template-columns: 32px 1fr; gap: 0.6rem; align-items: start;
+      padding: 0.7rem 0.85rem; background: var(--bg-2); border-radius: 14px;
     }
+    .br-row .br-body { display: flex; flex-direction: column; gap: 0.35rem; }
+    .br-row .br-top {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem;
+    }
+    .br-row .br-name { font-size: 0.84rem; font-weight: 600; color: var(--text); line-height: 1.25; }
+    .br-row .br-value { font-size: 1.05rem; font-weight: 700; color: var(--text); line-height: 1; flex-shrink: 0; }
+    .br-row .br-bottom {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem;
+      padding-top: 0.35rem; border-top: 1px solid rgba(110,123,150,0.12);
+    }
+    .br-row .br-meta { font-size: 0.7rem; color: var(--text-muted); }
+    .br-row .br-cost { font-size: 0.78rem; font-weight: 700; color: var(--teal); flex-shrink: 0; }
     .br-row .br-icon {
-      width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
+      width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; flex-shrink: 0;
     }
     .br-icon.blue { background: var(--accent-soft); color: var(--primary); }
     .br-icon.teal { background: var(--teal-soft); color: var(--teal); }
@@ -315,17 +344,21 @@
     .chart-legend { display: flex; gap: 1.25rem; margin-top: 0.5rem; font-size: 0.78rem; color: var(--text-muted); }
     .chart-legend .lg-dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 0.4rem; vertical-align: middle; }
 
+    @media (max-width: 1100px) {
+      .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+      .card.col-span-3, .card.col-span-4 { grid-column: span 2; }
+      .card.row-span-2 { grid-row: span 1; }
+    }
     @media (max-width: 960px) {
       .welcome-row { grid-template-columns: 1fr; gap: 1.5rem; }
       .headline-metrics { justify-content: flex-start; }
-      .dashboard-grid { grid-template-columns: 1fr 1fr; }
       .nav-pills { display: none; }
     }
     @media (max-width: 640px) {
       body { padding: 0.5rem; }
       .shell { padding: 1rem; border-radius: 18px; }
       .dashboard-grid { grid-template-columns: 1fr; }
-      .card.col-span-2 { grid-column: span 1; }
+      .card.col-span-2, .card.col-span-3, .card.col-span-4 { grid-column: span 1; }
       .topbar { flex-wrap: wrap; }
     }
   </style>
@@ -508,6 +541,18 @@
       return { label: o, icon: '?', cls: 'icon-traffic' };
     }
 
+    // Comparison delta vs previous period.
+    // invert=true cuando un valor MENOR es mejor (ej: CPL).
+    function deltaBadge(current, prev, opts = {}) {
+      const invert = !!opts.invert;
+      if (prev == null || prev === 0 || current == null) return '';
+      const pct = ((current - prev) / Math.abs(prev)) * 100;
+      const arrow = pct > 0 ? '▲' : pct < 0 ? '▼' : '·';
+      const isImprovement = invert ? pct < 0 : pct > 0;
+      const cls = Math.abs(pct) < 0.05 ? 'delta-flat' : (isImprovement ? 'delta-up' : 'delta-down');
+      return `<span class="card-delta ${cls}">${arrow} ${Math.abs(pct).toFixed(1)}% vs período anterior</span>`;
+    }
+
     function renderReport(data) {
       const t = data.meta.totals;
       const k = data.kommo;
@@ -515,18 +560,25 @@
       const campaigns = data.meta.campaigns.slice().sort((a, b) => b.spend - a.spend);
 
       // Headline metrics
+      const hPrev = data.previous || {};
+      const hPt = (hPrev.meta && hPrev.meta.totals) || {};
+      const hPk = hPrev.kommo || {};
+      const hPd = hPrev.derived || {};
       document.getElementById('headline-metrics').innerHTML = `
         <div class="headline-metric">
           <div class="label">Inversión</div>
           <div class="value">${formatUSD(t.spend)}</div>
+          ${deltaBadge(t.spend, hPt.spend)}
         </div>
         <div class="headline-metric">
-          <div class="label">Leads (Meta)</div>
-          <div class="value">${formatNum(t.leads)}</div>
-        </div>
-        <div class="headline-metric">
-          <div class="label">Leads (Kommo)</div>
+          <div class="label">Leads creados (Kommo)</div>
           <div class="value">${formatNum(k.created || 0)}</div>
+          ${deltaBadge(k.created || 0, hPk.created)}
+        </div>
+        <div class="headline-metric">
+          <div class="label">Costo / lead</div>
+          <div class="value">${d.cost_per_kommo_lead != null ? formatUSD2(d.cost_per_kommo_lead) : '—'}</div>
+          ${deltaBadge(d.cost_per_kommo_lead, hPd.cost_per_kommo_lead, { invert: true })}
         </div>
       `;
 
@@ -556,10 +608,16 @@
       const kommoFromMetaPct = t.leads > 0 ? ((k.created || 0) / t.leads) * 100 : 0;
       const derivedPct = (k.created || 0) > 0 ? ((k.derived || 0) / k.created) * 100 : 0;
 
+      // Previous period totals para deltas
+      const prev = data.previous || {};
+      const pt = (prev.meta && prev.meta.totals) || {};
+      const pk = prev.kommo || {};
+      const pd = prev.derived || {};
+
       // Build grid
       document.getElementById('report-area').innerHTML = `
         <!-- LINE CHART · formularios + derivados -->
-        <div class="card col-span-2 row-span-2">
+        <div class="card col-span-3 row-span-2">
           <div class="card-title">
             Evolución diaria
             <span class="switch-group" id="chart-mode-switch">
@@ -568,94 +626,119 @@
             </span>
           </div>
           <div class="chart-legend">
-            <span><span class="lg-dot" style="background: var(--teal);"></span>Formularios completos (Meta)</span>
+            <span><span class="lg-dot" style="background: var(--teal);"></span>Formularios Meta</span>
+            <span><span class="lg-dot" style="background: var(--primary);"></span>Leads creados (Kommo)</span>
             <span><span class="lg-dot" style="background: var(--accent);"></span>Leads derivados (Kommo)</span>
           </div>
           <div class="chart-wrap"><canvas id="evolution-chart"></canvas></div>
         </div>
 
+        <!-- Kommo funnel · al lado derecho del chart -->
+        <div class="card row-span-2">
+          <div class="card-title">
+            Funnel Kommo
+            <span class="pct" style="color: var(--teal);">${formatNum(k.created || 0)} leads</span>
+          </div>
+          <div class="breakdown-rows">
+            <div class="br-row">
+              <div class="br-icon blue">→</div>
+              <div class="br-body">
+                <div class="br-top">
+                  <div class="br-name">Leads creados<br><span style="font-weight:500;color:var(--text-muted);font-size:0.72rem;">entran al CRM</span></div>
+                  <div class="br-value">${formatNum(k.created || 0)}</div>
+                </div>
+                <div class="br-bottom">
+                  <div class="br-meta">Inversión / leads creados</div>
+                  <div class="br-cost">${d.cost_per_kommo_lead != null ? formatUSD2(d.cost_per_kommo_lead) : '—'}</div>
+                </div>
+              </div>
+            </div>
+            <div class="br-row">
+              <div class="br-icon green">✓</div>
+              <div class="br-body">
+                <div class="br-top">
+                  <div class="br-name">Leads derivados<br><span style="font-weight:500;color:var(--text-muted);font-size:0.72rem;">asignados a sucursal</span></div>
+                  <div class="br-value">${formatNum(k.derived || 0)}</div>
+                </div>
+                <div class="br-bottom">
+                  <div class="br-meta">${formatPct(derivedPct)} del total</div>
+                  <div class="br-cost">${d.cost_per_derived != null ? formatUSD2(d.cost_per_derived) : '—'}</div>
+                </div>
+              </div>
+            </div>
+            <div class="br-row">
+              <div class="br-icon warm">M</div>
+              <div class="br-body">
+                <div class="br-top">
+                  <div class="br-name">Meta vs Kommo<br><span style="font-weight:500;color:var(--text-muted);font-size:0.72rem;">${formatNum(t.leads)} forms → ${formatNum(k.created || 0)} en CRM</span></div>
+                  <div class="br-value">${formatPct(kommoFromMetaPct)}</div>
+                </div>
+                <div class="br-bottom">
+                  <div class="br-meta">CPL Meta directo</div>
+                  <div class="br-cost">${t.cost_per_lead != null ? formatUSD2(t.cost_per_lead) : '—'}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 metric cards en una fila: Alcance, ThruPlay, Visitas, Formularios -->
+        <div class="card tint-blue">
+          <div class="card-title" style="color: var(--primary);">Alcance · personas</div>
+          <div class="card-value">${formatNum(t.reach)}</div>
+          <div class="card-sub">${formatNum(t.impressions)} impresiones · CPM ${t.impressions > 0 ? formatUSD2((t.spend / t.impressions) * 1000) : '—'}</div>
+          ${deltaBadge(t.reach, pt.reach)}
+        </div>
+
+        <div class="card tint-warm">
+          <div class="card-title" style="color: var(--warm-strong);">ThruPlay (videos)</div>
+          <div class="card-value">${formatNum(t.thruplays)}</div>
+          <div class="card-sub">${t.cost_per_thruplay != null ? formatUSD2(t.cost_per_thruplay) + ' / thruplay' : '—'}</div>
+          ${deltaBadge(t.thruplays, pt.thruplays)}
+        </div>
+
+        <div class="card tint-teal">
+          <div class="card-title" style="color: var(--teal);">Visitas a la página</div>
+          <div class="card-value">${formatNum(t.landing_page_views)}</div>
+          <div class="card-sub">${t.cost_per_landing_page_view != null ? formatUSD2(t.cost_per_landing_page_view) + ' / visita' : '—'}</div>
+          ${deltaBadge(t.landing_page_views, pt.landing_page_views)}
+        </div>
+
+        <div class="card dark">
+          <div class="card-title">Formularios (Meta)</div>
+          <div class="card-value">${formatNum(t.leads)}</div>
+          <div class="card-sub muted">${t.cost_per_lead != null ? formatUSD2(t.cost_per_lead) + ' por lead' : '—'}</div>
+          ${deltaBadge(t.leads, pt.leads)}
+        </div>
+
         <!-- Inversión Meta with breakdown -->
-        <div class="card col-span-2">
+        <div class="card col-span-3">
           <div class="card-title">
             Inversión Meta · distribución por campaña
             <span class="pct">${formatUSD2(t.spend)}</span>
           </div>
           <div class="card-value" style="font-size: 1.1rem; color: var(--text-muted); font-weight: 500; margin-bottom: 0.5rem;">
             ${campaigns.length} campañas activas
+            ${deltaBadge(t.spend, pt.spend, { invert: false })}
           </div>
           <div class="progress-bars">${campaignBars || '<div class="card-sub">Sin datos en este período</div>'}</div>
         </div>
 
-        <!-- Alcance card (tinted) -->
-        <div class="card tint-blue">
-          <div class="card-title" style="color: var(--primary);">Alcance · personas (suma diaria)</div>
-          <div class="card-value">${formatNum(t.reach)}</div>
-          <div class="card-sub">${formatNum(t.impressions)} impresiones · CPM ${t.impressions > 0 ? formatUSD2((t.spend / t.impressions) * 1000) : '—'}</div>
-        </div>
-
-        <!-- Visitas a la página -->
-        <div class="card tint-teal">
-          <div class="card-title" style="color: var(--teal);">Visitas a la página</div>
-          <div class="card-value">${formatNum(t.landing_page_views)}</div>
-          <div class="card-sub">${t.cost_per_landing_page_view != null ? formatUSD2(t.cost_per_landing_page_view) + ' / visita' : '—'}</div>
-        </div>
-
-        <!-- ThruPlay -->
-        <div class="card tint-warm">
-          <div class="card-title" style="color: var(--warm-strong);">ThruPlay (videos)</div>
-          <div class="card-value">${formatNum(t.thruplays)}</div>
-          <div class="card-sub">${t.cost_per_thruplay != null ? formatUSD2(t.cost_per_thruplay) + ' / thruplay' : '—'}</div>
-        </div>
-
-        <!-- Leads Meta + CPL -->
-        <div class="card dark">
-          <div class="card-title">Formularios completos (Meta)</div>
-          <div class="card-value">${formatNum(t.leads)}</div>
-          <div class="card-sub muted">${t.cost_per_lead != null ? formatUSD2(t.cost_per_lead) + ' por lead' : '—'}</div>
-          <div style="margin-top: 1rem; height: 6px; background: rgba(255,255,255,0.15); border-radius: 50px;">
-            <div style="height: 100%; width: ${Math.min(conversionPct * 5, 100)}%; background: var(--accent); border-radius: 50px;"></div>
-          </div>
-          <div class="card-sub muted" style="margin-top: 0.4rem;">
-            ${formatPct(conversionPct)} de conversión sobre visitas
-          </div>
-        </div>
-
-        <!-- Kommo breakdown -->
-        <div class="card col-span-2">
-          <div class="card-title">
-            Funnel Kommo · pipeline de leads
-            <span class="pct" style="color: var(--teal);">${formatNum(k.created || 0)} leads</span>
-          </div>
-          <div class="breakdown-rows">
-            <div class="br-row">
-              <div class="br-icon blue">→</div>
-              <div>
-                <div class="br-name">Leads creados (entran al CRM)</div>
-                <div class="br-meta">${d.cost_per_kommo_lead != null ? formatUSD2(d.cost_per_kommo_lead) + ' costo atribuido por lead' : 'Sin atribución'}</div>
-              </div>
-              <div class="br-value">${formatNum(k.created || 0)}</div>
-            </div>
-            <div class="br-row">
-              <div class="br-icon green">✓</div>
-              <div>
-                <div class="br-name">Leads derivados (asignados a sucursal)</div>
-                <div class="br-meta">${formatPct(derivedPct)} del total · ${d.cost_per_derived != null ? formatUSD2(d.cost_per_derived) + ' por derivado' : ''}</div>
-              </div>
-              <div class="br-value">${formatNum(k.derived || 0)}</div>
-            </div>
-            <div class="br-row">
-              <div class="br-icon warm">M</div>
-              <div>
-                <div class="br-name">Leads Meta vs Kommo</div>
-                <div class="br-meta">${formatPct(kommoFromMetaPct)} de los formularios Meta entran al CRM (resto: dupes / test)</div>
-              </div>
-              <div class="br-value">${formatNum(t.leads)} → ${formatNum(k.created || 0)}</div>
-            </div>
+        <!-- Resumen card -->
+        <div class="card">
+          <div class="card-title">Costo por lead Kommo</div>
+          <div class="card-value">${d.cost_per_kommo_lead != null ? formatUSD2(d.cost_per_kommo_lead) : '—'}</div>
+          <div class="card-sub">Inversión / leads creados</div>
+          ${deltaBadge(d.cost_per_kommo_lead, pd.cost_per_kommo_lead, { invert: true })}
+          <div style="margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--border);">
+            <div class="card-sub" style="margin-bottom: 0.25rem;">Costo por derivado</div>
+            <div style="font-size: 1.2rem; font-weight: 700;">${d.cost_per_derived != null ? formatUSD2(d.cost_per_derived) : '—'}</div>
+            ${deltaBadge(d.cost_per_derived, pd.cost_per_derived, { invert: true })}
           </div>
         </div>
 
         <!-- Campaign list -->
-        <div class="card col-span-2">
+        <div class="card col-span-4">
           <div class="card-title">Campañas · detalle</div>
           <div class="campaign-list">
             ${campaigns.map((c) => {
@@ -686,19 +769,6 @@
                 </div>
               `;
             }).join('') || '<div class="card-sub">Sin campañas activas en este período</div>'}
-          </div>
-        </div>
-
-        <!-- Quick stats card -->
-        <div class="card">
-          <div class="card-title">Resumen</div>
-          <div class="card-value" style="font-size: 1.4rem;">${formatNum(t.leads + (k.derived || 0))}</div>
-          <div class="card-sub">eventos clave (leads Meta + derivados Kommo)</div>
-          <div class="progress-bars" style="margin-top: 1rem;">
-            <div class="progress-row">
-              <div class="name">Frecuencia</div>
-              <div class="bar"><div class="bar-fill blue" style="width: ${Math.min((t.impressions / Math.max(t.reach, 1)) * 25, 100)}%;">${(t.impressions / Math.max(t.reach, 1)).toFixed(2)}x</div></div>
-            </div>
           </div>
         </div>
       `;
@@ -746,6 +816,16 @@
         if (isCost) return m.leads > 0 ? +(m.spend / m.leads).toFixed(2) : 0;
         return m.leads || 0;
       });
+      const createdData = dates.map((d) => {
+        const m = metaDaily.get(d);
+        const k = kommoDaily.get(d);
+        if (!k) return 0;
+        if (isCost) {
+          const spend = m ? m.spend : 0;
+          return k.created > 0 ? +(spend / k.created).toFixed(2) : 0;
+        }
+        return k.created || 0;
+      });
       const derivData = dates.map((d) => {
         const m = metaDaily.get(d);
         const k = kommoDaily.get(d);
@@ -773,10 +853,17 @@
           labels,
           datasets: [
             {
-              label: 'Formularios (Meta)',
+              label: 'Formularios Meta',
               data: formData,
               borderColor: '#057488',
-              backgroundColor: 'rgba(5, 116, 136, 0.12)',
+              backgroundColor: 'rgba(5, 116, 136, 0.10)',
+              tension: 0.35, fill: false, pointRadius: 2.5, pointHoverRadius: 5, borderWidth: 2.5,
+            },
+            {
+              label: 'Leads creados (Kommo)',
+              data: createdData,
+              borderColor: '#1a3a6e',
+              backgroundColor: 'rgba(26, 58, 110, 0.10)',
               tension: 0.35, fill: true, pointRadius: 2.5, pointHoverRadius: 5, borderWidth: 2.5,
             },
             {
@@ -784,7 +871,7 @@
               data: derivData,
               borderColor: '#4a90e2',
               backgroundColor: 'rgba(74, 144, 226, 0.10)',
-              tension: 0.35, fill: true, pointRadius: 2.5, pointHoverRadius: 5, borderWidth: 2.5,
+              tension: 0.35, fill: false, pointRadius: 2.5, pointHoverRadius: 5, borderWidth: 2.5,
             },
           ],
         },
