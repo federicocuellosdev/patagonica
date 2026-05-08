@@ -13,6 +13,7 @@
     :root {
       --primary: #121C25;
       --secondary: #057488;
+      --accent: #d4a85a;
       --light: #f7f7f7;
       --text: #2a2a2a;
       --text-muted: #6c757d;
@@ -20,7 +21,7 @@
       --br: 6px;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Gilroy, 'Source Sans Pro', sans-serif; color: var(--text); background: var(--light); line-height: 1.6; }
+    body { font-family: Gilroy, 'Source Sans Pro', sans-serif; color: var(--text); background: var(--light); line-height: 1.5; }
 
     header {
       background: var(--primary); color: #fff;
@@ -35,41 +36,118 @@
     }
     .user-bar button:hover { background: rgba(255,255,255,0.08); }
 
-    main { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem; }
-    h1 { font-family: Gilroy; font-weight: 400; font-size: 1.8rem; color: var(--primary); margin-bottom: 0.4rem; }
-    .lead { color: var(--text-muted); margin-bottom: 2rem; }
+    main { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    h1 { font-family: Gilroy; font-weight: 400; font-size: 1.7rem; color: var(--primary); margin-bottom: 0.4rem; }
+    .lead { color: var(--text-muted); margin-bottom: 1.75rem; font-size: 0.92rem; }
 
-    .placeholder {
+    /* Filters */
+    .filters {
       background: #fff; border: 1px solid var(--border); border-radius: 10px;
-      padding: 3rem 2rem; text-align: center; color: var(--text-muted);
+      padding: 1.25rem; margin-bottom: 2rem;
+      display: flex; flex-wrap: wrap; gap: 1rem; align-items: end;
     }
-    .placeholder strong { display: block; color: var(--primary); font-size: 1.05rem; margin-bottom: 0.4rem; }
+    .filter-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .filter-group label {
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+      color: var(--text-muted);
+    }
+    .filter-group input {
+      padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: var(--br);
+      font-family: inherit; font-size: 0.92rem; min-width: 160px;
+    }
+    .preset-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .preset-btn {
+      background: transparent; border: 1px solid var(--border); border-radius: 50px;
+      padding: 0.3rem 0.85rem; font-family: inherit; font-size: 0.78rem; color: var(--text-muted);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .preset-btn:hover { border-color: var(--secondary); color: var(--secondary); }
+    .filters button.update {
+      background: var(--secondary); color: #fff; border: none; border-radius: var(--br);
+      padding: 0.65rem 1.4rem; font-family: inherit; font-size: 0.88rem; font-weight: 700; cursor: pointer;
+      margin-left: auto;
+    }
+    .filters button.update:hover { background: #04606f; }
+    .filters button.update:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    .loading, .error {
+    /* Sections */
+    .section { margin-bottom: 2.5rem; }
+    .section-title {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      color: var(--text-muted); margin-bottom: 0.85rem;
+    }
+
+    /* KPI cards */
+    .kpi-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.85rem;
+    }
+    .kpi {
+      background: #fff; border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+    }
+    .kpi-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+      color: var(--text-muted); margin-bottom: 0.4rem;
+    }
+    .kpi-value {
+      font-family: Gilroy; font-weight: 400; font-size: 1.55rem; color: var(--primary); line-height: 1.1;
+    }
+    .kpi-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+    /* Table */
+    .table-wrap { background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+    thead th {
+      background: #fafafa; padding: 0.75rem 1rem; text-align: left; font-weight: 700;
+      color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border); white-space: nowrap;
+    }
+    thead th.num, tbody td.num { text-align: right; }
+    tbody td {
+      padding: 0.85rem 1rem; border-bottom: 1px solid #f0f0f0; vertical-align: top;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background: #fafafa; }
+    .obj-tag {
+      display: inline-block; font-size: 0.67rem; font-weight: 700; text-transform: uppercase;
+      padding: 0.15rem 0.55rem; border-radius: 50px; letter-spacing: 0.5px;
+    }
+    .obj-OUTCOME_LEADS { background: #f0fafa; color: var(--secondary); }
+    .obj-OUTCOME_AWARENESS { background: #fdf6e7; color: #a37a1f; }
+    .obj-LINK_CLICKS, .obj-OUTCOME_TRAFFIC { background: #f3eef9; color: #5b3a8c; }
+
+    /* States */
+    .loading, .error-box {
+      background: #fff; border: 1px solid var(--border); border-radius: 10px;
+      padding: 2.5rem; text-align: center; color: var(--text-muted);
+    }
+    .error-box { background: #fff5f5; border-color: #ffd0d0; color: #c0392b; }
+    .spinner-inline {
+      display: inline-block; width: 16px; height: 16px;
+      border: 2px solid var(--border); border-top-color: var(--secondary);
+      border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 0.5rem;
+    }
+    .full-loading {
       display: flex; align-items: center; justify-content: center; min-height: 60vh;
       flex-direction: column; gap: 1rem;
     }
-    .error a { color: var(--secondary); }
     .spinner {
       width: 32px; height: 32px;
       border: 3px solid var(--border); border-top-color: var(--secondary);
       border-radius: 50%; animation: spin 0.7s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .hidden { display: none !important; }
+
+    .meta-info { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.6rem; }
+    .meta-info code { background: #f0f0f0; padding: 0.05rem 0.3rem; border-radius: 3px; font-size: 0.85em; }
   </style>
 </head>
 <body>
 
-  <div id="loading" class="loading">
+  <div id="auth-loading" class="full-loading">
     <div class="spinner"></div>
     <p style="color: var(--text-muted); font-size: 0.9rem;">Verificando acceso...</p>
-  </div>
-
-  <div id="error" class="error hidden">
-    <p style="font-size: 1rem; color: var(--text);">El enlace expiró o no es válido.</p>
-    <p><a href="login.html">Volver al login</a></p>
   </div>
 
   <div id="app" class="hidden">
@@ -83,11 +161,31 @@
 
     <main>
       <h1>Dashboard de reportes</h1>
-      <p class="lead">Métricas de Meta Ads y Kommo por período.</p>
+      <p class="lead">Performance de Meta Ads y leads de Kommo por período.</p>
 
-      <div class="placeholder">
-        <strong>Reporte en construcción</strong>
-        Próximamente: spend, alcance, lead forms, ThruPlay, visitas y costo por resultado, cruzados con leads de Kommo.
+      <div class="filters">
+        <div class="filter-group">
+          <label for="desde">Desde</label>
+          <input type="date" id="desde">
+        </div>
+        <div class="filter-group">
+          <label for="hasta">Hasta</label>
+          <input type="date" id="hasta">
+        </div>
+        <div class="filter-group">
+          <label>Atajos</label>
+          <div class="preset-btns">
+            <button type="button" class="preset-btn" data-range="7">Últimos 7 días</button>
+            <button type="button" class="preset-btn" data-range="30">Últimos 30 días</button>
+            <button type="button" class="preset-btn" data-range="month">Mes actual</button>
+            <button type="button" class="preset-btn" data-range="lastmonth">Mes anterior</button>
+          </div>
+        </div>
+        <button type="button" class="update" id="update-btn">Actualizar</button>
+      </div>
+
+      <div id="report-area">
+        <div class="loading">Elegí un período y presioná Actualizar.</div>
       </div>
     </main>
   </div>
@@ -99,17 +197,7 @@
 
     const TOKEN_KEY = 'patagonica_dashboard_token';
 
-    function showError() {
-      document.getElementById('loading').classList.add('hidden');
-      document.getElementById('error').classList.remove('hidden');
-    }
-
-    function showApp(email) {
-      document.getElementById('loading').classList.add('hidden');
-      document.getElementById('user-email').textContent = email || '';
-      document.getElementById('app').classList.remove('hidden');
-    }
-
+    // ---------- Auth ----------
     async function verifyToken(token) {
       const r = await fetch(`${API_BASE}/api/auth/verify`, {
         headers: { Authorization: 'Bearer ' + token }
@@ -123,6 +211,176 @@
       location.href = 'login.html';
     });
 
+    // ---------- Helpers ----------
+    function formatUSD(n) {
+      if (n == null || isNaN(n)) return '—';
+      return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    function formatNum(n) {
+      if (n == null || isNaN(n)) return '—';
+      return Number(n).toLocaleString('es-AR');
+    }
+    function formatPct(n) {
+      if (n == null || isNaN(n)) return '—';
+      return Number(n).toFixed(2) + '%';
+    }
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function isoDate(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+
+    // ---------- Date presets ----------
+    function applyPreset(kind) {
+      const today = new Date();
+      let desde, hasta;
+      if (kind === '7' || kind === '30') {
+        const days = parseInt(kind);
+        hasta = new Date(today);
+        desde = new Date(today);
+        desde.setDate(desde.getDate() - (days - 1));
+      } else if (kind === 'month') {
+        desde = new Date(today.getFullYear(), today.getMonth(), 1);
+        hasta = new Date(today);
+      } else if (kind === 'lastmonth') {
+        desde = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+        hasta = new Date(today.getFullYear(), today.getMonth(), 0);
+      }
+      document.getElementById('desde').value = isoDate(desde);
+      document.getElementById('hasta').value = isoDate(hasta);
+    }
+
+    document.querySelectorAll('.preset-btn').forEach((btn) => {
+      btn.addEventListener('click', () => applyPreset(btn.dataset.range));
+    });
+
+    // Default: last 30 days
+    applyPreset('30');
+
+    // ---------- Fetch report ----------
+    async function fetchReport() {
+      const token = sessionStorage.getItem(TOKEN_KEY);
+      const desde = document.getElementById('desde').value;
+      const hasta = document.getElementById('hasta').value;
+      if (!desde || !hasta) return;
+
+      const updateBtn = document.getElementById('update-btn');
+      updateBtn.disabled = true;
+      updateBtn.textContent = 'Cargando...';
+      document.getElementById('report-area').innerHTML = '<div class="loading"><span class="spinner-inline"></span>Consultando Meta y Kommo...</div>';
+
+      try {
+        const r = await fetch(`${API_BASE}/api/reportes/dashboard?desde=${desde}&hasta=${hasta}`, {
+          headers: { Authorization: 'Bearer ' + token }
+        });
+        if (r.status === 401) {
+          sessionStorage.removeItem(TOKEN_KEY);
+          location.replace('login.html');
+          return;
+        }
+        const data = await r.json();
+        if (!r.ok) throw new Error(data.error || 'Error al obtener reporte');
+        renderReport(data);
+      } catch (err) {
+        document.getElementById('report-area').innerHTML =
+          `<div class="error-box"><strong>Error:</strong> ${err.message}</div>`;
+      } finally {
+        updateBtn.disabled = false;
+        updateBtn.textContent = 'Actualizar';
+      }
+    }
+
+    document.getElementById('update-btn').addEventListener('click', fetchReport);
+
+    // ---------- Render ----------
+    function renderReport(data) {
+      const t = data.meta.totals;
+      const k = data.kommo;
+      const d = data.derived;
+
+      const kpis = [
+        { label: 'Inversión Meta', value: formatUSD(t.spend) },
+        { label: 'Alcance', value: formatNum(t.reach) },
+        { label: 'Impresiones', value: formatNum(t.impressions) },
+        { label: 'Formularios completos (Meta)', value: formatNum(t.leads), sub: t.cost_per_lead != null ? formatUSD(t.cost_per_lead) + ' / lead' : '' },
+        { label: 'Visitas a la página', value: formatNum(t.landing_page_views), sub: t.cost_per_landing_page_view != null ? formatUSD(t.cost_per_landing_page_view) + ' / visita' : '' },
+        { label: 'ThruPlay (videos)', value: formatNum(t.thruplays), sub: t.cost_per_thruplay != null ? formatUSD(t.cost_per_thruplay) + ' / thruplay' : '' },
+      ];
+
+      const kommoCards = [
+        { label: 'Leads creados (Kommo)', value: k.error ? '—' : formatNum(k.created), sub: k.error ? 'Error: ' + k.error : (d.cost_per_kommo_lead != null ? formatUSD(d.cost_per_kommo_lead) + ' / lead' : '') },
+        { label: 'Leads derivados (Kommo)', value: k.error ? '—' : formatNum(k.derived), sub: k.error ? '' : (d.cost_per_derived != null ? formatUSD(d.cost_per_derived) + ' / derivado' : '') },
+      ];
+
+      const campaignsHtml = data.meta.campaigns
+        .sort((a, b) => b.spend - a.spend)
+        .map((c) => `
+          <tr>
+            <td>${c.campaign_name}<div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.2rem;"><span class="obj-tag obj-${c.objective}">${c.objective.replace('OUTCOME_', '')}</span></div></td>
+            <td class="num">${formatUSD(c.spend)}</td>
+            <td class="num">${formatNum(c.reach)}</td>
+            <td class="num">${formatNum(c.impressions)}</td>
+            <td class="num">${formatNum(c.leads)}</td>
+            <td class="num">${c.cost_per_lead != null ? formatUSD(c.cost_per_lead) : '—'}</td>
+            <td class="num">${formatNum(c.landing_page_views)}</td>
+            <td class="num">${formatNum(c.thruplays)}</td>
+            <td class="num">${formatPct(c.ctr)}</td>
+          </tr>
+        `).join('');
+
+      document.getElementById('report-area').innerHTML = `
+        <div class="section">
+          <div class="section-title">Meta Ads · totales del período</div>
+          <div class="kpi-grid">
+            ${kpis.map(k => `
+              <div class="kpi">
+                <div class="kpi-label">${k.label}</div>
+                <div class="kpi-value">${k.value}</div>
+                ${k.sub ? `<div class="kpi-sub">${k.sub}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Kommo · leads del período</div>
+          <div class="kpi-grid">
+            ${kommoCards.map(k => `
+              <div class="kpi">
+                <div class="kpi-label">${k.label}</div>
+                <div class="kpi-value">${k.value}</div>
+                ${k.sub ? `<div class="kpi-sub">${k.sub}</div>` : ''}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Campañas Meta</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Campaña</th>
+                  <th class="num">Spend</th>
+                  <th class="num">Alcance</th>
+                  <th class="num">Impresiones</th>
+                  <th class="num">Leads</th>
+                  <th class="num">CPL</th>
+                  <th class="num">Visitas</th>
+                  <th class="num">ThruPlay</th>
+                  <th class="num">CTR</th>
+                </tr>
+              </thead>
+              <tbody>${campaignsHtml}</tbody>
+            </table>
+          </div>
+          <div class="meta-info">
+            Período: <code>${data.desde}</code> → <code>${data.hasta}</code>
+            ${data.cached ? ' · datos cacheados (max 5 min)' : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    // ---------- Boot ----------
     (async () => {
       const token = sessionStorage.getItem(TOKEN_KEY);
       if (!token) {
@@ -131,7 +389,11 @@
       }
       try {
         const data = await verifyToken(token);
-        showApp(data.email);
+        document.getElementById('user-email').textContent = data.email;
+        document.getElementById('auth-loading').classList.add('hidden');
+        document.getElementById('app').classList.remove('hidden');
+        // Auto-load on first render
+        fetchReport();
       } catch (e) {
         sessionStorage.removeItem(TOKEN_KEY);
         location.replace('login.html');
