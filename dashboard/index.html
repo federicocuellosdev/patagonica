@@ -181,7 +181,8 @@
             <button type="button" class="preset-btn" data-range="lastmonth">Mes anterior</button>
           </div>
         </div>
-        <button type="button" class="update" id="update-btn">Actualizar</button>
+        <button type="button" class="update" id="update-btn">Cargar</button>
+        <button type="button" class="update" id="refresh-btn" style="background:transparent;color:var(--secondary);border:1px solid var(--secondary);">Forzar refresh</button>
       </div>
 
       <div id="report-area">
@@ -255,19 +256,26 @@
     applyPreset('30');
 
     // ---------- Fetch report ----------
-    async function fetchReport() {
+    async function fetchReport(forceRefresh = false) {
       const token = sessionStorage.getItem(TOKEN_KEY);
       const desde = document.getElementById('desde').value;
       const hasta = document.getElementById('hasta').value;
       if (!desde || !hasta) return;
 
       const updateBtn = document.getElementById('update-btn');
+      const refreshBtn = document.getElementById('refresh-btn');
       updateBtn.disabled = true;
-      updateBtn.textContent = 'Cargando...';
-      document.getElementById('report-area').innerHTML = '<div class="loading"><span class="spinner-inline"></span>Consultando Meta y Kommo...</div>';
+      refreshBtn.disabled = true;
+      const activeBtn = forceRefresh ? refreshBtn : updateBtn;
+      const originalText = activeBtn.textContent;
+      activeBtn.textContent = forceRefresh ? 'Refrescando...' : 'Cargando...';
+      document.getElementById('report-area').innerHTML = forceRefresh
+        ? '<div class="loading"><span class="spinner-inline"></span>Consultando Meta y Kommo (sin caché)...</div>'
+        : '<div class="loading"><span class="spinner-inline"></span>Cargando datos...</div>';
 
       try {
-        const r = await fetch(`${API_BASE}/api/reportes/dashboard?desde=${desde}&hasta=${hasta}`, {
+        const url = `${API_BASE}/api/reportes/dashboard?desde=${desde}&hasta=${hasta}` + (forceRefresh ? '&refresh=1' : '');
+        const r = await fetch(url, {
           headers: { Authorization: 'Bearer ' + token }
         });
         if (r.status === 401) {
@@ -283,11 +291,14 @@
           `<div class="error-box"><strong>Error:</strong> ${err.message}</div>`;
       } finally {
         updateBtn.disabled = false;
-        updateBtn.textContent = 'Actualizar';
+        refreshBtn.disabled = false;
+        updateBtn.textContent = 'Cargar';
+        refreshBtn.textContent = 'Forzar refresh';
       }
     }
 
-    document.getElementById('update-btn').addEventListener('click', fetchReport);
+    document.getElementById('update-btn').addEventListener('click', () => fetchReport(false));
+    document.getElementById('refresh-btn').addEventListener('click', () => fetchReport(true));
 
     // ---------- Render ----------
     function renderReport(data) {
@@ -374,7 +385,8 @@
           </div>
           <div class="meta-info">
             Período: <code>${data.desde}</code> → <code>${data.hasta}</code>
-            ${data.cached ? ' · datos cacheados (max 5 min)' : ''}
+            ${data.fetched_at ? ` · datos del ${new Date(data.fetched_at).toLocaleString('es-AR')}` : ''}
+            ${data.cached ? ' · <span style="color:var(--secondary);">desde caché</span>' : ' · <span style="color:var(--accent);">recién consultado</span>'}
           </div>
         </div>
       `;
