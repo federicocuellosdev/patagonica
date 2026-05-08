@@ -14,6 +14,7 @@ const webRoutes = require('./routes/web');
 const federicoRoutes = require('./routes/federico');
 const tiendanubeRoutes = require('./routes/tiendanube');
 const authRoutes = require('./routes/auth');
+const reportesRoutes = require('./routes/reportes');
 const { generateCatalog } = require('./services/tokkoCatalogService');
 
 const app = express();
@@ -57,6 +58,7 @@ app.use('/api/web', webRoutes);
 app.use('/api/federico', federicoRoutes);
 app.use('/api/tiendanube', tiendanubeRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/reportes', reportesRoutes);
 
 app.get('/', (req, res) => {
   res.json({ mensaje: 'pong' });
