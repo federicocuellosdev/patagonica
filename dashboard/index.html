@@ -265,6 +265,24 @@
     .campaign-item .info .name {
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
+    .campaign-item.is-total {
+      border-top: 2px solid var(--primary);
+      border-bottom: none;
+      padding-top: 1.2rem; margin-top: 0.4rem;
+    }
+    .campaign-item.is-total .icon {
+      background: var(--primary); color: #fff;
+    }
+    .campaign-item.is-total .info .name {
+      font-size: 1rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .campaign-item.is-total .info .obj { color: var(--text-muted); }
+    .campaign-item.is-total .num-cell .num {
+      font-size: 1.08rem; font-weight: 700; color: var(--text);
+    }
+    .campaign-item.is-total .num-cell .lbl {
+      font-weight: 700; color: var(--primary);
+    }
     .campaign-item:last-child { border-bottom: none; }
     .campaign-item .icon {
       width: 36px; height: 36px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
@@ -797,6 +815,35 @@
                 </div>
               `;
             }).join('') || '<div class="card-sub">Sin campañas activas en este período</div>'}
+            ${campaigns.length > 0 ? `
+              <div class="campaign-item is-total">
+                <div class="icon">Σ</div>
+                <div class="info">
+                  <div class="name">Total</div>
+                  <div class="obj">${campaigns.length} campañas · CTR promedio ${formatPct(t.impressions > 0 ? (t.clicks / t.impressions) * 100 : 0)}</div>
+                </div>
+                <div class="num-cell">
+                  <div class="num">${formatUSD2(t.spend)}</div>
+                  <div class="lbl">Spend</div>
+                </div>
+                <div class="num-cell">
+                  <div class="num">${formatNum(t.reach)}</div>
+                  <div class="lbl">Alcance</div>
+                </div>
+                <div class="num-cell">
+                  <div class="num">${t.reach > 0 ? (t.impressions / t.reach).toFixed(2) : '—'}</div>
+                  <div class="lbl">Frecuencia</div>
+                </div>
+                <div class="num-cell">
+                  <div class="num">${formatNum(t.leads)}</div>
+                  <div class="lbl">Leads</div>
+                </div>
+                <div class="num-cell">
+                  <div class="num">${t.cost_per_lead != null ? formatUSD2(t.cost_per_lead) : '—'}</div>
+                  <div class="lbl">CPL</div>
+                </div>
+              </div>
+            ` : ''}
           </div>
         </div>
       `;
