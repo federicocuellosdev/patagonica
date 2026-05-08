@@ -259,9 +259,10 @@
       display: flex; flex-direction: column;
     }
     .campaign-item {
-      display: grid; grid-template-columns: 36px 1fr auto auto auto auto auto; gap: 1rem; align-items: center;
+      display: grid; grid-template-columns: 36px 1fr auto auto auto auto auto; gap: 2.25rem; align-items: center;
       padding: 0.85rem 0; border-bottom: 1px solid var(--border);
     }
+    .campaign-item .num-cell { min-width: 84px; }
     .campaign-item .info .name {
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
@@ -699,7 +700,7 @@
               <div class="br-icon green">✓</div>
               <div class="br-body">
                 <div class="br-top">
-                  <div class="br-name">Leads derivados<br><span style="font-weight:500;color:var(--text-muted);font-size:0.72rem;">asignados a sucursal</span></div>
+                  <div class="br-name">Leads derivados<br><span style="font-weight:500;color:var(--text-muted);font-size:0.72rem;">asignados a Tokko</span></div>
                   <div class="br-value">${formatNum(k.derived || 0)}</div>
                 </div>
                 <div class="br-bottom">
