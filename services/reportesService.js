@@ -99,7 +99,10 @@ async function fetchMetaDailyRange({ since, until }) {
     const rows = resp.data?.data || [];
     for (const r of rows) {
       const spend = Number(r.spend) || 0;
-      const leads = sumActions(r.actions, ['lead', 'onsite_conversion.lead_grouped']);
+      // Solo `lead` — el resto (onsite_conversion.lead_grouped,
+      // offsite_complete_registration_add_meta_leads, etc.) son distintas
+      // atribuciones del MISMO evento. Sumar dobla el conteo.
+      const leads = actionValue(r.actions, 'lead');
       out.push({
         date: r.date_start,
         campaign_id: r.campaign_id,
