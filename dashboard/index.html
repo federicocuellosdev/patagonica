@@ -111,7 +111,7 @@
 
     /* Welcome + headline metrics */
     .welcome-row {
-      display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem; align-items: end;
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 1rem; align-items: end;
       margin-bottom: 1.5rem;
     }
     .welcome h1 {
@@ -122,16 +122,16 @@
     .welcome .lead { color: var(--text-muted); font-size: 0.92rem; }
 
     .headline-metrics {
-      display: flex; gap: 1.5rem; justify-content: flex-end;
+      display: flex; gap: 1.25rem; justify-content: flex-end; flex-wrap: wrap;
     }
-    .headline-metric { text-align: left; }
+    .headline-metric { text-align: left; min-width: 0; }
     .headline-metric .label {
-      font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.25rem;
-      font-weight: 500;
+      font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.25rem;
+      font-weight: 500; white-space: nowrap;
     }
     .headline-metric .value {
-      font-size: 2.4rem; font-weight: 700; line-height: 1; color: var(--text);
-      letter-spacing: -1px;
+      font-size: 1.95rem; font-weight: 700; line-height: 1; color: var(--text);
+      letter-spacing: -0.8px;
     }
 
     /* Filters bar */
@@ -168,19 +168,21 @@
     .filter-bar .resync-btn:hover { color: var(--teal); border-color: var(--teal); }
     .filter-bar .resync-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* Grid */
+    /* Grid (12 cols) */
     .dashboard-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(12, 1fr);
       gap: 1rem;
     }
     .card {
       background: var(--card); border-radius: var(--br-card); padding: 1.25rem;
       border: 1px solid var(--border);
     }
-    .card.col-span-2 { grid-column: span 2; }
-    .card.col-span-3 { grid-column: span 3; }
-    .card.col-span-4 { grid-column: span 4; }
+    .card.span-3  { grid-column: span 3; }
+    .card.span-4  { grid-column: span 4; }
+    .card.span-8  { grid-column: span 8; }
+    .card.span-9  { grid-column: span 9; }
+    .card.span-12 { grid-column: span 12; }
     .card.row-span-2 { grid-row: span 2; }
 
     /* Delta indicator */
@@ -188,6 +190,7 @@
       font-size: 0.7rem; font-weight: 600; margin-top: 0.45rem;
       display: inline-flex; align-items: center; gap: 0.3rem;
       padding: 0.2rem 0.55rem; border-radius: var(--br-pill);
+      white-space: nowrap;
     }
     .delta-up    { background: var(--green-soft); color: var(--green); }
     .delta-down  { background: var(--rose-soft);  color: var(--rose); }
@@ -226,7 +229,10 @@
     /* Progress bars */
     .progress-bars { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 1rem; }
     .progress-row { display: flex; align-items: center; gap: 0.7rem; font-size: 0.78rem; }
-    .progress-row .name { width: 130px; color: var(--text-muted); font-weight: 500; flex-shrink: 0; }
+    .progress-row .name {
+      width: 220px; color: var(--text-muted); font-weight: 500; flex-shrink: 0;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
     .progress-row .bar {
       flex: 1; height: 24px; background: var(--bg-2); border-radius: var(--br-pill); overflow: hidden;
       position: relative;
@@ -248,8 +254,11 @@
       display: flex; flex-direction: column;
     }
     .campaign-item {
-      display: grid; grid-template-columns: 36px 1fr auto auto auto auto; gap: 1rem; align-items: center;
+      display: grid; grid-template-columns: 36px 1fr auto auto auto auto auto; gap: 1rem; align-items: center;
       padding: 0.85rem 0; border-bottom: 1px solid var(--border);
+    }
+    .campaign-item .info .name {
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .campaign-item:last-child { border-bottom: none; }
     .campaign-item .icon {
@@ -328,37 +337,45 @@
     }
     .meta-footer code { background: var(--bg-2); padding: 0.1rem 0.45rem; border-radius: 4px; font-family: 'Inter', monospace; font-size: 0.95em; }
 
-    /* Toggle switch */
-    .switch-group {
-      display: inline-flex; gap: 0; padding: 3px; background: var(--bg-2); border-radius: var(--br-pill);
-      margin-left: auto;
+    /* Chart series toggles (multi-select chips) */
+    .chart-toggles {
+      display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.75rem;
     }
-    .switch-opt {
-      padding: 0.4rem 0.95rem; border-radius: var(--br-pill);
-      font-size: 0.74rem; font-weight: 600; color: var(--text-muted); cursor: pointer;
-      border: none; background: transparent; font-family: inherit; transition: all 0.15s;
+    .chart-toggle {
+      padding: 0.4rem 0.85rem; border-radius: var(--br-pill);
+      font-size: 0.74rem; color: var(--text-muted); cursor: pointer;
+      border: 1px solid var(--border); background: var(--card);
+      font-family: inherit; font-weight: 500;
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      transition: all 0.15s;
     }
-    .switch-opt.active { background: var(--card); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .chart-toggle:hover { border-color: var(--text-soft); }
+    .chart-toggle .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--border); transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .chart-toggle.active {
+      background: var(--bg-2); color: var(--text); border-color: transparent;
+    }
 
     .chart-wrap { position: relative; height: 280px; margin-top: 0.85rem; }
-    .chart-legend { display: flex; gap: 1.25rem; margin-top: 0.5rem; font-size: 0.78rem; color: var(--text-muted); }
-    .chart-legend .lg-dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 0.4rem; vertical-align: middle; }
 
     @media (max-width: 1100px) {
-      .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
-      .card.col-span-3, .card.col-span-4 { grid-column: span 2; }
+      .dashboard-grid { grid-template-columns: repeat(6, 1fr); }
+      .card.span-3 { grid-column: span 3; }
+      .card.span-4, .card.span-8, .card.span-9, .card.span-12 { grid-column: span 6; }
       .card.row-span-2 { grid-row: span 1; }
     }
     @media (max-width: 960px) {
       .welcome-row { grid-template-columns: 1fr; gap: 1.5rem; }
       .headline-metrics { justify-content: flex-start; }
-      .nav-pills { display: none; }
     }
     @media (max-width: 640px) {
       body { padding: 0.5rem; }
       .shell { padding: 1rem; border-radius: 18px; }
       .dashboard-grid { grid-template-columns: 1fr; }
-      .card.col-span-2, .card.col-span-3, .card.col-span-4 { grid-column: span 1; }
+      .card.span-3, .card.span-4, .card.span-8, .card.span-9, .card.span-12 { grid-column: span 1; }
       .topbar { flex-wrap: wrap; }
     }
   </style>
@@ -381,13 +398,7 @@
             Patagónica
           </div>
         </div>
-        <nav class="nav-pills">
-          <button class="nav-pill active">Dashboard</button>
-          <button class="nav-pill" disabled>Campañas</button>
-          <button class="nav-pill" disabled>Leads</button>
-          <button class="nav-pill" disabled>Reportes</button>
-        </nav>
-        <div class="topbar-right">
+        <div class="topbar-right" style="margin-left:auto;">
           <div class="user-chip">
             <span class="avatar" id="user-avatar">F</span>
             <span class="email" id="user-email"></span>
@@ -571,6 +582,11 @@
           ${deltaBadge(t.spend, hPt.spend)}
         </div>
         <div class="headline-metric">
+          <div class="label">Formularios (Meta)</div>
+          <div class="value">${formatNum(t.leads)}</div>
+          ${deltaBadge(t.leads, hPt.leads)}
+        </div>
+        <div class="headline-metric">
           <div class="label">Leads creados (Kommo)</div>
           <div class="value">${formatNum(k.created || 0)}</div>
           ${deltaBadge(k.created || 0, hPk.created)}
@@ -617,24 +633,27 @@
       // Build grid
       document.getElementById('report-area').innerHTML = `
         <!-- LINE CHART · formularios + derivados -->
-        <div class="card col-span-3 row-span-2">
-          <div class="card-title">
-            Evolución diaria
-            <span class="switch-group" id="chart-mode-switch">
-              <button class="switch-opt active" data-mode="cantidad">Cantidad</button>
-              <button class="switch-opt" data-mode="costo">Costo</button>
-            </span>
-          </div>
-          <div class="chart-legend">
-            <span><span class="lg-dot" style="background: var(--teal);"></span>Formularios Meta</span>
-            <span><span class="lg-dot" style="background: var(--primary);"></span>Leads creados (Kommo)</span>
-            <span><span class="lg-dot" style="background: var(--accent);"></span>Leads derivados (Kommo)</span>
+        <div class="card span-8 row-span-2">
+          <div class="card-title">Evolución diaria</div>
+          <div class="chart-toggles" id="chart-toggles">
+            <button class="chart-toggle active" data-key="forms_count" data-color="#057488" data-axis="y">
+              <span class="dot" style="background:#057488;"></span>Formularios Meta
+            </button>
+            <button class="chart-toggle" data-key="forms_cost" data-color="#057488" data-axis="y1">
+              <span class="dot"></span>Costo / formulario
+            </button>
+            <button class="chart-toggle active" data-key="derived_count" data-color="#4a90e2" data-axis="y">
+              <span class="dot" style="background:#4a90e2;"></span>Leads derivados
+            </button>
+            <button class="chart-toggle" data-key="derived_cost" data-color="#4a90e2" data-axis="y1">
+              <span class="dot"></span>Costo / derivado
+            </button>
           </div>
           <div class="chart-wrap"><canvas id="evolution-chart"></canvas></div>
         </div>
 
         <!-- Kommo funnel · al lado derecho del chart -->
-        <div class="card row-span-2">
+        <div class="card span-4 row-span-2">
           <div class="card-title">
             Funnel Kommo
             <span class="pct" style="color: var(--teal);">${formatNum(k.created || 0)} leads</span>
@@ -683,28 +702,28 @@
         </div>
 
         <!-- 4 metric cards en una fila: Alcance, ThruPlay, Visitas, Formularios -->
-        <div class="card tint-blue">
+        <div class="card span-3 tint-blue">
           <div class="card-title" style="color: var(--primary);">Alcance · personas</div>
           <div class="card-value">${formatNum(t.reach)}</div>
           <div class="card-sub">${formatNum(t.impressions)} impresiones · CPM ${t.impressions > 0 ? formatUSD2((t.spend / t.impressions) * 1000) : '—'}</div>
           ${deltaBadge(t.reach, pt.reach)}
         </div>
 
-        <div class="card tint-warm">
+        <div class="card span-3 tint-warm">
           <div class="card-title" style="color: var(--warm-strong);">ThruPlay (videos)</div>
           <div class="card-value">${formatNum(t.thruplays)}</div>
           <div class="card-sub">${t.cost_per_thruplay != null ? formatUSD2(t.cost_per_thruplay) + ' / thruplay' : '—'}</div>
           ${deltaBadge(t.thruplays, pt.thruplays)}
         </div>
 
-        <div class="card tint-teal">
+        <div class="card span-3 tint-teal">
           <div class="card-title" style="color: var(--teal);">Visitas a la página</div>
           <div class="card-value">${formatNum(t.landing_page_views)}</div>
           <div class="card-sub">${t.cost_per_landing_page_view != null ? formatUSD2(t.cost_per_landing_page_view) + ' / visita' : '—'}</div>
           ${deltaBadge(t.landing_page_views, pt.landing_page_views)}
         </div>
 
-        <div class="card dark">
+        <div class="card span-3 dark">
           <div class="card-title">Formularios (Meta)</div>
           <div class="card-value">${formatNum(t.leads)}</div>
           <div class="card-sub muted">${t.cost_per_lead != null ? formatUSD2(t.cost_per_lead) + ' por lead' : '—'}</div>
@@ -712,7 +731,7 @@
         </div>
 
         <!-- Inversión Meta with breakdown -->
-        <div class="card col-span-3">
+        <div class="card span-9">
           <div class="card-title">
             Inversión Meta · distribución por campaña
             <span class="pct">${formatUSD2(t.spend)}</span>
@@ -725,7 +744,7 @@
         </div>
 
         <!-- Resumen card -->
-        <div class="card">
+        <div class="card span-3">
           <div class="card-title">Costo por lead Kommo</div>
           <div class="card-value">${d.cost_per_kommo_lead != null ? formatUSD2(d.cost_per_kommo_lead) : '—'}</div>
           <div class="card-sub">Inversión / leads creados</div>
@@ -738,7 +757,7 @@
         </div>
 
         <!-- Campaign list -->
-        <div class="card col-span-4">
+        <div class="card span-12">
           <div class="card-title">Campañas · detalle</div>
           <div class="campaign-list">
             ${campaigns.map((c) => {
@@ -757,6 +776,10 @@
                   <div class="num-cell">
                     <div class="num">${formatNum(c.reach)}</div>
                     <div class="lbl">Alcance</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${(c.frequency || 0).toFixed(2)}</div>
+                    <div class="lbl">Frecuencia</div>
                   </div>
                   <div class="num-cell">
                     <div class="num">${formatNum(c.leads || c.landing_page_views || c.thruplays)}</div>
@@ -784,97 +807,104 @@
       `;
 
       // Chart
-      renderEvolutionChart(data, 'cantidad');
-      document.querySelectorAll('#chart-mode-switch .switch-opt').forEach((b) => {
-        b.addEventListener('click', () => {
-          document.querySelectorAll('#chart-mode-switch .switch-opt').forEach((x) => x.classList.toggle('active', x === b));
-          renderEvolutionChart(data, b.dataset.mode);
+      lastReportData = data;
+      renderEvolutionChart(data, seriesState);
+      document.querySelectorAll('#chart-toggles .chart-toggle').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const key = btn.dataset.key;
+          seriesState[key] = !seriesState[key];
+          btn.classList.toggle('active', seriesState[key]);
+          const dot = btn.querySelector('.dot');
+          dot.style.background = seriesState[key] ? btn.dataset.color : '';
+          renderEvolutionChart(lastReportData, seriesState);
         });
       });
     }
 
+    let lastReportData = null;
+    const seriesState = {
+      forms_count: true,
+      forms_cost: false,
+      derived_count: true,
+      derived_cost: false,
+    };
+
     let evolutionChart = null;
-    function renderEvolutionChart(data, mode) {
+    function renderEvolutionChart(data, state) {
       const ctx = document.getElementById('evolution-chart');
       if (!ctx) return;
 
-      // Build a unified date axis from desde → hasta
+      // Date axis
       const dates = [];
       const start = new Date(data.desde + 'T12:00:00Z');
       const end = new Date(data.hasta + 'T12:00:00Z');
-      for (let d = new Date(start); d <= end; d.setUTCDate(d.getUTCDate() + 1)) {
-        dates.push(isoDate(d));
+      for (let dt = new Date(start); dt <= end; dt.setUTCDate(dt.getUTCDate() + 1)) {
+        dates.push(isoDate(dt));
       }
 
       const metaDaily = new Map((data.meta.daily || []).map((r) => [r.date, r]));
       const kommoDaily = new Map((data.kommo.daily || []).map((r) => [r.date, r]));
+      const labels = dates.map((d) => new Date(d + 'T12:00:00Z').toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }));
 
-      const isCost = mode === 'costo';
-      const formData = dates.map((d) => {
-        const m = metaDaily.get(d);
-        if (!m) return 0;
-        if (isCost) return m.leads > 0 ? +(m.spend / m.leads).toFixed(2) : 0;
-        return m.leads || 0;
-      });
-      const createdData = dates.map((d) => {
-        const m = metaDaily.get(d);
-        const k = kommoDaily.get(d);
-        if (!k) return 0;
-        if (isCost) {
-          const spend = m ? m.spend : 0;
-          return k.created > 0 ? +(spend / k.created).toFixed(2) : 0;
-        }
-        return k.created || 0;
-      });
-      const derivData = dates.map((d) => {
-        const m = metaDaily.get(d);
-        const k = kommoDaily.get(d);
-        if (!k) return 0;
-        if (isCost) {
-          const spend = m ? m.spend : 0;
-          return k.derived > 0 ? +(spend / k.derived).toFixed(2) : 0;
-        }
-        return k.derived || 0;
-      });
+      const datasets = [];
 
-      const labels = dates.map((d) => {
-        const dt = new Date(d + 'T12:00:00Z');
-        return dt.toLocaleDateString('es-AR', { day: '2-digit', month: 'short' });
-      });
+      if (state.forms_count) {
+        datasets.push({
+          label: 'Formularios Meta',
+          data: dates.map((d) => metaDaily.get(d)?.leads || 0),
+          borderColor: '#057488',
+          backgroundColor: 'rgba(5, 116, 136, 0.10)',
+          yAxisID: 'y',
+          tension: 0.35, fill: true, pointRadius: 2.5, pointHoverRadius: 5, borderWidth: 2.5,
+        });
+      }
+      if (state.forms_cost) {
+        datasets.push({
+          label: 'Costo / formulario',
+          data: dates.map((d) => {
+            const m = metaDaily.get(d);
+            return m && m.leads > 0 ? +(m.spend / m.leads).toFixed(2) : 0;
+          }),
+          borderColor: '#057488',
+          borderDash: [5, 4],
+          backgroundColor: 'transparent',
+          yAxisID: 'y1',
+          tension: 0.35, fill: false, pointRadius: 2, pointHoverRadius: 4, borderWidth: 2,
+        });
+      }
+      if (state.derived_count) {
+        datasets.push({
+          label: 'Leads derivados',
+          data: dates.map((d) => kommoDaily.get(d)?.derived || 0),
+          borderColor: '#4a90e2',
+          backgroundColor: 'rgba(74, 144, 226, 0.10)',
+          yAxisID: 'y',
+          tension: 0.35, fill: true, pointRadius: 2.5, pointHoverRadius: 5, borderWidth: 2.5,
+        });
+      }
+      if (state.derived_cost) {
+        datasets.push({
+          label: 'Costo / derivado',
+          data: dates.map((d) => {
+            const m = metaDaily.get(d);
+            const k = kommoDaily.get(d);
+            const spend = m ? m.spend : 0;
+            return k && k.derived > 0 ? +(spend / k.derived).toFixed(2) : 0;
+          }),
+          borderColor: '#4a90e2',
+          borderDash: [5, 4],
+          backgroundColor: 'transparent',
+          yAxisID: 'y1',
+          tension: 0.35, fill: false, pointRadius: 2, pointHoverRadius: 4, borderWidth: 2,
+        });
+      }
 
-      const yLabel = isCost ? 'USD por lead' : 'Cantidad';
-      const tooltipFmt = isCost
-        ? (v) => '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-        : (v) => Number(v).toLocaleString('es-AR');
+      const showCount = state.forms_count || state.derived_count;
+      const showCost  = state.forms_cost || state.derived_cost;
 
       const cfg = {
         type: 'line',
-        data: {
-          labels,
-          datasets: [
-            {
-              label: 'Formularios Meta',
-              data: formData,
-              borderColor: '#057488',
-              backgroundColor: 'rgba(5, 116, 136, 0.10)',
-              tension: 0.35, fill: false, pointRadius: 2.5, pointHoverRadius: 5, borderWidth: 2.5,
-            },
-            {
-              label: 'Leads creados (Kommo)',
-              data: createdData,
-              borderColor: '#1a3a6e',
-              backgroundColor: 'rgba(26, 58, 110, 0.10)',
-              tension: 0.35, fill: true, pointRadius: 2.5, pointHoverRadius: 5, borderWidth: 2.5,
-            },
-            {
-              label: 'Derivados (Kommo)',
-              data: derivData,
-              borderColor: '#4a90e2',
-              backgroundColor: 'rgba(74, 144, 226, 0.10)',
-              tension: 0.35, fill: false, pointRadius: 2.5, pointHoverRadius: 5, borderWidth: 2.5,
-            },
-          ],
-        },
+        data: { labels, datasets },
         options: {
           responsive: true, maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
@@ -882,7 +912,14 @@
             legend: { display: false },
             tooltip: {
               callbacks: {
-                label: (ctx) => `${ctx.dataset.label}: ${tooltipFmt(ctx.parsed.y)}`,
+                label: (ctx) => {
+                  const isCostSeries = ctx.dataset.yAxisID === 'y1';
+                  const v = ctx.parsed.y;
+                  const formatted = isCostSeries
+                    ? '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                    : Number(v).toLocaleString('es-AR');
+                  return `${ctx.dataset.label}: ${formatted}`;
+                },
               },
               backgroundColor: '#1a3a6e', titleColor: '#fff', bodyColor: '#fff', padding: 10, cornerRadius: 8,
             },
@@ -890,13 +927,24 @@
           scales: {
             x: { grid: { display: false }, ticks: { color: '#6e7b96', font: { size: 10 }, maxRotation: 0, autoSkipPadding: 16 } },
             y: {
-              beginAtZero: true,
+              display: showCount,
+              beginAtZero: true, position: 'left',
               grid: { color: 'rgba(110, 123, 150, 0.08)' },
               ticks: {
                 color: '#6e7b96', font: { size: 10 },
-                callback: (v) => isCost ? '$' + v : Number(v).toLocaleString('es-AR'),
+                callback: (v) => Number(v).toLocaleString('es-AR'),
               },
-              title: { display: true, text: yLabel, color: '#93a1bd', font: { size: 10, weight: 500 } },
+              title: { display: true, text: 'Cantidad', color: '#93a1bd', font: { size: 10, weight: 500 } },
+            },
+            y1: {
+              display: showCost,
+              beginAtZero: true, position: 'right',
+              grid: { drawOnChartArea: !showCount, color: 'rgba(110, 123, 150, 0.05)' },
+              ticks: {
+                color: '#6e7b96', font: { size: 10 },
+                callback: (v) => '$' + Number(v).toFixed(2),
+              },
+              title: { display: true, text: 'USD', color: '#93a1bd', font: { size: 10, weight: 500 } },
             },
           },
         },
