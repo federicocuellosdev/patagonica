@@ -249,8 +249,15 @@
     }
 
     document.querySelectorAll('.preset-btn').forEach((btn) => {
-      btn.addEventListener('click', () => applyPreset(btn.dataset.range));
+      btn.addEventListener('click', () => {
+        applyPreset(btn.dataset.range);
+        fetchReport(false);
+      });
     });
+
+    // Auto-fetch al cambiar las fechas
+    document.getElementById('desde').addEventListener('change', () => fetchReport(false));
+    document.getElementById('hasta').addEventListener('change', () => fetchReport(false));
 
     // Default: last 30 days
     applyPreset('30');
