@@ -14,3 +14,7 @@ coverage/
 .idea/
 test
 meta_ads
+data/auth.db
+data/auth.db-journal
+data/auth.db-wal
+data/auth.db-shm

@@ -13,6 +13,7 @@ const juanitaRoutes = require('./routes/juanita');
 const webRoutes = require('./routes/web');
 const federicoRoutes = require('./routes/federico');
 const tiendanubeRoutes = require('./routes/tiendanube');
+const authRoutes = require('./routes/auth');
 const { generateCatalog } = require('./services/tokkoCatalogService');
 
 const app = express();
@@ -25,7 +26,12 @@ app.use(cors({
     'https://www.chavelaba.com.ar',
     'https://federicocuellos.ar',
     'https://www.federicocuellos.ar',
+    'https://l.patagonicapropiedades.com.ar',
+    'https://patagonicapropiedades.com.ar',
+    'https://www.patagonicapropiedades.com.ar',
     'http://localhost:3000',
+    'http://localhost:5173',
+    'http://localhost:8080',
     /\.github\.io$/,
     /\.mitiendanube\.com$/,
   ],
@@ -50,6 +56,7 @@ app.use('/api/juanita', juanitaRoutes);
 app.use('/api/web', webRoutes);
 app.use('/api/federico', federicoRoutes);
 app.use('/api/tiendanube', tiendanubeRoutes);
+app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
   res.json({ mensaje: 'pong' });
