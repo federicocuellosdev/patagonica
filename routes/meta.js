@@ -4,6 +4,7 @@ const axios = require('axios');
 const metaService = require('../services/metaService');
 const kommoService = require('../services/kommoService');
 const { getFormConfig } = require('../config/forms');
+const { getAdsetTags } = require('../config/adsets');
 
 const CAPI_PIXEL_ID = '1129079111925410';
 
@@ -51,11 +52,15 @@ router.post('/webhook', async (req, res) => {
               // Obtener configuración del formulario
               const formConfig = getFormConfig(formId);
 
+              // Tags adicionales según adset (ej. NQ & RN)
+              const adsetTags = getAdsetTags(leadData.adset_id);
+              const tags = [...(formConfig.tags || []), ...adsetTags];
+
               // Enviar a Kommo
               const kommoResult = await kommoService.processLead(
                 leadData,
                 formConfig.name || 'FORM - General',
-                formConfig.tags || []
+                tags
               );
 
               console.log(`- Kommo - Lead ID: ${kommoResult.lead?.id}\n`);
