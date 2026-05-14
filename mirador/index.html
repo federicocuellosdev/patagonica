@@ -2105,19 +2105,23 @@
             </div>
             <form class="contact-form">
                 <h3>Envianos tu consulta</h3>
-                <div class="form-group">
-                    <label for="name">Nombre y apellido</label>
-                    <input type="text" id="name" name="name" placeholder="Tu nombre y apellido" required>
-                </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="phone">Telefono</label>
-                        <input type="tel" id="phone" name="phone" placeholder="Tu telefono" required>
+                        <label for="first_name">Nombre</label>
+                        <input type="text" id="first_name" name="first_name" placeholder="Tu nombre" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Tu email" required>
+                        <label for="last_name">Apellido</label>
+                        <input type="text" id="last_name" name="last_name" placeholder="Tu apellido" required>
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telefono</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Tu telefono" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Tu email" required>
                 </div>
                 <div class="form-group">
                     <label for="message">Mensaje</label>
@@ -2404,7 +2408,7 @@
             });
 
             const data = {
-                name: this.name.value,
+                name: (this.first_name.value + ' ' + this.last_name.value).trim(),
                 phone: this.phone.value,
                 email: this.email.value,
                 message: this.message.value,
