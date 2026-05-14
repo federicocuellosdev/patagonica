@@ -156,4 +156,4 @@ async function processLead(leadData, formLabel = 'General', tags = []) {
   return { contact, lead };
 }
 
-module.exports = { processLead };
+module.exports = { processLead, createContact, createLead };
