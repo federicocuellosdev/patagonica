@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
+    // Inyectar <base href="../"> siempre para que las rutas con './' resuelvan
+    // tanto en file:// como en https://. El handler de anchor fragments
+    // compensa que el <base> rompe el comportamiento nativo de href="#id".
     (function() {
-        var h = location.hostname;
-        if (location.protocol === 'file:' || h === 'localhost' || h === '127.0.0.1') {
-            document.write('<base href="../">');
-            document.addEventListener('click', function(e) {
-                var a = e.target.closest('a[href^="#"]');
-                if (a) { e.preventDefault(); var el = document.getElementById(a.getAttribute('href').substring(1)); if (el) el.scrollIntoView({ behavior: 'smooth' }); }
-            });
-        }
+        document.write('<base href="../">');
+        document.addEventListener('click', function(e) {
+            var a = e.target.closest('a[href^="#"]');
+            if (a) { e.preventDefault(); var el = document.getElementById(a.getAttribute('href').substring(1)); if (el) el.scrollIntoView({ behavior: 'smooth' }); }
+        });
     })();
     </script>
     <title>Cota Mil | Patagonica Propiedades</title>
@@ -31,12 +31,12 @@
     <meta name="twitter:description" content="20 lotes exclusivos en el faldeo del Cerro Bayo con vistas al lago Nahuel Huapi. Villa La Angostura, Patagonia.">
     <meta name="twitter:image"       content="https://l.patagonicapropiedades.com.ar/cota-1000/img/patagonica-propiedades-cota-1000-og.webp">
 
-    <link rel="icon" type="image/png" href="/mirador/img/patagonica-icon.webp">
+    <link rel="icon" type="image/png" href="./src/img/patagonica-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="https://d1v2p1s05qqabi.cloudfront.net/fonts/patagonica/fonts-patagonica.css" rel="stylesheet">
-    <link rel="preload" as="image" href="/cota-1000/img/patagonica-propiedades-cota-1000-hero.webp" type="image/webp">
+    <link rel="preload" as="image" href="./cota-1000/img/patagonica-propiedades-cota-1000-hero.webp" type="image/webp">
     <style>
         :root {
             --primary: #121C25;
@@ -154,7 +154,7 @@
         /* ── 1. Hero Parallax ── */
         .hero {
             height: 100vh;
-            background: url('/cota-1000/img/patagonica-propiedades-cota-1000-hero.webp') center/cover no-repeat fixed;
+            background: url('./cota-1000/img/patagonica-propiedades-cota-1000-hero.webp') center/cover no-repeat fixed;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -323,7 +323,7 @@
         .proyecto-image {
             position: relative;
             overflow: hidden;
-            min-height: 400px;
+            aspect-ratio: 1 / 1;
         }
         .proyecto-image img {
             width: 100%;
@@ -612,7 +612,7 @@
         .ubicacion {
             position: relative;
             height: 550px;
-            background: url('/cota-1000/img/patagonica-propiedades-cota-1000-ubicacion.webp') center top/cover no-repeat fixed;
+            background: url('./cota-1000/img/patagonica-propiedades-cota-1000-ubicacion.webp') center top/cover no-repeat fixed;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -904,6 +904,160 @@
         .lightbox-next { right: 1.5rem; }
         .lightbox-thumbs { display: none; }
 
+        /* ── Renders ── */
+        .renders {
+            padding: 6rem 5%;
+            background-color: var(--light);
+        }
+        .renders-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .renders-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 280px);
+            gap: 0.75rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .render-item {
+            overflow: hidden;
+            position: relative;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+        }
+        .render-item:first-child {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+        .render-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        .render-item:hover img { transform: scale(1.06); }
+        .render-item::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(18,28,37,0.55), transparent 55%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: var(--border-radius);
+        }
+        .render-item:hover::after { opacity: 1; }
+        .renders-disclaimer {
+            text-align: center;
+            font-size: 0.72rem;
+            color: rgba(0,0,0,0.65);
+            margin-top: 1.75rem;
+            padding: 0 1rem;
+            max-width: 820px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ── Estado de Obra ── */
+        .progress-section {
+            padding: 6rem 5%;
+            background-color: var(--white);
+        }
+        .progress-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .progress-image {
+            position: relative;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+        }
+        .progress-image > img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+        }
+        .progress-thumbs {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .progress-thumbs img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.85;
+            transition: opacity 0.3s ease;
+        }
+        .progress-thumbs img:hover { opacity: 1; }
+        .progress-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: rgba(5, 116, 136, 0.1);
+            border: 1px solid rgba(5, 116, 136, 0.25);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+            color: var(--secondary);
+        }
+        .progress-badge svg {
+            width: 16px; height: 16px;
+            fill: var(--secondary);
+            flex-shrink: 0;
+        }
+        .progress-info .section-subtitle {
+            color: var(--secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        .progress-info h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            line-height: 1.15;
+        }
+        .progress-info > p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        .progress-features {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .progress-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+        .progress-feature svg {
+            width: 20px; height: 20px;
+            fill: var(--secondary);
+            flex-shrink: 0;
+        }
+
         /* ── Responsive ── */
         @media (max-width: 1024px) {
             .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
@@ -918,6 +1072,11 @@
             .bento-grid .gallery-item:nth-child(4) { display: none; }
             .lotes-grid { grid-template-columns: repeat(3, 1fr); }
             .ubicacion-card { max-width: 100%; width: 92%; }
+            .renders-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(3, 220px); }
+            .render-item:first-child { grid-column: span 2; grid-row: span 1; }
+            .progress-container { grid-template-columns: 1fr; gap: 3rem; }
+            .progress-thumbs { grid-template-columns: repeat(5, 1fr); }
+            .progress-thumbs img { height: 70px; }
         }
 
         @media (max-width: 768px) {
@@ -939,7 +1098,7 @@
             nav a { font-size: 1.1rem; }
             .hero-title { font-size: clamp(2.5rem, 12vw, 4rem); }
             .proyecto-card { grid-template-columns: 1fr; }
-            .proyecto-image { min-height: 280px; order: -1; }
+            .proyecto-image { aspect-ratio: auto; min-height: 280px; order: -1; }
             .stats-ribbon { display: none; }
             .stats-cards { display: flex; }
             .bento-grid {
@@ -975,6 +1134,15 @@
             .lightbox-prev { left: 0.5rem; }
             .lightbox-next { right: 0.5rem; }
             .footer-content { flex-direction: column; gap: 1.5rem; text-align: center; }
+            .renders { padding: 4rem 5%; }
+            .renders-grid { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+            .render-item:first-child { grid-column: span 1; grid-row: span 1; }
+            .progress-section { padding: 4rem 5%; }
+            .progress-image > img { height: 280px; }
+            .progress-thumbs { grid-template-columns: repeat(3, 1fr); }
+            .progress-thumbs img { height: 90px; }
+            .progress-thumbs img:nth-child(n+4) { display: none; }
+            .hero-badge { font-size: 0.6rem; }
         }
 
         @media (max-width: 480px) {
@@ -991,9 +1159,7 @@
     <!-- Header -->
     <header>
         <a href="#" class="logo">
-            <img src="/mirador/img/patagonica-logo-blanco.webp" alt="Patagonica Propiedades">
-            <span class="logo-separator"></span>
-            <img src="/cota-1000/img/patagonica-propiedades-cota-1000-logo.svg" alt="Cota Mil" class="logo-project">
+            <img src="./src/img/patagonica-logo-blanco.png" alt="Patagonica Propiedades">
         </a>
         <nav>
             <ul>
@@ -1001,6 +1167,8 @@
                 <li><a href="#proyecto">Proyecto</a></li>
                 <li><a href="#galeria">Galeria</a></li>
                 <li><a href="#lotes">Lotes</a></li>
+                <li><a href="#renders">Renders</a></li>
+                <li><a href="#estado-obra">Obra</a></li>
                 <li><a href="#ubicacion">Ubicacion</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
@@ -1047,7 +1215,7 @@
                 </div>
             </div>
             <div class="proyecto-image">
-                <img loading="lazy" src="/cota-1000/img/patagonica-propiedades-cota-1000-proyecto.webp" alt="Cota Mil - Faldeo Cerro Bayo">
+                <img loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-proyecto.webp" alt="Cota Mil - Faldeo Cerro Bayo">
                 <div class="proyecto-image-badge">
                     <strong>20</strong>
                     <span>Lotes</span>
@@ -1072,7 +1240,7 @@
                 <div class="stat-label">Reserva intangible</div>
             </div>
             <div class="stat-item">
-                <div class="stat-number">127 <small>K</small></div>
+                <div class="stat-number">127 <small>mil</small></div>
                 <div class="stat-label">Desde USD</div>
             </div>
         </div>
@@ -1114,20 +1282,20 @@
         </div>
         <div class="bento-grid">
             <div class="gallery-item">
-                <img loading="lazy" src="/cota-1000/img/patagonica-propiedades-cota-1000-galeria-1.webp" alt="Cota Mil - Vista al lago Nahuel Huapi">
+                <img loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-obra-1.webp" alt="Cota Mil - Vista aerea del faldeo">
             </div>
             <div class="gallery-item">
-                <img loading="lazy" src="/cota-1000/img/patagonica-propiedades-cota-1000-galeria-2.webp" alt="Cota Mil - Bosque nativo">
+                <img loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-obra-2.webp" alt="Cota Mil - Bosque nativo">
             </div>
             <div class="gallery-item">
-                <img loading="lazy" src="/cota-1000/img/patagonica-propiedades-cota-1000-galeria-3.webp" alt="Cota Mil - Faldeo Cerro Bayo">
+                <img loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-obra-3.webp" alt="Cota Mil - Faldeo Cerro Bayo">
             </div>
             <div class="gallery-item">
-                <img loading="lazy" src="/cota-1000/img/patagonica-propiedades-cota-1000-galeria-4.webp" alt="Cota Mil - Entorno patagónico">
+                <img loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-obra-4.webp" alt="Cota Mil - Entorno patagonico">
             </div>
             <!-- Hidden images for lightbox -->
-            <div class="gallery-item" style="display:none;"><img loading="lazy" src="/cota-1000/img/patagonica-propiedades-cota-1000-galeria-5.webp" alt="Cota Mil"></div>
-            <div class="gallery-item" style="display:none;"><img loading="lazy" src="/cota-1000/img/patagonica-propiedades-cota-1000-galeria-6.webp" alt="Cota Mil"></div>
+            <div class="gallery-item" style="display:none;"><img loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-obra-5.webp" alt="Cota Mil"></div>
+            <div class="gallery-item" style="display:none;"><img loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-obra-6.webp" alt="Cota Mil"></div>
         </div>
         <div class="gallery-mobile-counter" id="gallery-mobile-counter">1 / 4</div>
         <p class="gallery-mobile-cta">Toca una imagen para ver la galeria completa</p>
@@ -1259,6 +1427,81 @@
         </div>
     </section>
 
+    <!-- 5b. Renders -->
+    <section class="renders" id="renders">
+        <div class="renders-header">
+            <p class="section-subtitle">Renders</p>
+            <h2 class="section-title">Imaginá tu casa en el bosque</h2>
+        </div>
+        <div class="renders-grid">
+            <div class="render-item">
+                <img loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-render-1.webp" alt="Cota Mil - Render arquitectonico 1">
+            </div>
+            <div class="render-item">
+                <img loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-render-2.webp" alt="Cota Mil - Render arquitectonico 2">
+            </div>
+            <div class="render-item">
+                <img loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-render-3.webp" alt="Cota Mil - Render arquitectonico 3">
+            </div>
+            <div class="render-item">
+                <img loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-render-4.webp" alt="Cota Mil - Render arquitectonico 4">
+            </div>
+            <div class="render-item">
+                <img loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-render-5.webp" alt="Cota Mil - Render arquitectonico 5">
+            </div>
+        </div>
+        <p class="renders-disclaimer">Aviso legal: Las imagenes son de caracter ilustrativo y no contractual. Los renders representan una propuesta arquitectonica posible para los lotes; el desarrollo construido podria presentar variaciones respecto a lo exhibido.</p>
+    </section>
+
+    <!-- 5c. Estado de Obra -->
+    <section class="progress-section" id="estado-obra">
+        <div class="progress-container">
+            <div class="progress-image">
+                <img src="./cota-1000/img/patagonica-propiedades-cota-1000-obra-1.webp" alt="Estado actual de Cota Mil - Vista aerea" loading="lazy">
+                <div class="progress-thumbs">
+                    <img src="./cota-1000/img/patagonica-propiedades-cota-1000-obra-2.webp" alt="Cota Mil - Obra 2" loading="lazy">
+                    <img src="./cota-1000/img/patagonica-propiedades-cota-1000-galeria-1.webp" alt="Cota Mil - Galeria 1" loading="lazy">
+                    <img src="./cota-1000/img/patagonica-propiedades-cota-1000-obra-3.webp" alt="Cota Mil - Obra 3" loading="lazy">
+                    <img src="./cota-1000/img/patagonica-propiedades-cota-1000-galeria-2.webp" alt="Cota Mil - Galeria 2" loading="lazy">
+                    <img src="./cota-1000/img/patagonica-propiedades-cota-1000-obra-4.webp" alt="Cota Mil - Obra 4" loading="lazy">
+                    <img src="./cota-1000/img/patagonica-propiedades-cota-1000-galeria-3.webp" alt="Cota Mil - Galeria 3" loading="lazy">
+                    <img src="./cota-1000/img/patagonica-propiedades-cota-1000-obra-5.webp" alt="Cota Mil - Obra 5" loading="lazy">
+                    <img src="./cota-1000/img/patagonica-propiedades-cota-1000-galeria-4.webp" alt="Cota Mil - Galeria 4" loading="lazy">
+                    <img src="./cota-1000/img/patagonica-propiedades-cota-1000-obra-6.webp" alt="Cota Mil - Obra 6" loading="lazy">
+                    <img src="./cota-1000/img/patagonica-propiedades-cota-1000-galeria-5.webp" alt="Cota Mil - Galeria 5" loading="lazy">
+                    <img src="./cota-1000/img/patagonica-propiedades-cota-1000-galeria-6.webp" alt="Cota Mil - Galeria 6" loading="lazy">
+                </div>
+            </div>
+            <div class="progress-info">
+                <p class="section-subtitle">Estado del proyecto</p>
+                <span class="progress-badge">
+                    <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                    Asi se ve hoy
+                </span>
+                <h2>El proyecto en tiempo real</h2>
+                <p>Capturas aereas recientes del faldeo del Cerro Bayo. Las calles internas, el trazado de lotes y la reserva natural intangible ya conviven en el terreno.</p>
+                <div class="progress-features">
+                    <div class="progress-feature">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        <span>Calles internas trazadas</span>
+                    </div>
+                    <div class="progress-feature">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        <span>20 lotes demarcados sobre el faldeo</span>
+                    </div>
+                    <div class="progress-feature">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        <span>Bosque nativo de coihues preservado</span>
+                    </div>
+                    <div class="progress-feature">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                        <span>Luz y gas natural disponibles en puerta</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 6. Ubicación parallax + glassmorphism centrada -->
     <section class="ubicacion" id="ubicacion">
         <div class="ubicacion-card">
@@ -1346,7 +1589,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
-                <img src="/mirador/img/patagonica-logo-blanco.webp" alt="Patagonica Propiedades">
+                <img src="./src/img/patagonica-logo-blanco.png" alt="Patagonica Propiedades">
             </div>
             <div class="social-links">
                 <a href="https://www.instagram.com/patagonicapropiedades/" target="_blank" aria-label="Instagram">
@@ -1417,24 +1660,18 @@
             });
         });
 
-        // Lightbox
+        // Lightbox (multi-grupo: galeria, renders, estado de obra)
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxCounter = document.getElementById('lightbox-counter');
         const lightboxThumbs = document.getElementById('lightbox-thumbs');
-        const galleryItems = document.querySelectorAll('.gallery-item img');
+        let currentGroup = [];
         let currentIndex = 0;
 
-        galleryItems.forEach((img, i) => {
-            const thumb = document.createElement('div');
-            thumb.className = 'lightbox-thumb' + (i === 0 ? ' active' : '');
-            thumb.innerHTML = '<img src="' + img.src + '" alt="Thumbnail">';
-            thumb.addEventListener('click', () => goToSlide(i));
-            lightboxThumbs.appendChild(thumb);
-        });
-
-        function openLightbox(index) {
+        function openLightbox(group, index) {
+            currentGroup = group;
             currentIndex = index;
+            rebuildThumbs();
             updateLightbox();
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -1447,40 +1684,71 @@
             currentIndex = i;
             updateLightbox();
         }
+        function rebuildThumbs() {
+            lightboxThumbs.innerHTML = '';
+            currentGroup.forEach((img, i) => {
+                const thumb = document.createElement('div');
+                thumb.className = 'lightbox-thumb' + (i === currentIndex ? ' active' : '');
+                thumb.innerHTML = '<img src="' + img.src + '" alt="Thumbnail">';
+                thumb.addEventListener('click', () => goToSlide(i));
+                lightboxThumbs.appendChild(thumb);
+            });
+        }
         function updateLightbox() {
             lightboxImg.style.opacity = '0';
             setTimeout(() => {
-                lightboxImg.src = galleryItems[currentIndex].src;
+                lightboxImg.src = currentGroup[currentIndex].src;
                 lightboxImg.style.opacity = '1';
             }, 180);
-            lightboxCounter.textContent = (currentIndex + 1) + ' / ' + galleryItems.length;
+            lightboxCounter.textContent = (currentIndex + 1) + ' / ' + currentGroup.length;
             document.querySelectorAll('.lightbox-thumb').forEach((t, i) => {
                 t.classList.toggle('active', i === currentIndex);
             });
         }
 
+        // Grupo 1: Galeria bento
+        const galleryItems = Array.from(document.querySelectorAll('.gallery-item img'));
         document.querySelectorAll('.gallery-item').forEach((item, i) => {
-            item.addEventListener('click', () => openLightbox(i));
+            item.addEventListener('click', () => openLightbox(galleryItems, i));
         });
+
+        // Grupo 2: Renders
+        const renderItems = Array.from(document.querySelectorAll('.render-item img'));
+        document.querySelectorAll('.render-item').forEach((item, i) => {
+            item.addEventListener('click', () => openLightbox(renderItems, i));
+        });
+
+        // Grupo 3: Estado de obra (principal + thumbs)
+        const progressMain = document.querySelector('.progress-image > img');
+        const progressThumbs = Array.from(document.querySelectorAll('.progress-thumbs img'));
+        const progressItems = progressMain ? [progressMain, ...progressThumbs] : progressThumbs;
+        if (progressMain) {
+            progressMain.style.cursor = 'pointer';
+            progressMain.addEventListener('click', () => openLightbox(progressItems, 0));
+        }
+        progressThumbs.forEach((img, i) => {
+            img.addEventListener('click', () => openLightbox(progressItems, i + 1));
+        });
+
         document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
         document.querySelector('.lightbox-main').addEventListener('click', (e) => {
             if (e.target === document.querySelector('.lightbox-main')) closeLightbox();
         });
         document.getElementById('lightbox-prev').addEventListener('click', (e) => {
             e.stopPropagation();
-            currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+            currentIndex = (currentIndex - 1 + currentGroup.length) % currentGroup.length;
             updateLightbox();
         });
         document.getElementById('lightbox-next').addEventListener('click', (e) => {
             e.stopPropagation();
-            currentIndex = (currentIndex + 1) % galleryItems.length;
+            currentIndex = (currentIndex + 1) % currentGroup.length;
             updateLightbox();
         });
         document.addEventListener('keydown', (e) => {
             if (!lightbox.classList.contains('active')) return;
             if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length; updateLightbox(); }
-            if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % galleryItems.length; updateLightbox(); }
+            if (e.key === 'ArrowLeft') { currentIndex = (currentIndex - 1 + currentGroup.length) % currentGroup.length; updateLightbox(); }
+            if (e.key === 'ArrowRight') { currentIndex = (currentIndex + 1) % currentGroup.length; updateLightbox(); }
         });
 
         // Mobile gallery carousel counter

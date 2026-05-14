@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
+    // Inyectar <base href="../"> siempre para que las rutas con './' resuelvan
+    // tanto en file:// como en https://. El handler de anchor fragments
+    // compensa que el <base> rompe el comportamiento nativo de href="#id".
     (function() {
-        var h = location.hostname;
-        if (location.protocol === 'file:' || h === 'localhost' || h === '127.0.0.1') {
-            document.write('<base href="../">');
-            document.addEventListener('click', function(e) {
-                var a = e.target.closest('a[href^="#"]');
-                if (a) { e.preventDefault(); var el = document.getElementById(a.getAttribute('href').substring(1)); if (el) el.scrollIntoView({ behavior: 'smooth' }); }
-            });
-        }
+        document.write('<base href="../">');
+        document.addEventListener('click', function(e) {
+            var a = e.target.closest('a[href^="#"]');
+            if (a) { e.preventDefault(); var el = document.getElementById(a.getAttribute('href').substring(1)); if (el) el.scrollIntoView({ behavior: 'smooth' }); }
+        });
     })();
     </script>
     <title>Mirador | Patagonica Propiedades</title>
@@ -31,7 +31,7 @@
     <meta name="twitter:description" content="Un exclusivo desarrollo de 9 unidades funcionales premium en barrio Arauco.">
     <meta name="twitter:image"       content="https://l.patagonicapropiedades.com.ar/mirador/img/patagonica-propiedades-mirador-og.webp">
 
-    <link rel="icon" type="image/png" href="/mirador/img/patagonica-icon.webp">
+    <link rel="icon" type="image/png" href="./src/img/patagonica-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap" rel="stylesheet">
@@ -1695,7 +1695,7 @@
     <!-- Header -->
     <header>
         <a href="#" class="logo">
-            <img src="/mirador/img/patagonica-logo-blanco.webp" alt="Patagonica Propiedades">
+            <img src="./src/img/patagonica-logo-blanco.png" alt="Patagonica Propiedades">
         </a>
         <nav>
             <ul>
@@ -2141,7 +2141,7 @@
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
-                <img src="/mirador/img/patagonica-logo-blanco.webp" alt="Patagonica Propiedades">
+                <img src="./src/img/patagonica-logo-blanco.png" alt="Patagonica Propiedades">
             </div>
             <div class="social-links">
                 <a href="https://www.instagram.com/patagonicapropiedades/" target="_blank" aria-label="Instagram">
