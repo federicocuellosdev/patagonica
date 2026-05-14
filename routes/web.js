@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const tokkoService = require('../services/tokkoService');
+const kommoService = require('../services/kommoService');
 const { getLandingConfig } = require('../config/landings');
 
 router.post('/contact', async (req, res) => {
@@ -21,32 +21,28 @@ router.post('/contact', async (req, res) => {
       return res.status(400).json({ error: 'Identificador de landing no válido' });
     }
 
-    // Construir texto con mensaje + tracking
-    let text = message || '';
+    // Nota: mensaje + tracking
+    let note = message || '';
     if (tracking && Object.keys(tracking).length > 0) {
-      text += '\n\nTracking:';
-      for (const [key, val] of Object.entries(tracking)) {
-        text += `\n${key}: ${val}`;
-      }
+      if (note) note += '\n\n';
+      note += 'Tracking:';
+      for (const [k, v] of Object.entries(tracking)) note += `\n${k}: ${v}`;
     }
 
-    const contactData = {
-      name,
-      email,
-      phone: phone || '',
-      cellphone: phone || '',
-      text,
+    // 1) Crear contacto en Kommo
+    const contact = await kommoService.createContact({ name, email, phone: phone || '' });
+
+    // 2) Crear lead vinculando el contacto (Kommo linkea automaticamente con _embedded.contacts)
+    const lead = await kommoService.createLead({
+      title: `${landing.kommoLeadPrefix} ${name}`.trim(),
+      contactId: contact.id,
+      note: note.trim() || null,
       tags: landing.tags
-    };
+    });
 
-    // Solo incluir publication_id si existe y es numérico (ID de Tokko)
-    if (publication_id && !isNaN(publication_id)) {
-      contactData.publication_id = Number(publication_id);
-    }
-
-    const result = await tokkoService.createContact(contactData);
-    res.json(result);
+    res.json({ success: true, contactId: contact.id, leadId: lead.id });
   } catch (error) {
+    console.error('[web/contact] Error:', error.response?.data || error.message);
     res.status(500).json({ error: error.message });
   }
 });
