@@ -34,7 +34,7 @@ router.post('/contact', async (req, res) => {
 
     // 2) Crear lead vinculando el contacto (Kommo linkea automaticamente con _embedded.contacts)
     const lead = await kommoService.createLead({
-      title: `${landing.kommoLeadPrefix} ${name}`.trim(),
+      title: `${landing.kommoLeadPrefix} - ${name}`.trim(),
       contactId: contact.id,
       note: note.trim() || null,
       tags: landing.tags
