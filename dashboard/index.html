@@ -523,7 +523,7 @@
 
     document.getElementById('logout-btn').addEventListener('click', () => {
       sessionStorage.removeItem(TOKEN_KEY);
-      location.href = 'login.html';
+      location.href = 'dashboard/login.html';
     });
 
     function formatUSD(n) { if (n == null || isNaN(n)) return '—'; return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: n < 100 ? 2 : 0 }); }
@@ -593,7 +593,7 @@
         const r = await fetch(url, { headers: { Authorization: 'Bearer ' + token } });
         if (r.status === 401) {
           sessionStorage.removeItem(TOKEN_KEY);
-          location.replace('login.html');
+          location.replace('dashboard/login.html');
           return;
         }
         const data = await r.json();
@@ -1198,7 +1198,7 @@
     (async () => {
       const token = sessionStorage.getItem(TOKEN_KEY);
       if (!token) {
-        location.replace('login.html');
+        location.replace('dashboard/login.html');
         return;
       }
       try {
@@ -1211,7 +1211,7 @@
         fetchReport();
       } catch (e) {
         sessionStorage.removeItem(TOKEN_KEY);
-        location.replace('login.html');
+        location.replace('dashboard/login.html');
       }
     })();
   </script>

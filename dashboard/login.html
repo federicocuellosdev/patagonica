@@ -179,7 +179,7 @@
         const data = await r.json();
         if (r.ok && data.token) {
           sessionStorage.setItem(TOKEN_KEY, data.token);
-          location.href = 'index.html';
+          location.href = 'dashboard/index.html';
         } else {
           showMsg(data.error || 'No se pudo ingresar', 'err');
           btn.disabled = false;
