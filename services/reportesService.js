@@ -281,6 +281,7 @@ function aggregateMetaAdsets({ desde, hasta }) {
   const filtered = store.days.filter((d) => d.date >= desde && d.date <= hasta);
 
   const byAdset = new Map();
+  const dailyByAdset = new Map();
   for (const d of filtered) {
     const key = d.adset_id;
     if (!byAdset.has(key)) {
@@ -293,6 +294,7 @@ function aggregateMetaAdsets({ desde, hasta }) {
         spend: 0, reach: 0, impressions: 0, clicks: 0, leads: 0,
         landing_page_views: 0, link_clicks: 0,
       });
+      dailyByAdset.set(key, new Map());
     }
     const a = byAdset.get(key);
     a.spend += d.spend;
@@ -302,10 +304,18 @@ function aggregateMetaAdsets({ desde, hasta }) {
     a.landing_page_views += d.landing_page_views;
     a.link_clicks += d.link_clicks;
     a.reach += d.reach;
+
+    const da = dailyByAdset.get(key);
+    if (!da.has(d.date)) da.set(d.date, { date: d.date, spend: 0, leads: 0, landing_page_views: 0 });
+    const aDay = da.get(d.date);
+    aDay.spend += d.spend;
+    aDay.leads += d.leads;
+    aDay.landing_page_views += d.landing_page_views;
   }
 
   return Array.from(byAdset.values()).map((a) => ({
     ...a,
+    daily: Array.from(dailyByAdset.get(a.adset_id).values()).sort((x, y) => (x.date < y.date ? -1 : 1)),
     ctr: a.impressions > 0 ? (a.clicks / a.impressions) * 100 : 0,
     cpm: a.impressions > 0 ? (a.spend / a.impressions) * 1000 : 0,
     frequency: a.reach > 0 ? a.impressions / a.reach : 0,
@@ -406,6 +416,7 @@ function aggregateMeta({ desde, hasta }) {
 
   const byCampaign = new Map();
   const byDate = new Map();
+  const dailyByCampaign = new Map(); // campaign_id -> Map(date -> row)
   for (const d of filtered) {
     const key = d.campaign_id;
     if (!byCampaign.has(key)) {
@@ -416,6 +427,7 @@ function aggregateMeta({ desde, hasta }) {
         spend: 0, reach: 0, impressions: 0, clicks: 0, leads: 0,
         landing_page_views: 0, link_clicks: 0, thruplays: 0,
       });
+      dailyByCampaign.set(key, new Map());
     }
     const c = byCampaign.get(key);
     c.spend += d.spend;
@@ -428,6 +440,15 @@ function aggregateMeta({ desde, hasta }) {
     // reach no es perfectamente aditivo entre días (puede haber overlap de usuarios),
     // pero la suma diaria es la convención típica en dashboards y comparativa entre períodos.
     c.reach += d.reach;
+
+    // Daily per campaign (para popup con chart por entidad)
+    const dc = dailyByCampaign.get(key);
+    if (!dc.has(d.date)) dc.set(d.date, { date: d.date, spend: 0, leads: 0, landing_page_views: 0, thruplays: 0 });
+    const cDay = dc.get(d.date);
+    cDay.spend += d.spend;
+    cDay.leads += d.leads;
+    cDay.landing_page_views += d.landing_page_views;
+    cDay.thruplays += d.thruplays;
 
     // Daily totals
     if (!byDate.has(d.date)) {
@@ -444,6 +465,7 @@ function aggregateMeta({ desde, hasta }) {
 
   const campaigns = Array.from(byCampaign.values()).map((c) => ({
     ...c,
+    daily: Array.from(dailyByCampaign.get(c.campaign_id).values()).sort((a, b) => (a.date < b.date ? -1 : 1)),
     ctr: c.impressions > 0 ? (c.clicks / c.impressions) * 100 : 0,
     cpm: c.impressions > 0 ? (c.spend / c.impressions) * 1000 : 0,
     frequency: c.reach > 0 ? c.impressions / c.reach : 0,
