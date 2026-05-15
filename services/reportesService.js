@@ -343,6 +343,16 @@ function aggregateMeta({ desde, hasta }) {
   };
 }
 
+function getFormGroupName(tags) {
+  // Tag explicito 'FORM - *' tiene prioridad
+  const formTag = tags.find((t) => t.startsWith('FORM - '));
+  if (formTag) return formTag;
+  // Forms sin prefijo
+  if (tags.includes('Remarketing') && tags.includes('Emprendimientos')) return 'Remarketing - Emprendimientos';
+  if (tags.includes('Emprendimientos')) return 'Emprendimientos';
+  return null;
+}
+
 function aggregateKommo({ desde, hasta }) {
   const store = readJson(KOMMO_FILE, { leads: [] });
   const fromUnix = Math.floor(new Date(desde + 'T00:00:00-03:00').getTime() / 1000);
@@ -353,6 +363,11 @@ function aggregateKommo({ desde, hasta }) {
   const derived = filtered.filter((l) => l.tags.includes(TAG_DERIVADO) || l.status_id === STAGE_DERIVADO).length;
 
   const byDate = new Map();
+  // Breakdown por grupo de anuncios (FORM tag) — solo leads de Meta Ads
+  const formGroups = new Map();
+  let withNqRn = 0;
+  let withoutNqRn = 0;
+
   for (const l of filtered) {
     const isDerived = l.tags.includes(TAG_DERIVADO) || l.status_id === STAGE_DERIVADO;
     const date = new Date(l.created_at * 1000).toLocaleDateString('en-CA', { timeZone: 'America/Argentina/Buenos_Aires' });
@@ -360,13 +375,32 @@ function aggregateKommo({ desde, hasta }) {
     const row = byDate.get(date);
     row.created += 1;
     if (isDerived) row.derived += 1;
+
+    // Form breakdown
+    if (!l.tags.includes('Meta Ads')) continue;
+    const formName = getFormGroupName(l.tags);
+    if (!formName) continue;
+    const hasNqRn = l.tags.includes('NQ & RN');
+    if (hasNqRn) withNqRn += 1; else withoutNqRn += 1;
+
+    if (!formGroups.has(formName)) {
+      formGroups.set(formName, { form_name: formName, leads: 0, with_nq_rn: 0, without_nq_rn: 0, derived: 0 });
+    }
+    const f = formGroups.get(formName);
+    f.leads += 1;
+    if (hasNqRn) f.with_nq_rn += 1; else f.without_nq_rn += 1;
+    if (isDerived) f.derived += 1;
   }
+
   const daily = Array.from(byDate.values()).sort((a, b) => (a.date < b.date ? -1 : 1));
+  const forms_breakdown = Array.from(formGroups.values()).sort((a, b) => b.leads - a.leads);
 
   return {
     created,
     derived,
     daily,
+    forms_breakdown,
+    forms_totals: { with_nq_rn: withNqRn, without_nq_rn: withoutNqRn, total: withNqRn + withoutNqRn },
     store_meta: {
       total_leads_stored: store.leads.length,
       last_synced_at: store.last_synced_at,
