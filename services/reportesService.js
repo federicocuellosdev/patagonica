@@ -153,7 +153,7 @@ async function syncMetaDaily({ force = false } = {}) {
     }
   }
 
-  const rows = await fetchMetaDailyRange({ since, until: target });
+  const rows = await fetchInChunks(fetchMetaDailyRange, since, target, 90);
 
   if (rows.length > 0) {
     if (force) {
@@ -173,6 +173,25 @@ async function syncMetaDaily({ force = false } = {}) {
 
   writeJson(META_FILE, store);
   return { ...store, fetched: rows.length, range: { since, until: target } };
+}
+
+// Helper: divide [since, until] en chunks de N días para no reventar Meta
+async function fetchInChunks(fetcher, since, until, maxDaysPerChunk = 45) {
+  const out = [];
+  let cur = since;
+  while (cur <= until) {
+    let chunkUntil = addDays(cur, maxDaysPerChunk - 1);
+    if (chunkUntil > until) chunkUntil = until;
+    try {
+      const rows = await fetcher({ since: cur, until: chunkUntil });
+      out.push(...rows);
+    } catch (e) {
+      const detail = e.response?.data?.error?.message || e.message;
+      throw new Error(`Chunk ${cur} → ${chunkUntil} fallo: ${detail}`);
+    }
+    cur = addDays(chunkUntil, 1);
+  }
+  return out;
 }
 
 // ---------- Meta Adsets sync (level=adset) ----------
@@ -256,7 +275,7 @@ async function syncMetaAdsetDaily({ force = false } = {}) {
     if (since > target) return { ...store, fetched: 0, range: null };
   }
 
-  const rows = await fetchMetaAdsetDailyRange({ since, until: target });
+  const rows = await fetchInChunks(fetchMetaAdsetDailyRange, since, target, 45);
 
   if (rows.length > 0) {
     if (force) {
@@ -380,7 +399,7 @@ async function syncMetaAdDaily({ force = false } = {}) {
     since = addDays(store.latest, 1);
     if (since > target) return { ...store, fetched: 0, range: null };
   }
-  const rows = await fetchMetaAdDailyRange({ since, until: target });
+  const rows = await fetchInChunks(fetchMetaAdDailyRange, since, target, 30);
   if (rows.length > 0) {
     if (force) {
       store.days = rows;
