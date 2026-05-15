@@ -1267,41 +1267,55 @@
     }
 
     // ===== Modal: timeline de ads FORM por fecha de publicacion =====
-    const timelineState = { leads: true, cpl: true, spend: false };
+    const timelineState = { leads: true, cpl: true, spend: false, onlyActive: false };
 
     function openAdsTimelineModal(ads) {
-      const valid = ads.filter((a) => a.created_time);
-      if (!valid.length) return;
-      document.getElementById('entity-modal-title').textContent = 'Anuncios FORM · línea de tiempo';
-      document.getElementById('entity-modal-sub').textContent = `${valid.length} anuncio${valid.length===1?'':'s'} ubicado${valid.length===1?'':'s'} en su fecha de publicación`;
+      const allValid = ads.filter((a) => a.created_time);
+      if (!allValid.length) return;
+      // Heredamos el estado del filtro 'Solo activos' del bloque superior si esta activo
+      if (typeof window.__topAdsOnlyActive === 'boolean') timelineState.onlyActive = window.__topAdsOnlyActive;
+
+      function currentList() {
+        return timelineState.onlyActive
+          ? allValid.filter((a) => (a.effective_status || '').toUpperCase() === 'ACTIVE')
+          : allValid;
+      }
+
+      function refreshHeader() {
+        const list = currentList();
+        document.getElementById('entity-modal-title').textContent = 'Anuncios FORM · línea de tiempo';
+        document.getElementById('entity-modal-sub').textContent = `${list.length} anuncio${list.length===1?'':'s'} ubicado${list.length===1?'':'s'} en su fecha de publicación`;
+        const totalLeads = list.reduce((s, a) => s + (a.leads || 0), 0);
+        const totalSpend = list.reduce((s, a) => s + (a.spend || 0), 0);
+        const avgCpl = totalLeads > 0 ? totalSpend / totalLeads : null;
+        document.getElementById('entity-modal-stats').innerHTML = `
+          <div class="entity-stat"><div class="lbl">Anuncios</div><div class="val">${formatNum(list.length)}</div></div>
+          <div class="entity-stat"><div class="lbl">Leads totales</div><div class="val">${formatNum(totalLeads)}</div></div>
+          <div class="entity-stat"><div class="lbl">Inversión total</div><div class="val">${formatUSD2(totalSpend)}</div></div>
+          <div class="entity-stat"><div class="lbl">CPL promedio</div><div class="val">${avgCpl != null ? formatUSD2(avgCpl) : '—'}</div></div>
+        `;
+      }
 
       document.getElementById('entity-modal-toggles').innerHTML = `
         <button class="entity-modal-toggle ${timelineState.leads ? 'active' : ''}" data-key="leads"><span class="dot"></span>Leads</button>
         <button class="entity-modal-toggle ${timelineState.cpl ? 'active' : ''}" data-key="cpl"><span class="dot"></span>CPL (USD)</button>
         <button class="entity-modal-toggle ${timelineState.spend ? 'active' : ''}" data-key="spend"><span class="dot"></span>Inversión (USD)</button>
+        <button class="entity-modal-toggle ${timelineState.onlyActive ? 'active' : ''}" data-key="onlyActive" data-filter="1"><span class="dot"></span>Solo activos</button>
       `;
       document.querySelectorAll('#entity-modal-toggles .entity-modal-toggle').forEach((btn) => {
         btn.addEventListener('click', () => {
           const key = btn.dataset.key;
           timelineState[key] = !timelineState[key];
           btn.classList.toggle('active', timelineState[key]);
-          renderAdsTimelineChart(valid);
+          refreshHeader();
+          renderAdsTimelineChart(currentList());
         });
       });
 
-      const totalLeads = valid.reduce((s, a) => s + (a.leads || 0), 0);
-      const totalSpend = valid.reduce((s, a) => s + (a.spend || 0), 0);
-      const avgCpl = totalLeads > 0 ? totalSpend / totalLeads : null;
-      document.getElementById('entity-modal-stats').innerHTML = `
-        <div class="entity-stat"><div class="lbl">Anuncios</div><div class="val">${formatNum(valid.length)}</div></div>
-        <div class="entity-stat"><div class="lbl">Leads totales</div><div class="val">${formatNum(totalLeads)}</div></div>
-        <div class="entity-stat"><div class="lbl">Inversión total</div><div class="val">${formatUSD2(totalSpend)}</div></div>
-        <div class="entity-stat"><div class="lbl">CPL promedio</div><div class="val">${avgCpl != null ? formatUSD2(avgCpl) : '—'}</div></div>
-      `;
-
+      refreshHeader();
       document.getElementById('entity-modal').classList.add('open');
       document.body.style.overflow = 'hidden';
-      renderAdsTimelineChart(valid);
+      renderAdsTimelineChart(currentList());
     }
 
     function renderAdsTimelineChart(ads) {
@@ -1381,6 +1395,7 @@
           plugins: {
             legend: { display: false },
             tooltip: {
+              displayColors: false,
               callbacks: {
                 title: (items) => {
                   // Si el item es un triangulo de ad, mostrar el nombre como titulo
@@ -1398,10 +1413,14 @@
                     const fecha = ad.created_time
                       ? new Date(ad.created_time).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' })
                       : '—';
+                    const sep = '─────────────';
                     return [
                       'Leads totales: ' + Number(ad.leads || 0).toLocaleString('es-AR'),
+                      sep,
                       'Coste (prom.): ' + cpl,
+                      sep,
                       'Inversión: $' + Number(ad.spend || 0).toFixed(2),
+                      sep,
                       'Fecha: ' + fecha,
                     ];
                   }
