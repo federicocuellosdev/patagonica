@@ -1689,6 +1689,24 @@
             }
 
         }
+
+        /* Mobile en horizontal: hamburguesa + ocultar botones del hero */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .mobile-menu-btn { display: flex; }
+            nav {
+                position: fixed; top: 0; right: -100%;
+                width: 60%; height: 100vh;
+                background-color: var(--primary);
+                padding: 5rem 2rem;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 30px rgba(0,0,0,0.3);
+                z-index: 100;
+            }
+            nav.active { right: 0; }
+            nav ul { flex-direction: column; gap: 1.25rem; }
+            nav a { font-size: 1rem; }
+            .hero-buttons { display: none; }
+        }
     </style>
 </head>
 <body>
