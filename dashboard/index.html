@@ -1182,6 +1182,8 @@
                   <span class="ad-sort-btn ${topAdsSort==='oldest'?'active':''}" data-sort="oldest">Más antiguo</span>
                   <span class="ad-sort-divider"></span>
                   <span class="ad-sort-btn ${topAdsOnlyActive?'active':''}" data-filter="active">Solo activos</span>
+                  <span class="ad-sort-divider"></span>
+                  <span class="ad-sort-btn" data-action="chart">Gráfico</span>
                 </span>
               </span>
             </summary>
@@ -1253,6 +1255,134 @@
           btn.classList.toggle('active', topAdsOnlyActive);
           refreshTopAdsList();
         });
+      });
+      // Boton 'Grafico': abre modal con timeline de los ads filtrados
+      document.querySelectorAll('.ad-sort-btn[data-action="chart"]').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault(); e.stopPropagation();
+          const ads = sortFormAds('newest', topAdsOnlyActive);
+          openAdsTimelineModal(ads);
+        });
+      });
+    }
+
+    // ===== Modal: timeline de ads FORM por fecha de publicacion =====
+    const timelineState = { leads: true, cpl: true, spend: false };
+
+    function openAdsTimelineModal(ads) {
+      const valid = ads.filter((a) => a.created_time);
+      if (!valid.length) return;
+      document.getElementById('entity-modal-title').textContent = 'Anuncios FORM · línea de tiempo';
+      document.getElementById('entity-modal-sub').textContent = `${valid.length} anuncio${valid.length===1?'':'s'} ubicado${valid.length===1?'':'s'} en su fecha de publicación`;
+
+      document.getElementById('entity-modal-toggles').innerHTML = `
+        <button class="entity-modal-toggle ${timelineState.leads ? 'active' : ''}" data-key="leads"><span class="dot"></span>Leads</button>
+        <button class="entity-modal-toggle ${timelineState.cpl ? 'active' : ''}" data-key="cpl"><span class="dot"></span>CPL (USD)</button>
+        <button class="entity-modal-toggle ${timelineState.spend ? 'active' : ''}" data-key="spend"><span class="dot"></span>Inversión (USD)</button>
+      `;
+      document.querySelectorAll('#entity-modal-toggles .entity-modal-toggle').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const key = btn.dataset.key;
+          timelineState[key] = !timelineState[key];
+          btn.classList.toggle('active', timelineState[key]);
+          renderAdsTimelineChart(valid);
+        });
+      });
+
+      const totalLeads = valid.reduce((s, a) => s + (a.leads || 0), 0);
+      const totalSpend = valid.reduce((s, a) => s + (a.spend || 0), 0);
+      const avgCpl = totalLeads > 0 ? totalSpend / totalLeads : null;
+      document.getElementById('entity-modal-stats').innerHTML = `
+        <div class="entity-stat"><div class="lbl">Anuncios</div><div class="val">${formatNum(valid.length)}</div></div>
+        <div class="entity-stat"><div class="lbl">Leads totales</div><div class="val">${formatNum(totalLeads)}</div></div>
+        <div class="entity-stat"><div class="lbl">Inversión total</div><div class="val">${formatUSD2(totalSpend)}</div></div>
+        <div class="entity-stat"><div class="lbl">CPL promedio</div><div class="val">${avgCpl != null ? formatUSD2(avgCpl) : '—'}</div></div>
+      `;
+
+      document.getElementById('entity-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      renderAdsTimelineChart(valid);
+    }
+
+    function renderAdsTimelineChart(ads) {
+      const ctx = document.getElementById('entity-modal-chart');
+      if (!ctx) return;
+      const sorted = [...ads].sort((a, b) => (a.created_time || '').localeCompare(b.created_time || ''));
+      const datasets = [];
+      if (timelineState.leads) {
+        datasets.push({
+          label: 'Leads',
+          data: sorted.map((a) => ({ x: new Date(a.created_time).getTime(), y: a.leads || 0, ad: a })),
+          backgroundColor: '#057488', borderColor: '#057488',
+          yAxisID: 'y', pointRadius: 5, pointHoverRadius: 8, showLine: false,
+        });
+      }
+      if (timelineState.cpl) {
+        datasets.push({
+          label: 'CPL',
+          data: sorted.filter((a) => a.cost_per_lead != null).map((a) => ({ x: new Date(a.created_time).getTime(), y: +a.cost_per_lead.toFixed(2), ad: a })),
+          backgroundColor: '#c0392b', borderColor: '#c0392b',
+          yAxisID: 'y1', pointRadius: 5, pointHoverRadius: 8, pointStyle: 'triangle', showLine: false,
+        });
+      }
+      if (timelineState.spend) {
+        datasets.push({
+          label: 'Inversión',
+          data: sorted.map((a) => ({ x: new Date(a.created_time).getTime(), y: +a.spend.toFixed(2), ad: a })),
+          backgroundColor: '#4a90e2', borderColor: '#4a90e2',
+          yAxisID: 'y1', pointRadius: 5, pointHoverRadius: 8, pointStyle: 'rect', showLine: false,
+        });
+      }
+
+      if (entityChart) entityChart.destroy();
+      entityChart = new Chart(ctx, {
+        type: 'scatter',
+        data: { datasets },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: 'nearest', intersect: true },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                title: (items) => {
+                  const x = items[0]?.parsed?.x;
+                  return x ? new Date(x).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
+                },
+                label: (c) => {
+                  const point = c.raw;
+                  const v = c.parsed.y;
+                  const isCurrency = c.dataset.yAxisID === 'y1';
+                  const fv = isCurrency ? '$' + v.toFixed(2) : v.toLocaleString('es-AR');
+                  const adName = point?.ad?.ad_name ? ' · ' + point.ad.ad_name : '';
+                  return `${c.dataset.label}: ${fv}${adName}`;
+                },
+              },
+              backgroundColor: '#1a3a6e', titleColor: '#fff', bodyColor: '#fff', padding: 10, cornerRadius: 8,
+            },
+          },
+          scales: {
+            x: {
+              type: 'linear', grid: { display: false },
+              ticks: {
+                color: '#6e7b96', font: { size: 10 }, maxRotation: 0, autoSkipPadding: 24,
+                callback: (v) => new Date(v).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: '2-digit' }),
+              },
+            },
+            y: {
+              display: timelineState.leads, beginAtZero: true, position: 'left',
+              grid: { color: 'rgba(110,123,150,0.08)' },
+              ticks: { color: '#6e7b96', font: { size: 10 }, callback: (v) => Number(v).toLocaleString('es-AR') },
+              title: { display: true, text: 'Leads', color: '#93a1bd', font: { size: 10, weight: 500 } },
+            },
+            y1: {
+              display: timelineState.cpl || timelineState.spend, beginAtZero: true, position: 'right',
+              grid: { drawOnChartArea: !timelineState.leads, color: 'rgba(110,123,150,0.05)' },
+              ticks: { color: '#6e7b96', font: { size: 10 }, callback: (v) => '$' + Number(v).toFixed(2) },
+              title: { display: true, text: 'USD', color: '#93a1bd', font: { size: 10, weight: 500 } },
+            },
+          },
+        },
       });
     }
 
