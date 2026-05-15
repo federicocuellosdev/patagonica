@@ -515,7 +515,40 @@
     }
     .entity-modal-toggle.active .dot { background: #fff; }
     .entity-modal-body { padding: 1.25rem 1.5rem; flex: 1; overflow: auto; }
-    .entity-modal-chart-wrap { height: 360px; }
+    .entity-modal-chart-wrap { height: 360px; position: relative; }
+
+    /* Tooltip custom para el timeline de ads */
+    .ads-timeline-tooltip {
+      position: absolute;
+      background: #1a3a6e;
+      color: #fff;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.12s ease;
+      max-width: 320px;
+      min-width: 200px;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.28);
+      z-index: 50;
+    }
+    .ads-timeline-tooltip .att-title {
+      font-weight: 700;
+      font-size: 0.82rem;
+      margin-bottom: 0.5rem;
+      word-break: break-word;
+      white-space: normal;
+    }
+    .ads-timeline-tooltip .att-line { padding: 0.18rem 0; }
+    .ads-timeline-tooltip .att-hr {
+      width: 100%;
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.18);
+      margin: 0.18rem 0;
+      display: block;
+    }
     .entity-modal-stats {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem;
       margin-top: 1rem;
@@ -1318,6 +1351,69 @@
       renderAdsTimelineChart(currentList());
     }
 
+    // Tooltip custom (HTML) para el chart de timeline — usa <hr> reales como
+    // divider en vez de unicode dashes para que se vea bien con nombres largos.
+    function externalAdsTimelineTooltip(context) {
+      const { chart, tooltip } = context;
+      const parent = chart.canvas.parentNode;
+      let el = parent.querySelector('.ads-timeline-tooltip');
+      if (!el) {
+        el = document.createElement('div');
+        el.className = 'ads-timeline-tooltip';
+        parent.appendChild(el);
+      }
+      if (!tooltip || tooltip.opacity === 0) { el.style.opacity = '0'; return; }
+
+      const adPoint = (tooltip.dataPoints || []).find((p) => p.raw?.ad);
+      if (adPoint) {
+        const ad = adPoint.raw.ad;
+        const cpl = ad.cost_per_lead != null ? '$' + ad.cost_per_lead.toFixed(2) : '—';
+        const fecha = ad.created_time
+          ? new Date(ad.created_time).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' })
+          : '—';
+        const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        el.innerHTML = `
+          <div class="att-title">${esc(ad.ad_name)}</div>
+          <div class="att-line">Leads totales: ${Number(ad.leads || 0).toLocaleString('es-AR')}</div>
+          <hr class="att-hr">
+          <div class="att-line">Coste (prom.): ${cpl}</div>
+          <hr class="att-hr">
+          <div class="att-line">Inversión: $${Number(ad.spend || 0).toFixed(2)}</div>
+          <hr class="att-hr">
+          <div class="att-line">Fecha: ${fecha}</div>
+        `;
+      } else {
+        const titleX = tooltip.dataPoints?.[0]?.parsed?.x;
+        const title = titleX ? new Date(titleX).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
+        const lines = (tooltip.dataPoints || [])
+          .filter((p) => !p.raw?.ad && p.parsed.y != null)
+          .map((p) => {
+            const isCurrency = p.dataset.yAxisID === 'y1';
+            const v = p.parsed.y;
+            const fv = isCurrency ? '$' + v.toFixed(2) : Number(v).toLocaleString('es-AR');
+            return `<div class="att-line">${p.dataset.label}: ${fv}</div>`;
+          })
+          .join('<hr class="att-hr">');
+        el.innerHTML = `<div class="att-title">${title}</div>${lines}`;
+      }
+
+      // Posicionar arriba del caret; flip abajo si no entra
+      const chartW = chart.width;
+      const chartH = chart.height;
+      el.style.opacity = '0';
+      el.style.left = '0px'; el.style.top = '0px';
+      const w = el.offsetWidth; const h = el.offsetHeight;
+      let left = tooltip.caretX - w / 2;
+      let top = tooltip.caretY - h - 14;
+      if (left < 4) left = 4;
+      if (left + w > chartW - 4) left = chartW - w - 4;
+      if (top < 4) top = tooltip.caretY + 14;
+      if (top + h > chartH - 4) top = chartH - h - 4;
+      el.style.left = left + 'px';
+      el.style.top = top + 'px';
+      el.style.opacity = '1';
+    }
+
     function renderAdsTimelineChart(ads) {
       const ctx = document.getElementById('entity-modal-chart');
       if (!ctx) return;
@@ -1395,42 +1491,8 @@
           plugins: {
             legend: { display: false },
             tooltip: {
-              displayColors: false,
-              callbacks: {
-                title: (items) => {
-                  // Si el item es un triangulo de ad, mostrar el nombre como titulo
-                  const adPoint = items.find((it) => it.raw?.ad);
-                  if (adPoint) return adPoint.raw.ad.ad_name;
-                  const x = items[0]?.parsed?.x;
-                  return x ? new Date(x).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
-                },
-                label: (c) => {
-                  const v = c.parsed.y;
-                  const point = c.raw;
-                  if (point?.ad) {
-                    const ad = point.ad;
-                    const cpl = ad.cost_per_lead != null ? '$' + ad.cost_per_lead.toFixed(2) : '—';
-                    const fecha = ad.created_time
-                      ? new Date(ad.created_time).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' })
-                      : '—';
-                    const sep = '─────────────';
-                    return [
-                      'Leads totales: ' + Number(ad.leads || 0).toLocaleString('es-AR'),
-                      sep,
-                      'Coste (prom.): ' + cpl,
-                      sep,
-                      'Inversión: $' + Number(ad.spend || 0).toFixed(2),
-                      sep,
-                      'Fecha: ' + fecha,
-                    ];
-                  }
-                  if (v == null) return null;
-                  const isCurrency = c.dataset.yAxisID === 'y1';
-                  const fv = isCurrency ? '$' + v.toFixed(2) : Number(v).toLocaleString('es-AR');
-                  return `${c.dataset.label}: ${fv}`;
-                },
-              },
-              backgroundColor: '#1a3a6e', titleColor: '#fff', bodyColor: '#fff', padding: 10, cornerRadius: 8,
+              enabled: false,
+              external: externalAdsTimelineTooltip,
             },
           },
           scales: {
