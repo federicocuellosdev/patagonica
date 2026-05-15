@@ -625,6 +625,25 @@
       // Welcome subtitle (saludo dinámico según la hora + nombre del usuario)
       document.getElementById('welcome-title').textContent = `${greetingForNow()}, ${currentUserName || ''}`.trim().replace(/,\s*$/, '');
 
+      // Forms breakdown (Kommo leads taggeados Meta Ads, agrupados por FORM tag)
+      const formsBreakdown = (k.forms_breakdown || []).slice();
+      const formsTotals = k.forms_totals || { with_nq_rn: 0, without_nq_rn: 0, total: 0 };
+      const totalFormLeads = formsTotals.total || 1;
+      const formBars = formsBreakdown.map((f) => {
+        const pct = (f.leads / totalFormLeads) * 100;
+        const short = f.form_name.replace(/^FORM - /, '');
+        const nqLabel = f.with_nq_rn > 0
+          ? ` <span style="color:var(--text-muted);font-size:0.7rem;">(${f.without_nq_rn} sin · ${f.with_nq_rn} NQ&RN)</span>`
+          : '';
+        return `
+          <div class="progress-row">
+            <div class="name" title="${f.form_name}">${short}${nqLabel}</div>
+            <div class="bar"><div class="bar-fill teal" style="width: ${pct.toFixed(1)}%;">${pct.toFixed(0)}%</div></div>
+            <div class="pct-end">${formatNum(f.leads)} leads</div>
+          </div>
+        `;
+      }).join('');
+
       // Spend share by campaign for progress bars
       const totalSpend = t.spend || 1;
       const campaignBars = campaigns.map((c) => {
@@ -843,6 +862,29 @@
                 </div>
               </div>
             ` : ''}
+          </div>
+        </div>
+
+        <!-- Forms breakdown -->
+        <div class="card span-9">
+          <div class="card-title">
+            Formularios · distribución por grupo de anuncios
+            <span class="pct">${formatNum(formsTotals.total)} leads</span>
+          </div>
+          <div class="card-value" style="font-size: 1.1rem; color: var(--text-muted); font-weight: 500; margin-bottom: 0.5rem;">
+            ${formsBreakdown.length} grupo${formsBreakdown.length === 1 ? '' : 's'} de anuncios
+          </div>
+          <div class="progress-bars">${formBars || '<div class="card-sub">Sin leads de Meta Ads en este periodo</div>'}</div>
+        </div>
+
+        <!-- Forms NQ&RN split -->
+        <div class="card span-3">
+          <div class="card-title">Desglose NQ & RN</div>
+          <div class="card-value">${formatNum(formsTotals.without_nq_rn)}</div>
+          <div class="card-sub">Forms sin NQ & RN</div>
+          <div style="margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--border);">
+            <div class="card-sub" style="margin-bottom: 0.25rem;">Forms con NQ & RN</div>
+            <div style="font-size: 1.5rem; font-weight: 700;">${formatNum(formsTotals.with_nq_rn)}</div>
           </div>
         </div>
       `;
