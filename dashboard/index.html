@@ -356,6 +356,16 @@
       display: inline-block; width: 1px; height: 16px;
       background: var(--border); margin: 0 0.25rem; vertical-align: middle;
     }
+    .granularity-toggle {
+      display: inline-flex; gap: 2px; padding: 2px; background: var(--bg-2); border-radius: 12px;
+      font-weight: 500; text-transform: none; letter-spacing: 0;
+    }
+    .granularity-btn {
+      padding: 0.18rem 0.65rem; font-size: 0.7rem; color: var(--text-muted);
+      border-radius: 10px; cursor: pointer; transition: background 0.15s ease, color 0.15s ease;
+    }
+    .granularity-btn:hover { color: var(--text); }
+    .granularity-btn.active { background: var(--card); color: var(--primary); box-shadow: var(--shadow); }
 
     /* Onboarding-style breakdown */
     .breakdown-rows { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.85rem; }
@@ -904,7 +914,13 @@
       document.getElementById('report-area').innerHTML = `
         <!-- LINE CHART · formularios + derivados -->
         <div class="card span-8 row-span-2">
-          <div class="card-title">Evolución diaria</div>
+          <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Evolución</span>
+            <span class="granularity-toggle">
+              <span class="granularity-btn ${chartGranularity==='day'?'active':''}" data-gran="day">Días</span>
+              <span class="granularity-btn ${chartGranularity==='week'?'active':''}" data-gran="week">Semanas</span>
+            </span>
+          </div>
           <div class="chart-toggles" id="chart-toggles">
             <button class="chart-toggle active" data-key="forms_count" data-color="#057488" data-axis="y">
               <span class="dot" style="background:#057488;"></span>Formularios Meta
@@ -1267,6 +1283,14 @@
           btn.classList.toggle('active', seriesState[key]);
           const dot = btn.querySelector('.dot');
           dot.style.background = seriesState[key] ? btn.dataset.color : '';
+          renderEvolutionChart(lastReportData, seriesState);
+        });
+      });
+      // Granularidad dia/semana del chart de evolucion
+      document.querySelectorAll('.granularity-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          chartGranularity = btn.dataset.gran;
+          document.querySelectorAll('.granularity-btn').forEach((b) => b.classList.toggle('active', b.dataset.gran === chartGranularity));
           renderEvolutionChart(lastReportData, seriesState);
         });
       });
@@ -1905,6 +1929,7 @@
       derived_cost: false,
       hitos: false,
     };
+    let chartGranularity = 'day'; // 'day' | 'week'
 
     // Hitos hardcodeados (linea punteada vertical con bandera en el chart de evolucion)
     const HITOS = [
@@ -1983,17 +2008,62 @@
       const ctx = document.getElementById('evolution-chart');
       if (!ctx) return;
 
-      // Date axis
-      const dates = [];
+      // Date axis (dia o semana, segun chartGranularity)
+      function wkStart(iso) {
+        const d = new Date(iso + 'T12:00:00Z');
+        const day = d.getUTCDay();
+        const diff = day === 0 ? 6 : day - 1;
+        d.setUTCDate(d.getUTCDate() - diff);
+        return d.toISOString().slice(0, 10);
+      }
+
+      const allDays = [];
       const start = new Date(data.desde + 'T12:00:00Z');
       const end = new Date(data.hasta + 'T12:00:00Z');
       for (let dt = new Date(start); dt <= end; dt.setUTCDate(dt.getUTCDate() + 1)) {
-        dates.push(isoDate(dt));
+        allDays.push(isoDate(dt));
       }
 
-      const metaDaily = new Map((data.meta.daily || []).map((r) => [r.date, r]));
-      const kommoDaily = new Map((data.kommo.daily || []).map((r) => [r.date, r]));
-      const labels = dates.map((d) => new Date(d + 'T12:00:00Z').toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }));
+      const rawMetaDaily = new Map((data.meta.daily || []).map((r) => [r.date, r]));
+      const rawKommoDaily = new Map((data.kommo.daily || []).map((r) => [r.date, r]));
+
+      let dates, metaDaily, kommoDaily, labels;
+      if (chartGranularity === 'week') {
+        const weekKeys = [];
+        const metaWk = new Map();
+        const kommoWk = new Map();
+        for (const d of allDays) {
+          const wk = wkStart(d);
+          if (!metaWk.has(wk)) {
+            weekKeys.push(wk);
+            metaWk.set(wk, { date: wk, spend: 0, leads: 0, landing_page_views: 0, thruplays: 0 });
+            kommoWk.set(wk, { date: wk, created: 0, derived: 0 });
+          }
+          const m = rawMetaDaily.get(d);
+          if (m) {
+            const r = metaWk.get(wk);
+            r.spend += m.spend || 0;
+            r.leads += m.leads || 0;
+            r.landing_page_views += m.landing_page_views || 0;
+            r.thruplays += m.thruplays || 0;
+          }
+          const k2 = rawKommoDaily.get(d);
+          if (k2) {
+            const r = kommoWk.get(wk);
+            r.created += k2.created || 0;
+            r.derived += k2.derived || 0;
+          }
+        }
+        dates = weekKeys;
+        metaDaily = metaWk;
+        kommoDaily = kommoWk;
+        labels = dates.map((d) => 'Sem ' + new Date(d + 'T12:00:00Z').toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }));
+      } else {
+        dates = allDays;
+        metaDaily = rawMetaDaily;
+        kommoDaily = rawKommoDaily;
+        labels = dates.map((d) => new Date(d + 'T12:00:00Z').toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }));
+      }
 
       const datasets = [];
 
@@ -2054,7 +2124,8 @@
       // Hitos: ubicamos cada uno por indice dentro del array de dates ISO
       const hitosForChart = (state.hitos ? HITOS : []).map((h) => ({
         ...h,
-        dateIndex: dates.indexOf(h.date),
+        // Si la granularidad es semanal, mapeamos al lunes de la semana del hito
+        dateIndex: dates.indexOf(chartGranularity === 'week' ? wkStart(h.date) : h.date),
       })).filter((h) => h.dateIndex >= 0);
 
       const cfg = {
