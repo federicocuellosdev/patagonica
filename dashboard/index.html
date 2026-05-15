@@ -925,13 +925,33 @@
           <div class="chart-wrap"><canvas id="evolution-chart"></canvas></div>
         </div>
 
-        <!-- Kommo funnel · al lado derecho del chart -->
+        <!-- Funnel · al lado derecho del chart -->
         <div class="card span-4 row-span-2">
           <div class="card-title">
-            Funnel Kommo
+            Funnel
             <span class="pct" style="color: var(--teal);">${formatNum(k.created || 0)} leads</span>
           </div>
           <div class="breakdown-rows">
+            <div class="br-row">
+              <div class="br-icon teal">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="4" y="3" width="16" height="18" rx="2"></rect>
+                  <line x1="8" y1="8" x2="16" y2="8"></line>
+                  <line x1="8" y1="12" x2="16" y2="12"></line>
+                  <line x1="8" y1="16" x2="13" y2="16"></line>
+                </svg>
+              </div>
+              <div class="br-body">
+                <div class="br-top">
+                  <div class="br-name">Formularios<br><span style="font-weight:500;color:var(--text-muted);font-size:0.72rem;">enviados desde Meta</span></div>
+                  <div class="br-value">${formatNum(t.leads)}</div>
+                </div>
+                <div class="br-bottom">
+                  <div class="br-meta">CPL Meta directo</div>
+                  <div class="br-cost">${t.cost_per_lead != null ? formatUSD2(t.cost_per_lead) : '—'}</div>
+                </div>
+              </div>
+            </div>
             <div class="br-row">
               <div class="br-icon blue">→</div>
               <div class="br-body">
