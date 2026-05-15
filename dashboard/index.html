@@ -1308,39 +1308,76 @@
       const ctx = document.getElementById('entity-modal-chart');
       if (!ctx) return;
       const sorted = [...ads].sort((a, b) => (a.created_time || '').localeCompare(b.created_time || ''));
+
+      // Resumimos por semana (lunes como inicio) para suavizar la curva
+      function weekStart(iso) {
+        const d = new Date(iso + 'T12:00:00Z');
+        const day = d.getUTCDay();
+        const diff = day === 0 ? 6 : day - 1;
+        d.setUTCDate(d.getUTCDate() - diff);
+        return d.toISOString().slice(0, 10);
+      }
+      const weeklyMap = new Map();
+      for (const ad of sorted) {
+        for (const d of (ad.daily || [])) {
+          const wk = weekStart(d.date);
+          if (!weeklyMap.has(wk)) weeklyMap.set(wk, { date: wk, leads: 0, spend: 0 });
+          const row = weeklyMap.get(wk);
+          row.leads += d.leads || 0;
+          row.spend += d.spend || 0;
+        }
+      }
+      const dailyTotals = Array.from(weeklyMap.values()).sort((a, b) => (a.date < b.date ? -1 : 1));
+      const toX = (iso) => new Date(iso + 'T12:00:00Z').getTime();
+
       const datasets = [];
+      // Linea total de Leads
       if (timelineState.leads) {
         datasets.push({
-          label: 'Leads',
-          data: sorted.map((a) => ({ x: new Date(a.created_time).getTime(), y: a.leads || 0, ad: a })),
-          backgroundColor: '#057488', borderColor: '#057488',
-          yAxisID: 'y', pointRadius: 5, pointHoverRadius: 8, showLine: false,
+          type: 'line', label: 'Leads',
+          data: dailyTotals.map((d) => ({ x: toX(d.date), y: d.leads })),
+          borderColor: '#057488', backgroundColor: 'rgba(5,116,136,0.10)',
+          yAxisID: 'y', tension: 0.35, fill: true, pointRadius: 0, pointHoverRadius: 4, borderWidth: 2.5,
         });
       }
-      if (timelineState.cpl) {
-        datasets.push({
-          label: 'CPL',
-          data: sorted.filter((a) => a.cost_per_lead != null).map((a) => ({ x: new Date(a.created_time).getTime(), y: +a.cost_per_lead.toFixed(2), ad: a })),
-          backgroundColor: '#c0392b', borderColor: '#c0392b',
-          yAxisID: 'y1', pointRadius: 5, pointHoverRadius: 8, pointStyle: 'triangle', showLine: false,
-        });
-      }
+      // Linea total de Inversion
       if (timelineState.spend) {
         datasets.push({
-          label: 'Inversión',
-          data: sorted.map((a) => ({ x: new Date(a.created_time).getTime(), y: +a.spend.toFixed(2), ad: a })),
-          backgroundColor: '#4a90e2', borderColor: '#4a90e2',
-          yAxisID: 'y1', pointRadius: 5, pointHoverRadius: 8, pointStyle: 'rect', showLine: false,
+          type: 'line', label: 'Inversión',
+          data: dailyTotals.map((d) => ({ x: toX(d.date), y: +d.spend.toFixed(2) })),
+          borderColor: '#4a90e2', backgroundColor: 'transparent',
+          yAxisID: 'y1', borderDash: [5, 4],
+          tension: 0.35, fill: false, pointRadius: 0, pointHoverRadius: 4, borderWidth: 2,
         });
       }
+      // Linea CPL diaria (spend/leads cuando leads>0)
+      if (timelineState.cpl) {
+        datasets.push({
+          type: 'line', label: 'CPL',
+          data: dailyTotals.map((d) => ({ x: toX(d.date), y: d.leads > 0 ? +(d.spend / d.leads).toFixed(2) : null })),
+          borderColor: '#c0392b', backgroundColor: 'transparent',
+          yAxisID: 'y1', borderDash: [3, 3], spanGaps: false,
+          tension: 0.35, fill: false, pointRadius: 0, pointHoverRadius: 4, borderWidth: 2,
+        });
+      }
+      // Triangulos: cada ad en su fecha de publicacion (siempre visibles, marcadores)
+      datasets.push({
+        type: 'scatter', label: 'Publicado',
+        data: sorted.filter((a) => a.created_time).map((a) => ({
+          x: new Date(a.created_time).getTime(), y: 0, ad: a,
+        })),
+        backgroundColor: '#1a3a6e', borderColor: '#1a3a6e',
+        yAxisID: 'y', pointStyle: 'triangle',
+        pointRadius: 6, pointHoverRadius: 10, showLine: false,
+      });
 
       if (entityChart) entityChart.destroy();
       entityChart = new Chart(ctx, {
-        type: 'scatter',
+        type: 'line',
         data: { datasets },
         options: {
           responsive: true, maintainAspectRatio: false,
-          interaction: { mode: 'nearest', intersect: true },
+          interaction: { mode: 'nearest', intersect: false },
           plugins: {
             legend: { display: false },
             tooltip: {
@@ -1350,12 +1387,16 @@
                   return x ? new Date(x).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
                 },
                 label: (c) => {
-                  const point = c.raw;
                   const v = c.parsed.y;
+                  if (v == null) return null;
+                  const point = c.raw;
+                  if (point?.ad) {
+                    const cpl = point.ad.cost_per_lead != null ? '$' + point.ad.cost_per_lead.toFixed(2) : '—';
+                    return `Ad publicado: ${point.ad.ad_name} (${point.ad.leads} leads · ${cpl} CPL)`;
+                  }
                   const isCurrency = c.dataset.yAxisID === 'y1';
-                  const fv = isCurrency ? '$' + v.toFixed(2) : v.toLocaleString('es-AR');
-                  const adName = point?.ad?.ad_name ? ' · ' + point.ad.ad_name : '';
-                  return `${c.dataset.label}: ${fv}${adName}`;
+                  const fv = isCurrency ? '$' + v.toFixed(2) : Number(v).toLocaleString('es-AR');
+                  return `${c.dataset.label}: ${fv}`;
                 },
               },
               backgroundColor: '#1a3a6e', titleColor: '#fff', bodyColor: '#fff', padding: 10, cornerRadius: 8,
@@ -1370,10 +1411,10 @@
               },
             },
             y: {
-              display: timelineState.leads, beginAtZero: true, position: 'left',
+              display: true, beginAtZero: true, position: 'left',
               grid: { color: 'rgba(110,123,150,0.08)' },
               ticks: { color: '#6e7b96', font: { size: 10 }, callback: (v) => Number(v).toLocaleString('es-AR') },
-              title: { display: true, text: 'Leads', color: '#93a1bd', font: { size: 10, weight: 500 } },
+              title: { display: timelineState.leads, text: 'Leads', color: '#93a1bd', font: { size: 10, weight: 500 } },
             },
             y1: {
               display: timelineState.cpl || timelineState.spend, beginAtZero: true, position: 'right',
