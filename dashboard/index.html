@@ -840,6 +840,9 @@
             <button class="chart-toggle" data-key="derived_cost" data-color="#4a90e2" data-axis="y1">
               <span class="dot"></span>Costo / derivado
             </button>
+            <button class="chart-toggle" data-key="hitos" data-color="#c0392b" data-axis="hito">
+              <span class="dot"></span>Hitos
+            </button>
           </div>
           <div class="chart-wrap"><canvas id="evolution-chart"></canvas></div>
         </div>
@@ -1261,7 +1264,7 @@
         const resultTotal = entity[resultKey] != null ? entity[resultKey] : 0;
         const cost_per = resultTotal > 0 ? entity.spend / resultTotal : null;
         document.getElementById('entity-modal-stats').innerHTML = `
-          <div class="entity-stat"><div class="lbl">Spend</div><div class="val">${formatUSD2(entity.spend)}</div></div>
+          <div class="entity-stat"><div class="lbl">Inversión</div><div class="val">${formatUSD2(entity.spend)}</div></div>
           <div class="entity-stat"><div class="lbl">${resultLabel}</div><div class="val">${formatNum(resultTotal)}</div></div>
           <div class="entity-stat"><div class="lbl">Costo / ${resultLabel.toLowerCase()}</div><div class="val">${cost_per != null ? formatUSD2(cost_per) : '—'}</div></div>
           <div class="entity-stat"><div class="lbl">CTR</div><div class="val">${formatPct(entity.ctr || 0)}</div></div>
@@ -1423,7 +1426,55 @@
       forms_cost: false,
       derived_count: true,
       derived_cost: false,
+      hitos: false,
     };
+
+    // Hitos hardcodeados (linea punteada vertical con bandera en el chart de evolucion)
+    const HITOS = [
+      { date: '2026-05-07', label: 'Lanzamiento NQ & RN', color: '#c0392b' }
+    ];
+
+    // Plugin de Chart.js: dibuja lineas verticales punteadas para cada hito en seriesState.hitos
+    const hitosChartPlugin = {
+      id: 'hitos',
+      afterDatasetsDraw(chart, args, opts) {
+        if (!opts || !opts.enabled || !opts.hitos || !opts.hitos.length) return;
+        const { ctx, scales: { x }, chartArea } = chart;
+        const labels = chart.data.labels || [];
+        opts.hitos.forEach((h) => {
+          const idx = labels.indexOf(h.labelText);
+          if (idx < 0) return;
+          const xPos = x.getPixelForValue(idx);
+          if (xPos < chartArea.left || xPos > chartArea.right) return;
+          // Linea punteada
+          ctx.save();
+          ctx.strokeStyle = h.color || '#c0392b';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([5, 4]);
+          ctx.beginPath();
+          ctx.moveTo(xPos, chartArea.top);
+          ctx.lineTo(xPos, chartArea.bottom);
+          ctx.stroke();
+          // Bandera arriba con texto
+          ctx.setLineDash([]);
+          ctx.font = '600 10px Inter, sans-serif';
+          const text = h.label;
+          const padX = 6, padY = 3;
+          const w = ctx.measureText(text).width + padX * 2;
+          const fx = xPos + 2;
+          const fy = chartArea.top + 2;
+          ctx.fillStyle = h.color || '#c0392b';
+          ctx.beginPath();
+          ctx.roundRect ? ctx.roundRect(fx, fy, w, 16 + padY, 3) : ctx.rect(fx, fy, w, 16 + padY);
+          ctx.fill();
+          ctx.fillStyle = '#fff';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(text, fx + padX, fy + 9 + padY / 2);
+          ctx.restore();
+        });
+      },
+    };
+    if (typeof Chart !== 'undefined') Chart.register(hitosChartPlugin);
 
     function firstNameFromEmail(email) {
       const map = {
@@ -1516,6 +1567,12 @@
       const showCount = state.forms_count || state.derived_count;
       const showCost  = state.forms_cost || state.derived_cost;
 
+      // Hitos: pasamos solo los que caen dentro del rango y mapeamos al label formateado
+      const hitosForChart = (state.hitos ? HITOS : []).map((h) => ({
+        ...h,
+        labelText: new Date(h.date + 'T12:00:00Z').toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }),
+      })).filter((h) => labels.includes(h.labelText));
+
       const cfg = {
         type: 'line',
         data: { labels, datasets },
@@ -1523,6 +1580,7 @@
           responsive: true, maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           plugins: {
+            hitos: { enabled: hitosForChart.length > 0, hitos: hitosForChart },
             legend: { display: false },
             tooltip: {
               callbacks: {
