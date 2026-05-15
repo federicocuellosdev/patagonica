@@ -5,6 +5,10 @@
   },
   {
     "email": "tomasbadia.j@gmail.com",
-    "password_hash": "$2b$12$b0OsJTL.qhZm0qO5t0/e7uHDlKa/eJeIAZHP.nprn.0O7VarYIJnq"
+    "password_hash": "$2b$12$3UeRP4VfI5F45j5gEhUbc.NS7bwGHuRT./BGOGOyyEwZE.zN46M0e"
+  },
+  {
+    "email": "juandominguez.films@gmail.com",
+    "password_hash": "$2b$12$c.qWq3QUdtkZTkLR2Us2MewaS4mWz3lL6hX2srGSrihiiQ4dmx0.C"
   }
 ]
