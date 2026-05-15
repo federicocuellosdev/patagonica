@@ -447,12 +447,14 @@ async function syncMetaAdsMetadata({ force = false } = {}) {
   return { ...store, fetched: ads.length };
 }
 
-function aggregateMetaAds({ desde, hasta }) {
+function aggregateMetaAds({ desde, hasta, allTime = false }) {
   const store = readJson(ADS_FILE, { days: [] });
   const metaStore = readJson(ADS_META_FILE, { ads: [] });
   const metaById = new Map(metaStore.ads.map((m) => [m.id, m]));
 
-  const filtered = store.days.filter((d) => d.date >= desde && d.date <= hasta);
+  const filtered = allTime
+    ? store.days
+    : store.days.filter((d) => d.date >= desde && d.date <= hasta);
   const byAd = new Map();
   const dailyByAd = new Map();
   for (const d of filtered) {
@@ -772,6 +774,8 @@ function buildReport({ desde, hasta }) {
   const meta = aggregateMeta({ desde, hasta });
   meta.adsets = aggregateMetaAdsets({ desde, hasta });
   meta.ads = aggregateMetaAds({ desde, hasta });
+  // Historico completo (sin filtro de fecha) — usado por el bloque 'Top FORM historico'
+  meta.ads_all_time = aggregateMetaAds({ desde: null, hasta: null, allTime: true });
   const kommo = aggregateKommo({ desde, hasta });
 
   const cost_per_kommo_lead = kommo.created > 0 ? meta.totals.spend / kommo.created : null;
