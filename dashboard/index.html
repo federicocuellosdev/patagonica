@@ -521,22 +521,6 @@
   <div id="app" class="hidden">
     <div class="shell">
 
-      <!-- Topbar -->
-      <div class="topbar">
-        <div class="topbar-left">
-          <div class="brand-pill">
-            <span class="dot">P</span>
-            Patagónica
-          </div>
-        </div>
-        <div class="topbar-right" style="margin-left:auto;">
-          <div class="user-chip">
-            <span class="avatar" id="user-avatar">F</span>
-            <span class="email" id="user-email"></span>
-          </div>
-          <a class="logout-link" id="logout-btn">Salir</a>
-        </div>
-      </div>
 
       <!-- Welcome -->
       <div class="welcome">
@@ -607,7 +591,8 @@
       return r.json();
     }
 
-    document.getElementById('logout-btn').addEventListener('click', () => {
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) logoutBtn.addEventListener('click', () => {
       sessionStorage.removeItem(TOKEN_KEY);
       location.href = 'dashboard/login.html';
     });
@@ -1784,8 +1769,10 @@
       try {
         const data = await verifyToken(token);
         currentUserName = firstNameFromEmail(data.email);
-        document.getElementById('user-email').textContent = data.email;
-        document.getElementById('user-avatar').textContent = (currentUserName[0] || data.email[0] || 'U').toUpperCase();
+        const ue = document.getElementById('user-email');
+        if (ue) ue.textContent = data.email;
+        const ua = document.getElementById('user-avatar');
+        if (ua) ua.textContent = (currentUserName[0] || data.email[0] || 'U').toUpperCase();
         document.getElementById('auth-loading').classList.add('hidden');
         document.getElementById('app').classList.remove('hidden');
         fetchReport();
