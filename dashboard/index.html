@@ -453,6 +453,9 @@
     }
 
     .chart-wrap { position: relative; height: 280px; margin-top: 0.85rem; }
+    /* Card chart: que el chart-wrap rellene la altura vertical de la card */
+    .card.has-chart { display: flex; flex-direction: column; }
+    .card.has-chart .chart-wrap { flex: 1; min-height: 280px; height: auto; margin-top: 1rem; }
 
     @media (max-width: 1100px) {
       .dashboard-grid { grid-template-columns: repeat(6, 1fr); }
@@ -661,6 +664,18 @@
     });
 
     function formatUSD(n) { if (n == null || isNaN(n)) return '—'; return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: n < 100 ? 2 : 0 }); }
+    // Formato compacto de fecha: DD/MM/YY (acepta ISO 'YYYY-MM-DD' o Date)
+    function fmtDateShort(input) {
+      if (input == null) return '—';
+      const d = input instanceof Date
+        ? input
+        : new Date(typeof input === 'string' && input.length === 10 ? input + 'T12:00:00Z' : input);
+      if (isNaN(d)) return '—';
+      const dd = String(d.getUTCDate()).padStart(2, '0');
+      const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+      const yy = String(d.getUTCFullYear()).slice(-2);
+      return `${dd}/${mm}/${yy}`;
+    }
     function formatUSD2(n) { if (n == null || isNaN(n)) return '—'; return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
     function formatNum(n) { if (n == null || isNaN(n)) return '—'; return Number(n).toLocaleString('es-AR'); }
     function formatPct(n) { if (n == null || isNaN(n)) return '—'; return Number(n).toFixed(2) + '%'; }
@@ -863,11 +878,7 @@
         if (st.includes('PAUSE')) return '<span style="color:#9a6b1a;font-weight:600;">● Pausado</span>';
         return `<span style="color:var(--text-muted);">${s || '—'}</span>`;
       }
-      function fmtCreated(iso) {
-        if (!iso) return '—';
-        const d = new Date(iso);
-        return d.toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: '2-digit' });
-      }
+      const fmtCreated = fmtDateShort;
 
       // Distribucion por grupo de anuncios (Meta adsets, no Kommo)
       const totalFormAdsetLeads = formAdsets.reduce((s, a) => s + (a.leads || 0), 0) || 1;
@@ -913,7 +924,7 @@
       // Build grid
       document.getElementById('report-area').innerHTML = `
         <!-- LINE CHART · formularios + derivados -->
-        <div class="card span-8 row-span-2">
+        <div class="card span-8 row-span-2 has-chart">
           <div class="card-title" style="display:flex; justify-content:space-between; align-items:center;">
             <span>Evolución</span>
             <span class="granularity-toggle">
@@ -1412,9 +1423,7 @@
       if (adPoint) {
         const ad = adPoint.raw.ad;
         const cpl = ad.cost_per_lead != null ? '$' + ad.cost_per_lead.toFixed(2) : '—';
-        const fecha = ad.created_time
-          ? new Date(ad.created_time).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' })
-          : '—';
+        const fecha = fmtDateShort(ad.created_time);
         const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
         el.innerHTML = `
           <div class="att-title">${esc(ad.ad_name)}</div>
@@ -1428,7 +1437,7 @@
         `;
       } else {
         const titleX = tooltip.dataPoints?.[0]?.parsed?.x;
-        const title = titleX ? new Date(titleX).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
+        const title = titleX ? fmtDateShort(new Date(titleX)) : '';
         const lines = (tooltip.dataPoints || [])
           .filter((p) => !p.raw?.ad && p.parsed.y != null)
           .map((p) => {
@@ -1547,7 +1556,7 @@
               type: 'linear', grid: { display: false },
               ticks: {
                 color: '#6e7b96', font: { size: 10 }, maxRotation: 0, autoSkipPadding: 24,
-                callback: (v) => new Date(v).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: '2-digit' }),
+                callback: (v) => fmtDateShort(new Date(v)),
               },
             },
             y: {
@@ -1570,6 +1579,47 @@
     // ===== Modal con chart de evolución por entidad (campaign / adset) =====
     let entityChart = null;
     const entityModalState = { spend: true, result: true };
+    let entityGranularity = 'day'; // 'day' | 'week' — toggle dentro del popup
+
+    function wkStartIso(iso) {
+      const d = new Date(iso + 'T12:00:00Z');
+      const day = d.getUTCDay();
+      const diff = day === 0 ? 6 : day - 1;
+      d.setUTCDate(d.getUTCDate() - diff);
+      return d.toISOString().slice(0, 10);
+    }
+    function bucketDaily(daily, granularity, keys) {
+      if (granularity !== 'week') return daily;
+      const map = new Map();
+      for (const d of (daily || [])) {
+        const wk = wkStartIso(d.date);
+        if (!map.has(wk)) {
+          const row = { date: wk };
+          for (const k of keys) row[k] = 0;
+          map.set(wk, row);
+        }
+        const row = map.get(wk);
+        for (const k of keys) row[k] += (d[k] || 0);
+      }
+      return Array.from(map.values()).sort((a, b) => (a.date < b.date ? -1 : 1));
+    }
+    function granularityToggleHTML() {
+      return `
+        <span class="granularity-toggle" style="margin-left:auto;">
+          <span class="granularity-btn ${entityGranularity==='day'?'active':''}" data-modal-gran="day">Días</span>
+          <span class="granularity-btn ${entityGranularity==='week'?'active':''}" data-modal-gran="week">Semanas</span>
+        </span>
+      `;
+    }
+    function attachGranularityHandler(rerender) {
+      document.querySelectorAll('[data-modal-gran]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          entityGranularity = btn.dataset.modalGran;
+          document.querySelectorAll('[data-modal-gran]').forEach((b) => b.classList.toggle('active', b.dataset.modalGran === entityGranularity));
+          rerender();
+        });
+      });
+    }
 
     function objectiveResultLabel(objective) {
       if (objective === 'OUTCOME_LEADS') return 'Leads';
@@ -1624,7 +1674,7 @@
         sub = `Grupo de anuncios · ${entity.campaign_name}`;
       } else if (type === 'ad') {
         title = entity.ad_name;
-        const created = entity.created_time ? new Date(entity.created_time).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
+        const created = fmtDateShort(entity.created_time);
         sub = `Anuncio · ${entity.adset_name} · publicado ${created}`;
       } else {
         title = entity.form_name;
@@ -1657,6 +1707,8 @@
           </button>
         `;
       }
+      // Append granularity toggle al final del toggle row
+      document.getElementById('entity-modal-toggles').insertAdjacentHTML('beforeend', granularityToggleHTML());
       document.querySelectorAll('#entity-modal-toggles .entity-modal-toggle').forEach((btn) => {
         btn.addEventListener('click', () => {
           const key = btn.dataset.key;
@@ -1670,6 +1722,11 @@
           else if (isAd) renderAdChart(entity);
           else renderEntityChart(entity);
         });
+      });
+      attachGranularityHandler(() => {
+        if (isForm) renderFormChart(entity);
+        else if (isAd) renderAdChart(entity);
+        else renderEntityChart(entity);
       });
 
       // Stats
@@ -1710,12 +1767,16 @@
     function renderAdChart(entity) {
       const ctx = document.getElementById('entity-modal-chart');
       if (!ctx) return;
-      const dates = [];
+      const allDays = [];
       const start = new Date(lastReportData.desde + 'T12:00:00Z');
       const end = new Date(lastReportData.hasta + 'T12:00:00Z');
-      for (let dt = new Date(start); dt <= end; dt.setUTCDate(dt.getUTCDate() + 1)) dates.push(isoDate(dt));
-      const dailyMap = new Map((entity.daily || []).map((d) => [d.date, d]));
-      const labels = dates.map((d) => new Date(d + 'T12:00:00Z').toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }));
+      for (let dt = new Date(start); dt <= end; dt.setUTCDate(dt.getUTCDate() + 1)) allDays.push(isoDate(dt));
+      const dailyBuckets = bucketDaily(entity.daily || [], entityGranularity, ['spend','leads','landing_page_views']);
+      const dailyMap = new Map(dailyBuckets.map((d) => [d.date, d]));
+      const dates = entityGranularity === 'week'
+        ? Array.from(new Set(allDays.map(wkStartIso))).sort()
+        : allDays;
+      const labels = dates.map((d) => fmtDateShort(d));
       const showLeads = entityModalState.leads !== false;
       const showCpl = entityModalState.cpl !== false;
       const datasets = [];
@@ -1780,12 +1841,16 @@
     function renderFormChart(entity) {
       const ctx = document.getElementById('entity-modal-chart');
       if (!ctx) return;
-      const dates = [];
+      const allDays = [];
       const start = new Date(lastReportData.desde + 'T12:00:00Z');
       const end = new Date(lastReportData.hasta + 'T12:00:00Z');
-      for (let dt = new Date(start); dt <= end; dt.setUTCDate(dt.getUTCDate() + 1)) dates.push(isoDate(dt));
-      const dailyMap = new Map((entity.daily || []).map((d) => [d.date, d]));
-      const labels = dates.map((d) => new Date(d + 'T12:00:00Z').toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }));
+      for (let dt = new Date(start); dt <= end; dt.setUTCDate(dt.getUTCDate() + 1)) allDays.push(isoDate(dt));
+      const dailyBuckets = bucketDaily(entity.daily || [], entityGranularity, ['leads','derived']);
+      const dailyMap = new Map(dailyBuckets.map((d) => [d.date, d]));
+      const dates = entityGranularity === 'week'
+        ? Array.from(new Set(allDays.map(wkStartIso))).sort()
+        : allDays;
+      const labels = dates.map((d) => fmtDateShort(d));
 
       const showLeads = entityModalState.leads !== false;
       const showDerived = entityModalState.derived !== false;
@@ -1842,7 +1907,7 @@
         dates.push(isoDate(dt));
       }
       const dailyMap = new Map((entity.daily || []).map((d) => [d.date, d]));
-      const labels = dates.map((d) => new Date(d + 'T12:00:00Z').toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }));
+      const labels = dates.map((d) => fmtDateShort(d));
 
       const datasets = [];
       if (entityModalState.result) {
@@ -2057,12 +2122,12 @@
         dates = weekKeys;
         metaDaily = metaWk;
         kommoDaily = kommoWk;
-        labels = dates.map((d) => 'Sem ' + new Date(d + 'T12:00:00Z').toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }));
+        labels = dates.map((d) => fmtDateShort(d));
       } else {
         dates = allDays;
         metaDaily = rawMetaDaily;
         kommoDaily = rawKommoDaily;
-        labels = dates.map((d) => new Date(d + 'T12:00:00Z').toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }));
+        labels = dates.map((d) => fmtDateShort(d));
       }
 
       const datasets = [];
