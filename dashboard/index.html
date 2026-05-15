@@ -352,6 +352,10 @@
     }
     .ad-sort-btn:hover { background: var(--border); }
     .ad-sort-btn.active { background: var(--primary); color: #fff; }
+    .ad-sort-divider {
+      display: inline-block; width: 1px; height: 16px;
+      background: var(--border); margin: 0 0.25rem; vertical-align: middle;
+    }
 
     /* Onboarding-style breakdown */
     .breakdown-rows { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.85rem; }
@@ -782,16 +786,19 @@
       const cplGeneral = formAdsetsSplit.general.leads > 0 ? formAdsetsSplit.general.spend / formAdsetsSplit.general.leads : null;
       const cplNqRn = formAdsetsSplit.nqRn.leads > 0 ? formAdsetsSplit.nqRn.spend / formAdsetsSplit.nqRn.leads : null;
 
-      // Top 20 anuncios de la campaña FORM con toggle de ordenamiento
-      const allAds = (data.meta.ads || []).slice();
-      const baseFormAds = allAds.filter((a) => (a.campaign_name || '').startsWith('FORM - '));
-      function sortFormAds(key) {
-        if (key === 'newest') return [...baseFormAds].sort((a, b) => (b.created_time || '').localeCompare(a.created_time || ''));
-        if (key === 'oldest') return [...baseFormAds].sort((a, b) => (a.created_time || '').localeCompare(b.created_time || ''));
-        return [...baseFormAds].sort((a, b) => b.leads - a.leads);
+      // Top FORM historico (toda la historia, no solo el periodo seleccionado)
+      const allAdsHistoric = (data.meta.ads_all_time || data.meta.ads || []).slice();
+      const baseFormAds = allAdsHistoric.filter((a) => (a.campaign_name || '').startsWith('FORM - '));
+      function isAdActive(a) { return (a.effective_status || '').toUpperCase() === 'ACTIVE'; }
+      function sortFormAds(key, onlyActive) {
+        const base = onlyActive ? baseFormAds.filter(isAdActive) : baseFormAds;
+        if (key === 'newest') return [...base].sort((a, b) => (b.created_time || '').localeCompare(a.created_time || ''));
+        if (key === 'oldest') return [...base].sort((a, b) => (a.created_time || '').localeCompare(b.created_time || ''));
+        return [...base].sort((a, b) => b.leads - a.leads);
       }
       let topAdsSort = window.__topAdsSort || 'result';
-      let topAds = sortFormAds(topAdsSort).slice(0, 20);
+      let topAdsOnlyActive = window.__topAdsOnlyActive === true;
+      let topAds = sortFormAds(topAdsSort, topAdsOnlyActive).slice(0, 20);
       function adRowHTML(a) {
         return `
           <div class="campaign-item" data-entity-type="ad" data-entity-id="${a.ad_id}">
@@ -1163,21 +1170,23 @@
           </details>
         </div>
 
-        <!-- Top 20 anuncios FORM (colapsable, cerrado por defecto) -->
+        <!-- Top 20 anuncios FORM historicos (colapsable, cerrado por defecto) -->
         <div class="card span-12">
           <details class="collapsible">
             <summary>
               <span class="card-title">
-                Top 20 anuncios FORM
+                Top 20 anuncios FORM · histórico
                 <span class="ad-sort-group" style="margin-left:0.75rem;font-weight:500;">
                   <span class="ad-sort-btn ${topAdsSort==='result'?'active':''}" data-sort="result">Resultado</span>
                   <span class="ad-sort-btn ${topAdsSort==='newest'?'active':''}" data-sort="newest">Último publicado</span>
                   <span class="ad-sort-btn ${topAdsSort==='oldest'?'active':''}" data-sort="oldest">Más antiguo</span>
+                  <span class="ad-sort-divider"></span>
+                  <span class="ad-sort-btn ${topAdsOnlyActive?'active':''}" data-filter="active">Solo activos</span>
                 </span>
               </span>
             </summary>
             <div class="campaign-list" id="top-ads-list">
-              ${topAds.map(adRowHTML).join('') || '<div class="card-sub">Sin anuncios FORM en este período</div>'}
+              ${topAds.map(adRowHTML).join('') || '<div class="card-sub">Sin anuncios FORM</div>'}
             </div>
           </details>
         </div>
@@ -1216,23 +1225,33 @@
         });
       });
 
-      // Sort toggle del Top 20 anuncios FORM
-      document.querySelectorAll('.ad-sort-btn').forEach((btn) => {
+      // Toggle del Top 20 anuncios FORM (sort + filtro 'solo activos')
+      function refreshTopAdsList() {
+        topAds = sortFormAds(topAdsSort, topAdsOnlyActive).slice(0, 20);
+        const list = document.getElementById('top-ads-list');
+        if (!list) return;
+        list.innerHTML = topAds.map(adRowHTML).join('') || '<div class="card-sub">Sin anuncios FORM</div>';
+        list.querySelectorAll('[data-entity-type][data-entity-id]').forEach((row) => {
+          row.addEventListener('click', () => openEntityModal(row.dataset.entityType, row.dataset.entityId));
+        });
+      }
+      document.querySelectorAll('.ad-sort-btn[data-sort]').forEach((btn) => {
         btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
+          e.preventDefault(); e.stopPropagation();
           const key = btn.dataset.sort;
           window.__topAdsSort = key;
           topAdsSort = key;
-          topAds = sortFormAds(key).slice(0, 20);
-          const list = document.getElementById('top-ads-list');
-          if (list) {
-            list.innerHTML = topAds.map(adRowHTML).join('') || '<div class="card-sub">Sin anuncios FORM en este período</div>';
-            list.querySelectorAll('[data-entity-type][data-entity-id]').forEach((row) => {
-              row.addEventListener('click', () => openEntityModal(row.dataset.entityType, row.dataset.entityId));
-            });
-          }
-          document.querySelectorAll('.ad-sort-btn').forEach((b) => b.classList.toggle('active', b.dataset.sort === key));
+          document.querySelectorAll('.ad-sort-btn[data-sort]').forEach((b) => b.classList.toggle('active', b.dataset.sort === key));
+          refreshTopAdsList();
+        });
+      });
+      document.querySelectorAll('.ad-sort-btn[data-filter="active"]').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault(); e.stopPropagation();
+          topAdsOnlyActive = !topAdsOnlyActive;
+          window.__topAdsOnlyActive = topAdsOnlyActive;
+          btn.classList.toggle('active', topAdsOnlyActive);
+          refreshTopAdsList();
         });
       });
     }
@@ -1602,6 +1621,7 @@
 
     // Hitos hardcodeados (linea punteada vertical con bandera en el chart de evolucion)
     const HITOS = [
+      { date: '2025-08-15', label: 'Inicio gestión', color: '#057488' },
       { date: '2026-05-07', label: 'Lanzamiento NQ & RN', color: '#c0392b' }
     ];
 
