@@ -20,22 +20,31 @@ const { generateCatalog } = require('./services/tokkoCatalogService');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const ALLOWED_ORIGINS = [
+  'https://tienda.chavelaba.com.ar',
+  'https://chavelaba.com.ar',
+  'https://www.chavelaba.com.ar',
+  'https://federicocuellos.ar',
+  'https://www.federicocuellos.ar',
+  'https://l.patagonicapropiedades.com.ar',
+  'https://patagonicapropiedades.com.ar',
+  'https://www.patagonicapropiedades.com.ar',
+];
+const ALLOWED_ORIGIN_REGEX = [
+  /^http:\/\/localhost(:\d+)?$/,
+  /^http:\/\/127\.0\.0\.1(:\d+)?$/,
+  /\.github\.io$/,
+  /\.mitiendanube\.com$/,
+];
+
 app.use(cors({
-  origin: [
-    'https://tienda.chavelaba.com.ar',
-    'https://chavelaba.com.ar',
-    'https://www.chavelaba.com.ar',
-    'https://federicocuellos.ar',
-    'https://www.federicocuellos.ar',
-    'https://l.patagonicapropiedades.com.ar',
-    'https://patagonicapropiedades.com.ar',
-    'https://www.patagonicapropiedades.com.ar',
-    'http://localhost:3000',
-    'http://localhost:5173',
-    'http://localhost:8080',
-    /\.github\.io$/,
-    /\.mitiendanube\.com$/,
-  ],
+  origin: (origin, callback) => {
+    // Sin Origin (curl, server-to-server) o file:// (browser manda "null") → permitir
+    if (!origin || origin === 'null') return callback(null, true);
+    if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+    if (ALLOWED_ORIGIN_REGEX.some((r) => r.test(origin))) return callback(null, true);
+    return callback(new Error('CORS bloqueado para origin: ' + origin), false);
+  },
   credentials: true,
 }));
 app.use(bodyParser.json());
