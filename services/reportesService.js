@@ -529,6 +529,7 @@ function aggregateKommo({ desde, hasta }) {
   const byDate = new Map();
   // Breakdown por grupo de anuncios (FORM tag) — solo leads de Meta Ads
   const formGroups = new Map();
+  const formsDailyMap = new Map(); // form_name -> Map(date -> {date, leads, derived})
   let withNqRn = 0;
   let withoutNqRn = 0;
 
@@ -549,15 +550,27 @@ function aggregateKommo({ desde, hasta }) {
 
     if (!formGroups.has(formName)) {
       formGroups.set(formName, { form_name: formName, leads: 0, with_nq_rn: 0, without_nq_rn: 0, derived: 0 });
+      formsDailyMap.set(formName, new Map());
     }
     const f = formGroups.get(formName);
     f.leads += 1;
     if (hasNqRn) f.with_nq_rn += 1; else f.without_nq_rn += 1;
     if (isDerived) f.derived += 1;
+
+    const fdaily = formsDailyMap.get(formName);
+    if (!fdaily.has(date)) fdaily.set(date, { date, leads: 0, derived: 0 });
+    const fday = fdaily.get(date);
+    fday.leads += 1;
+    if (isDerived) fday.derived += 1;
   }
 
   const daily = Array.from(byDate.values()).sort((a, b) => (a.date < b.date ? -1 : 1));
-  const forms_breakdown = Array.from(formGroups.values()).sort((a, b) => b.leads - a.leads);
+  const forms_breakdown = Array.from(formGroups.values())
+    .map((f) => ({
+      ...f,
+      daily: Array.from((formsDailyMap.get(f.form_name) || new Map()).values()).sort((a, b) => (a.date < b.date ? -1 : 1)),
+    }))
+    .sort((a, b) => b.leads - a.leads);
 
   return {
     created,
