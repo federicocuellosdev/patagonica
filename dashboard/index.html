@@ -969,7 +969,7 @@
                   </div>
                   <div class="num-cell">
                     <div class="num">${formatUSD2(c.spend)}</div>
-                    <div class="lbl">Spend</div>
+                    <div class="lbl">Inversión</div>
                   </div>
                   <div class="num-cell">
                     <div class="num">${formatNum(c.reach)}</div>
@@ -999,7 +999,7 @@
                 </div>
                 <div class="num-cell">
                   <div class="num">${formatUSD2(t.spend)}</div>
-                  <div class="lbl">Spend</div>
+                  <div class="lbl">Inversión</div>
                 </div>
                 <div class="num-cell">
                   <div class="num">${formatNum(t.reach)}</div>
@@ -1072,7 +1072,7 @@
                   </div>
                   <div class="num-cell">
                     <div class="num">${formatUSD2(a.spend)}</div>
-                    <div class="lbl">Spend</div>
+                    <div class="lbl">Inversión</div>
                   </div>
                   <div class="num-cell">
                     <div class="num">${formatNum(a.reach)}</div>
@@ -1101,7 +1101,7 @@
                   </div>
                   <div class="num-cell">
                     <div class="num">${formatUSD2(formAdsetsTotals.spend)}</div>
-                    <div class="lbl">Spend</div>
+                    <div class="lbl">Inversión</div>
                   </div>
                   <div class="num-cell">
                     <div class="num">${formatNum(formAdsetsTotals.reach)}</div>
@@ -1439,12 +1439,13 @@
       id: 'hitos',
       afterDatasetsDraw(chart, args, opts) {
         if (!opts || !opts.enabled || !opts.hitos || !opts.hitos.length) return;
-        const { ctx, scales: { x }, chartArea } = chart;
-        const labels = chart.data.labels || [];
+        const xScale = chart.scales && chart.scales.x;
+        const chartArea = chart.chartArea;
+        const ctx = chart.ctx;
+        if (!xScale || !chartArea) return;
         opts.hitos.forEach((h) => {
-          const idx = labels.indexOf(h.labelText);
-          if (idx < 0) return;
-          const xPos = x.getPixelForValue(idx);
+          if (typeof h.dateIndex !== 'number' || h.dateIndex < 0) return;
+          const xPos = xScale.getPixelForValue(h.dateIndex);
           if (xPos < chartArea.left || xPos > chartArea.right) return;
           // Linea punteada
           ctx.save();
@@ -1567,11 +1568,11 @@
       const showCount = state.forms_count || state.derived_count;
       const showCost  = state.forms_cost || state.derived_cost;
 
-      // Hitos: pasamos solo los que caen dentro del rango y mapeamos al label formateado
+      // Hitos: ubicamos cada uno por indice dentro del array de dates ISO
       const hitosForChart = (state.hitos ? HITOS : []).map((h) => ({
         ...h,
-        labelText: new Date(h.date + 'T12:00:00Z').toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }),
-      })).filter((h) => labels.includes(h.labelText));
+        dateIndex: dates.indexOf(h.date),
+      })).filter((h) => h.dateIndex >= 0);
 
       const cfg = {
         type: 'line',
