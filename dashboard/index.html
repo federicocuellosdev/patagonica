@@ -1383,17 +1383,29 @@
             tooltip: {
               callbacks: {
                 title: (items) => {
+                  // Si el item es un triangulo de ad, mostrar el nombre como titulo
+                  const adPoint = items.find((it) => it.raw?.ad);
+                  if (adPoint) return adPoint.raw.ad.ad_name;
                   const x = items[0]?.parsed?.x;
                   return x ? new Date(x).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
                 },
                 label: (c) => {
                   const v = c.parsed.y;
-                  if (v == null) return null;
                   const point = c.raw;
                   if (point?.ad) {
-                    const cpl = point.ad.cost_per_lead != null ? '$' + point.ad.cost_per_lead.toFixed(2) : '—';
-                    return `Ad publicado: ${point.ad.ad_name} (${point.ad.leads} leads · ${cpl} CPL)`;
+                    const ad = point.ad;
+                    const cpl = ad.cost_per_lead != null ? '$' + ad.cost_per_lead.toFixed(2) : '—';
+                    const fecha = ad.created_time
+                      ? new Date(ad.created_time).toLocaleDateString('es-AR', { day: '2-digit', month: 'short', year: 'numeric' })
+                      : '—';
+                    return [
+                      'Leads totales: ' + Number(ad.leads || 0).toLocaleString('es-AR'),
+                      'Coste (prom.): ' + cpl,
+                      'Inversión: $' + Number(ad.spend || 0).toFixed(2),
+                      'Fecha: ' + fecha,
+                    ];
                   }
+                  if (v == null) return null;
                   const isCurrency = c.dataset.yAxisID === 'y1';
                   const fv = isCurrency ? '$' + v.toFixed(2) : Number(v).toLocaleString('es-AR');
                   return `${c.dataset.label}: ${fv}`;
