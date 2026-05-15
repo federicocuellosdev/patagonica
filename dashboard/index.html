@@ -750,10 +750,11 @@
       // Welcome subtitle (saludo dinámico según la hora + nombre del usuario)
       document.getElementById('welcome-title').textContent = `${greetingForNow()}, ${currentUserName || ''}`.trim().replace(/,\s*$/, '');
 
-      // Form adsets — adsets cuyo nombre arranca con 'FORM - ' (datos de Meta a nivel adset)
+      // Form adsets — todos los adsets de campañas cuyo nombre arranca con 'FORM - '
+      // (incluye los que no llevan 'FORM -' en el adset_name)
       const allAdsets = (data.meta.adsets || []).slice();
       const formAdsets = allAdsets
-        .filter((a) => (a.adset_name || '').startsWith('FORM - '))
+        .filter((a) => (a.campaign_name || '').startsWith('FORM - ') || (a.adset_name || '').startsWith('FORM - '))
         .sort((a, b) => b.spend - a.spend);
       const formAdsetsTotals = formAdsets.reduce(
         (acc, a) => {
@@ -791,7 +792,7 @@
           ? ` <span style="color:var(--text-muted);font-size:0.7rem;">(${f.without_nq_rn} sin · ${f.with_nq_rn} NQ&RN)</span>`
           : '';
         return `
-          <div class="progress-row">
+          <div class="progress-row" data-entity-type="form" data-entity-id="${f.form_name}">
             <div class="name" title="${f.form_name}">${short}${nqLabel}</div>
             <div class="bar"><div class="bar-fill teal" style="width: ${pct.toFixed(1)}%;">${pct.toFixed(0)}%</div></div>
             <div class="pct-end">${formatNum(f.leads)} leads</div>
@@ -1190,50 +1191,135 @@
         entity = lastReportData.meta.campaigns.find((c) => String(c.campaign_id) === String(id));
       } else if (type === 'adset') {
         entity = (lastReportData.meta.adsets || []).find((a) => String(a.adset_id) === String(id));
+      } else if (type === 'form') {
+        const fb = (lastReportData.kommo.forms_breakdown || []).find((f) => f.form_name === id);
+        if (fb) {
+          entity = {
+            __form: true,
+            form_name: fb.form_name,
+            leads: fb.leads,
+            derived: fb.derived,
+            with_nq_rn: fb.with_nq_rn,
+            without_nq_rn: fb.without_nq_rn,
+            daily: fb.daily || [],
+          };
+        }
       }
       if (!entity) return;
 
       const modal = document.getElementById('entity-modal');
-      const title = type === 'campaign' ? entity.campaign_name : entity.adset_name;
-      const sub = type === 'campaign'
-        ? `Campaña · ${objectiveResultLabel(entity.objective)}`
-        : `Grupo de anuncios · ${entity.campaign_name}`;
+      let title, sub;
+      if (type === 'campaign') {
+        title = entity.campaign_name;
+        sub = `Campaña · ${objectiveResultLabel(entity.objective)}`;
+      } else if (type === 'adset') {
+        title = entity.adset_name;
+        sub = `Grupo de anuncios · ${entity.campaign_name}`;
+      } else {
+        title = entity.form_name;
+        sub = `Formulario · ${entity.with_nq_rn} NQ&RN / ${entity.without_nq_rn} general`;
+      }
       document.getElementById('entity-modal-title').textContent = title;
       document.getElementById('entity-modal-sub').textContent = sub;
 
-      // Toggles
-      const resultLabel = resultLabelForEntity(entity);
-      document.getElementById('entity-modal-toggles').innerHTML = `
-        <button class="entity-modal-toggle ${entityModalState.spend ? 'active' : ''}" data-key="spend">
-          <span class="dot"></span>Costo (USD)
-        </button>
-        <button class="entity-modal-toggle ${entityModalState.result ? 'active' : ''}" data-key="result">
-          <span class="dot"></span>${resultLabel}
-        </button>
-      `;
+      // Toggles — el tipo 'form' (Kommo) solo tiene leads y derivados, sin spend
+      const isForm = type === 'form';
+      const resultLabel = isForm ? 'Leads' : resultLabelForEntity(entity);
+      if (isForm) {
+        document.getElementById('entity-modal-toggles').innerHTML = `
+          <button class="entity-modal-toggle active" data-key="leads"><span class="dot"></span>Leads</button>
+          <button class="entity-modal-toggle ${entityModalState.derived !== false ? 'active' : ''}" data-key="derived"><span class="dot"></span>Derivados</button>
+        `;
+      } else {
+        document.getElementById('entity-modal-toggles').innerHTML = `
+          <button class="entity-modal-toggle ${entityModalState.spend ? 'active' : ''}" data-key="spend">
+            <span class="dot"></span>Costo (USD)
+          </button>
+          <button class="entity-modal-toggle ${entityModalState.result ? 'active' : ''}" data-key="result">
+            <span class="dot"></span>${resultLabel}
+          </button>
+        `;
+      }
       document.querySelectorAll('#entity-modal-toggles .entity-modal-toggle').forEach((btn) => {
         btn.addEventListener('click', () => {
           const key = btn.dataset.key;
-          entityModalState[key] = !entityModalState[key];
-          btn.classList.toggle('active', entityModalState[key]);
-          renderEntityChart(entity);
+          if (isForm) {
+            entityModalState[key] = entityModalState[key] === false;
+          } else {
+            entityModalState[key] = !entityModalState[key];
+          }
+          btn.classList.toggle('active', entityModalState[key] !== false);
+          if (isForm) renderFormChart(entity); else renderEntityChart(entity);
         });
       });
 
-      // Stats abajo
-      const resultKey = resultKeyForEntity(entity);
-      const resultTotal = entity[resultKey] != null ? entity[resultKey] : 0;
-      const cost_per = resultTotal > 0 ? entity.spend / resultTotal : null;
-      document.getElementById('entity-modal-stats').innerHTML = `
-        <div class="entity-stat"><div class="lbl">Spend</div><div class="val">${formatUSD2(entity.spend)}</div></div>
-        <div class="entity-stat"><div class="lbl">${resultLabel}</div><div class="val">${formatNum(resultTotal)}</div></div>
-        <div class="entity-stat"><div class="lbl">Costo / ${resultLabel.toLowerCase()}</div><div class="val">${cost_per != null ? formatUSD2(cost_per) : '—'}</div></div>
-        <div class="entity-stat"><div class="lbl">CTR</div><div class="val">${formatPct(entity.ctr || 0)}</div></div>
-      `;
+      // Stats
+      if (isForm) {
+        document.getElementById('entity-modal-stats').innerHTML = `
+          <div class="entity-stat"><div class="lbl">Leads totales</div><div class="val">${formatNum(entity.leads)}</div></div>
+          <div class="entity-stat"><div class="lbl">Derivados</div><div class="val">${formatNum(entity.derived)}</div></div>
+          <div class="entity-stat"><div class="lbl">NQ & RN</div><div class="val">${formatNum(entity.with_nq_rn)}</div></div>
+          <div class="entity-stat"><div class="lbl">Generales</div><div class="val">${formatNum(entity.without_nq_rn)}</div></div>
+        `;
+      } else {
+        const resultKey = resultKeyForEntity(entity);
+        const resultTotal = entity[resultKey] != null ? entity[resultKey] : 0;
+        const cost_per = resultTotal > 0 ? entity.spend / resultTotal : null;
+        document.getElementById('entity-modal-stats').innerHTML = `
+          <div class="entity-stat"><div class="lbl">Spend</div><div class="val">${formatUSD2(entity.spend)}</div></div>
+          <div class="entity-stat"><div class="lbl">${resultLabel}</div><div class="val">${formatNum(resultTotal)}</div></div>
+          <div class="entity-stat"><div class="lbl">Costo / ${resultLabel.toLowerCase()}</div><div class="val">${cost_per != null ? formatUSD2(cost_per) : '—'}</div></div>
+          <div class="entity-stat"><div class="lbl">CTR</div><div class="val">${formatPct(entity.ctr || 0)}</div></div>
+        `;
+      }
 
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
-      renderEntityChart(entity);
+      if (isForm) renderFormChart(entity); else renderEntityChart(entity);
+    }
+
+    function renderFormChart(entity) {
+      const ctx = document.getElementById('entity-modal-chart');
+      if (!ctx) return;
+      const dates = [];
+      const start = new Date(lastReportData.desde + 'T12:00:00Z');
+      const end = new Date(lastReportData.hasta + 'T12:00:00Z');
+      for (let dt = new Date(start); dt <= end; dt.setUTCDate(dt.getUTCDate() + 1)) dates.push(isoDate(dt));
+      const dailyMap = new Map((entity.daily || []).map((d) => [d.date, d]));
+      const labels = dates.map((d) => new Date(d + 'T12:00:00Z').toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }));
+
+      const showLeads = entityModalState.leads !== false;
+      const showDerived = entityModalState.derived !== false;
+
+      const datasets = [];
+      if (showLeads) datasets.push({
+        label: 'Leads', data: dates.map((d) => dailyMap.get(d)?.leads || 0),
+        borderColor: '#057488', backgroundColor: 'rgba(5, 116, 136, 0.10)',
+        yAxisID: 'y', tension: 0.35, fill: true, pointRadius: 2.5, pointHoverRadius: 5, borderWidth: 2.5,
+      });
+      if (showDerived) datasets.push({
+        label: 'Derivados', data: dates.map((d) => dailyMap.get(d)?.derived || 0),
+        borderColor: '#4a90e2', backgroundColor: 'rgba(74, 144, 226, 0.08)',
+        yAxisID: 'y', tension: 0.35, fill: false, pointRadius: 2, pointHoverRadius: 4, borderWidth: 2,
+      });
+
+      if (entityChart) entityChart.destroy();
+      entityChart = new Chart(ctx, {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: { backgroundColor: '#1a3a6e', titleColor: '#fff', bodyColor: '#fff', padding: 10, cornerRadius: 8 },
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { color: '#6e7b96', font: { size: 10 }, maxRotation: 0, autoSkipPadding: 16 } },
+            y: { beginAtZero: true, grid: { color: 'rgba(110, 123, 150, 0.08)' }, ticks: { color: '#6e7b96', font: { size: 10 }, callback: (v) => Number(v).toLocaleString('es-AR') }, title: { display: true, text: 'Cantidad', color: '#93a1bd', font: { size: 10, weight: 500 } } },
+          },
+        },
+      });
     }
 
     function closeEntityModal() {
