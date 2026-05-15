@@ -680,6 +680,19 @@
         },
         { spend: 0, reach: 0, impressions: 0, clicks: 0, leads: 0 }
       );
+      // Split de spend y leads por categoria (NQ&RN vs general)
+      const formAdsetsSplit = formAdsets.reduce(
+        (acc, a) => {
+          const isNqRn = /NQ\s*&\s*RN/i.test(a.adset_name);
+          const key = isNqRn ? 'nqRn' : 'general';
+          acc[key].spend += a.spend;
+          acc[key].leads += a.leads;
+          return acc;
+        },
+        { general: { spend: 0, leads: 0 }, nqRn: { spend: 0, leads: 0 } }
+      );
+      const cplGeneral = formAdsetsSplit.general.leads > 0 ? formAdsetsSplit.general.spend / formAdsetsSplit.general.leads : null;
+      const cplNqRn = formAdsetsSplit.nqRn.leads > 0 ? formAdsetsSplit.nqRn.spend / formAdsetsSplit.nqRn.leads : null;
 
       // Forms breakdown (Kommo leads taggeados Meta Ads, agrupados por FORM tag)
       const formsBreakdown = (k.forms_breakdown || []).slice();
@@ -939,12 +952,22 @@
 
         <!-- Forms NQ&RN split -->
         <div class="card span-3">
-          <div class="card-title">Desglose NQ & RN</div>
-          <div class="card-value">${formatNum(formsTotals.without_nq_rn)}</div>
-          <div class="card-sub">Forms sin NQ & RN</div>
-          <div style="margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--border);">
-            <div class="card-sub" style="margin-bottom: 0.25rem;">Forms con NQ & RN</div>
-            <div style="font-size: 1.5rem; font-weight: 700;">${formatNum(formsTotals.with_nq_rn)}</div>
+          <div class="card-title">Desglose NQ & RN · Forms por categoría</div>
+          <div style="display:flex; flex-direction:column; gap:0.85rem;">
+            <div>
+              <div class="card-sub" style="margin-bottom:0.2rem;">Forms Generales</div>
+              <div style="font-size:1.5rem; font-weight:700; line-height:1;">${formatNum(formAdsetsSplit.general.leads)}</div>
+              <div class="card-sub" style="margin-top:0.35rem;">
+                ${formatUSD2(formAdsetsSplit.general.spend)} · ${cplGeneral != null ? formatUSD2(cplGeneral) + ' / lead' : '—'}
+              </div>
+            </div>
+            <div style="padding-top:0.8rem; border-top:1px solid var(--border);">
+              <div class="card-sub" style="margin-bottom:0.2rem;">Forms NQ & RN</div>
+              <div style="font-size:1.5rem; font-weight:700; line-height:1;">${formatNum(formAdsetsSplit.nqRn.leads)}</div>
+              <div class="card-sub" style="margin-top:0.35rem;">
+                ${formatUSD2(formAdsetsSplit.nqRn.spend)} · ${cplNqRn != null ? formatUSD2(cplNqRn) + ' / lead' : '—'}
+              </div>
+            </div>
           </div>
         </div>
 
