@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patagónica Propiedades — Desarrollos en Villa La Angostura</title>
+    <meta name="description" content="Conocé los desarrollos premium de Patagónica Propiedades en Villa La Angostura: El Mirador, Cota 1000 y Loma Guacha.">
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website">
+    <meta property="og:site_name"   content="Patagónica Propiedades">
+    <meta property="og:url"         content="https://l.patagonicapropiedades.com.ar/">
+    <meta property="og:title"       content="Patagónica Propiedades — Desarrollos en Villa La Angostura">
+    <meta property="og:description" content="Conocé los desarrollos premium de Patagónica Propiedades en Villa La Angostura.">
+    <meta property="og:image"       content="https://l.patagonicapropiedades.com.ar/mirador/img/patagonica-propiedades-mirador-og.webp">
+
+    <link rel="icon" type="image/png" href="src/img/patagonica-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://d1v2p1s05qqabi.cloudfront.net/fonts/patagonica/fonts-patagonica.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary:   #121C25;
+            --secondary: #057488;
+            --light:     #f7f7f7;
+            --white:     #fff;
+            --text:      #212529;
+            --text-muted:#6c757d;
+            --br:        8px;
+            --br-lg:     16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: Gilroy, 'Source Sans Pro', sans-serif;
+            color: var(--text);
+            line-height: 1.5;
+            background-color: var(--primary);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            z-index: 10;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo img { height: 70px; width: auto; }
+
+        /* Hero */
+        .hero {
+            min-height: 55vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 9rem 1.5rem 3rem;
+            background:
+                radial-gradient(ellipse at top, rgba(5,116,136,0.22) 0%, transparent 60%),
+                linear-gradient(180deg, #121C25 0%, #0d1118 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.04) 0, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(5,116,136,0.08) 0, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-content { max-width: 880px; position: relative; z-index: 1; }
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(5, 116, 136, 0.25);
+            border: 1px solid rgba(5, 116, 136, 0.55);
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: rgba(255,255,255,0.92);
+        }
+        .hero-title {
+            font-family: Gilroy, sans-serif;
+            font-size: clamp(1.6rem, 4vw, 3.25rem);
+            font-weight: 400;
+            margin-bottom: 1.25rem;
+            line-height: 1.1;
+            white-space: nowrap;
+        }
+        .hero-description {
+            font-size: 1.1rem;
+            font-weight: 300;
+            opacity: 0.82;
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        /* Cards section */
+        .cards-section {
+            padding: 3.5rem 5% 6rem;
+            background: var(--light);
+        }
+        .cards-grid {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.75rem;
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 440px;
+            border-radius: var(--br-lg);
+            overflow: hidden;
+            text-decoration: none;
+            color: #fff;
+            box-shadow: 0 8px 30px rgba(18, 28, 37, 0.12);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            isolation: isolate;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 45px rgba(18, 28, 37, 0.25);
+        }
+        .card-image {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.6s ease;
+            z-index: -2;
+        }
+        .card:hover .card-image { transform: scale(1.07); }
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg,
+                rgba(18, 28, 37, 0.10) 0%,
+                rgba(18, 28, 37, 0.55) 55%,
+                rgba(18, 28, 37, 0.95) 100%);
+            z-index: -1;
+        }
+        .card-body {
+            margin-top: auto;
+            padding: 1.75rem 1.5rem 1.6rem;
+        }
+        .card-eyebrow {
+            display: inline-block;
+            padding: 0.3rem 0.85rem;
+            background: rgba(5, 116, 136, 0.85);
+            border-radius: 50px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.9rem;
+        }
+        .card-title {
+            font-family: Gilroy, sans-serif;
+            font-size: 1.65rem;
+            font-weight: 500;
+            line-height: 1.15;
+            margin-bottom: 1.4rem;
+        }
+        .card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.85);
+        }
+        .card-cta::after {
+            content: '→';
+            transition: transform 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .card:hover .card-cta::after { transform: translateX(5px); }
+
+        /* Dashboard card – distinct identity */
+        .card-dashboard .card-image {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(74,144,226,0.22) 0%, transparent 55%),
+                radial-gradient(circle at 80% 80%, rgba(5,116,136,0.28) 0%, transparent 55%),
+                linear-gradient(135deg, #1a3a6e 0%, #121C25 70%);
+        }
+        .card-dashboard .card-overlay {
+            background: linear-gradient(180deg,
+                rgba(18, 28, 37, 0.15) 0%,
+                rgba(18, 28, 37, 0.55) 60%,
+                rgba(18, 28, 37, 0.92) 100%);
+        }
+        .card-dashboard .card-eyebrow { background: rgba(74,144,226,0.85); }
+        .dashboard-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 32px 32px;
+            z-index: -1;
+        }
+        .dashboard-icon {
+            position: absolute;
+            top: 1.5rem; right: 1.5rem;
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.18);
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 2rem 1.5rem;
+            font-size: 0.85rem;
+            font-weight: 300;
+        }
+        footer a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+        }
+        footer a:hover { color: #fff; }
+
+        @media (max-width: 600px) {
+            .logo img { height: 56px; }
+            .hero { padding: 7rem 1rem 2.5rem; min-height: auto; }
+            .hero-title { font-size: clamp(1.15rem, 5.5vw, 1.6rem); }
+            .card { height: 380px; }
+            .cards-section { padding: 2.5rem 1.25rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="./" class="logo" aria-label="Patagónica Propiedades">
+            <img src="src/img/patagonica-logo-blanco.png" alt="Patagónica Propiedades">
+        </a>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Desarrollos en Villa La Angostura</h1>
+            <p class="hero-description">Elegí el destino que querés conocer. Tres desarrollos premium y el panel interno de gestión.</p>
+        </div>
+    </section>
+
+    <section class="cards-section">
+        <div class="cards-grid">
+
+            <a href="mirador/index.html" class="card">
+                <div class="card-image" style="background-image: url('mirador/img/patagonica-propiedades-mirador-principal-v3.webp');"></div>
+                <div class="card-overlay"></div>
+                <div class="card-body">
+                    <span class="card-eyebrow">Barrio Arauco</span>
+                    <h2 class="card-title">El Mirador</h2>
+                    <span class="card-cta">Ver desarrollo</span>
+                </div>
+            </a>
+
+            <a href="cota-1000/index.html" class="card">
+                <div class="card-image" style="background-image: url('cota-1000/img/patagonica-propiedades-cota-1000-hero.webp');"></div>
+                <div class="card-overlay"></div>
+                <div class="card-body">
+                    <span class="card-eyebrow">Cerro Bayo</span>
+                    <h2 class="card-title">Cota 1000</h2>
+                    <span class="card-cta">Ver desarrollo</span>
+                </div>
+            </a>
+
+            <a href="loma-guacha/index.html" class="card">
+                <div class="card-image" style="background-image: url('loma-guacha/img/patagonica-propiedades-loma-guacha-hero.webp');"></div>
+                <div class="card-overlay"></div>
+                <div class="card-body">
+                    <span class="card-eyebrow">Lomas del Correntoso</span>
+                    <h2 class="card-title">Loma Guacha</h2>
+                    <span class="card-cta">Ver desarrollo</span>
+                </div>
+            </a>
+
+            <a href="dashboard/index.html" class="card card-dashboard">
+                <div class="card-image"></div>
+                <div class="dashboard-grid"></div>
+                <div class="card-overlay"></div>
+                <div class="dashboard-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="9"/>
+                        <rect x="14" y="3" width="7" height="5"/>
+                        <rect x="14" y="12" width="7" height="9"/>
+                        <rect x="3" y="16" width="7" height="5"/>
+                    </svg>
+                </div>
+                <div class="card-body">
+                    <span class="card-eyebrow">Interno</span>
+                    <h2 class="card-title">Dashboard</h2>
+                    <span class="card-cta">Ingresar</span>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; <span id="year"></span> Patagónica Propiedades · <a href="https://patagonicapropiedades.com.ar" target="_blank" rel="noopener">patagonicapropiedades.com.ar</a></p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
