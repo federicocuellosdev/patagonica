@@ -337,6 +337,22 @@
     }
     details.collapsible[open] > summary { margin-bottom: 0.75rem; }
 
+    .ad-sort-group { display: inline-flex; gap: 0.25rem; }
+    .ad-sort-btn {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.7rem; font-weight: 500;
+      color: var(--text-muted);
+      background: var(--bg-2);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .ad-sort-btn:hover { background: var(--border); }
+    .ad-sort-btn.active { background: var(--primary); color: #fff; }
+
     /* Onboarding-style breakdown */
     .breakdown-rows { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.85rem; }
     .br-row {
@@ -766,12 +782,31 @@
       const cplGeneral = formAdsetsSplit.general.leads > 0 ? formAdsetsSplit.general.spend / formAdsetsSplit.general.leads : null;
       const cplNqRn = formAdsetsSplit.nqRn.leads > 0 ? formAdsetsSplit.nqRn.spend / formAdsetsSplit.nqRn.leads : null;
 
-      // Top 10 anuncios de la campaña FORM (sort por leads desc)
+      // Top 20 anuncios de la campaña FORM con toggle de ordenamiento
       const allAds = (data.meta.ads || []).slice();
-      const topAds = allAds
-        .filter((a) => (a.campaign_name || '').startsWith('FORM - '))
-        .sort((a, b) => b.leads - a.leads)
-        .slice(0, 10);
+      const baseFormAds = allAds.filter((a) => (a.campaign_name || '').startsWith('FORM - '));
+      function sortFormAds(key) {
+        if (key === 'newest') return [...baseFormAds].sort((a, b) => (b.created_time || '').localeCompare(a.created_time || ''));
+        if (key === 'oldest') return [...baseFormAds].sort((a, b) => (a.created_time || '').localeCompare(b.created_time || ''));
+        return [...baseFormAds].sort((a, b) => b.leads - a.leads);
+      }
+      let topAdsSort = window.__topAdsSort || 'result';
+      let topAds = sortFormAds(topAdsSort).slice(0, 20);
+      function adRowHTML(a) {
+        return `
+          <div class="campaign-item" data-entity-type="ad" data-entity-id="${a.ad_id}">
+            <div class="icon icon-leads">A</div>
+            <div class="info">
+              <div class="name" title="${a.ad_name}">${a.ad_name}</div>
+              <div class="obj">${a.adset_name} · ${statusBadge(a.effective_status)}</div>
+            </div>
+            <div class="num-cell"><div class="num">${formatNum(a.leads)}</div><div class="lbl">Leads</div></div>
+            <div class="num-cell"><div class="num">${a.cost_per_lead != null ? formatUSD2(a.cost_per_lead) : '—'}</div><div class="lbl">CPL</div></div>
+            <div class="num-cell"><div class="num">${formatUSD2(a.spend)}</div><div class="lbl">Inversión</div></div>
+            <div class="num-cell"><div class="num">${fmtCreated(a.created_time)}</div><div class="lbl">Publicado</div></div>
+          </div>
+        `;
+      }
       function statusBadge(s) {
         const st = (s || '').toUpperCase();
         if (st === 'ACTIVE') return '<span style="color:#1d8b4f;font-weight:600;">● Activo</span>';
@@ -1128,38 +1163,21 @@
           </details>
         </div>
 
-        <!-- Top 10 anuncios FORM (colapsable, cerrado por defecto) -->
+        <!-- Top 20 anuncios FORM (colapsable, cerrado por defecto) -->
         <div class="card span-12">
           <details class="collapsible">
             <summary>
-              <span class="card-title">Top 10 anuncios FORM <span class="pct" style="color:var(--text-muted);font-weight:500;">por leads</span></span>
+              <span class="card-title">
+                Top 20 anuncios FORM
+                <span class="ad-sort-group" style="margin-left:0.75rem;font-weight:500;">
+                  <span class="ad-sort-btn ${topAdsSort==='result'?'active':''}" data-sort="result">Resultado</span>
+                  <span class="ad-sort-btn ${topAdsSort==='newest'?'active':''}" data-sort="newest">Último publicado</span>
+                  <span class="ad-sort-btn ${topAdsSort==='oldest'?'active':''}" data-sort="oldest">Más antiguo</span>
+                </span>
+              </span>
             </summary>
-            <div class="campaign-list">
-              ${topAds.map((a) => `
-                <div class="campaign-item" data-entity-type="ad" data-entity-id="${a.ad_id}">
-                  <div class="icon icon-leads">A</div>
-                  <div class="info">
-                    <div class="name" title="${a.ad_name}">${a.ad_name}</div>
-                    <div class="obj">${a.adset_name} · ${statusBadge(a.effective_status)}</div>
-                  </div>
-                  <div class="num-cell">
-                    <div class="num">${formatNum(a.leads)}</div>
-                    <div class="lbl">Leads</div>
-                  </div>
-                  <div class="num-cell">
-                    <div class="num">${a.cost_per_lead != null ? formatUSD2(a.cost_per_lead) : '—'}</div>
-                    <div class="lbl">CPL</div>
-                  </div>
-                  <div class="num-cell">
-                    <div class="num">${formatUSD2(a.spend)}</div>
-                    <div class="lbl">Inversión</div>
-                  </div>
-                  <div class="num-cell">
-                    <div class="num">${fmtCreated(a.created_time)}</div>
-                    <div class="lbl">Publicado</div>
-                  </div>
-                </div>
-              `).join('') || '<div class="card-sub">Sin anuncios FORM en este período</div>'}
+            <div class="campaign-list" id="top-ads-list">
+              ${topAds.map(adRowHTML).join('') || '<div class="card-sub">Sin anuncios FORM en este período</div>'}
             </div>
           </details>
         </div>
@@ -1195,6 +1213,26 @@
           // Evitar abrir modal cuando el click viene del <summary> de un <details>
           if (e.target.closest('summary')) return;
           openEntityModal(el.dataset.entityType, el.dataset.entityId);
+        });
+      });
+
+      // Sort toggle del Top 20 anuncios FORM
+      document.querySelectorAll('.ad-sort-btn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const key = btn.dataset.sort;
+          window.__topAdsSort = key;
+          topAdsSort = key;
+          topAds = sortFormAds(key).slice(0, 20);
+          const list = document.getElementById('top-ads-list');
+          if (list) {
+            list.innerHTML = topAds.map(adRowHTML).join('') || '<div class="card-sub">Sin anuncios FORM en este período</div>';
+            list.querySelectorAll('[data-entity-type][data-entity-id]').forEach((row) => {
+              row.addEventListener('click', () => openEntityModal(row.dataset.entityType, row.dataset.entityId));
+            });
+          }
+          document.querySelectorAll('.ad-sort-btn').forEach((b) => b.classList.toggle('active', b.dataset.sort === key));
         });
       });
     }
