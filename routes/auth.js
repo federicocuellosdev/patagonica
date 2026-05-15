@@ -6,7 +6,7 @@ const db = require('../lib/db');
 const router = express.Router();
 
 const JWT_SECRET = process.env.REPORTE_PATAGONICA_JWT_SECRET;
-const TOKEN_TTL = '7d';
+const TOKEN_TTL = '90d';
 
 const getUserStmt = db.prepare('SELECT email, password_hash FROM users WHERE email = ?');
 const logStmt = db.prepare(
