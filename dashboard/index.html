@@ -298,6 +298,35 @@
     .campaign-item .num-cell .num { font-size: 0.88rem; font-weight: 600; color: var(--text); }
     .campaign-item .num-cell .lbl { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 0.1rem; }
 
+    /* Collapsible details (FAQ-style) */
+    details.collapsible > summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.25rem 0;
+    }
+    details.collapsible > summary::-webkit-details-marker { display: none; }
+    details.collapsible > summary::after {
+      content: '';
+      width: 10px; height: 10px;
+      border-right: 2px solid var(--text-muted);
+      border-bottom: 2px solid var(--text-muted);
+      transform: rotate(-45deg);
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    details.collapsible[open] > summary::after { transform: rotate(45deg); }
+    details.collapsible > summary > .card-title {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    details.collapsible[open] > summary { margin-bottom: 0.75rem; }
+
     /* Onboarding-style breakdown */
     .breakdown-rows { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.85rem; }
     .br-row {
@@ -625,6 +654,23 @@
       // Welcome subtitle (saludo dinámico según la hora + nombre del usuario)
       document.getElementById('welcome-title').textContent = `${greetingForNow()}, ${currentUserName || ''}`.trim().replace(/,\s*$/, '');
 
+      // Form adsets — adsets cuyo nombre arranca con 'FORM - ' (datos de Meta a nivel adset)
+      const allAdsets = (data.meta.adsets || []).slice();
+      const formAdsets = allAdsets
+        .filter((a) => (a.adset_name || '').startsWith('FORM - '))
+        .sort((a, b) => b.spend - a.spend);
+      const formAdsetsTotals = formAdsets.reduce(
+        (acc, a) => {
+          acc.spend += a.spend;
+          acc.reach += a.reach;
+          acc.impressions += a.impressions;
+          acc.clicks += a.clicks;
+          acc.leads += a.leads;
+          return acc;
+        },
+        { spend: 0, reach: 0, impressions: 0, clicks: 0, leads: 0 }
+      );
+
       // Forms breakdown (Kommo leads taggeados Meta Ads, agrupados por FORM tag)
       const formsBreakdown = (k.forms_breakdown || []).slice();
       const formsTotals = k.forms_totals || { with_nq_rn: 0, without_nq_rn: 0, total: 0 };
@@ -799,7 +845,10 @@
 
         <!-- Campaign list -->
         <div class="card span-12">
-          <div class="card-title">Campañas · detalle</div>
+          <details class="collapsible">
+            <summary>
+              <span class="card-title">Campañas · detalle <span class="pct" style="color:var(--text-muted);font-weight:500;">${campaigns.length} campaña${campaigns.length === 1 ? '' : 's'}</span></span>
+            </summary>
           <div class="campaign-list">
             ${campaigns.map((c) => {
               const meta = objectiveMeta(c.objective);
@@ -863,6 +912,7 @@
               </div>
             ` : ''}
           </div>
+          </details>
         </div>
 
         <!-- Forms breakdown -->
@@ -886,6 +936,75 @@
             <div class="card-sub" style="margin-bottom: 0.25rem;">Forms con NQ & RN</div>
             <div style="font-size: 1.5rem; font-weight: 700;">${formatNum(formsTotals.with_nq_rn)}</div>
           </div>
+        </div>
+
+        <!-- Form adsets detail (colapsable, cerrado por defecto) -->
+        <div class="card span-12">
+          <details class="collapsible">
+            <summary>
+              <span class="card-title">Formularios · detalle <span class="pct" style="color:var(--text-muted);font-weight:500;">${formAdsets.length} grupo${formAdsets.length === 1 ? '' : 's'} de anuncios</span></span>
+            </summary>
+            <div class="campaign-list">
+              ${formAdsets.map((a) => `
+                <div class="campaign-item">
+                  <div class="icon icon-leads">F</div>
+                  <div class="info">
+                    <div class="name" title="${a.adset_name}">${a.adset_name}</div>
+                    <div class="obj">${a.campaign_name} · CTR ${formatPct(a.ctr)}</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${formatUSD2(a.spend)}</div>
+                    <div class="lbl">Spend</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${formatNum(a.reach)}</div>
+                    <div class="lbl">Alcance</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${(a.frequency || 0).toFixed(2)}</div>
+                    <div class="lbl">Frecuencia</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${formatNum(a.leads)}</div>
+                    <div class="lbl">Leads</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${a.cost_per_lead != null ? formatUSD2(a.cost_per_lead) : '—'}</div>
+                    <div class="lbl">CPL</div>
+                  </div>
+                </div>
+              `).join('') || '<div class="card-sub">Sin grupos de anuncios FORM en este período</div>'}
+              ${formAdsets.length > 0 ? `
+                <div class="campaign-item is-total">
+                  <div class="icon">Σ</div>
+                  <div class="info">
+                    <div class="name">Total</div>
+                    <div class="obj">${formAdsets.length} grupos · CTR promedio ${formatPct(formAdsetsTotals.impressions > 0 ? (formAdsetsTotals.clicks / formAdsetsTotals.impressions) * 100 : 0)}</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${formatUSD2(formAdsetsTotals.spend)}</div>
+                    <div class="lbl">Spend</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${formatNum(formAdsetsTotals.reach)}</div>
+                    <div class="lbl">Alcance</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${formAdsetsTotals.reach > 0 ? (formAdsetsTotals.impressions / formAdsetsTotals.reach).toFixed(2) : '—'}</div>
+                    <div class="lbl">Frecuencia</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${formatNum(formAdsetsTotals.leads)}</div>
+                    <div class="lbl">Leads</div>
+                  </div>
+                  <div class="num-cell">
+                    <div class="num">${formAdsetsTotals.leads > 0 ? formatUSD2(formAdsetsTotals.spend / formAdsetsTotals.leads) : '—'}</div>
+                    <div class="lbl">CPL</div>
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+          </details>
         </div>
       `;
 
