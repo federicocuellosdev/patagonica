@@ -1912,17 +1912,21 @@
           ctx.moveTo(xPos, chartArea.top);
           ctx.lineTo(xPos, chartArea.bottom);
           ctx.stroke();
-          // Bandera arriba con texto
+          // Bandera arriba con texto — la ponemos a la izquierda de la linea por
+          // default, asi no se corta cuando el hito esta cerca del borde derecho.
+          // Si tampoco entra a la izquierda, flip a la derecha.
           ctx.setLineDash([]);
           ctx.font = '600 10px Inter, sans-serif';
           const text = h.label;
           const padX = 6, padY = 3;
           const w = ctx.measureText(text).width + padX * 2;
-          const fx = xPos + 2;
+          const flagH = 16 + padY;
+          let fx = xPos - w - 2; // izquierda
+          if (fx < chartArea.left + 2) fx = xPos + 2; // si no entra, derecha
           const fy = chartArea.top + 2;
           ctx.fillStyle = h.color || '#c0392b';
           ctx.beginPath();
-          ctx.roundRect ? ctx.roundRect(fx, fy, w, 16 + padY, 3) : ctx.rect(fx, fy, w, 16 + padY);
+          ctx.roundRect ? ctx.roundRect(fx, fy, w, flagH, 3) : ctx.rect(fx, fy, w, flagH);
           ctx.fill();
           ctx.fillStyle = '#fff';
           ctx.textBaseline = 'middle';
