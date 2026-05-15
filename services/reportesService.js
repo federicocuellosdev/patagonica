@@ -14,6 +14,8 @@ fs.mkdirSync(cacheDir, { recursive: true });
 
 const META_FILE = path.join(cacheDir, 'meta-daily.json');
 const ADSETS_FILE = path.join(cacheDir, 'meta-adsets-daily.json');
+const ADS_FILE = path.join(cacheDir, 'meta-ads-daily.json');
+const ADS_META_FILE = path.join(cacheDir, 'meta-ads-meta.json');
 const KOMMO_FILE = path.join(cacheDir, 'kommo-leads.json');
 
 const DEFAULT_SYNC_START = process.env.REPORTES_SYNC_START || '2024-01-01';
@@ -324,6 +326,154 @@ function aggregateMetaAdsets({ desde, hasta }) {
   }));
 }
 
+// ---------- Meta Ads sync (level=ad) ----------
+async function fetchMetaAdDailyRange({ since, until }) {
+  const token = process.env.META_ACCESS_TOKEN;
+  const accountId = process.env.META_AD_ACCOUNT_ID;
+  if (!token || !accountId) throw new Error('Meta credentials missing');
+
+  const fields = [
+    'date_start','date_stop',
+    'campaign_id','campaign_name',
+    'adset_id','adset_name',
+    'ad_id','ad_name',
+    'spend','impressions','clicks','actions',
+  ].join(',');
+
+  const out = [];
+  let url = `${META_BASE}/act_${accountId}/insights`;
+  let params = {
+    level: 'ad', fields, time_increment: 1,
+    time_range: JSON.stringify({ since, until }),
+    limit: 500, access_token: token,
+  };
+  while (url) {
+    const resp = await axios.get(url, { params });
+    const rows = resp.data?.data || [];
+    for (const r of rows) {
+      out.push({
+        date: r.date_start,
+        campaign_id: r.campaign_id, campaign_name: r.campaign_name,
+        adset_id: r.adset_id, adset_name: r.adset_name,
+        ad_id: r.ad_id, ad_name: r.ad_name,
+        spend: Number(r.spend) || 0,
+        impressions: Number(r.impressions) || 0,
+        clicks: Number(r.clicks) || 0,
+        leads: actionValue(r.actions, 'lead'),
+        landing_page_views: actionValue(r.actions, 'landing_page_view'),
+      });
+    }
+    const next = resp.data?.paging?.next;
+    if (next) { url = next; params = undefined; } else { url = null; }
+  }
+  return out;
+}
+
+async function syncMetaAdDaily({ force = false } = {}) {
+  const store = readJson(ADS_FILE, { last_synced_at: null, earliest: null, latest: null, days: [] });
+  const target = yesterdayISO();
+  let since;
+  if (force || !store.latest) {
+    since = DEFAULT_SYNC_START;
+    store.days = []; store.earliest = null; store.latest = null;
+  } else {
+    since = addDays(store.latest, 1);
+    if (since > target) return { ...store, fetched: 0, range: null };
+  }
+  const rows = await fetchMetaAdDailyRange({ since, until: target });
+  if (rows.length > 0) {
+    if (force) {
+      store.days = rows;
+    } else {
+      const seen = new Set(store.days.map((d) => `${d.date}__${d.ad_id}`));
+      for (const r of rows) {
+        const key = `${r.date}__${r.ad_id}`;
+        if (!seen.has(key)) store.days.push(r);
+      }
+    }
+    store.days.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+    store.earliest = store.days[0]?.date || null;
+    store.latest = store.days[store.days.length - 1]?.date || null;
+  }
+  store.last_synced_at = new Date().toISOString();
+  writeJson(ADS_FILE, store);
+  return { ...store, fetched: rows.length, range: { since, until: target } };
+}
+
+// Metadata de ads (nombre, fecha de creacion, estado). Refresh max cada 6h.
+async function syncMetaAdsMetadata({ force = false } = {}) {
+  const store = readJson(ADS_META_FILE, { last_synced_at: null, ads: [] });
+  if (!force && store.last_synced_at) {
+    const age = Date.now() - new Date(store.last_synced_at).getTime();
+    if (age < 6 * 60 * 60 * 1000) return { ...store, fetched: 0, skipped: true };
+  }
+  const token = process.env.META_ACCESS_TOKEN;
+  const accountId = process.env.META_AD_ACCOUNT_ID;
+  const url = `${META_BASE}/act_${accountId}/ads`;
+  let params = {
+    fields: 'id,name,created_time,effective_status,status',
+    limit: 500, access_token: token,
+  };
+  let next = url;
+  const ads = [];
+  while (next) {
+    const r = await axios.get(next, { params });
+    ads.push(...(r.data?.data || []));
+    next = r.data?.paging?.next || null;
+    params = undefined;
+  }
+  store.ads = ads;
+  store.last_synced_at = new Date().toISOString();
+  writeJson(ADS_META_FILE, store);
+  return { ...store, fetched: ads.length };
+}
+
+function aggregateMetaAds({ desde, hasta }) {
+  const store = readJson(ADS_FILE, { days: [] });
+  const metaStore = readJson(ADS_META_FILE, { ads: [] });
+  const metaById = new Map(metaStore.ads.map((m) => [m.id, m]));
+
+  const filtered = store.days.filter((d) => d.date >= desde && d.date <= hasta);
+  const byAd = new Map();
+  const dailyByAd = new Map();
+  for (const d of filtered) {
+    const key = d.ad_id;
+    if (!byAd.has(key)) {
+      byAd.set(key, {
+        ad_id: d.ad_id, ad_name: d.ad_name,
+        adset_id: d.adset_id, adset_name: d.adset_name,
+        campaign_id: d.campaign_id, campaign_name: d.campaign_name,
+        spend: 0, impressions: 0, clicks: 0, leads: 0, landing_page_views: 0,
+      });
+      dailyByAd.set(key, new Map());
+    }
+    const a = byAd.get(key);
+    a.spend += d.spend;
+    a.impressions += d.impressions;
+    a.clicks += d.clicks;
+    a.leads += d.leads;
+    a.landing_page_views += d.landing_page_views;
+
+    const dm = dailyByAd.get(key);
+    if (!dm.has(d.date)) dm.set(d.date, { date: d.date, spend: 0, leads: 0 });
+    const dx = dm.get(d.date);
+    dx.spend += d.spend;
+    dx.leads += d.leads;
+  }
+  return Array.from(byAd.values()).map((a) => {
+    const m = metaById.get(a.ad_id) || {};
+    return {
+      ...a,
+      created_time: m.created_time || null,
+      effective_status: m.effective_status || null,
+      status: m.status || null,
+      ctr: a.impressions > 0 ? (a.clicks / a.impressions) * 100 : 0,
+      cost_per_lead: a.leads > 0 ? a.spend / a.leads : null,
+      daily: Array.from(dailyByAd.get(a.ad_id).values()).sort((x, y) => (x.date < y.date ? -1 : 1)),
+    };
+  });
+}
+
 // ---------- Kommo sync ----------
 function kommoHeaders() {
   return { Authorization: `Bearer ${process.env.KOMMO_TOKEN}` };
@@ -589,17 +739,20 @@ function aggregateKommo({ desde, hasta }) {
 
 // ---------- Top-level ----------
 async function ensureSynced({ force = false }) {
-  const [meta, adsets, kommo] = await Promise.all([
+  const [meta, adsets, ads, adsMeta, kommo] = await Promise.all([
     syncMetaDaily({ force }),
     syncMetaAdsetDaily({ force }).catch((e) => ({ error: e.message })),
+    syncMetaAdDaily({ force }).catch((e) => ({ error: e.message })),
+    syncMetaAdsMetadata({ force }).catch((e) => ({ error: e.message })),
     syncKommoLeads({ force }).catch((e) => ({ error: e.message })),
   ]);
-  return { meta_sync: meta, adsets_sync: adsets, kommo_sync: kommo };
+  return { meta_sync: meta, adsets_sync: adsets, ads_sync: ads, ads_meta_sync: adsMeta, kommo_sync: kommo };
 }
 
 function buildReport({ desde, hasta }) {
   const meta = aggregateMeta({ desde, hasta });
   meta.adsets = aggregateMetaAdsets({ desde, hasta });
+  meta.ads = aggregateMetaAds({ desde, hasta });
   const kommo = aggregateKommo({ desde, hasta });
 
   const cost_per_kommo_lead = kommo.created > 0 ? meta.totals.spend / kommo.created : null;
@@ -637,6 +790,8 @@ function buildReport({ desde, hasta }) {
 function clearCache() {
   if (fs.existsSync(META_FILE)) fs.unlinkSync(META_FILE);
   if (fs.existsSync(ADSETS_FILE)) fs.unlinkSync(ADSETS_FILE);
+  if (fs.existsSync(ADS_FILE)) fs.unlinkSync(ADS_FILE);
+  if (fs.existsSync(ADS_META_FILE)) fs.unlinkSync(ADS_META_FILE);
   if (fs.existsSync(KOMMO_FILE)) fs.unlinkSync(KOMMO_FILE);
 }
 
