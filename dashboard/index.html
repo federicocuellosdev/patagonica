@@ -441,6 +441,74 @@
       .card.span-3, .card.span-4, .card.span-8, .card.span-9, .card.span-12 { grid-column: span 1; }
       .topbar { flex-wrap: wrap; }
     }
+
+    /* Detail modal con chart por entidad */
+    .progress-row, .campaign-item:not(.is-total) { cursor: pointer; transition: background 0.15s ease; }
+    .progress-row:hover { background: rgba(5, 116, 136, 0.04); border-radius: 8px; }
+    .campaign-item:not(.is-total):hover { background: rgba(5, 116, 136, 0.04); }
+    .entity-modal {
+      position: fixed; inset: 0; z-index: 3000;
+      background: rgba(18, 28, 37, 0.65);
+      display: none; align-items: center; justify-content: center;
+      padding: 1.5rem;
+    }
+    .entity-modal.open { display: flex; }
+    .entity-modal-card {
+      background: var(--white); border-radius: 18px;
+      max-width: 960px; width: 100%; max-height: 90vh;
+      display: flex; flex-direction: column;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+      overflow: hidden;
+    }
+    .entity-modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;
+    }
+    .entity-modal-title {
+      font-size: 1.05rem; font-weight: 700; color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+    .entity-modal-sub { font-size: 0.8rem; color: var(--text-muted); }
+    .entity-modal-close {
+      background: var(--bg-2); border: none; width: 32px; height: 32px;
+      border-radius: 50%; cursor: pointer; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+    }
+    .entity-modal-close:hover { background: var(--border); color: var(--primary); }
+    .entity-modal-toggles {
+      display: flex; gap: 0.5rem; padding: 0.85rem 1.5rem; flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+    }
+    .entity-modal-toggle {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 50px; padding: 0.4rem 0.85rem;
+      font-size: 0.78rem; font-weight: 500; color: var(--text-muted);
+      cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+    .entity-modal-toggle.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .entity-modal-toggle .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--text-muted);
+    }
+    .entity-modal-toggle.active .dot { background: #fff; }
+    .entity-modal-body { padding: 1.25rem 1.5rem; flex: 1; overflow: auto; }
+    .entity-modal-chart-wrap { height: 360px; }
+    .entity-modal-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .entity-stat {
+      background: var(--bg-2); padding: 0.75rem 0.85rem; border-radius: 12px;
+    }
+    .entity-stat .lbl { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .entity-stat .val { font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-top: 0.2rem; }
+    @media (max-width: 640px) {
+      .entity-modal-stats { grid-template-columns: repeat(2, 1fr); }
+      .entity-modal-chart-wrap { height: 260px; }
+    }
   </style>
 </head>
 <body>
@@ -504,6 +572,24 @@
       </div>
 
       <div class="meta-footer" id="meta-footer"></div>
+    </div>
+  </div>
+
+  <!-- Detail modal con chart por entidad -->
+  <div class="entity-modal" id="entity-modal" role="dialog" aria-modal="true">
+    <div class="entity-modal-card">
+      <div class="entity-modal-header">
+        <div>
+          <div class="entity-modal-title" id="entity-modal-title">—</div>
+          <div class="entity-modal-sub" id="entity-modal-sub">—</div>
+        </div>
+        <button class="entity-modal-close" id="entity-modal-close" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="entity-modal-toggles" id="entity-modal-toggles"></div>
+      <div class="entity-modal-body">
+        <div class="entity-modal-chart-wrap"><canvas id="entity-modal-chart"></canvas></div>
+        <div class="entity-modal-stats" id="entity-modal-stats"></div>
+      </div>
     </div>
   </div>
 
@@ -721,7 +807,7 @@
                   : c.objective === 'OUTCOME_AWARENESS' ? 'warm' : 'blue';
         const short = c.campaign_name.replace(/^FORM - |^TRAFICO - |^RM - /, '');
         return `
-          <div class="progress-row">
+          <div class="progress-row" data-entity-type="campaign" data-entity-id="${c.campaign_id}">
             <div class="name" title="${c.campaign_name}">${short}</div>
             <div class="bar"><div class="bar-fill ${cls}" style="width: ${pct.toFixed(1)}%;">${pct.toFixed(0)}%</div></div>
             <div class="pct-end">${formatUSD2(c.spend)}</div>
@@ -876,7 +962,7 @@
             ${campaigns.map((c) => {
               const meta = objectiveMeta(c.objective);
               return `
-                <div class="campaign-item">
+                <div class="campaign-item" data-entity-type="campaign" data-entity-id="${c.campaign_id}">
                   <div class="icon ${meta.cls}">${meta.icon}</div>
                   <div class="info">
                     <div class="name">${c.campaign_name}</div>
@@ -979,7 +1065,7 @@
             </summary>
             <div class="campaign-list">
               ${formAdsets.map((a) => `
-                <div class="campaign-item">
+                <div class="campaign-item" data-entity-type="adset" data-entity-id="${a.adset_id}">
                   <div class="icon icon-leads">F</div>
                   <div class="info">
                     <div class="name" title="${a.adset_name}">${a.adset_name}</div>
@@ -1064,7 +1150,190 @@
           renderEvolutionChart(lastReportData, seriesState);
         });
       });
+
+      // Click handler para abrir el modal de entidad (campañas, adsets)
+      document.querySelectorAll('[data-entity-type][data-entity-id]').forEach((el) => {
+        el.addEventListener('click', (e) => {
+          // Evitar abrir modal cuando el click viene del <summary> de un <details>
+          if (e.target.closest('summary')) return;
+          openEntityModal(el.dataset.entityType, el.dataset.entityId);
+        });
+      });
     }
+
+    // ===== Modal con chart de evolución por entidad (campaign / adset) =====
+    let entityChart = null;
+    const entityModalState = { spend: true, result: true };
+
+    function objectiveResultLabel(objective) {
+      if (objective === 'OUTCOME_LEADS') return 'Leads';
+      if (objective === 'OUTCOME_TRAFFIC') return 'Visitas';
+      if (objective === 'OUTCOME_AWARENESS') return 'ThruPlay';
+      return 'Resultados';
+    }
+    function resultKeyForEntity(entity) {
+      // Adsets de FORM = leads. Campañas usan su objetivo.
+      if (entity.adset_id) return 'leads';
+      if (entity.objective === 'OUTCOME_TRAFFIC') return 'landing_page_views';
+      if (entity.objective === 'OUTCOME_AWARENESS') return 'thruplays';
+      return 'leads';
+    }
+    function resultLabelForEntity(entity) {
+      if (entity.adset_id) return 'Leads';
+      return objectiveResultLabel(entity.objective);
+    }
+
+    function openEntityModal(type, id) {
+      if (!lastReportData) return;
+      let entity = null;
+      if (type === 'campaign') {
+        entity = lastReportData.meta.campaigns.find((c) => String(c.campaign_id) === String(id));
+      } else if (type === 'adset') {
+        entity = (lastReportData.meta.adsets || []).find((a) => String(a.adset_id) === String(id));
+      }
+      if (!entity) return;
+
+      const modal = document.getElementById('entity-modal');
+      const title = type === 'campaign' ? entity.campaign_name : entity.adset_name;
+      const sub = type === 'campaign'
+        ? `Campaña · ${objectiveResultLabel(entity.objective)}`
+        : `Grupo de anuncios · ${entity.campaign_name}`;
+      document.getElementById('entity-modal-title').textContent = title;
+      document.getElementById('entity-modal-sub').textContent = sub;
+
+      // Toggles
+      const resultLabel = resultLabelForEntity(entity);
+      document.getElementById('entity-modal-toggles').innerHTML = `
+        <button class="entity-modal-toggle ${entityModalState.spend ? 'active' : ''}" data-key="spend">
+          <span class="dot"></span>Costo (USD)
+        </button>
+        <button class="entity-modal-toggle ${entityModalState.result ? 'active' : ''}" data-key="result">
+          <span class="dot"></span>${resultLabel}
+        </button>
+      `;
+      document.querySelectorAll('#entity-modal-toggles .entity-modal-toggle').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const key = btn.dataset.key;
+          entityModalState[key] = !entityModalState[key];
+          btn.classList.toggle('active', entityModalState[key]);
+          renderEntityChart(entity);
+        });
+      });
+
+      // Stats abajo
+      const resultKey = resultKeyForEntity(entity);
+      const resultTotal = entity[resultKey] != null ? entity[resultKey] : 0;
+      const cost_per = resultTotal > 0 ? entity.spend / resultTotal : null;
+      document.getElementById('entity-modal-stats').innerHTML = `
+        <div class="entity-stat"><div class="lbl">Spend</div><div class="val">${formatUSD2(entity.spend)}</div></div>
+        <div class="entity-stat"><div class="lbl">${resultLabel}</div><div class="val">${formatNum(resultTotal)}</div></div>
+        <div class="entity-stat"><div class="lbl">Costo / ${resultLabel.toLowerCase()}</div><div class="val">${cost_per != null ? formatUSD2(cost_per) : '—'}</div></div>
+        <div class="entity-stat"><div class="lbl">CTR</div><div class="val">${formatPct(entity.ctr || 0)}</div></div>
+      `;
+
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      renderEntityChart(entity);
+    }
+
+    function closeEntityModal() {
+      const modal = document.getElementById('entity-modal');
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      if (entityChart) { entityChart.destroy(); entityChart = null; }
+    }
+
+    function renderEntityChart(entity) {
+      const ctx = document.getElementById('entity-modal-chart');
+      if (!ctx) return;
+      const resultKey = resultKeyForEntity(entity);
+      const resultLabel = resultLabelForEntity(entity);
+
+      // Eje X: días del período
+      const dates = [];
+      const start = new Date(lastReportData.desde + 'T12:00:00Z');
+      const end = new Date(lastReportData.hasta + 'T12:00:00Z');
+      for (let dt = new Date(start); dt <= end; dt.setUTCDate(dt.getUTCDate() + 1)) {
+        dates.push(isoDate(dt));
+      }
+      const dailyMap = new Map((entity.daily || []).map((d) => [d.date, d]));
+      const labels = dates.map((d) => new Date(d + 'T12:00:00Z').toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }));
+
+      const datasets = [];
+      if (entityModalState.result) {
+        datasets.push({
+          label: resultLabel,
+          data: dates.map((d) => dailyMap.get(d)?.[resultKey] || 0),
+          borderColor: '#057488',
+          backgroundColor: 'rgba(5, 116, 136, 0.10)',
+          yAxisID: 'y',
+          tension: 0.35, fill: true, pointRadius: 2.5, pointHoverRadius: 5, borderWidth: 2.5,
+        });
+      }
+      if (entityModalState.spend) {
+        datasets.push({
+          label: 'Costo (USD)',
+          data: dates.map((d) => +(dailyMap.get(d)?.spend || 0).toFixed(2)),
+          borderColor: '#4a90e2',
+          borderDash: [5, 4],
+          backgroundColor: 'transparent',
+          yAxisID: 'y1',
+          tension: 0.35, fill: false, pointRadius: 2, pointHoverRadius: 4, borderWidth: 2,
+        });
+      }
+
+      const showResult = entityModalState.result;
+      const showSpend = entityModalState.spend;
+
+      if (entityChart) entityChart.destroy();
+      entityChart = new Chart(ctx, {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (c) => {
+                  const isCost = c.dataset.yAxisID === 'y1';
+                  const v = c.parsed.y;
+                  const formatted = isCost
+                    ? '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                    : Number(v).toLocaleString('es-AR');
+                  return `${c.dataset.label}: ${formatted}`;
+                },
+              },
+              backgroundColor: '#1a3a6e', titleColor: '#fff', bodyColor: '#fff', padding: 10, cornerRadius: 8,
+            },
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { color: '#6e7b96', font: { size: 10 }, maxRotation: 0, autoSkipPadding: 16 } },
+            y: {
+              display: showResult, beginAtZero: true, position: 'left',
+              grid: { color: 'rgba(110, 123, 150, 0.08)' },
+              ticks: { color: '#6e7b96', font: { size: 10 }, callback: (v) => Number(v).toLocaleString('es-AR') },
+              title: { display: true, text: resultLabel, color: '#93a1bd', font: { size: 10, weight: 500 } },
+            },
+            y1: {
+              display: showSpend, beginAtZero: true, position: 'right',
+              grid: { drawOnChartArea: !showResult, color: 'rgba(110, 123, 150, 0.05)' },
+              ticks: { color: '#6e7b96', font: { size: 10 }, callback: (v) => '$' + Number(v).toFixed(2) },
+              title: { display: true, text: 'USD', color: '#93a1bd', font: { size: 10, weight: 500 } },
+            },
+          },
+        },
+      });
+    }
+
+    document.getElementById('entity-modal-close').addEventListener('click', closeEntityModal);
+    document.getElementById('entity-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'entity-modal') closeEntityModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('entity-modal').classList.contains('open')) closeEntityModal();
+    });
 
     let lastReportData = null;
     let currentUserName = '';
