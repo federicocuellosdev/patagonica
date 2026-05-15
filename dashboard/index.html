@@ -1470,11 +1470,11 @@
           tension: 0.35, fill: false, pointRadius: 0, pointHoverRadius: 4, borderWidth: 2,
         });
       }
-      // Triangulos: cada ad en su fecha de publicacion (siempre visibles, marcadores)
+      // Triangulos: cada ad en su fecha de publicacion, altura = leads totales del ad
       datasets.push({
         type: 'scatter', label: 'Publicado',
         data: sorted.filter((a) => a.created_time).map((a) => ({
-          x: new Date(a.created_time).getTime(), y: 0, ad: a,
+          x: new Date(a.created_time).getTime(), y: a.leads || 0, ad: a,
         })),
         backgroundColor: '#1a3a6e', borderColor: '#1a3a6e',
         yAxisID: 'y', pointStyle: 'triangle',
