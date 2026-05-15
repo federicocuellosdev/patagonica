@@ -3,8 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+  // <base href="../"> siempre, asi los './' resuelven en file:// y https://
+  (function() {
+      document.write('<base href="../">');
+      document.addEventListener('click', function(e) {
+          var a = e.target.closest('a[href^="#"]');
+          if (a) { e.preventDefault(); var el = document.getElementById(a.getAttribute('href').substring(1)); if (el) el.scrollIntoView({ behavior: 'smooth' }); }
+      });
+  })();
+  </script>
   <title>Dashboard | Patagónica Propiedades</title>
-  <link rel="icon" type="image/png" href="/mirador/img/patagonica-icon.webp">
+  <link rel="icon" type="image/png" href="./src/img/patagonica-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">

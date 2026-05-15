@@ -3,8 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+  // <base href="../"> siempre, asi los './' resuelven en file:// y https://
+  (function() {
+      document.write('<base href="../">');
+      document.addEventListener('click', function(e) {
+          var a = e.target.closest('a[href^="#"]');
+          if (a) { e.preventDefault(); var el = document.getElementById(a.getAttribute('href').substring(1)); if (el) el.scrollIntoView({ behavior: 'smooth' }); }
+      });
+  })();
+  </script>
   <title>Acceso al dashboard | Patagónica Propiedades</title>
-  <link rel="icon" type="image/png" href="/mirador/img/patagonica-icon.webp">
+  <link rel="icon" type="image/png" href="./src/img/patagonica-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap" rel="stylesheet">
@@ -116,7 +126,7 @@
 </head>
 <body>
   <form class="card" id="login-form">
-    <img class="logo" src="/mirador/img/patagonica-logo-blanco.webp" alt="Patagónica Propiedades" style="filter: invert(1) brightness(0.2);">
+    <img class="logo" src="./src/img/patagonica-logo-blanco.png" alt="Patagónica Propiedades" style="filter: invert(1) brightness(0.2);">
     <h1>Dashboard de reportes</h1>
     <p class="subtitle">Ingresá tus credenciales para acceder</p>
 
