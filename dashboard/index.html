@@ -781,21 +781,16 @@
       const cplGeneral = formAdsetsSplit.general.leads > 0 ? formAdsetsSplit.general.spend / formAdsetsSplit.general.leads : null;
       const cplNqRn = formAdsetsSplit.nqRn.leads > 0 ? formAdsetsSplit.nqRn.spend / formAdsetsSplit.nqRn.leads : null;
 
-      // Forms breakdown (Kommo leads taggeados Meta Ads, agrupados por FORM tag)
-      const formsBreakdown = (k.forms_breakdown || []).slice();
-      const formsTotals = k.forms_totals || { with_nq_rn: 0, without_nq_rn: 0, total: 0 };
-      const totalFormLeads = formsTotals.total || 1;
-      const formBars = formsBreakdown.map((f) => {
-        const pct = (f.leads / totalFormLeads) * 100;
-        const short = f.form_name.replace(/^FORM - /, '');
-        const nqLabel = f.with_nq_rn > 0
-          ? ` <span style="color:var(--text-muted);font-size:0.7rem;">(${f.without_nq_rn} sin · ${f.with_nq_rn} NQ&RN)</span>`
-          : '';
+      // Distribucion por grupo de anuncios (Meta adsets, no Kommo)
+      const totalFormAdsetLeads = formAdsets.reduce((s, a) => s + (a.leads || 0), 0) || 1;
+      const formBars = formAdsets.map((a) => {
+        const pct = (a.leads / totalFormAdsetLeads) * 100;
+        const short = a.adset_name.replace(/^FORM - /, '');
         return `
-          <div class="progress-row" data-entity-type="form" data-entity-id="${f.form_name}">
-            <div class="name" title="${f.form_name}">${short}${nqLabel}</div>
+          <div class="progress-row" data-entity-type="adset" data-entity-id="${a.adset_id}">
+            <div class="name" title="${a.adset_name}">${short}</div>
             <div class="bar"><div class="bar-fill teal" style="width: ${pct.toFixed(1)}%;">${pct.toFixed(0)}%</div></div>
-            <div class="pct-end">${formatNum(f.leads)} leads</div>
+            <div class="pct-end">${formatNum(a.leads)} leads</div>
           </div>
         `;
       }).join('');
@@ -1029,17 +1024,17 @@
         <div class="card span-9">
           <div class="card-title">
             Formularios · distribución por grupo de anuncios
-            <span class="pct">${formatNum(formsTotals.total)} leads</span>
+            <span class="pct">${formatNum(totalFormAdsetLeads === 1 && formAdsets.length === 0 ? 0 : totalFormAdsetLeads)} leads</span>
           </div>
           <div class="card-value" style="font-size: 1.1rem; color: var(--text-muted); font-weight: 500; margin-bottom: 0.5rem;">
-            ${formsBreakdown.length} grupo${formsBreakdown.length === 1 ? '' : 's'} de anuncios
+            ${formAdsets.length} grupo${formAdsets.length === 1 ? '' : 's'} de anuncios
           </div>
-          <div class="progress-bars">${formBars || '<div class="card-sub">Sin leads de Meta Ads en este periodo</div>'}</div>
+          <div class="progress-bars">${formBars || '<div class="card-sub">Sin grupos de anuncios FORM en este periodo</div>'}</div>
         </div>
 
         <!-- Forms NQ&RN split -->
         <div class="card span-3">
-          <div class="card-title">Desglose NQ & RN · Forms por categoría</div>
+          <div class="card-title">Forms por categoría</div>
           <div style="display:flex; flex-direction:column; gap:0.85rem;">
             <div>
               <div class="card-sub" style="margin-bottom:0.2rem;">Forms Generales</div>
