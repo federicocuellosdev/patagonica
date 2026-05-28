@@ -56,7 +56,7 @@ router.post('/ia', async (req, res) => {
 
 router.post('/encuesta-asech', async (req, res) => {
     try {
-        const { nombre: nombreRaw, email = '', p1, p2, p3 } = req.body;
+        const { nombre: nombreRaw, email = '', whatsapp = '', p1, p2, p3, interes_taller = '' } = req.body;
 
         if (!nombreRaw || !p1 || !p2 || !p3) {
             return res.status(400).json({ error: 'Nombre y respuestas son requeridos' });
@@ -65,7 +65,7 @@ router.post('/encuesta-asech', async (req, res) => {
         const nombre = nombreRaw.trim().toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
         const fecha = new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });
 
-        await agregarFilaASheet(SPREADSHEET_ID, "'encuesta - Marketing con IA'!A:F", [fecha, nombre, email, p1, p2, p3]);
+        await agregarFilaASheet(SPREADSHEET_ID, "'encuesta - Marketing con IA'!A:H", [fecha, nombre, email, p1, p2, p3, whatsapp, interes_taller]);
 
         console.log(`- Encuesta Asech - ${nombre} (${email})`);
         res.json({ success: true });
