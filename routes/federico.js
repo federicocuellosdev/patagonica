@@ -56,13 +56,13 @@ router.post('/ia', async (req, res) => {
 
 router.post('/encuesta-asech', async (req, res) => {
     try {
-        const { nombre: nombreRaw, email = '', whatsapp = '', p1, p2, p3, interes_taller = '' } = req.body;
+        const { nombre: nombreRaw = '', email = '', whatsapp = '', p1, p2, p3, interes_taller = '' } = req.body;
 
-        if (!nombreRaw || !p1 || !p2 || !p3) {
-            return res.status(400).json({ error: 'Nombre y respuestas son requeridos' });
+        if (!p1 || !p2 || !p3) {
+            return res.status(400).json({ error: 'Las respuestas son requeridas' });
         }
 
-        const nombre = nombreRaw.trim().toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+        const nombre = nombreRaw ? nombreRaw.trim().toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : '';
         const fecha = new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' });
 
         await agregarFilaASheet(SPREADSHEET_ID, "'encuesta - Marketing con IA'!A:H", [fecha, nombre, whatsapp, interes_taller, email, p1, p2, p3]);
