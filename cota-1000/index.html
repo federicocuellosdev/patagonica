@@ -541,60 +541,154 @@
             gap: 0.75rem;
         }
         .lote-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: var(--border-radius);
-            padding: 1.25rem 1rem;
+            background: rgba(255,255,255,0.10);
+            padding: 1.5rem 1rem;
+            border-radius: var(--border-radius-lg);
+            border: 1px solid rgba(255,255,255,0.15);
+            text-align: center;
             transition: all 0.3s ease;
-            cursor: pointer;
         }
         .lote-card:hover {
-            background: rgba(5,116,136,0.15);
-            border-color: rgba(5,116,136,0.4);
-            transform: translateY(-2px);
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-4px);
+            border-color: rgba(5, 116, 136, 0.4);
+        }
+        .lote-card-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--secondary), #068a9f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            border-radius: var(--border-radius);
+        }
+        .lote-card-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: #fff;
         }
         .lote-card-number {
             font-family: Gilroy, sans-serif;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: rgba(255,255,255,0.4);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.6);
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-bottom: 0.5rem;
         }
         .lote-card-price {
             font-family: Gilroy, sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #fff;
             line-height: 1.2;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.25rem;
         }
-        .lote-card-sup {
+        .lote-card-params {
+            font-family: Gilroy, sans-serif;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.7);
+            margin: 0.85rem 0 0;
+            letter-spacing: 0.02em;
+        }
+        .lote-card-params .label {
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            margin-right: 0.35rem;
+            font-weight: 600;
+        }
+        .lote-card-params strong {
+            color: #7ee6d6;
+            font-weight: 700;
+            background: rgba(126, 230, 214, 0.15);
             display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
-            background: rgba(5, 116, 136, 0.3);
-            color: #7da9b1;
+            justify-content: center;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            margin-left: 0.3rem;
+        }
+        .lote-card-params .key {
+            color: #0897b1;
+            font-weight: 700;
+        }
+        .lote-card-params small {
+            color: rgba(255,255,255,0.55);
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        .lote-card-sup {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.3rem 0.6rem;
+            margin-top: 0.85rem;
+            padding-top: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            font-family: Gilroy, sans-serif;
             font-size: 0.85rem;
+            color: #fff;
             font-weight: 600;
-            padding: 0.35rem 1rem;
-            border-radius: 50px;
         }
         .lote-card-sup svg {
             width: 16px;
             height: 16px;
             fill: #0897b1;
         }
+        .lote-card-sup small {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.55);
+            margin-left: 0.15rem;
+        }
+        .lote-card-sup .key {
+            color: #0897b1;
+            font-weight: 700;
+        }
+        .lote-card-sup .item {
+            display: inline-flex;
+            align-items: baseline;
+        }
+        .lote-card-sup b {
+            color: #fff;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        .lote-card-sup .sep {
+            color: rgba(255,255,255,0.3);
+            font-weight: 400;
+        }
+        .lote-card-sup-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .lote-card-sup-sep {
+            color: rgba(255,255,255,0.25);
+            font-size: 0.85rem;
+            font-weight: 400;
+        }
         .lote-card-sold {
             background: rgba(255,255,255,0.05);
             border-color: rgba(255,255,255,0.06);
-            opacity: 0.6;
+            opacity: 0.65;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         .lote-card-sold:hover {
             transform: none;
             border-color: rgba(255,255,255,0.06);
             background: rgba(255,255,255,0.05);
+        }
+        .lote-card-sold .lote-card-icon {
+            background: rgba(255,255,255,0.15);
         }
         .lote-card-sold-badge {
             display: inline-block;
@@ -607,6 +701,60 @@
             letter-spacing: 0.08em;
             padding: 0.35rem 1rem;
             border-radius: 50px;
+            margin-top: 0.5rem;
+        }
+        .lote-card-comun {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+        }
+        .lote-card-comun .lote-card-icon {
+            background: linear-gradient(135deg, #4ade80, #16a34a);
+        }
+        .lote-card-comun-surface {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 0.85rem;
+            padding-top: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.12);
+        }
+        .lote-card-comun .lote-card-sup-label {
+            font-family: Gilroy, sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-align: center;
+            margin-bottom: 0.4rem;
+        }
+        .lote-card-comun .lote-card-sup {
+            border-top: none;
+            margin-top: 0;
+            padding-top: 0;
+            font-size: 1.5rem;
+        }
+        .lote-card-comun .lote-card-sup svg {
+            fill: #4ade80;
+            width: 20px;
+            height: 20px;
+        }
+        .lote-card-comun-badge {
+            display: inline-block;
+            align-self: center;
+            background: rgba(74, 222, 128, 0.15);
+            color: #86efac;
+            font-family: Gilroy, sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            margin-top: 0.25rem;
         }
 
         /* ── 6. Ubicación – parallax + glassmorphism centrada ── */
@@ -1334,43 +1482,107 @@
             <div class="lotes-manzana">
                 <div class="lotes-manzana-title">Manzana A</div>
                 <div class="lotes-grid">
-                    <div class="lote-card">
-                        <div class="lote-card-number">Lote 1</div>
-                        <div class="lote-card-price">USD 135.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 2.100 m²</div>
-                    </div>
-                    <div class="lote-card">
-                        <div class="lote-card-number">Lote 2</div>
-                        <div class="lote-card-price">USD 137.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 2.050 m²</div>
-                    </div>
-                    <div class="lote-card">
-                        <div class="lote-card-number">Lote 3</div>
-                        <div class="lote-card-price">USD 155.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 2.380 m²</div>
-                    </div>
-                    <div class="lote-card">
-                        <div class="lote-card-number">Lote 4</div>
-                        <div class="lote-card-price">USD 165.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 2.510 m²</div>
-                    </div>
                     <div class="lote-card lote-card-sold">
-                        <div class="lote-card-number">Lote 5</div>
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 1</div>
                         <div class="lote-card-sold-badge">Vendido</div>
                     </div>
                     <div class="lote-card">
-                        <div class="lote-card-number">Lote 6</div>
-                        <div class="lote-card-price">USD 185.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 2.800 m²</div>
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 2</div>
+                        <div class="lote-card-price">USD 138.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>3</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>4.008,74 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 3</div>
+                        <div class="lote-card-price">USD 140.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>3</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>4.080,71 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
                     </div>
                     <div class="lote-card lote-card-sold">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 4</div>
+                        <div class="lote-card-sold-badge">Vendido</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 5</div>
+                        <div class="lote-card-price">USD 337.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>3</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>4.071,99 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 6</div>
+                        <div class="lote-card-price">USD 180.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>3</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>4.217,11 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
+                    </div>
+                    <div class="lote-card lote-card-sold">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
                         <div class="lote-card-number">Lote 7</div>
                         <div class="lote-card-sold-badge">Vendido</div>
                     </div>
                     <div class="lote-card">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
                         <div class="lote-card-number">Lote 8</div>
-                        <div class="lote-card-price">USD 210.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 3.150 m²</div>
+                        <div class="lote-card-price">USD 165.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>2</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>2.246,89 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 9</div>
+                        <div class="lote-card-price">USD 245.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>3</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>4.513,86 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
+                    </div>
+                    <div class="lote-card lote-card-comun">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/><path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/></svg></div>
+                        <div class="lote-card-number">Lote 10</div>
+                        <div class="lote-card-comun-badge">Reserva Natural</div>
+                        <div class="lote-card-comun-surface">
+                            <div class="lote-card-sup-label">Superficie</div>
+                            <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>4.961,62 <small>m²</small></span></div>
+                        </div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 11</div>
+                        <div class="lote-card-price">USD 178.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>2</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>2.779,19 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
+                    </div>
+                    <div class="lote-card lote-card-sold">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 12</div>
+                        <div class="lote-card-sold-badge">Vendido</div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 13</div>
+                        <div class="lote-card-price">USD 135.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>2</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>2.000,16 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
+                    </div>
+                    <div class="lote-card lote-card-comun">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M5.338 1.59a61 61 0 0 0-2.837.856.48.48 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.7 10.7 0 0 0 2.287 2.233c.346.244.652.42.893.533q.18.085.293.118a1 1 0 0 0 .101.025 1 1 0 0 0 .1-.025q.114-.034.294-.118c.24-.113.547-.29.893-.533a10.7 10.7 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.8 11.8 0 0 1-2.517 2.453 7 7 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7 7 0 0 1-1.048-.625 11.8 11.8 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 63 63 0 0 1 5.072.56"/><path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0"/></svg></div>
+                        <div class="lote-card-number">Lote 14</div>
+                        <div class="lote-card-comun-badge">Reserva Natural</div>
+                        <div class="lote-card-comun-surface">
+                            <div class="lote-card-sup-label">Superficie</div>
+                            <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>14.662,23 <small>m²</small></span></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1379,33 +1591,21 @@
             <div class="lotes-manzana">
                 <div class="lotes-manzana-title">Manzana B</div>
                 <div class="lotes-grid">
-                    <div class="lote-card lote-card-sold">
-                        <div class="lote-card-number">Lote 1</div>
-                        <div class="lote-card-sold-badge">Vendido</div>
+                    <div class="lote-card">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 1B</div>
+                        <div class="lote-card-price">USD 275.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>3</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>4.299,34 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
                     </div>
                     <div class="lote-card">
-                        <div class="lote-card-number">Lote 2</div>
-                        <div class="lote-card-price">USD 225.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 3.300 m²</div>
-                    </div>
-                    <div class="lote-card">
-                        <div class="lote-card-number">Lote 3</div>
-                        <div class="lote-card-price">USD 240.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 3.450 m²</div>
-                    </div>
-                    <div class="lote-card lote-card-sold">
-                        <div class="lote-card-number">Lote 4</div>
-                        <div class="lote-card-sold-badge">Vendido</div>
-                    </div>
-                    <div class="lote-card">
-                        <div class="lote-card-number">Lote 5</div>
-                        <div class="lote-card-price">USD 265.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 3.800 m²</div>
-                    </div>
-                    <div class="lote-card">
-                        <div class="lote-card-number">Lote 6</div>
-                        <div class="lote-card-price">USD 280.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.020 m²</div>
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 2B</div>
+                        <div class="lote-card-price">USD 290.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>3</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>4.091,24 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
                     </div>
                 </div>
             </div>
@@ -1415,32 +1615,57 @@
                 <div class="lotes-manzana-title">Manzana C</div>
                 <div class="lotes-grid">
                     <div class="lote-card">
-                        <div class="lote-card-number">Lote 1</div>
-                        <div class="lote-card-price">USD 290.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.100 m²</div>
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 1C</div>
+                        <div class="lote-card-price">USD 145.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>2</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>2.032,14 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 2C</div>
+                        <div class="lote-card-price">USD 145.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>2</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>2.024,38 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
                     </div>
                     <div class="lote-card lote-card-sold">
-                        <div class="lote-card-number">Lote 2</div>
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 3C</div>
                         <div class="lote-card-sold-badge">Vendido</div>
                     </div>
                     <div class="lote-card">
-                        <div class="lote-card-number">Lote 3</div>
-                        <div class="lote-card-price">USD 310.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.350 m²</div>
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 4C</div>
+                        <div class="lote-card-price">USD 150.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>2</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>2.038,49 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
                     </div>
                     <div class="lote-card">
-                        <div class="lote-card-number">Lote 4</div>
-                        <div class="lote-card-price">USD 320.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.500 m²</div>
-                    </div>
-                    <div class="lote-card lote-card-sold">
-                        <div class="lote-card-number">Lote 5</div>
-                        <div class="lote-card-sold-badge">Vendido</div>
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 5C</div>
+                        <div class="lote-card-price">USD 165.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>2</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>2.120,76 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
                     </div>
                     <div class="lote-card">
-                        <div class="lote-card-number">Lote 6</div>
-                        <div class="lote-card-price">USD 337.000</div>
-                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> 4.780 m²</div>
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 6C</div>
+                        <div class="lote-card-price">USD 171.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>2</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>2.014,59 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
+                    </div>
+                    <div class="lote-card">
+                        <div class="lote-card-icon"><svg viewBox="0 0 16 16"><path d="M7.765 1.559a.5.5 0 0 1 .47 0l7.5 4a.5.5 0 0 1 0 .882l-7.5 4a.5.5 0 0 1-.47 0l-7.5-4a.5.5 0 0 1 0-.882z"/><path d="m2.125 8.567-1.86.992a.5.5 0 0 0 0 .882l7.5 4a.5.5 0 0 0 .47 0l7.5-4a.5.5 0 0 0 0-.882l-1.86-.992-5.17 2.756a1.5 1.5 0 0 1-1.41 0z"/></svg></div>
+                        <div class="lote-card-number">Lote 7C</div>
+                        <div class="lote-card-price">USD 135.000</div>
+                        <div class="lote-card-params"><span class="label">Volúmenes construibles:</span> <strong>2</strong></div>
+                        <div class="lote-card-sup"><svg viewBox="0 0 24 24"><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg> <span>2.052,35 <small>m²</small></span></div>
+                        <div class="lote-card-sup"><span class="item"><span class="key">FOS</span><b>5</b></span> <span class="sep">·</span> <span class="item"><span class="key">FOT</span><b>7,5</b></span></div>
                     </div>
                 </div>
             </div>
