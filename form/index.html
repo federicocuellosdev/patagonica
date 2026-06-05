@@ -412,12 +412,6 @@
 
     <main>
         <div class="form-card">
-            <div class="form-intro">
-                <div class="property-hint" id="property-hint" hidden>
-                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18L19.6 8 12 11.82 4.4 8 12 4.18zM4 9.65l7 3.5v7.7l-7-3.5v-7.7zm9 11.2v-7.7l7-3.5v7.7l-7 3.5z"/></svg>
-                    <span>Propiedad <strong id="property-id-display"></strong></span>
-                </div>
-            </div>
 
             <div class="progress" id="progress">
                 <div class="progress-step active" data-step="1"><div class="progress-dot">1</div></div>
@@ -598,8 +592,6 @@
         const propId = params.get('propiedad_id');
         if (propId) {
             document.getElementById('propiedad_id').value = propId;
-            document.getElementById('property-id-display').textContent = '#' + propId;
-            document.getElementById('property-hint').hidden = false;
         }
 
         function showStep(n) {
