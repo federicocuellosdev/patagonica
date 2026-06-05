@@ -95,7 +95,7 @@ router.post('/consulta-propiedad', async (req, res) => {
     });
 
     const lead = await kommoService.createLead({
-      title: `WEB - Propiedad - ${nombre}`,
+      title: `WEB - ${nombre}`,
       contactId: contact.id,
       note: note.trim(),
       tags: ['WEB - Propiedad'],
