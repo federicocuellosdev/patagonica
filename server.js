@@ -27,6 +27,7 @@ const ALLOWED_ORIGINS = [
   'https://federicocuellos.ar',
   'https://www.federicocuellos.ar',
   'https://l.patagonicapropiedades.com.ar',
+  'https://form.patagonicapropiedades.com.ar',
   'https://patagonicapropiedades.com.ar',
   'https://www.patagonicapropiedades.com.ar',
 ];
