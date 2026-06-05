@@ -598,6 +598,15 @@
     src="https://www.facebook.com/tr?id=1129079111925410&ev=PageView&noscript=1"
     /></noscript>
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SY02RHT35W"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-SY02RHT35W');
+    </script>
+
     <script>
     (function() {
         const form = document.getElementById('lead-form');
@@ -610,6 +619,23 @@
         if (propId) {
             document.getElementById('propiedad_id').value = propId;
         }
+
+        // GA4 step funnel: dispara form_1/2/3 una sola vez por step.
+        const trackedSteps = new Set();
+        function trackStepView(n) {
+            if (typeof n !== 'number') return;
+            const evt = 'form_' + n;
+            if (trackedSteps.has(evt)) return;
+            trackedSteps.add(evt);
+            if (typeof gtag === 'function') {
+                gtag('event', evt, {
+                    event_category: 'form',
+                    event_label: 'consulta-propiedad',
+                    propiedad_id: propId || ''
+                });
+            }
+        }
+        trackStepView(1);
 
         function showStep(n) {
             steps.forEach(s => s.classList.remove('active'));
@@ -630,6 +656,7 @@
             }
 
             currentStep = n;
+            trackStepView(n);
             updateButtonState();
             if (window.innerWidth < 700) {
                 form.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -715,6 +742,14 @@
 
                 if (typeof fbq === 'function') {
                     fbq('track', 'Lead', { content_ids: [data.propiedad_id || ''], content_type: 'product' });
+                }
+                if (typeof gtag === 'function') {
+                    gtag('event', 'generate_lead', {
+                        event_category: 'form',
+                        event_label: 'consulta-propiedad',
+                        propiedad_id: data.propiedad_id || '',
+                        value: 1
+                    });
                 }
 
                 showStep('success');
