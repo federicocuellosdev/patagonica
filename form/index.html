@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+    (function() {
+        document.write('<base href="../">');
+    })();
+    </script>
+    <title>Solicitud de informacion | Patagonica Propiedades</title>
+
+    <meta name="description" content="Contanos un poco mas sobre vos y un asesor de Patagonica Propiedades te contacta a la brevedad.">
+    <meta name="robots" content="noindex">
+
+    <link rel="icon" type="image/png" href="./src/img/patagonica-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://d1v2p1s05qqabi.cloudfront.net/fonts/patagonica/fonts-patagonica.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #121C25;
+            --secondary: #057488;
+            --secondary-light: #7ee6d6;
+            --bg-card: rgba(255,255,255,0.06);
+            --bg-card-strong: rgba(255,255,255,0.10);
+            --border: rgba(255,255,255,0.12);
+            --border-strong: rgba(255,255,255,0.22);
+            --text: #fff;
+            --text-muted: rgba(255,255,255,0.6);
+            --text-faint: rgba(255,255,255,0.4);
+            --radius: 12px;
+            --radius-lg: 18px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: Gilroy, 'Source Sans Pro', sans-serif;
+            color: var(--text);
+            line-height: 1.5;
+            background: var(--primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(5,116,136,0.18), transparent 50%),
+                radial-gradient(circle at 85% 80%, rgba(5,116,136,0.12), transparent 55%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        header {
+            position: relative;
+            z-index: 2;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo img { height: 64px; width: auto; }
+
+        main {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 1.5rem 3rem;
+        }
+
+        .form-card {
+            width: 100%;
+            max-width: 560px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem 2rem;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .form-intro {
+            text-align: center;
+            margin-bottom: 1.75rem;
+        }
+        .form-eyebrow {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 0.5rem;
+        }
+        .form-title {
+            font-family: Gilroy, sans-serif;
+            font-size: clamp(1.5rem, 4vw, 1.9rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+        .form-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .property-hint {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(5,116,136,0.15);
+            border: 1px solid rgba(5,116,136,0.3);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            margin: 1rem auto 0;
+            font-size: 0.8rem;
+            color: var(--secondary-light);
+            width: fit-content;
+        }
+        .property-hint svg { width: 14px; height: 14px; fill: var(--secondary-light); }
+        .property-hint[hidden] { display: none; }
+
+        .progress {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            margin-bottom: 2rem;
+        }
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .progress-dot {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--bg-card-strong);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-faint);
+            transition: all 0.3s ease;
+        }
+        .progress-step.active .progress-dot,
+        .progress-step.done .progress-dot {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: #fff;
+        }
+        .progress-line {
+            width: 32px;
+            height: 1px;
+            background: var(--border);
+            transition: background 0.3s ease;
+        }
+        .progress-step.done + .progress-line { background: var(--secondary); }
+
+        .step { display: none; }
+        .step.active {
+            display: block;
+            animation: fadeIn 0.35s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 0.4rem;
+            text-align: center;
+        }
+        .step-title:has(+ .options) {
+            margin-bottom: 2rem;
+        }
+        .step-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .options {
+            display: grid;
+            gap: 0.6rem;
+        }
+        .option {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 1rem 1.1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: rgba(255,255,255,0.02);
+        }
+        .option:hover {
+            border-color: var(--border-strong);
+            background: rgba(255,255,255,0.05);
+        }
+        .option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .option-icon {
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(5,116,136,0.25);
+        }
+        .option-icon svg { width: 18px; height: 18px; fill: var(--secondary-light); }
+        .option-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        .option-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        .option-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .option-check {
+            margin-left: auto;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid var(--border-strong);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .option-check svg {
+            width: 12px;
+            height: 12px;
+            fill: #fff;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .option input:checked + .option-check {
+            background: var(--secondary);
+            border-color: var(--secondary);
+        }
+        .option input:checked + .option-check svg { opacity: 1; }
+        .option:has(input:checked) {
+            border-color: var(--secondary);
+            background: rgba(5,116,136,0.12);
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+        .field label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .field input,
+        .field textarea {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+        .field input:focus,
+        .field textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: rgba(5,116,136,0.08);
+        }
+        .field input::placeholder,
+        .field textarea::placeholder {
+            color: var(--text-faint);
+        }
+        .field textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        .btn {
+            flex: 1;
+            padding: 0.95rem 1.25rem;
+            border-radius: 50px;
+            border: 1px solid var(--border-strong);
+            background: transparent;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            line-height: 1;
+        }
+        .btn:hover { background: rgba(255,255,255,0.06); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), #068a9f);
+            border-color: transparent;
+            box-shadow: 0 4px 16px rgba(5,116,136,0.35);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #068a9f, #07a1bb);
+            box-shadow: 0 6px 22px rgba(5,116,136,0.5);
+            transform: translateY(-1px);
+        }
+        .btn-primary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            pointer-events: none;
+        }
+        .btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+        .step-success { text-align: center; padding: 1rem 0; }
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1.25rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), #068a9f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .success-icon svg { width: 32px; height: 32px; fill: #fff; }
+        .step-success h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+        .step-success p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        footer {
+            position: relative;
+            z-index: 2;
+            padding: 1.5rem 5%;
+            text-align: center;
+            color: var(--text-faint);
+            font-size: 0.75rem;
+        }
+        footer a {
+            color: var(--secondary-light);
+            text-decoration: none;
+        }
+        footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            .form-card { padding: 1.75rem 1.25rem; }
+            .actions { flex-direction: column-reverse; }
+            .actions .btn { width: 100%; }
+            .logo img { height: 52px; }
+            .progress-line { width: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="https://patagonicapropiedades.com.ar" class="logo" aria-label="Patagonica Propiedades">
+            <img src="./src/img/patagonica-logo-blanco.png" alt="Patagonica Propiedades">
+        </a>
+    </header>
+
+    <main>
+        <div class="form-card">
+            <div class="form-intro">
+                <div class="property-hint" id="property-hint" hidden>
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18L19.6 8 12 11.82 4.4 8 12 4.18zM4 9.65l7 3.5v7.7l-7-3.5v-7.7zm9 11.2v-7.7l7-3.5v7.7l-7 3.5z"/></svg>
+                    <span>Propiedad <strong id="property-id-display"></strong></span>
+                </div>
+            </div>
+
+            <div class="progress" id="progress">
+                <div class="progress-step active" data-step="1"><div class="progress-dot">1</div></div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="2"><div class="progress-dot">2</div></div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="3"><div class="progress-dot">3</div></div>
+            </div>
+
+            <form id="lead-form" novalidate>
+                <input type="hidden" name="propiedad_id" id="propiedad_id">
+
+                <!-- Step 1: Conoce Villa La Angostura? -->
+                <div class="step active" data-step="1">
+                    <h2 class="step-title">¿Conoces Villa la Angostura?</h2>
+                    <div class="options" role="radiogroup">
+                        <label class="option">
+                            <input type="radio" name="conoce" value="inversiones" required>
+                            <span class="option-icon">
+                                <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+                            </span>
+                            <span class="option-text">
+                                <span class="option-title">Conozco y tengo inversiones</span>
+                            </span>
+                            <span class="option-check">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                            </span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="conoce" value="ciudad">
+                            <span class="option-icon">
+                                <svg viewBox="0 0 24 24"><path d="M15 11V5l-3-3-3 3v2H3v14h18V11h-6zm-8 8H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm6 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm6 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg>
+                            </span>
+                            <span class="option-text">
+                                <span class="option-title">Conozco la ciudad</span>
+                            </span>
+                            <span class="option-check">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                            </span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="conoce" value="no_conozco">
+                            <span class="option-icon">
+                                <svg viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14a4 4 0 0 0-4 4h2a2 2 0 0 1 4 0c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5a4 4 0 0 0-4-4z"/></svg>
+                            </span>
+                            <span class="option-text">
+                                <span class="option-title">No conozco</span>
+                            </span>
+                            <span class="option-check">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="actions">
+                        <button type="button" class="btn btn-primary" data-next>
+                            Siguiente
+                            <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Travel intent -->
+                <div class="step" data-step="2">
+                    <h2 class="step-title">¿Pensas viajar a Villa La Angostura en los proximos 6 meses?</h2>
+                    <div class="options" role="radiogroup">
+                        <label class="option">
+                            <input type="radio" name="viaje" value="si" required>
+                            <span class="option-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                            </span>
+                            <span class="option-text">
+                                <span class="option-title">Si</span>
+                            </span>
+                            <span class="option-check">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                            </span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="viaje" value="no">
+                            <span class="option-icon">
+                                <svg viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/></svg>
+                            </span>
+                            <span class="option-text">
+                                <span class="option-title">No</span>
+                            </span>
+                            <span class="option-check">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                            </span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="viaje" value="no_se">
+                            <span class="option-icon">
+                                <svg viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14a4 4 0 0 0-4 4h2a2 2 0 0 1 4 0c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5a4 4 0 0 0-4-4z"/></svg>
+                            </span>
+                            <span class="option-text">
+                                <span class="option-title">No lo se</span>
+                            </span>
+                            <span class="option-check">
+                                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="actions">
+                        <button type="button" class="btn" data-prev>
+                            <svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+                            Atras
+                        </button>
+                        <button type="button" class="btn btn-primary" data-next>
+                            Siguiente
+                            <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Contact data -->
+                <div class="step" data-step="3">
+                    <h2 class="step-title">Tus datos de contacto</h2>
+                    <p class="step-desc">Nos comunicamos a la brevedad por el medio que prefieras.</p>
+
+                    <div class="field">
+                        <label for="nombre">Nombre completo</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre y apellido" autocomplete="name" required>
+                    </div>
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="tu@email.com" autocomplete="email" required>
+                    </div>
+                    <div class="field">
+                        <label for="telefono">WhatsApp</label>
+                        <input type="tel" id="telefono" name="telefono" placeholder="+54 9 11 1234 5678" autocomplete="tel" required>
+                    </div>
+                    <div class="field">
+                        <label for="mensaje">Mensaje (opcional)</label>
+                        <textarea id="mensaje" name="mensaje" placeholder="Contanos lo que necesites: presupuesto, dudas, preferencias..."></textarea>
+                    </div>
+
+                    <div class="actions">
+                        <button type="button" class="btn" data-prev>
+                            <svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
+                            Atras
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="submit-btn">
+                            Enviar consulta
+                            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Success -->
+                <div class="step step-success" data-step="success">
+                    <div class="success-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                    </div>
+                    <h2>Recibimos tu consulta</h2>
+                    <p>Gracias por escribirnos. Un asesor de Patagonica Propiedades te va a contactar a la brevedad por WhatsApp o email.</p>
+                    <a href="https://patagonicapropiedades.com.ar" class="btn btn-primary" style="text-decoration:none; display:inline-flex; max-width:280px; margin:0 auto;">
+                        Volver al sitio
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        Patagonica Propiedades &mdash; Villa La Angostura &middot; <a href="https://patagonicapropiedades.com.ar">patagonicapropiedades.com.ar</a>
+    </footer>
+
+    <script>
+    (function() {
+        const form = document.getElementById('lead-form');
+        const steps = Array.from(form.querySelectorAll('.step'));
+        const progressSteps = Array.from(document.querySelectorAll('.progress-step'));
+        let currentStep = 1;
+
+        const params = new URLSearchParams(window.location.search);
+        const propId = params.get('propiedad_id');
+        if (propId) {
+            document.getElementById('propiedad_id').value = propId;
+            document.getElementById('property-id-display').textContent = '#' + propId;
+            document.getElementById('property-hint').hidden = false;
+        }
+
+        function showStep(n) {
+            steps.forEach(s => s.classList.remove('active'));
+            const step = form.querySelector('.step[data-step="' + n + '"]');
+            if (step) step.classList.add('active');
+
+            progressSteps.forEach(p => {
+                const stepNum = parseInt(p.dataset.step, 10);
+                p.classList.remove('active', 'done');
+                if (typeof n === 'number') {
+                    if (stepNum < n) p.classList.add('done');
+                    if (stepNum === n) p.classList.add('active');
+                } else {
+                    p.classList.add('done');
+                }
+            });
+
+            currentStep = n;
+            updateButtonState();
+            if (window.innerWidth < 700) {
+                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function isStepValid(n) {
+            const step = form.querySelector('.step[data-step="' + n + '"]');
+            if (!step) return true;
+            const required = step.querySelectorAll('[required]');
+            for (const el of required) {
+                if (el.type === 'radio') {
+                    const group = form.querySelectorAll('input[name="' + el.name + '"]');
+                    const anyChecked = Array.from(group).some(r => r.checked);
+                    if (!anyChecked) return false;
+                } else if (!el.value.trim()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function updateButtonState() {
+            const step = form.querySelector('.step[data-step="' + currentStep + '"]');
+            if (!step) return;
+            const actionBtn = step.querySelector('[data-next], button[type="submit"]');
+            if (actionBtn) actionBtn.disabled = !isStepValid(currentStep);
+        }
+
+        form.addEventListener('click', function(e) {
+            const next = e.target.closest('[data-next]');
+            const prev = e.target.closest('[data-prev]');
+            if (next && isStepValid(currentStep)) {
+                showStep(currentStep + 1);
+            } else if (prev) {
+                showStep(currentStep - 1);
+            }
+        });
+
+        form.addEventListener('change', updateButtonState);
+        form.addEventListener('input', updateButtonState);
+
+        // Init disabled state on first render
+        updateButtonState();
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            if (!isStepValid(currentStep)) return;
+
+            const submitBtn = document.getElementById('submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Enviando...';
+
+            const data = Object.fromEntries(new FormData(form).entries());
+            data.tracking = {
+                referer: document.referrer || '',
+                utm_source: params.get('utm_source') || '',
+                utm_medium: params.get('utm_medium') || '',
+                utm_campaign: params.get('utm_campaign') || ''
+            };
+
+            const API_URL = 'https://patagonica.onrender.com';
+
+            try {
+                const res = await fetch(API_URL + '/api/web/consulta-propiedad', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (!res.ok) {
+                    const body = await res.json().catch(() => ({}));
+                    throw new Error(body.error || ('HTTP ' + res.status));
+                }
+
+                if (typeof fbq === 'function') {
+                    fbq('track', 'Lead', { content_ids: [data.propiedad_id || ''], content_type: 'product' });
+                }
+
+                showStep('success');
+            } catch (err) {
+                console.error('[form]', err);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Enviar consulta';
+                const errMsg = document.getElementById('submit-error') || (function() {
+                    const p = document.createElement('p');
+                    p.id = 'submit-error';
+                    p.style.cssText = 'color:#ef4444;font-size:0.85rem;text-align:center;margin-top:0.85rem;';
+                    submitBtn.parentNode.parentNode.appendChild(p);
+                    return p;
+                })();
+                errMsg.textContent = 'Hubo un problema enviando tu consulta. Intentalo en unos segundos.';
+            }
+        });
+    })();
+    </script>
+</body>
+</html>
