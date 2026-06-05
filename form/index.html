@@ -636,6 +636,9 @@
             }
         }
 
+        const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        const PHONE_RE = /^[+]?[\d\s\-()]{8,20}$/;
+
         function isStepValid(n) {
             const step = form.querySelector('.step[data-step="' + n + '"]');
             if (!step) return true;
@@ -647,6 +650,12 @@
                     if (!anyChecked) return false;
                 } else if (!el.value.trim()) {
                     return false;
+                } else if (el.type === 'email') {
+                    if (!EMAIL_RE.test(el.value.trim())) return false;
+                } else if (el.type === 'tel') {
+                    if (!PHONE_RE.test(el.value.trim())) return false;
+                    const digits = el.value.replace(/\D/g, '');
+                    if (digits.length < 8) return false;
                 }
             }
             return true;
