@@ -568,7 +568,7 @@
                         <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
                     </div>
                     <h2>Recibimos tu consulta</h2>
-                    <p>Gracias por escribirnos. Un asesor de Patagonica Propiedades te va a contactar a la brevedad por WhatsApp o email.</p>
+                    <p>Gracias por escribirnos. Un asesor de Patagonica Propiedades te va a contactar a la brevedad por WhatsApp.</p>
                     <a href="https://patagonicapropiedades.com.ar" class="btn btn-primary" style="text-decoration:none; display:inline-flex; max-width:280px; margin:0 auto;">
                         Volver al sitio
                     </a>
@@ -580,6 +580,23 @@
     <footer>
         Patagonica Propiedades &mdash; Villa La Angostura &middot; <a href="https://patagonicapropiedades.com.ar">patagonicapropiedades.com.ar</a>
     </footer>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1129079111925410');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1129079111925410&ev=PageView&noscript=1"
+    /></noscript>
 
     <script>
     (function() {
@@ -599,16 +616,18 @@
             const step = form.querySelector('.step[data-step="' + n + '"]');
             if (step) step.classList.add('active');
 
-            progressSteps.forEach(p => {
-                const stepNum = parseInt(p.dataset.step, 10);
-                p.classList.remove('active', 'done');
-                if (typeof n === 'number') {
+            const progressEl = document.getElementById('progress');
+            if (n === 'success') {
+                progressEl.style.display = 'none';
+            } else {
+                progressEl.style.display = '';
+                progressSteps.forEach(p => {
+                    const stepNum = parseInt(p.dataset.step, 10);
+                    p.classList.remove('active', 'done');
                     if (stepNum < n) p.classList.add('done');
                     if (stepNum === n) p.classList.add('active');
-                } else {
-                    p.classList.add('done');
-                }
-            });
+                });
+            }
 
             currentStep = n;
             updateButtonState();
