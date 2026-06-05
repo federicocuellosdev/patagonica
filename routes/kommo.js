@@ -70,6 +70,14 @@ async function extractTokkoIdPropiedad(lead) {
   return field?.values?.[0]?.value || null;
 }
 
+// Extrae el valor del custom field tokko_id_desarrollo (id de emprendimiento de Tokko)
+async function extractTokkoIdDesarrollo(lead) {
+  const fieldId = await kommoService.getLeadFieldIdByName('tokko_id_desarrollo');
+  if (!fieldId) return null;
+  const field = lead.custom_fields_values?.find(f => f.field_id === fieldId);
+  return field?.values?.[0]?.value || null;
+}
+
 // Agrega un tag al lead en Kommo (manteniendo los existentes)
 async function addTagToLead(leadId, existingTags, newTag) {
   const allTags = [...new Set([...existingTags, newTag])];
@@ -174,8 +182,11 @@ router.post('/webhook', async (req, res) => {
             .join('\n\n');
         }
 
-        // Pasa el id de propiedad de Tokko si esta seteado en el custom field del lead
-        const tokkoPropId = await extractTokkoIdPropiedad(fullLead);
+        // Pasa el id de propiedad y/o emprendimiento de Tokko si estan seteados en los custom fields del lead
+        const [tokkoPropId, tokkoDevId] = await Promise.all([
+          extractTokkoIdPropiedad(fullLead),
+          extractTokkoIdDesarrollo(fullLead)
+        ]);
 
         await tokkoService.createContact({
           name: contact.name,
@@ -184,7 +195,8 @@ router.post('/webhook', async (req, res) => {
           cellphone,
           text,
           tags,
-          property_id: tokkoPropId || undefined
+          property_id: tokkoPropId || undefined,
+          publication_id: tokkoDevId || undefined
         });
 
         console.log(`- Tokko - Contacto derivado a ${derivar || 'sin asignar'} (Lead ${leadId})\n`);

@@ -47,11 +47,13 @@ router.post('/contact', async (req, res) => {
   }
 });
 
-// Form de consulta por propiedad (l.patagonicapropiedades.com.ar/form)
+// Form unificado de consulta (l.patagonicapropiedades.com.ar/form)
+// Sirve tanto para fichas de propiedad (Brokian) como para landings (Mirador, Loma Guacha, Cota 1000).
 router.post('/consulta-propiedad', async (req, res) => {
   try {
     const {
-      propiedad_id,
+      propiedad_id,            // opcional: viene desde la ficha (Tokko property id)
+      landing: landingKey,     // opcional: viene desde una landing (slug o id de Tokko)
       conoce,
       viaje,
       nombre,
@@ -64,8 +66,31 @@ router.post('/consulta-propiedad', async (req, res) => {
     if (!nombre || !email) {
       return res.status(400).json({ error: 'Nombre y email son obligatorios' });
     }
-    if (!propiedad_id) {
-      return res.status(400).json({ error: 'propiedad_id es obligatorio' });
+    if (!propiedad_id && !landingKey) {
+      return res.status(400).json({ error: 'Se requiere propiedad_id o landing' });
+    }
+
+    // Determinar fuente -> titulo del lead, tags, custom fields
+    // - landing tiene prioridad si esta presente
+    // - sino, ficha de propiedad
+    let leadLabel;
+    let leadTags;
+    const customFields = {};
+
+    if (landingKey) {
+      const landing = getLandingConfig(landingKey);
+      if (!landing) {
+        return res.status(400).json({ error: 'Identificador de landing no válido' });
+      }
+      leadLabel = landing.label;
+      leadTags = landing.tags;
+      if (landing.tokkoDevelopmentId) {
+        customFields.tokko_id_desarrollo = landing.tokkoDevelopmentId;
+      }
+    } else {
+      leadLabel = 'Ficha';
+      leadTags = ['WEB - FICHA PROP.'];
+      customFields.tokko_id_propiedad = propiedad_id;
     }
 
     const conoceLabel = {
@@ -79,9 +104,12 @@ router.post('/consulta-propiedad', async (req, res) => {
       no_se: 'No lo sé'
     };
 
-    let note = `Propiedad: #${propiedad_id}`;
-    if (conoce) note += `\n¿Conoce Villa la Angostura?: ${conoceLabel[conoce] || conoce}`;
-    if (viaje) note += `\n¿Viaja en los proximos 6 meses?: ${viajeLabel[viaje] || viaje}`;
+    const noteLines = [];
+    if (propiedad_id) noteLines.push(`Propiedad: #${propiedad_id}`);
+    if (landingKey) noteLines.push(`Landing: ${landingKey}`);
+    if (conoce) noteLines.push(`¿Conoce Villa la Angostura?: ${conoceLabel[conoce] || conoce}`);
+    if (viaje) noteLines.push(`¿Viaja en los proximos 6 meses?: ${viajeLabel[viaje] || viaje}`);
+    let note = noteLines.join('\n');
     if (mensaje) note += `\n\nMensaje:\n${mensaje}`;
     if (tracking && Object.keys(tracking).length > 0) {
       note += '\n\nTracking:';
@@ -95,11 +123,11 @@ router.post('/consulta-propiedad', async (req, res) => {
     });
 
     const lead = await kommoService.createLead({
-      title: `WEB - ${nombre}`,
+      title: `WEB - ${leadLabel} - ${nombre}`,
       contactId: contact.id,
       note: note.trim(),
-      tags: ['WEB - Propiedad'],
-      customFields: { tokko_id_propiedad: propiedad_id }
+      tags: leadTags,
+      customFields
     });
 
     res.json({ success: true, contactId: contact.id, leadId: lead.id });
