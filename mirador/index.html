@@ -1503,6 +1503,70 @@
             .pdf-viewer-close svg { width: 16px; height: 16px; }
         }
 
+        /* CTA inline en seccion Contacto */
+        .contact-cta-wrap {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        .contact-cta-wrap h3 {
+            font-family: Gilroy, sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 0.6rem;
+            color: var(--primary, #121C25);
+        }
+        .contact-cta-wrap p {
+            color: var(--text-muted, #6c757d);
+            margin-bottom: 1.5rem;
+        }
+        .cta-info-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: linear-gradient(135deg, #057488, #068a9f);
+            color: #fff;
+            text-decoration: none;
+            font-family: Gilroy, sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 16px rgba(5,116,136,0.35);
+            transition: all 0.3s ease;
+        }
+        .cta-info-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(5,116,136,0.5); }
+        .cta-info-btn svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
+
+        /* CTA flotante fijo */
+        .cta-info-fab {
+            position: fixed;
+            bottom: 2rem; left: 2rem;
+            z-index: 999;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: linear-gradient(135deg, #057488, #068a9f);
+            color: #fff;
+            text-decoration: none;
+            font-family: Gilroy, sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            line-height: 1;
+            padding: 0.85rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(5,116,136,0.4);
+            transition: all 0.3s ease;
+        }
+        .cta-info-fab:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(5,116,136,0.55); }
+        .cta-info-fab svg { width: 20px; height: 20px; fill: currentColor; flex-shrink: 0; }
+        @media (max-width: 768px) {
+            .cta-info-fab {
+                bottom: 5.5rem; left: 1rem; right: 1rem;
+                justify-content: center;
+                padding: 0.9rem 1.5rem;
+            }
+        }
+
         /* WhatsApp FAB */
         .whatsapp-fab {
             position: fixed;
@@ -2121,41 +2185,14 @@
                     </div>
                 </div>
             </div>
-            <form class="contact-form">
-                <h3>Envianos tu consulta</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="first_name">Nombre</label>
-                        <input type="text" id="first_name" name="first_name" placeholder="Tu nombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="last_name">Apellido</label>
-                        <input type="text" id="last_name" name="last_name" placeholder="Tu apellido" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Telefono</label>
-                    <input type="tel" id="phone" name="phone" placeholder="Ej: +54 9 294 412 3456" inputmode="tel" pattern="\+?[\d\s().\-]{8,20}" minlength="8" maxlength="20" title="Ingresa un telefono valido (minimo 8 caracteres, podes incluir +, espacios, parentesis y guiones)" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Tu email" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Mensaje</label>
-                    <textarea id="message" name="message" placeholder="Me interesa conocer mas sobre El Mirador Residences..."></textarea>
-                </div>
-                <!-- Tracking oculto -->
-                <input type="hidden" name="utm_source">
-                <input type="hidden" name="utm_medium">
-                <input type="hidden" name="utm_campaign">
-                <input type="hidden" name="utm_content">
-                <input type="hidden" name="utm_term">
-                <input type="hidden" name="fbclid">
-                <input type="hidden" name="gclid">
-                <button type="submit" class="btn btn-accent">Enviar Consulta</button>
-                <div id="form-status" style="display:none; margin-top:1rem; padding:0.75rem 1rem; border-radius:8px; font-size:0.9rem; text-align:center;"></div>
-            </form>
+            <div class="contact-cta-wrap">
+                <h3>Conta con nosotros</h3>
+                <p>Completa el formulario y un asesor te contacta a la brevedad.</p>
+                <a href="./form/?landing=mirador" class="cta-info-btn" onclick="if(typeof fbq==='function')fbq('track','InitiateCheckout',{content_ids:['mirador'],content_type:'product'});if(typeof gtag==='function')gtag('event','obtener_informacion',{event_category:'engagement',event_label:'mirador'});">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+                    <span>Obtener Información</span>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -2182,6 +2219,12 @@
             <p style="margin-top: 0.5rem; font-size: 0.7rem;">Aviso legal: Las imagenes son de caracter ilustrativo y no contractual. El desarrollo podria presentar variaciones respecto a lo exhibido.</p>
         </div>
     </footer>
+
+    <!-- Floating CTA: Obtener Informacion -->
+    <a href="./form/?landing=mirador" class="cta-info-fab" onclick="if(typeof fbq==='function')fbq('track','InitiateCheckout',{content_ids:['mirador'],content_type:'product'});if(typeof gtag==='function')gtag('event','obtener_informacion',{event_category:'engagement',event_label:'mirador-fab'});">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+        <span>Obtener Información</span>
+    </a>
 
     <!-- WhatsApp FAB -->
     <a href="https://wa.me/5492944123456" class="whatsapp-fab" target="_blank" aria-label="WhatsApp" onclick="fbq('track','Lead');gtag('event','generate_lead',{event_category:'conversion',event_label:'mirador-whatsapp-fab'});">
@@ -2401,69 +2444,18 @@
             });
         });
 
-        // Captura de parámetros de tráfico pago
-        const params = new URLSearchParams(window.location.search);
-        ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'].forEach(function(key) {
-            const val = params.get(key);
-            if (val) document.querySelector('input[name="' + key + '"]').value = val;
-        });
-
-        // Form
-        const API_URL = 'https://patagonica.onrender.com';
-
-        document.querySelector('.contact-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const btn = this.querySelector('button[type="submit"]');
-            const btnText = btn.textContent;
-            btn.disabled = true;
-            btn.textContent = 'Enviando...';
-
-            const form = this;
-            const tracking = {};
-            ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'].forEach(function(key) {
-                const val = form.querySelector('input[name="' + key + '"]').value;
-                if (val) tracking[key] = val;
+        // UTM params -> propagar al CTA del form (?landing=mirador)
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const utmKeys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','gclid'];
+            const utm = utmKeys.map(k => [k, params.get(k)]).filter(([_, v]) => v);
+            if (!utm.length) return;
+            document.querySelectorAll('.cta-info-btn, .cta-info-fab').forEach(a => {
+                const u = new URL(a.href, window.location.origin);
+                utm.forEach(([k, v]) => u.searchParams.set(k, v));
+                a.href = u.toString();
             });
-
-            const data = {
-                name: (this.first_name.value + ' ' + this.last_name.value).trim(),
-                phone: this.phone.value,
-                email: this.email.value,
-                message: this.message.value,
-                publication_id: 62849,
-                tracking: tracking
-            };
-
-            const status = document.getElementById('form-status');
-            status.style.display = 'none';
-
-            try {
-                const res = await fetch(`${API_URL}/api/web/contact`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-
-                if (!res.ok) throw new Error('Error al enviar');
-
-                fbq('track', 'Lead');
-                gtag('event', 'generate_lead', { event_category: 'conversion', event_label: 'mirador' });
-
-                status.textContent = 'Gracias por tu consulta. Nos pondremos en contacto a la brevedad.';
-                status.style.display = 'block';
-                status.style.background = '#d4edda';
-                status.style.color = '#155724';
-                this.reset();
-            } catch (err) {
-                status.textContent = 'Hubo un error al enviar tu consulta. Por favor intenta nuevamente.';
-                status.style.display = 'block';
-                status.style.background = '#f8d7da';
-                status.style.color = '#721c24';
-            } finally {
-                btn.disabled = false;
-                btn.textContent = btnText;
-            }
-        });
+        })();
 
         // PDF Viewer
         var pdfViewer = document.getElementById('pdf-viewer');

@@ -616,6 +616,7 @@
 
         const params = new URLSearchParams(window.location.search);
         const propId = params.get('propiedad_id');
+        const landingParam = params.get('landing');
         if (propId) {
             document.getElementById('propiedad_id').value = propId;
         }
@@ -720,6 +721,7 @@
             submitBtn.innerHTML = 'Enviando...';
 
             const data = Object.fromEntries(new FormData(form).entries());
+            if (landingParam) data.landing = landingParam;
             data.tracking = {
                 referer: document.referrer || '',
                 utm_source: params.get('utm_source') || '',
