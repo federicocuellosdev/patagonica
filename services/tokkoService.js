@@ -25,6 +25,11 @@ async function createContact(contactData) {
     data.developments = [contactData.publication_id];
   }
 
+  // Propiedad individual del listado (id de Tokko) si existe
+  if (contactData.property_id) {
+    data.properties = [contactData.property_id];
+  }
+
   try {
     const response = await axios.post(
       `${BASE_URL}/webcontact/?key=${TOKKO_API_KEY}`,

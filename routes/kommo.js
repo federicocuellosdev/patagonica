@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const tokkoService = require('../services/tokkoService');
+const kommoService = require('../services/kommoService');
 
 const STAGE_PARA_DERIVAR = 103741151;
 const FIELD_DERIVAR_ID = 1275244;
@@ -58,6 +59,14 @@ function extractEmail(contact) {
 
 function extractDerivar(lead) {
   const field = lead.custom_fields_values?.find(f => f.field_id === FIELD_DERIVAR_ID);
+  return field?.values?.[0]?.value || null;
+}
+
+// Extrae el valor del custom field tokko_id_propiedad (id de propiedad de Tokko)
+async function extractTokkoIdPropiedad(lead) {
+  const fieldId = await kommoService.getLeadFieldIdByName('tokko_id_propiedad');
+  if (!fieldId) return null;
+  const field = lead.custom_fields_values?.find(f => f.field_id === fieldId);
   return field?.values?.[0]?.value || null;
 }
 
@@ -165,7 +174,18 @@ router.post('/webhook', async (req, res) => {
             .join('\n\n');
         }
 
-        await tokkoService.createContact({ name: contact.name, email, phone, cellphone, text, tags });
+        // Pasa el id de propiedad de Tokko si esta seteado en el custom field del lead
+        const tokkoPropId = await extractTokkoIdPropiedad(fullLead);
+
+        await tokkoService.createContact({
+          name: contact.name,
+          email,
+          phone,
+          cellphone,
+          text,
+          tags,
+          property_id: tokkoPropId || undefined
+        });
 
         console.log(`- Tokko - Contacto derivado a ${derivar || 'sin asignar'} (Lead ${leadId})\n`);
 

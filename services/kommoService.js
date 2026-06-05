@@ -34,7 +34,25 @@ async function createContact({ name, email, phone, phoneForm }) {
   return res.data._embedded.contacts[0];
 }
 
-async function createLead({ title, contactId, note, whatsappNote, tags = [] }) {
+// Cache en memoria: { 'nombre o code de campo' -> field_id } para leads.
+let leadFieldIdCache = null;
+
+async function getLeadFieldIdByName(name) {
+  if (leadFieldIdCache && leadFieldIdCache[name] !== undefined) return leadFieldIdCache[name];
+  const res = await axios.get(
+    `${KOMMO_BASE_URL}/leads/custom_fields?limit=250`,
+    { headers: getHeaders() }
+  );
+  const fields = res.data._embedded?.custom_fields || [];
+  leadFieldIdCache = {};
+  for (const f of fields) {
+    if (f.name) leadFieldIdCache[f.name] = f.id;
+    if (f.code) leadFieldIdCache[f.code] = f.id;
+  }
+  return leadFieldIdCache[name] || null;
+}
+
+async function createLead({ title, contactId, note, whatsappNote, tags = [], customFields = {} }) {
   const leadBody = {
     name: title,
     pipeline_id: PIPELINE_ID,
@@ -44,6 +62,21 @@ async function createLead({ title, contactId, note, whatsappNote, tags = [] }) {
       tags: tags.map(t => ({ name: t }))
     }
   };
+
+  // Resolver custom fields por nombre/code -> field_id
+  const customFieldsValues = [];
+  for (const [name, value] of Object.entries(customFields || {})) {
+    if (value == null || value === '') continue;
+    const fieldId = await getLeadFieldIdByName(name);
+    if (fieldId) {
+      customFieldsValues.push({ field_id: fieldId, values: [{ value: String(value) }] });
+    } else {
+      console.warn(`[kommoService] Custom field no encontrado en Kommo: "${name}"`);
+    }
+  }
+  if (customFieldsValues.length) {
+    leadBody.custom_fields_values = customFieldsValues;
+  }
 
   const res = await axios.post(`${KOMMO_BASE_URL}/leads`, [leadBody], { headers: getHeaders() });
   const lead = res.data._embedded.leads[0];
@@ -156,4 +189,4 @@ async function processLead(leadData, formLabel = 'General', tags = []) {
   return { contact, lead };
 }
 
-module.exports = { processLead, createContact, createLead };
+module.exports = { processLead, createContact, createLead, getLeadFieldIdByName };
