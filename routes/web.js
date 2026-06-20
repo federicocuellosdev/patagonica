@@ -137,4 +137,50 @@ router.post('/consulta-propiedad', async (req, res) => {
   }
 });
 
+// Consulta desde la ficha de Brokian (modal WhatsApp).
+// Flujo: crear contacto en Kommo -> crear Lead con titulo "WEB - Ficha - <Nombre>".
+// La nota del lead lleva: codigo de propiedad (PHO<id>), nombre del asesor y URL de la ficha.
+router.post('/contacto-whatsapp', async (req, res) => {
+  try {
+    const { nombre, telefono, propiedad_id, asesor, tracking } = req.body;
+
+    if (!nombre || !telefono) {
+      return res.status(400).json({ error: 'Nombre y telefono son obligatorios' });
+    }
+    if (!propiedad_id) {
+      return res.status(400).json({ error: 'propiedad_id es obligatorio' });
+    }
+
+    const noteLines = [];
+    noteLines.push(`Código de propiedad: PHO${propiedad_id}`);
+    const asesorName = asesor && (asesor.name || asesor.nombre);
+    if (asesorName) noteLines.push(`Asesor: ${asesorName}`);
+    if (tracking && tracking.page_url) {
+      noteLines.push(`URL de la ficha: ${tracking.page_url}`);
+    }
+    let note = noteLines.join('\n');
+    if (tracking && tracking.referer) {
+      note += `\n\nReferer: ${tracking.referer}`;
+    }
+
+    const contact = await kommoService.createContact({
+      name: nombre,
+      phone: telefono
+    });
+
+    const lead = await kommoService.createLead({
+      title: `WEB - Ficha - ${nombre}`,
+      contactId: contact.id,
+      note: note.trim(),
+      tags: ['WEB - Ficha'],
+      customFields: { tokko_id_propiedad: propiedad_id }
+    });
+
+    res.json({ success: true, contactId: contact.id, leadId: lead.id });
+  } catch (error) {
+    console.error('[web/contacto-whatsapp] Error:', error.response?.data || error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
