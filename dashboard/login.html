@@ -212,7 +212,7 @@
         const data = await r.json();
         if (r.ok && data.token) {
           sessionStorage.setItem(TOKEN_KEY, data.token);
-          location.href = 'dashboard/index.html';
+          location.href = 'dashboard/hub.html';
         } else {
           loadingOverlay.classList.remove('show');
           showMsg(data.error || 'No se pudo ingresar', 'err');
