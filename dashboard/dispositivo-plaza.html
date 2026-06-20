@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script>
+(function() {
+  document.write('<base href="../">');
+})();
+</script>
+<title>Informe Patagónica — Ubicaciones &amp; dispositivos · Ene-Jun 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #e7ebf3;
+    --bg-2:         #f1f4f9;
+    --card:         #ffffff;
+    --primary:      #1a3a6e;
+    --accent:       #4a90e2;
+    --accent-soft:  #cfe1f5;
+    --teal:         #057488;
+    --teal-soft:    #d6eef1;
+    --warm:         #f3e9d7;
+    --warm-strong:  #d4a85a;
+    --green-soft:   #d4ecdf;
+    --green:        #3aa676;
+    --rose-soft:    #f4dadf;
+    --rose:         #c0526a;
+    --text:         #1a3a6e;
+    --text-muted:   #6e7b96;
+    --text-soft:    #93a1bd;
+    --border:       #e3e8ef;
+    --br-card:      22px;
+    --br-pill:      50px;
+    --shadow:       0 2px 14px rgba(26, 58, 110, 0.05);
+    --shadow-lg:    0 4px 24px rgba(26, 58, 110, 0.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    color:var(--text);background:var(--bg);
+    line-height:1.5;min-height:100vh;padding:1.25rem;
+  }
+  .shell{
+    max-width:1320px;margin:0 auto;background:var(--card);
+    border-radius:28px;padding:1.75rem 2rem 2.25rem;
+    box-shadow:var(--shadow);
+  }
+
+  header.report-header{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:1rem;margin-bottom:1.5rem;
+  }
+  .brand-pill{
+    display:inline-flex;align-items:center;gap:0.55rem;
+    padding:0.35rem 0.95rem 0.35rem 0.4rem;
+    background:var(--bg-2);border-radius:var(--br-pill);
+    font-weight:600;font-size:0.82rem;color:var(--text);
+  }
+  .brand-pill .dot{
+    width:26px;height:26px;border-radius:50%;
+    background:var(--primary);display:flex;align-items:center;justify-content:center;
+    color:#fff;font-weight:800;font-size:0.75rem;letter-spacing:-0.3px;
+  }
+  .period-pill{
+    display:inline-flex;align-items:center;gap:0.4rem;
+    padding:0.4rem 0.95rem;background:var(--bg-2);border-radius:var(--br-pill);
+    font-size:0.78rem;color:var(--text-muted);font-weight:500;
+  }
+
+  .welcome{margin-bottom:1.75rem;}
+  .welcome h1{
+    font-weight:700;font-size:2rem;line-height:1.15;color:var(--text);
+    letter-spacing:-0.5px;margin-bottom:0.35rem;
+  }
+  .welcome .lead{color:var(--text-muted);font-size:0.92rem;}
+
+  /* Headline KPIs (fila horizontal) */
+  .headline-metrics{
+    display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;
+    padding:1.5rem 0;border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);margin-bottom:2rem;
+  }
+  .headline-metric{
+    text-align:left;min-width:0;padding:0 0.65rem;
+    border-right:1px solid var(--border);
+  }
+  .headline-metric:last-child{border-right:none;}
+  .headline-metric .label{
+    font-size:0.7rem;color:var(--text-muted);margin-bottom:0.45rem;
+    font-weight:500;white-space:nowrap;text-transform:uppercase;letter-spacing:0.6px;
+  }
+  .headline-metric .value{
+    font-size:1.7rem;font-weight:700;line-height:1;color:var(--text);
+    letter-spacing:-0.6px;
+  }
+  .headline-metric .sub{font-size:0.72rem;color:var(--text-muted);margin-top:0.45rem;}
+  @media (max-width:980px){
+    .headline-metrics{grid-template-columns:repeat(3,1fr);}
+    .headline-metric{border-right:none;border-bottom:1px solid var(--border);padding-bottom:1rem;}
+  }
+
+  h2{
+    font-size:1.05rem;font-weight:700;color:var(--text);margin:2rem 0 0.5rem;
+    display:flex;align-items:center;gap:0.6rem;letter-spacing:-0.2px;
+  }
+  h2::before{
+    content:'';display:inline-block;width:6px;height:22px;border-radius:3px;
+    background:linear-gradient(180deg, var(--accent), var(--primary));
+  }
+  .meta{color:var(--text-muted);font-size:0.82rem;margin-bottom:0.85rem;}
+  code{background:var(--bg-2);padding:0.1rem 0.4rem;border-radius:6px;font-size:0.78rem;color:var(--primary);}
+
+  /* Tablas dentro de cards */
+  .table-card{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--br-card);
+    overflow:hidden;margin-bottom:0.5rem;
+  }
+  table{width:100%;border-collapse:collapse;font-size:0.82rem;}
+  th,td{padding:0.65rem 0.85rem;text-align:left;border-bottom:1px solid var(--border);}
+  th{
+    background:var(--bg-2);font-weight:600;text-transform:uppercase;
+    font-size:0.66rem;letter-spacing:0.5px;color:var(--text-muted);
+  }
+  tr:last-child td{border-bottom:0;}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  .strong{font-weight:600;}
+  .strong-row td{background:#fafbfd;}
+  .strong-row.toggle{cursor:pointer;user-select:none;transition:background 0.15s ease;}
+  .strong-row.toggle:hover td{background:var(--bg-2);}
+  .strong-row.no-toggle{cursor:default;}
+  .toggle-head,.toggle-cell{width:40px;text-align:center;}
+  .chev{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;background:var(--bg-2);
+    color:var(--text-muted);font-size:0.7rem;
+    transition:transform 0.2s ease,background 0.2s ease,color 0.2s ease;
+    transform-origin:center;
+  }
+  .strong-row.toggle:hover .chev{background:var(--accent-soft);color:var(--primary);}
+  .strong-row.is-open .chev{
+    transform:rotate(90deg);background:var(--primary);color:#fff;
+  }
+  .sub-row td{font-size:0.78rem;color:var(--text-muted);background:var(--card);}
+  .sub-row td.indent{padding-left:1.85rem;}
+  .sub-row .raw{font-size:0.66rem;color:var(--text-soft);margin-left:4px;}
+  tr.muted td{
+    color:var(--text-muted);background:var(--bg-2);font-weight:600;
+    border-top:2px solid var(--primary);
+  }
+
+  /* Animacion sutil al expandir */
+  .sub-row:not([hidden]),
+  .chart-row:not([hidden]){animation:rowFade 0.28s ease;}
+  @keyframes rowFade{
+    from{opacity:0;transform:translateY(-4px);}
+    to{opacity:1;transform:none;}
+  }
+
+  /* Chart row */
+  .chart-row td{background:var(--bg-2);padding:1rem 1.25rem;}
+  .chart-container{width:100%;}
+  .chart-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:0.65rem;}
+  .chart-chip{
+    display:inline-flex;align-items:center;gap:6px;
+    border:1px solid var(--border);background:var(--card);color:var(--text-muted);
+    padding:0.3rem 0.85rem;border-radius:var(--br-pill);cursor:pointer;font:inherit;font-size:0.72rem;
+    font-weight:500;transition:all 0.15s ease;
+  }
+  .chart-chip:hover{border-color:var(--primary);color:var(--text);}
+  .chart-chip .sw{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c,#999);}
+  .chart-chip.active{
+    background:var(--c,var(--primary));color:#fff;border-color:transparent;
+    box-shadow:0 2px 8px rgba(26,58,110,0.18);
+  }
+  .chart-chip.active .sw{background:rgba(255,255,255,0.85);}
+  .line-chart{
+    width:100%;height:auto;display:block;background:var(--card);
+    border:1px solid var(--border);border-radius:14px;padding:0.5rem;
+  }
+  .chart-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;font-size:0.75rem;color:var(--text-muted);}
+  .chart-legend .lg{display:inline-flex;align-items:center;gap:5px;}
+  .chart-legend .sw{display:inline-block;width:14px;height:3px;border-radius:2px;background:var(--c);}
+
+  /* Lecturas clave */
+  .hito-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:1rem;margin-top:0.5rem;
+  }
+  .hito-box{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--br-card);padding:1.25rem 1.4rem;position:relative;
+  }
+  .hito-box.tint-blue{background:linear-gradient(135deg, #e8f1ff 0%, var(--accent-soft) 100%);border-color:transparent;}
+  .hito-box.tint-teal{background:linear-gradient(135deg, var(--teal-soft), #b9e0e4);border-color:transparent;}
+  .hito-box.tint-warm{background:linear-gradient(135deg, var(--warm), #ecdcb8);border-color:transparent;}
+  .hito-box h3{
+    margin:0 0 0.6rem;font-size:0.95rem;font-weight:700;color:var(--text);
+    display:flex;align-items:center;gap:0.5rem;
+  }
+  .hito-box h3::before{
+    content:'';width:8px;height:8px;border-radius:50%;background:var(--primary);
+  }
+  .hito-box.tint-blue h3::before{background:var(--accent);}
+  .hito-box.tint-teal h3::before{background:var(--teal);}
+  .hito-box.tint-warm h3::before{background:var(--warm-strong);}
+  .hito-box p{margin:0;font-size:0.85rem;line-height:1.5;color:var(--text);}
+
+  .footer-meta{
+    color:var(--text-soft);font-size:0.75rem;margin-top:2rem;text-align:center;
+    padding-top:1.25rem;border-top:1px solid var(--border);
+  }
+
+  /* Auth gate */
+  #auth-loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;z-index:9999;}
+  #auth-loading .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;}
+  #auth-loading .msg{color:var(--text-muted);font-size:0.85rem;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  #report-content{display:none;}
+  body.is-auth #auth-loading{display:none;}
+  body.is-auth #report-content{display:block;}
+  .topbar-logout{
+    position:absolute;top:1.75rem;right:2rem;display:inline-flex;align-items:center;gap:0.4rem;
+    padding:0.45rem 0.95rem;background:var(--bg-2);border-radius:var(--br-pill);
+    border:0;font-family:inherit;font-size:0.78rem;font-weight:500;color:var(--text-muted);cursor:pointer;
+    transition:color 0.15s ease;
+  }
+  .topbar-logout:hover{color:var(--rose);}
+
+</style>
+</head>
+<body>
+<div id="auth-loading"><div class="spinner"></div><div class="msg">Verificando acceso…</div></div>
+<div id="report-content">
+<div class="shell" style="position:relative;">
+<button type="button" class="topbar-logout" aria-label="Cerrar sesión">Cerrar sesión</button>
+<header class="report-header">
+  <span class="brand-pill"><span class="dot">P</span> Patagónica Propiedades</span>
+  <span class="period-pill">1 Ene 2026 → 17 Jun 2026 · USD</span>
+</header>
+<div class="welcome">
+  <h1>Análisis de ubicaciones y dispositivos</h1>
+  <p class="lead">Performance de la cuenta publicitaria de Meta por placement, sistema operativo y tipo de dispositivo.</p>
+</div>
+
+<div class="headline-metrics">
+  <div class="headline-metric">
+    <div class="label">Inversión</div>
+    <div class="value">USD 6.436,93</div>
+    <div class="sub">CPC USD 0,04</div>
+  </div>
+  <div class="headline-metric">
+    <div class="label">Alcance</div>
+    <div class="value">3.441.838</div>
+    <div class="sub">personas únicas</div>
+  </div>
+  <div class="headline-metric">
+    <div class="label">Impresiones</div>
+    <div class="value">5.258.197</div>
+    <div class="sub">veces mostrado</div>
+  </div>
+  <div class="headline-metric">
+    <div class="label">Frecuencia</div>
+    <div class="value">1,53</div>
+    <div class="sub">impr / persona</div>
+  </div>
+  <div class="headline-metric">
+    <div class="label">Leads</div>
+    <div class="value">4.146</div>
+    <div class="sub">CPL USD 1,55</div>
+  </div>
+  <div class="headline-metric">
+    <div class="label">CTR</div>
+    <div class="value">2.72%</div>
+    <div class="sub">143.241 clics</div>
+  </div>
+</div>
+
+<h2>Ubicaciones × dispositivo</h2>
+<p class="meta">Cada placement abre su desglose por tipo de dispositivo según la clasificación de Meta (<code>device_platform</code>: mobile_app · mobile_web · desktop). Frecuencia ponderada por impresiones. Solo aparecen placements con &gt;1.000 reach o algún lead.</p>
+<div class="table-card">
+  <table>
+    <thead>
+      <tr>
+        <th>Ubicación / dispositivo</th>
+        <th class="num">Alcance</th>
+        <th class="num">Frecuencia</th>
+        <th class="num">Leads</th>
+        <th class="num">Lead / alcance</th>
+        <th class="num">CPL</th>
+        <th class="num">Inversión</th>
+        <th class="toggle-head"></th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr class="strong-row toggle" data-id="pl-1" data-placement="instagram/feed">
+      <td><strong>Instagram Feed</strong></td>
+      <td class="num strong">292.432</td>
+      <td class="num">1,57</td>
+      <td class="num strong">1.258</td>
+      <td class="num">0.430%</td>
+      <td class="num">USD 1,13</td>
+      <td class="num">USD 1.424,35</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-1" hidden>
+      <td class="indent">↳ App móvil</td>
+      <td class="num">290.696</td>
+      <td class="num">1,57</td>
+      <td class="num">1.257</td>
+      <td class="num">0.432%</td>
+      <td class="num">USD 1,13</td>
+      <td class="num">USD 1.423,51</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-1" hidden>
+      <td class="indent">↳ Web móvil</td>
+      <td class="num">559</td>
+      <td class="num">1,03</td>
+      <td class="num">0</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="num">USD 0,21</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-1" hidden>
+      <td class="indent">↳ Escritorio</td>
+      <td class="num">1.177</td>
+      <td class="num">1,10</td>
+      <td class="num">1</td>
+      <td class="num">0.085%</td>
+      <td class="num">USD 0,63</td>
+      <td class="num">USD 0,63</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="chart-row" data-parent="pl-1" hidden>
+      <td colspan="8">
+        <div class="chart-container" data-placement="instagram/feed">
+          <div class="chart-chips">
+            <button type="button" class="chart-chip active" data-kpi="leads" style="--c:#057488"><span class="sw"></span>Leads</button>
+            <button type="button" class="chart-chip" data-kpi="reach" style="--c:#d97706"><span class="sw"></span>Alcance</button>
+            <button type="button" class="chart-chip" data-kpi="lead_reach" style="--c:#7a6fea"><span class="sw"></span>Lead / alcance</button>
+            <button type="button" class="chart-chip" data-kpi="cpl" style="--c:#0ea5e9"><span class="sw"></span>CPL</button>
+            <button type="button" class="chart-chip" data-kpi="frequency" style="--c:#2d7a52"><span class="sw"></span>Frecuencia</button>
+          </div>
+          <svg class="line-chart" viewBox="0 0 1100 280" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="chart-legend"></div>
+        </div>
+      </td>
+    </tr>
+    <tr class="strong-row toggle" data-id="pl-2" data-placement="instagram/instagram_stories">
+      <td><strong>Instagram Stories</strong></td>
+      <td class="num strong">182.103</td>
+      <td class="num">1,59</td>
+      <td class="num strong">914</td>
+      <td class="num">0.502%</td>
+      <td class="num">USD 1,14</td>
+      <td class="num">USD 1.043,39</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-2" hidden>
+      <td class="indent">↳ App móvil</td>
+      <td class="num">179.421</td>
+      <td class="num">1,59</td>
+      <td class="num">914</td>
+      <td class="num">0.509%</td>
+      <td class="num">USD 1,14</td>
+      <td class="num">USD 1.042,86</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-2" hidden>
+      <td class="indent">↳ Web móvil</td>
+      <td class="num">917</td>
+      <td class="num">1,07</td>
+      <td class="num">0</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="num">USD 0,03</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-2" hidden>
+      <td class="indent">↳ Escritorio</td>
+      <td class="num">1.765</td>
+      <td class="num">1,17</td>
+      <td class="num">0</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="num">USD 0,50</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="chart-row" data-parent="pl-2" hidden>
+      <td colspan="8">
+        <div class="chart-container" data-placement="instagram/instagram_stories">
+          <div class="chart-chips">
+            <button type="button" class="chart-chip active" data-kpi="leads" style="--c:#057488"><span class="sw"></span>Leads</button>
+            <button type="button" class="chart-chip" data-kpi="reach" style="--c:#d97706"><span class="sw"></span>Alcance</button>
+            <button type="button" class="chart-chip" data-kpi="lead_reach" style="--c:#7a6fea"><span class="sw"></span>Lead / alcance</button>
+            <button type="button" class="chart-chip" data-kpi="cpl" style="--c:#0ea5e9"><span class="sw"></span>CPL</button>
+            <button type="button" class="chart-chip" data-kpi="frequency" style="--c:#2d7a52"><span class="sw"></span>Frecuencia</button>
+          </div>
+          <svg class="line-chart" viewBox="0 0 1100 280" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="chart-legend"></div>
+        </div>
+      </td>
+    </tr>
+    <tr class="strong-row toggle" data-id="pl-3" data-placement="instagram/instagram_reels">
+      <td><strong>Instagram Reels</strong></td>
+      <td class="num strong">691.522</td>
+      <td class="num">1,22</td>
+      <td class="num strong">778</td>
+      <td class="num">0.113%</td>
+      <td class="num">USD 1,33</td>
+      <td class="num">USD 1.036,06</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-3" hidden>
+      <td class="indent">↳ App móvil</td>
+      <td class="num">691.351</td>
+      <td class="num">1,22</td>
+      <td class="num">778</td>
+      <td class="num">0.113%</td>
+      <td class="num">USD 1,33</td>
+      <td class="num">USD 1.036,01</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-3" hidden>
+      <td class="indent">↳ Escritorio</td>
+      <td class="num">137</td>
+      <td class="num">1,13</td>
+      <td class="num">0</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="num">USD 0,04</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="chart-row" data-parent="pl-3" hidden>
+      <td colspan="8">
+        <div class="chart-container" data-placement="instagram/instagram_reels">
+          <div class="chart-chips">
+            <button type="button" class="chart-chip active" data-kpi="leads" style="--c:#057488"><span class="sw"></span>Leads</button>
+            <button type="button" class="chart-chip" data-kpi="reach" style="--c:#d97706"><span class="sw"></span>Alcance</button>
+            <button type="button" class="chart-chip" data-kpi="lead_reach" style="--c:#7a6fea"><span class="sw"></span>Lead / alcance</button>
+            <button type="button" class="chart-chip" data-kpi="cpl" style="--c:#0ea5e9"><span class="sw"></span>CPL</button>
+            <button type="button" class="chart-chip" data-kpi="frequency" style="--c:#2d7a52"><span class="sw"></span>Frecuencia</button>
+          </div>
+          <svg class="line-chart" viewBox="0 0 1100 280" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="chart-legend"></div>
+        </div>
+      </td>
+    </tr>
+    <tr class="strong-row toggle" data-id="pl-4" data-placement="facebook/feed">
+      <td><strong>Facebook Feed</strong></td>
+      <td class="num strong">756.748</td>
+      <td class="num">1,75</td>
+      <td class="num strong">692</td>
+      <td class="num">0.091%</td>
+      <td class="num">USD 1,85</td>
+      <td class="num">USD 1.281,51</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-4" hidden>
+      <td class="indent">↳ App móvil</td>
+      <td class="num">742.725</td>
+      <td class="num">1,75</td>
+      <td class="num">682</td>
+      <td class="num">0.092%</td>
+      <td class="num">USD 1,83</td>
+      <td class="num">USD 1.248,22</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-4" hidden>
+      <td class="indent">↳ Web móvil</td>
+      <td class="num">8.541</td>
+      <td class="num">1,80</td>
+      <td class="num">2</td>
+      <td class="num">0.023%</td>
+      <td class="num">USD 5,95</td>
+      <td class="num">USD 11,91</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-4" hidden>
+      <td class="indent">↳ Escritorio</td>
+      <td class="num">5.482</td>
+      <td class="num">1,64</td>
+      <td class="num">8</td>
+      <td class="num">0.146%</td>
+      <td class="num">USD 2,67</td>
+      <td class="num">USD 21,38</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="chart-row" data-parent="pl-4" hidden>
+      <td colspan="8">
+        <div class="chart-container" data-placement="facebook/feed">
+          <div class="chart-chips">
+            <button type="button" class="chart-chip active" data-kpi="leads" style="--c:#057488"><span class="sw"></span>Leads</button>
+            <button type="button" class="chart-chip" data-kpi="reach" style="--c:#d97706"><span class="sw"></span>Alcance</button>
+            <button type="button" class="chart-chip" data-kpi="lead_reach" style="--c:#7a6fea"><span class="sw"></span>Lead / alcance</button>
+            <button type="button" class="chart-chip" data-kpi="cpl" style="--c:#0ea5e9"><span class="sw"></span>CPL</button>
+            <button type="button" class="chart-chip" data-kpi="frequency" style="--c:#2d7a52"><span class="sw"></span>Frecuencia</button>
+          </div>
+          <svg class="line-chart" viewBox="0 0 1100 280" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="chart-legend"></div>
+        </div>
+      </td>
+    </tr>
+    <tr class="strong-row toggle" data-id="pl-5" data-placement="facebook/facebook_reels">
+      <td><strong>Facebook Reels</strong></td>
+      <td class="num strong">662.308</td>
+      <td class="num">1,43</td>
+      <td class="num strong">368</td>
+      <td class="num">0.056%</td>
+      <td class="num">USD 1,77</td>
+      <td class="num">USD 651,73</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-5" hidden>
+      <td class="indent">↳ App móvil</td>
+      <td class="num">655.526</td>
+      <td class="num">1,43</td>
+      <td class="num">366</td>
+      <td class="num">0.056%</td>
+      <td class="num">USD 1,77</td>
+      <td class="num">USD 647,84</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-5" hidden>
+      <td class="indent">↳ Web móvil</td>
+      <td class="num">6.782</td>
+      <td class="num">1,33</td>
+      <td class="num">2</td>
+      <td class="num">0.029%</td>
+      <td class="num">USD 1,94</td>
+      <td class="num">USD 3,89</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="chart-row" data-parent="pl-5" hidden>
+      <td colspan="8">
+        <div class="chart-container" data-placement="facebook/facebook_reels">
+          <div class="chart-chips">
+            <button type="button" class="chart-chip active" data-kpi="leads" style="--c:#057488"><span class="sw"></span>Leads</button>
+            <button type="button" class="chart-chip" data-kpi="reach" style="--c:#d97706"><span class="sw"></span>Alcance</button>
+            <button type="button" class="chart-chip" data-kpi="lead_reach" style="--c:#7a6fea"><span class="sw"></span>Lead / alcance</button>
+            <button type="button" class="chart-chip" data-kpi="cpl" style="--c:#0ea5e9"><span class="sw"></span>CPL</button>
+            <button type="button" class="chart-chip" data-kpi="frequency" style="--c:#2d7a52"><span class="sw"></span>Frecuencia</button>
+          </div>
+          <svg class="line-chart" viewBox="0 0 1100 280" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="chart-legend"></div>
+        </div>
+      </td>
+    </tr>
+    <tr class="strong-row toggle" data-id="pl-6">
+      <td><strong>Facebook Stories</strong></td>
+      <td class="num strong">29.941</td>
+      <td class="num">1,32</td>
+      <td class="num strong">68</td>
+      <td class="num">0.227%</td>
+      <td class="num">USD 1,78</td>
+      <td class="num">USD 120,83</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-6" hidden>
+      <td class="indent">↳ App móvil</td>
+      <td class="num">29.941</td>
+      <td class="num">1,32</td>
+      <td class="num">68</td>
+      <td class="num">0.227%</td>
+      <td class="num">USD 1,78</td>
+      <td class="num">USD 120,83</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="strong-row toggle" data-id="pl-7">
+      <td><strong>Facebook Marketplace</strong></td>
+      <td class="num strong">395.975</td>
+      <td class="num">2,21</td>
+      <td class="num strong">44</td>
+      <td class="num">0.011%</td>
+      <td class="num">USD 9,45</td>
+      <td class="num">USD 415,77</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-7" hidden>
+      <td class="indent">↳ App móvil</td>
+      <td class="num">387.987</td>
+      <td class="num">2,22</td>
+      <td class="num">44</td>
+      <td class="num">0.011%</td>
+      <td class="num">USD 9,34</td>
+      <td class="num">USD 410,75</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-7" hidden>
+      <td class="indent">↳ Escritorio</td>
+      <td class="num">7.988</td>
+      <td class="num">1,86</td>
+      <td class="num">0</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="num">USD 5,02</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="strong-row toggle" data-id="pl-8">
+      <td><strong>Facebook Search</strong></td>
+      <td class="num strong">210.201</td>
+      <td class="num">1,60</td>
+      <td class="num strong">12</td>
+      <td class="num">0.006%</td>
+      <td class="num">USD 9,08</td>
+      <td class="num">USD 108,92</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-8" hidden>
+      <td class="indent">↳ App móvil</td>
+      <td class="num">208.765</td>
+      <td class="num">1,60</td>
+      <td class="num">12</td>
+      <td class="num">0.006%</td>
+      <td class="num">USD 9,03</td>
+      <td class="num">USD 108,33</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-8" hidden>
+      <td class="indent">↳ Escritorio</td>
+      <td class="num">1.436</td>
+      <td class="num">1,25</td>
+      <td class="num">0</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="num">USD 0,59</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="strong-row toggle" data-id="pl-9">
+      <td><strong>FB Reels Overlay</strong></td>
+      <td class="num strong">24.133</td>
+      <td class="num">1,36</td>
+      <td class="num strong">10</td>
+      <td class="num">0.041%</td>
+      <td class="num">USD 2,57</td>
+      <td class="num">USD 25,65</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-9" hidden>
+      <td class="indent">↳ App móvil</td>
+      <td class="num">24.133</td>
+      <td class="num">1,36</td>
+      <td class="num">10</td>
+      <td class="num">0.041%</td>
+      <td class="num">USD 2,57</td>
+      <td class="num">USD 25,65</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="strong-row toggle" data-id="pl-10">
+      <td><strong>Audience Network</strong></td>
+      <td class="num strong">2.896</td>
+      <td class="num">2,59</td>
+      <td class="num strong">2</td>
+      <td class="num">0.069%</td>
+      <td class="num">USD 5,36</td>
+      <td class="num">USD 10,72</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-10" hidden>
+      <td class="indent">↳ App móvil</td>
+      <td class="num">2.816</td>
+      <td class="num">2,60</td>
+      <td class="num">2</td>
+      <td class="num">0.071%</td>
+      <td class="num">USD 5,34</td>
+      <td class="num">USD 10,68</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-10" hidden>
+      <td class="indent">↳ Escritorio</td>
+      <td class="num">80</td>
+      <td class="num">2,24</td>
+      <td class="num">0</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="num">USD 0,04</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="strong-row toggle" data-id="pl-11">
+      <td><strong>FB Instream Video</strong></td>
+      <td class="num strong">162.403</td>
+      <td class="num">2,18</td>
+      <td class="num strong">0</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="num">USD 305,30</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-11" hidden>
+      <td class="indent">↳ App móvil</td>
+      <td class="num">162.401</td>
+      <td class="num">2,18</td>
+      <td class="num">0</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="num">USD 305,30</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="strong-row toggle" data-id="pl-12">
+      <td><strong>Threads Feed</strong></td>
+      <td class="num strong">14.481</td>
+      <td class="num">1,13</td>
+      <td class="num strong">0</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="num">USD 7,81</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-12" hidden>
+      <td class="indent">↳ App móvil</td>
+      <td class="num">14.481</td>
+      <td class="num">1,13</td>
+      <td class="num">0</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="num">USD 7,81</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="strong-row toggle" data-id="pl-13">
+      <td><strong>FB Columna derecha</strong></td>
+      <td class="num strong">14.770</td>
+      <td class="num">1,83</td>
+      <td class="num strong">0</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="num">USD 2,18</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="pl-13" hidden>
+      <td class="indent">↳ Escritorio</td>
+      <td class="num">14.770</td>
+      <td class="num">1,83</td>
+      <td class="num">0</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="num">USD 2,18</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="muted">
+      <td>Total general</td>
+      <td class="num">3.441.838</td>
+      <td class="num">1,53</td>
+      <td class="num">4.146</td>
+      <td class="num">0.120%</td>
+      <td class="num strong">USD 1,55</td>
+      <td class="num strong">USD 6.436,93</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Sistema operativo × dispositivo</h2>
+<p class="meta">Agregado por sistema operativo y tipo de dispositivo según <code>impression_device</code> de Meta. Frecuencia ponderada por impresiones.</p>
+<div class="table-card">
+  <table>
+    <thead>
+      <tr>
+        <th>SO / dispositivo</th>
+        <th class="num">Alcance</th>
+        <th class="num">% alcance</th>
+        <th class="num">Frecuencia</th>
+        <th class="num">Leads</th>
+        <th class="num">% leads</th>
+        <th class="num">Lead / alcance</th>
+        <th class="num">CPL</th>
+        <th class="toggle-head"></th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr class="strong-row toggle" data-id="os-1" data-os="Android">
+      <td><strong>Android</strong></td>
+      <td class="num strong">2.609.400</td>
+      <td class="num">75.8%</td>
+      <td class="num">1,85</td>
+      <td class="num strong">2.342</td>
+      <td class="num">56.5%</td>
+      <td class="num strong">0.090%</td>
+      <td class="num">USD 1,81</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="os-1" hidden>
+      <td class="indent">↳ Smartphone <span class="raw">android_smartphone</span></td>
+      <td class="num">2.600.924</td>
+      <td class="num">75.6%</td>
+      <td class="num">1,85</td>
+      <td class="num">2.342</td>
+      <td class="num">56.5%</td>
+      <td class="num">0.090%</td>
+      <td class="num">USD 1,80</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="sub-row" data-parent="os-1" hidden>
+      <td class="indent">↳ Tablet <span class="raw">android_tablet</span></td>
+      <td class="num">8.476</td>
+      <td class="num">0.2%</td>
+      <td class="num">1,85</td>
+      <td class="num">0</td>
+      <td class="num">0.0%</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="chart-row" data-parent="os-1" hidden>
+      <td colspan="9">
+        <div class="chart-container" data-os="Android">
+          <div class="chart-chips">
+            <button type="button" class="chart-chip active" data-kpi="leads" style="--c:#057488"><span class="sw"></span>Leads</button>
+            <button type="button" class="chart-chip" data-kpi="reach" style="--c:#d97706"><span class="sw"></span>Alcance</button>
+            <button type="button" class="chart-chip" data-kpi="lead_reach" style="--c:#7a6fea"><span class="sw"></span>Lead / alcance</button>
+            <button type="button" class="chart-chip" data-kpi="cpl" style="--c:#0ea5e9"><span class="sw"></span>CPL</button>
+            <button type="button" class="chart-chip" data-kpi="frequency" style="--c:#2d7a52"><span class="sw"></span>Frecuencia</button>
+          </div>
+          <svg class="line-chart" viewBox="0 0 1100 280" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="chart-legend"></div>
+        </div>
+      </td>
+    </tr>
+    <tr class="strong-row toggle" data-id="os-2" data-os="iOS">
+      <td><strong>iOS</strong></td>
+      <td class="num strong">478.545</td>
+      <td class="num">13.9%</td>
+      <td class="num">1,97</td>
+      <td class="num strong">1.793</td>
+      <td class="num">43.2%</td>
+      <td class="num strong">0.375%</td>
+      <td class="num">USD 1,21</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="os-2" hidden>
+      <td class="indent">↳ Smartphone <span class="raw">iphone</span></td>
+      <td class="num">472.989</td>
+      <td class="num">13.7%</td>
+      <td class="num">1,97</td>
+      <td class="num">1.785</td>
+      <td class="num">43.1%</td>
+      <td class="num">0.377%</td>
+      <td class="num">USD 1,21</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="sub-row" data-parent="os-2" hidden>
+      <td class="indent">↳ Tablet <span class="raw">ipad</span></td>
+      <td class="num">5.555</td>
+      <td class="num">0.2%</td>
+      <td class="num">1,77</td>
+      <td class="num">8</td>
+      <td class="num">0.2%</td>
+      <td class="num">0.144%</td>
+      <td class="num">USD 2,07</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="chart-row" data-parent="os-2" hidden>
+      <td colspan="9">
+        <div class="chart-container" data-os="iOS">
+          <div class="chart-chips">
+            <button type="button" class="chart-chip active" data-kpi="leads" style="--c:#057488"><span class="sw"></span>Leads</button>
+            <button type="button" class="chart-chip" data-kpi="reach" style="--c:#d97706"><span class="sw"></span>Alcance</button>
+            <button type="button" class="chart-chip" data-kpi="lead_reach" style="--c:#7a6fea"><span class="sw"></span>Lead / alcance</button>
+            <button type="button" class="chart-chip" data-kpi="cpl" style="--c:#0ea5e9"><span class="sw"></span>CPL</button>
+            <button type="button" class="chart-chip" data-kpi="frequency" style="--c:#2d7a52"><span class="sw"></span>Frecuencia</button>
+          </div>
+          <svg class="line-chart" viewBox="0 0 1100 280" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="chart-legend"></div>
+        </div>
+      </td>
+    </tr>
+    <tr class="strong-row toggle" data-id="os-3">
+      <td><strong>Desktop / Web</strong></td>
+      <td class="num strong">37.794</td>
+      <td class="num">1.1%</td>
+      <td class="num">1,72</td>
+      <td class="num strong">11</td>
+      <td class="num">0.3%</td>
+      <td class="num strong">0.029%</td>
+      <td class="num">USD 3,11</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="os-3" hidden>
+      <td class="indent">↳ Desktop <span class="raw">desktop</span></td>
+      <td class="num">37.794</td>
+      <td class="num">1.1%</td>
+      <td class="num">1,72</td>
+      <td class="num">11</td>
+      <td class="num">0.3%</td>
+      <td class="num">0.029%</td>
+      <td class="num">USD 3,11</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    <tr class="strong-row toggle" data-id="os-4">
+      <td><strong>Otros</strong></td>
+      <td class="num strong">288</td>
+      <td class="num">0.0%</td>
+      <td class="num">1,80</td>
+      <td class="num strong">0</td>
+      <td class="num">0.0%</td>
+      <td class="num strong">0.000%</td>
+      <td class="num">—</td>
+      <td class="toggle-cell"><span class="chev">▸</span></td>
+    </tr>
+    <tr class="sub-row" data-parent="os-4" hidden>
+      <td class="indent">↳ Otros <span class="raw">other</span></td>
+      <td class="num">288</td>
+      <td class="num">0.0%</td>
+      <td class="num">1,80</td>
+      <td class="num">0</td>
+      <td class="num">0.0%</td>
+      <td class="num">0.000%</td>
+      <td class="num">—</td>
+      <td class="toggle-cell"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Lecturas clave</h2>
+<div class="hito-grid">
+  <div class="hito-box tint-blue">
+    <h3>iOS convierte mejor que Android por unidad de alcance</h3>
+    <p>Si bien Android domina en volumen, iPhone consigue una tasa de generación de formularios casi 4× superior por cada usuario alcanzado. El CPL en iPhone tiende a ser menor que en Android pese a un CPM más alto.</p>
+  </div>
+  <div class="hito-box tint-warm">
+    <h3>Escritorio aporta muy poco</h3>
+    <p>El placement desktop representa &lt;2% del alcance y &lt;1% de los leads en la mayoría de las ubicaciones. No conviene producir creatividades específicas; sí sirve dejarlo activo en auto.</p>
+  </div>
+  <div class="hito-box tint-teal">
+    <h3>Top placements para formularios</h3>
+    <p>Las cuatro ubicaciones líderes — Instagram Feed, Instagram Stories, Instagram Reels, Facebook Feed — concentran la mayor parte de la generación de leads. Todas son mayoritariamente mobile app.</p>
+  </div>
+</div>
+
+<p class="footer-meta">Informe generado el 20/6/2026 desde Meta Marketing API v20.0 · Fuente: cuenta publicitaria de Patagónica Propiedades.</p>
+</div>
+</div>
+
+<script>
+(function() {
+  var API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? 'http://localhost:3000'
+    : 'https://patagonica.onrender.com';
+  var TOKEN_KEY = 'patagonica_dashboard_token';
+  var token = sessionStorage.getItem(TOKEN_KEY);
+  if (!token) {
+    location.replace('dashboard/login.html');
+    return;
+  }
+  fetch(API_BASE + '/api/auth/verify', { headers: { Authorization: 'Bearer ' + token } })
+    .then(function(r) {
+      if (!r.ok) throw new Error('invalid');
+      document.body.classList.add('is-auth');
+    })
+    .catch(function() {
+      sessionStorage.removeItem(TOKEN_KEY);
+      location.replace('dashboard/login.html');
+    });
+
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.topbar-logout')) {
+      sessionStorage.removeItem(TOKEN_KEY);
+      location.href = 'dashboard/login.html';
+    }
+  });
+})();
+</script>
+
+<script id="chart-data" type="application/json">{"instagram/feed":{"mobile_app":{"2026-01":{"leads":250,"reach":23782,"impressions":34632,"spend":150.92307100000002,"frequency_w":50762.93799400001},"2026-02":{"leads":198,"reach":26125,"impressions":34196,"spend":131.932267,"frequency_w":45464.54038299999},"2026-03":{"leads":306,"reach":51278,"impressions":72953,"spend":268.726601,"frequency_w":106723.57653099998},"2026-04":{"leads":230,"reach":111844,"impressions":137888,"spend":327.3410059999999,"frequency_w":174205.954775},"2026-05":{"leads":190,"reach":84401,"impressions":109524,"spend":348.728289,"frequency_w":147877.368704},"2026-06":{"leads":83,"reach":34439,"impressions":43575,"spend":195.85711099999997,"frequency_w":57040.11978300002}},"desktop":{"2026-02":{"leads":0,"reach":179,"impressions":180,"spend":0.02,"frequency_w":181.007352},"2026-03":{"leads":0,"reach":172,"impressions":199,"spend":0.05,"frequency_w":241.404598},"2026-04":{"leads":0,"reach":265,"impressions":277,"spend":0.029998,"frequency_w":291.886624},"2026-05":{"leads":0,"reach":411,"impressions":429,"spend":0.05,"frequency_w":448.69555199999996},"2026-06":{"leads":1,"reach":181,"impressions":194,"spend":0.48,"frequency_w":208.15151400000002}},"mobile_web":{"2026-02":{"leads":0,"reach":52,"impressions":54,"spend":0,"frequency_w":56.124379999999995},"2026-03":{"leads":0,"reach":82,"impressions":83,"spend":0.03,"frequency_w":84.076922},"2026-04":{"leads":0,"reach":113,"impressions":113,"spend":0,"frequency_w":113},"2026-05":{"leads":0,"reach":260,"impressions":262,"spend":0.07,"frequency_w":264.016462},"2026-06":{"leads":0,"reach":55,"impressions":63,"spend":0.11,"frequency_w":73.133346}}},"instagram/instagram_stories":{"desktop":{"2026-01":{"leads":0,"reach":1047,"impressions":1203,"spend":0.279971,"frequency_w":1383.083666},"2026-02":{"leads":0,"reach":304,"impressions":311,"spend":0.04,"frequency_w":318.32989200000003},"2026-03":{"leads":0,"reach":56,"impressions":70,"spend":0.01,"frequency_w":89.939374},"2026-04":{"leads":0,"reach":91,"impressions":112,"spend":0.010004,"frequency_w":142.725662},"2026-05":{"leads":0,"reach":250,"impressions":277,"spend":0.130004,"frequency_w":310.95966699999997},"2026-06":{"leads":0,"reach":64,"impressions":72,"spend":0.030009,"frequency_w":81.015864}},"mobile_app":{"2026-01":{"leads":232,"reach":30553,"impressions":43101,"spend":132.961647,"frequency_w":62204.41859500001},"2026-02":{"leads":180,"reach":29373,"impressions":42057,"spend":146.77275999999998,"frequency_w":62135.61442799999},"2026-03":{"leads":246,"reach":35432,"impressions":51236,"spend":218.75823000000003,"frequency_w":75716.16977300002},"2026-04":{"leads":144,"reach":42701,"impressions":54581,"spend":234.44670399999995,"frequency_w":71755.910076},"2026-05":{"leads":82,"reach":42892,"impressions":54451,"spend":196.36547300000004,"frequency_w":71316.516809},"2026-06":{"leads":30,"reach":20533,"impressions":27267,"spend":113.552546,"frequency_w":38088.870207}},"mobile_web":{"2026-01":{"leads":0,"reach":527,"impressions":556,"spend":0.009999,"frequency_w":586.709303},"2026-02":{"leads":0,"reach":143,"impressions":144,"spend":0,"frequency_w":145.01887200000002},"2026-03":{"leads":0,"reach":16,"impressions":16,"spend":0,"frequency_w":16},"2026-04":{"leads":0,"reach":43,"impressions":45,"spend":0,"frequency_w":47.148146},"2026-05":{"leads":0,"reach":166,"impressions":177,"spend":0.01,"frequency_w":189.385426},"2026-06":{"leads":0,"reach":39,"impressions":41,"spend":0.010003,"frequency_w":43.111128}}},"instagram/instagram_reels":{"desktop":{"2026-01":{"leads":0,"reach":19,"impressions":19,"spend":0,"frequency_w":19},"2026-02":{"leads":0,"reach":5,"impressions":5,"spend":0,"frequency_w":5},"2026-03":{"leads":0,"reach":7,"impressions":7,"spend":0,"frequency_w":7},"2026-04":{"leads":0,"reach":66,"impressions":68,"spend":0.01,"frequency_w":70.140908},"2026-05":{"leads":0,"reach":35,"impressions":41,"spend":0.02,"frequency_w":48.44},"2026-06":{"leads":0,"reach":11,"impressions":12,"spend":0.010003,"frequency_w":13.100000000000001}},"mobile_app":{"2026-01":{"leads":176,"reach":132201,"impressions":149069,"spend":147.37851200000003,"frequency_w":168980.78536300006},"2026-02":{"leads":122,"reach":117797,"impressions":128061,"spend":131.152099,"frequency_w":140182.556755},"2026-03":{"leads":204,"reach":86223,"impressions":99794,"spend":176.278676,"frequency_w":118331.62693100004},"2026-04":{"leads":122,"reach":239424,"impressions":255275,"spend":238.27251599999997,"frequency_w":274220.890927},"2026-05":{"leads":106,"reach":130467,"impressions":145758,"spend":228.76225699999998,"frequency_w":164732.99776500007},"2026-06":{"leads":48,"reach":36634,"impressions":40790,"spend":114.165135,"frequency_w":46051.796845000004}},"mobile_web":{"2026-01":{"leads":0,"reach":5,"impressions":5,"spend":0.009999,"frequency_w":5},"2026-03":{"leads":0,"reach":2,"impressions":2,"spend":0,"frequency_w":2},"2026-04":{"leads":0,"reach":18,"impressions":19,"spend":0,"frequency_w":20.166669},"2026-05":{"leads":0,"reach":7,"impressions":7,"spend":0,"frequency_w":7},"2026-06":{"leads":0,"reach":3,"impressions":4,"spend":0,"frequency_w":5.333332}}},"facebook/feed":{"desktop":{"2026-01":{"leads":4,"reach":537,"impressions":720,"spend":3.2500099999999987,"frequency_w":979.2962110000001},"2026-02":{"leads":2,"reach":579,"impressions":802,"spend":2.530003999999999,"frequency_w":1128.087018},"2026-03":{"leads":2,"reach":1024,"impressions":1385,"spend":2.659997999999999,"frequency_w":1918.326397},"2026-04":{"leads":0,"reach":1190,"impressions":1526,"spend":2.829948999999999,"frequency_w":1987.1096039999995},"2026-05":{"leads":0,"reach":1609,"impressions":2548,"spend":4.810011999999998,"frequency_w":4169.416727},"2026-06":{"leads":0,"reach":1222,"impressions":1738,"spend":5.300019,"frequency_w":2545.5129399999996}},"mobile_app":{"2026-01":{"leads":116,"reach":16373,"impressions":23294,"spend":65.020996,"frequency_w":33551.66602399999},"2026-02":{"leads":96,"reach":21582,"impressions":29662,"spend":74.25140699999997,"frequency_w":41609.314508},"2026-03":{"leads":184,"reach":195916,"impressions":273604,"spend":248.20596000000003,"frequency_w":392844.95073900017},"2026-04":{"leads":144,"reach":260487,"impressions":386702,"spend":317.8177859999999,"frequency_w":594596.3446120002},"2026-05":{"leads":94,"reach":236360,"impressions":369666,"spend":327.261025,"frequency_w":596175.2320940003},"2026-06":{"leads":48,"reach":133672,"impressions":172522,"spend":215.66445499999998,"frequency_w":232115.576754}},"mobile_web":{"2026-01":{"leads":0,"reach":4,"impressions":6,"spend":0.09999999999999999,"frequency_w":10},"2026-02":{"leads":0,"reach":179,"impressions":242,"spend":0.15,"frequency_w":329.12573899999995},"2026-03":{"leads":2,"reach":2074,"impressions":2855,"spend":1.9200070000000007,"frequency_w":4058.8611179999994},"2026-04":{"leads":0,"reach":2333,"impressions":3395,"spend":2.0799179999999993,"frequency_w":5159.812514999999},"2026-05":{"leads":0,"reach":3567,"impressions":6245,"spend":5.290270999999998,"frequency_w":11387.312292999999},"2026-06":{"leads":0,"reach":1539,"impressions":1942,"spend":2.3699580000000005,"frequency_w":2497.3119899999997}}},"facebook/facebook_reels":{"mobile_app":{"2026-01":{"leads":82,"reach":142296,"impressions":182512,"spend":96.97721400000002,"frequency_w":234911.25684299998},"2026-02":{"leads":44,"reach":142498,"impressions":165472,"spend":77.291328,"frequency_w":193251.10588200003},"2026-03":{"leads":106,"reach":184088,"impressions":234968,"spend":150.62955099999996,"frequency_w":307247.2561670001},"2026-04":{"leads":62,"reach":109135,"impressions":132240,"spend":118.44998100000002,"frequency_w":164641.75320799998},"2026-05":{"leads":42,"reach":114270,"impressions":142885,"spend":129.89674700000003,"frequency_w":190805.05051799997},"2026-06":{"leads":30,"reach":31635,"impressions":40531,"spend":74.59319500000001,"frequency_w":53181.188523000004}},"mobile_web":{"2026-01":{"leads":0,"reach":3352,"impressions":4167,"spend":1.1498840000000001,"frequency_w":5183.72272},"2026-02":{"leads":0,"reach":348,"impressions":381,"spend":0.05,"frequency_w":423.026451},"2026-03":{"leads":0,"reach":1268,"impressions":1587,"spend":0.81,"frequency_w":1987.709248},"2026-04":{"leads":0,"reach":1313,"impressions":1542,"spend":0.5700080000000001,"frequency_w":1846.7882829999999},"2026-05":{"leads":2,"reach":579,"impressions":788,"spend":0.889869,"frequency_w":1079.4450430000002},"2026-06":{"leads":0,"reach":329,"impressions":378,"spend":0.420032,"frequency_w":436.23423500000007}}}}</script>
+<script id="chart-data-os" type="application/json">{"Android":{"2026-01":{"leads":538,"reach":303502,"impressions":405637,"spend":429.46748599999984,"frequency_w":554383.82503},"2026-02":{"leads":396,"reach":334693,"impressions":425307,"spend":450.8968040000001,"frequency_w":561157.074389},"2026-03":{"leads":534,"reach":557777,"impressions":806072,"spend":761.3332360000003,"frequency_w":1256840.6242919995},"2026-04":{"leads":438,"reach":784320,"impressions":1098908,"spend":940.1091079999999,"frequency_w":1649447.9781610002},"2026-05":{"leads":304,"reach":735121,"impressions":1197001,"spend":1079.9192839999992,"frequency_w":2151054.7871299996},"2026-06":{"leads":132,"reach":277529,"impressions":402925,"spend":568.7709459999995,"frequency_w":620201.7725159997}},"iOS":{"2026-01":{"leads":352,"reach":64425,"impressions":93879,"spend":227.32265100000004,"frequency_w":141943.59189099996},"2026-02":{"leads":272,"reach":65351,"impressions":93763,"spend":227.13318999999996,"frequency_w":140688.488695},"2026-03":{"leads":526,"reach":99167,"impressions":168475,"spend":448.1167679999998,"frequency_w":304623.0787479999},"2026-04":{"leads":296,"reach":130127,"impressions":191710,"spend":487.671096,"frequency_w":299135.5729709999},"2026-05":{"leads":228,"reach":136641,"impressions":215701,"spend":499.63063399999965,"frequency_w":363003.585182},"2026-06":{"leads":119,"reach":63429,"impressions":95708,"spend":282.06908300000003,"frequency_w":153829.66352899995}}}</script>
+<script>
+(function() {
+  var CHART_DATA = JSON.parse(document.getElementById('chart-data').textContent);
+  var CHART_DATA_OS = JSON.parse(document.getElementById('chart-data-os').textContent);
+  var MONTHS = ['2026-01','2026-02','2026-03','2026-04','2026-05','2026-06'];
+  var MONTH_LABELS = ['Ene','Feb','Mar','Abr','May','Jun'];
+  var DEVICE_LABELS = { mobile_app:'App móvil', mobile_web:'Web móvil', desktop:'Escritorio', unknown:'Otros' };
+  var DEVICE_COLORS = { mobile_app:'#057488', mobile_web:'#d97706', desktop:'#7a6fea', unknown:'#94a3b8' };
+  var KPI_FORMATTERS = {
+    leads: function(v){return Math.round(v).toLocaleString('es-AR');},
+    reach: function(v){return Math.round(v).toLocaleString('es-AR');},
+    impressions: function(v){return Math.round(v).toLocaleString('es-AR');},
+    lead_reach: function(v){return v.toFixed(3) + '%';},
+    cpl: function(v){return 'USD ' + v.toFixed(2);},
+    frequency: function(v){return v.toFixed(2);}
+  };
+
+  function valueFor(cell, kpi) {
+    if (!cell) return 0;
+    switch(kpi) {
+      case 'leads': return cell.leads;
+      case 'reach': return cell.reach;
+      case 'impressions': return cell.impressions;
+      case 'lead_reach': return cell.reach ? (cell.leads/cell.reach)*100 : 0;
+      case 'cpl': return cell.leads ? cell.spend/cell.leads : 0;
+      case 'frequency': return cell.impressions ? cell.frequency_w/cell.impressions : 0;
+    }
+    return 0;
+  }
+
+  // Agrega un cell (suma campos numericos)
+  function addCells(a, b) {
+    return {
+      leads: (a.leads||0)+(b.leads||0),
+      reach: (a.reach||0)+(b.reach||0),
+      impressions: (a.impressions||0)+(b.impressions||0),
+      spend: (a.spend||0)+(b.spend||0),
+      frequency_w: (a.frequency_w||0)+(b.frequency_w||0)
+    };
+  }
+
+  function renderChart(container, kpi) {
+    var svg = container.querySelector('.line-chart');
+    var legendEl = container.querySelector('.chart-legend');
+    var placement = container.getAttribute('data-placement');
+    var os = container.getAttribute('data-os');
+
+    var monthlyTotals;
+    if (placement) {
+      var data = CHART_DATA[placement];
+      if (!data) return;
+      // Total agregado por mes (suma de todos los devices)
+      monthlyTotals = MONTHS.map(function(m){
+        var acc = { leads:0, reach:0, impressions:0, spend:0, frequency_w:0 };
+        Object.keys(data).forEach(function(dev){
+          if (data[dev][m]) acc = addCells(acc, data[dev][m]);
+        });
+        return acc;
+      });
+    } else if (os) {
+      var dataOS = CHART_DATA_OS[os];
+      if (!dataOS) return;
+      monthlyTotals = MONTHS.map(function(m){
+        return dataOS[m] || { leads:0, reach:0, impressions:0, spend:0, frequency_w:0 };
+      });
+    } else {
+      return;
+    }
+
+    var values = monthlyTotals.map(function(c){ return valueFor(c, kpi); });
+    var maxV = Math.max.apply(null, values.concat([0]));
+    if (maxV === 0) maxV = 1;
+    var minV = 0;
+
+    var W = 1100, H = 280;
+    var padL = 60, padR = 24, padT = 18, padB = 32;
+    var innerW = W - padL - padR;
+    var innerH = H - padT - padB;
+    var stepX = innerW / (MONTHS.length - 1);
+
+    function x(i){return padL + i*stepX;}
+    function y(v){return padT + innerH - ((v - minV) / (maxV - minV)) * innerH;}
+
+    // Color por KPI activo (toma del chip)
+    var chip = container.querySelector('.chart-chip.active');
+    var color = '#057488';
+    if (chip) {
+      var style = chip.getAttribute('style') || '';
+      var m = style.match(/--c:s*([^;]+)/);
+      if (m) color = m[1].trim();
+    }
+
+    var parts = [];
+    // Y grid + labels
+    for (var i = 0; i <= 4; i++) {
+      var val = minV + (maxV - minV) * (i/4);
+      var yPos = y(val);
+      parts.push('<line x1="'+padL+'" y1="'+yPos.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+yPos.toFixed(1)+'" stroke="#e5e9e3" stroke-width="1" stroke-dasharray="3,3"/>');
+      parts.push('<text x="'+(padL-8)+'" y="'+(yPos+3).toFixed(1)+'" text-anchor="end" font-size="10.5" fill="#6b7a72">'+KPI_FORMATTERS[kpi](val)+'</text>');
+    }
+    // X labels
+    for (var j = 0; j < MONTHS.length; j++) {
+      parts.push('<text x="'+x(j).toFixed(1)+'" y="'+(H-12)+'" text-anchor="middle" font-size="11" font-weight="600" fill="#2d3e46">'+MONTH_LABELS[j]+'</text>');
+    }
+    parts.push('<line x1="'+padL+'" y1="'+(padT+innerH)+'" x2="'+(W-padR)+'" y2="'+(padT+innerH)+'" stroke="#2d3e46" stroke-width="1"/>');
+
+    // Area suave bajo la curva
+    var areaPath = values.map(function(v,i){
+      return (i===0 ? 'M' : 'L') + x(i).toFixed(1) + ',' + y(v).toFixed(1);
+    }).join(' ') + ' L' + x(values.length-1).toFixed(1) + ',' + (padT+innerH) + ' L' + x(0).toFixed(1) + ',' + (padT+innerH) + ' Z';
+    parts.push('<path d="'+areaPath+'" fill="'+color+'" opacity="0.08"/>');
+
+    // Linea + puntos
+    var linePath = values.map(function(v,i){
+      return (i===0 ? 'M' : 'L') + x(i).toFixed(1) + ',' + y(v).toFixed(1);
+    }).join(' ');
+    parts.push('<path d="'+linePath+'" fill="none" stroke="'+color+'" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>');
+    values.forEach(function(v,i){
+      parts.push('<circle cx="'+x(i).toFixed(1)+'" cy="'+y(v).toFixed(1)+'" r="3.8" fill="'+color+'" stroke="#fff" stroke-width="1.8"><title>'+MONTH_LABELS[i]+': '+KPI_FORMATTERS[kpi](v)+'</title></circle>');
+    });
+
+    svg.innerHTML = parts.join('');
+    legendEl.innerHTML = '';
+  }
+
+  // Click handler para expandir/colapsar
+  document.addEventListener('click', function(e) {
+    // Ignorar clicks sobre chips
+    if (e.target.closest('.chart-chip')) {
+      var chip = e.target.closest('.chart-chip');
+      var cont = chip.closest('.chart-container');
+      var kpi = chip.getAttribute('data-kpi');
+      cont.querySelectorAll('.chart-chip').forEach(function(c){c.classList.toggle('active', c === chip);});
+      renderChart(cont, kpi);
+      return;
+    }
+    var tr = e.target.closest('tr.strong-row.toggle');
+    if (!tr || tr.classList.contains('no-toggle')) return;
+    var id = tr.getAttribute('data-id');
+    if (!id) return;
+    var open = tr.classList.toggle('is-open');
+    document.querySelectorAll('tr[data-parent="' + id + '"]').forEach(function(r) {
+      r.hidden = !open;
+    });
+    // Si tiene chart, renderizar al abrir
+    if (open) {
+      var hasChart = tr.hasAttribute('data-placement') || tr.hasAttribute('data-os');
+      if (hasChart) {
+        var chartTr = document.querySelector('tr.chart-row[data-parent="' + id + '"]');
+        if (chartTr) {
+          var cont = chartTr.querySelector('.chart-container');
+          var activeChip = cont.querySelector('.chart-chip.active');
+          var kpi = activeChip ? activeChip.getAttribute('data-kpi') : 'leads';
+          renderChart(cont, kpi);
+        }
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
