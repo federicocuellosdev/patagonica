@@ -153,7 +153,7 @@ function buildPropertyRow(prop) {
     listingType,
     propertyType,
     `${priceData.price} ${priceData.currency}`,
-    prop.public_url || `https://patagonicapropiedades.com/propiedades/${prop.id}`,
+    `https://patagonicapropiedades.com.ar/p/${prop.id}-prop`,
     ...imageSlots,
     prop.address || '',
     city,
