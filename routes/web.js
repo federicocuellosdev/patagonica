@@ -173,7 +173,8 @@ router.post('/contacto-whatsapp', async (req, res) => {
       contactId: contact.id,
       note: note.trim(),
       tags: ['WEB - Ficha'],
-      customFields: { tokko_id_propiedad: propiedad_id }
+      customFields: { tokko_id_propiedad: propiedad_id },
+      stageId: 103742735 // Pipeline Venta -> NO CONTACTAR
     });
 
     res.json({ success: true, contactId: contact.id, leadId: lead.id });

@@ -52,11 +52,11 @@ async function getLeadFieldIdByName(name) {
   return leadFieldIdCache[name] || null;
 }
 
-async function createLead({ title, contactId, note, whatsappNote, tags = [], customFields = {} }) {
+async function createLead({ title, contactId, note, whatsappNote, tags = [], customFields = {}, stageId = null }) {
   const leadBody = {
     name: title,
     pipeline_id: PIPELINE_ID,
-    status_id: STAGE_ID,
+    status_id: stageId || STAGE_ID,
     _embedded: {
       contacts: [{ id: contactId }],
       tags: tags.map(t => ({ name: t }))
