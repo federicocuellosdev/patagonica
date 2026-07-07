@@ -498,40 +498,79 @@
         }
         .lotes-inner { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
         .lotes-header {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
             display: grid;
-            grid-template-columns: 1fr auto;
-            align-items: center;
-            gap: 3rem;
-            margin-bottom: 3rem;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
             text-align: left;
         }
-        .lotes-header-text { max-width: 560px; }
+        .lotes-header-text {
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
         .lotes-header .section-subtitle {
             font-size: 0.8rem;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.4);
+            color: var(--secondary);
             margin-bottom: 0.75rem;
             font-weight: 600;
         }
         .lotes-header .section-title {
             font-family: Gilroy, sans-serif;
-            font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
             color: #fff;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1.25rem;
             line-height: 1.15;
             font-weight: 700;
         }
         .lotes-desc {
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.65);
             font-size: 0.9rem;
+            line-height: 1.7;
+            margin: 0;
         }
         .lotes-header-map {
-            width: 320px;
-            max-width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            background: rgba(0,0,0,0.25);
+        }
+        .lotes-header-map img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
             display: block;
+        }
+        .lotes-header-map-badge {
+            position: absolute;
+            bottom: 1.25rem;
+            right: 1.25rem;
+            background: var(--secondary);
+            color: #fff;
+            padding: 1rem 1.25rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(5,116,136,0.35);
+        }
+        .lotes-header-map-badge strong {
+            display: block;
+            font-size: 1.5rem;
+            line-height: 1;
+            font-family: Gilroy, sans-serif;
+        }
+        .lotes-header-map-badge span {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
         }
         .lotes-manzana { margin-bottom: 2.5rem; }
         .lotes-manzana-title {
@@ -1332,9 +1371,9 @@
             .gallery-mobile-counter { display: block; }
             .gallery-mobile-cta { display: block; }
             .lotes-grid { grid-template-columns: repeat(2, 1fr); }
-            .lotes-header { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
-            .lotes-header-text { margin: 0 auto; }
-            .lotes-header-map { width: 260px; margin: 0 auto; }
+            .lotes-header { grid-template-columns: 1fr; }
+            .lotes-header-map { aspect-ratio: auto; min-height: 280px; order: -1; }
+            .lotes-header-text { padding: 2rem 1.5rem; }
             .hero {
                 background-attachment: scroll;
             }
@@ -1543,7 +1582,13 @@
                     <h2 class="section-title">Encuentra tu lote ideal</h2>
                     <p class="lotes-desc">20 lotes exclusivos en el faldeo del Cerro Bayo. Luz y gas en puerta, coihues autóctonos y vistas al lago Nahuel Huapi.</p>
                 </div>
-                <img class="lotes-header-map" loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-mapa-lotes.webp" alt="Cota Mil — Mapa de lotes del loteo">
+                <div class="lotes-header-map">
+                    <img loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-mapa-lotes.webp" alt="Cota Mil — Mapa de lotes del loteo">
+                    <div class="lotes-header-map-badge">
+                        <strong>Mapa</strong>
+                        <span>de lotes</span>
+                    </div>
+                </div>
             </div>
 
             <!-- Manzana A -->
