@@ -498,9 +498,14 @@
         }
         .lotes-inner { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
         .lotes-header {
-            text-align: center;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 3rem;
             margin-bottom: 3rem;
+            text-align: left;
         }
+        .lotes-header-text { max-width: 560px; }
         .lotes-header .section-subtitle {
             font-size: 0.8rem;
             letter-spacing: 3px;
@@ -520,8 +525,13 @@
         .lotes-desc {
             color: rgba(255,255,255,0.5);
             font-size: 0.9rem;
-            max-width: 560px;
-            margin: 0 auto;
+        }
+        .lotes-header-map {
+            width: 320px;
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+            display: block;
         }
         .lotes-manzana { margin-bottom: 2.5rem; }
         .lotes-manzana-title {
@@ -1322,6 +1332,9 @@
             .gallery-mobile-counter { display: block; }
             .gallery-mobile-cta { display: block; }
             .lotes-grid { grid-template-columns: repeat(2, 1fr); }
+            .lotes-header { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+            .lotes-header-text { margin: 0 auto; }
+            .lotes-header-map { width: 260px; margin: 0 auto; }
             .hero {
                 background-attachment: scroll;
             }
@@ -1525,9 +1538,12 @@
     <section class="lotes" id="lotes">
         <div class="lotes-inner">
             <div class="lotes-header">
-                <p class="section-subtitle">Lotes disponibles</p>
-                <h2 class="section-title">Encuentra tu lote ideal</h2>
-                <p class="lotes-desc">20 lotes exclusivos en el faldeo del Cerro Bayo. Luz y gas en puerta, coihues autóctonos y vistas al lago Nahuel Huapi.</p>
+                <div class="lotes-header-text">
+                    <p class="section-subtitle">Lotes disponibles</p>
+                    <h2 class="section-title">Encuentra tu lote ideal</h2>
+                    <p class="lotes-desc">20 lotes exclusivos en el faldeo del Cerro Bayo. Luz y gas en puerta, coihues autóctonos y vistas al lago Nahuel Huapi.</p>
+                </div>
+                <img class="lotes-header-map" loading="lazy" src="./cota-1000/img/patagonica-propiedades-cota-1000-mapa-lotes.webp" alt="Cota Mil — Mapa de lotes del loteo">
             </div>
 
             <!-- Manzana A -->
