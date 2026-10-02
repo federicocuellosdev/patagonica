@@ -231,6 +231,14 @@
         }
         .card-plaza .card-eyebrow { background: rgba(212,168,90,0.85); }
 
+        .card-form {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(58,166,118,0.25) 0%, transparent 55%),
+                radial-gradient(circle at 80% 80%, rgba(5,116,136,0.30) 0%, transparent 55%),
+                linear-gradient(135deg, #1f4a3c 0%, #122819 70%);
+        }
+        .card-form .card-eyebrow { background: rgba(58,166,118,0.85); }
+
         footer {
             background: var(--primary);
             color: rgba(255,255,255,0.6);
@@ -327,6 +335,25 @@
                         <span class="card-eyebrow">Análisis Meta Ads</span>
                         <h2 class="card-title">Dispositivo &amp; Plaza</h2>
                         <p class="card-desc">Performance por placement, sistema operativo y tipo de dispositivo con drill-down.</p>
+                        <span class="card-cta">Ver informe</span>
+                    </div>
+                </a>
+
+                <a href="dashboard/informe-meta-form.html" class="card card-form">
+                    <div class="card-bg-grid"></div>
+                    <div class="card-overlay"></div>
+                    <div class="card-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="9" y1="13" x2="15" y2="13"/>
+                            <line x1="9" y1="17" x2="15" y2="17"/>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-eyebrow">Campaña FORM</span>
+                        <h2 class="card-title">Informe Formularios</h2>
+                        <p class="card-desc">Funnel de lead ads: alcance, abiertos, completados, tasa de completación, CPL y CPM por ad set y anuncio.</p>
                         <span class="card-cta">Ver informe</span>
                     </div>
                 </a>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+  (function() {
+      document.write('<base href="../">');
+  })();
+  </script>
+  <title>Informe FORM | Patagónica Propiedades</title>
+  <link rel="icon" type="image/png" href="src/img/patagonica-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://d1v2p1s05qqabi.cloudfront.net/fonts/patagonica/fonts-patagonica.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #121C25;
+      --secondary: #057488;
+      --light: #f7f7f7;
+      --white: #fff;
+      --text: #212529;
+      --text-muted: #6c757d;
+      --border: #e4ddd4;
+      --accent: #4a90e2;
+      --good: #3aa676;
+      --warn: #d4a85a;
+      --bad: #c0526a;
+      --br: 8px;
+      --br-lg: 16px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Gilroy, 'Source Sans Pro', sans-serif;
+      background: var(--light);
+      color: var(--text);
+      line-height: 1.55;
+      visibility: hidden;
+    }
+    body.is-auth { visibility: visible; }
+    .topbar {
+      background: var(--primary); color: var(--white); padding: 1rem 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .topbar a.logo { color: var(--white); text-decoration: none; font-weight: 700; font-size: 1rem; letter-spacing: 0.3px; }
+    .topbar .nav { display: flex; gap: 1rem; align-items: center; }
+    .topbar .nav a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.85rem; padding: 0.4rem 0.75rem; border-radius: 6px; transition: all 0.2s; }
+    .topbar .nav a:hover { color: var(--white); background: rgba(255,255,255,0.1); }
+    .topbar-logout { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: var(--white); padding: 0.4rem 0.9rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+    .topbar-logout:hover { background: rgba(255,255,255,0.2); }
+    .page { max-width: 1400px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .page-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .page-title { font-size: 1.7rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem; }
+    .page-sub { color: var(--text-muted); font-size: 0.9rem; }
+    .page-actions { display: flex; gap: 0.6rem; align-items: center; }
+    .btn { background: var(--secondary); color: var(--white); border: 0; padding: 0.55rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; }
+    .btn:hover { opacity: 0.9; }
+    .btn.ghost { background: transparent; color: var(--secondary); border: 1px solid var(--secondary); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .meta-strip { color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .kpi { background: var(--white); border-radius: var(--br); padding: 1.1rem 1.25rem; border: 1px solid var(--border); }
+    .kpi-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 600; }
+    .kpi-value { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+    .kpi-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+    .section { margin-bottom: 2.5rem; }
+    .section-title { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.75rem; display: flex; align-items: baseline; gap: 0.5rem; }
+    .section-title .count { font-size: 0.78rem; font-weight: 500; color: var(--text-muted); }
+
+    .tabla-wrap { background: var(--white); border-radius: var(--br); border: 1px solid var(--border); overflow: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    th { background: #f0ece6; text-align: left; padding: 0.7rem 0.75rem; font-weight: 600; color: var(--primary); white-space: nowrap; position: sticky; top: 0; }
+    td { padding: 0.6rem 0.75rem; border-top: 1px solid var(--border); }
+    tbody tr:hover { background: #faf7f0; }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    .totals-row td { font-weight: 700; background: #faf5e9; border-top: 2px solid var(--border); }
+    .pill { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 10px; font-size: 0.7rem; font-weight: 600; }
+    .pill-good { background: #e3f3eb; color: var(--good); }
+    .pill-warn { background: #faeed7; color: #a07a30; }
+    .pill-bad  { background: #fadfe3; color: var(--bad); }
+
+    .status { padding: 1rem 1.25rem; border-radius: var(--br); margin-bottom: 1.5rem; font-size: 0.9rem; }
+    .status.loading { background: #f0ece6; color: var(--text-muted); }
+    .status.error { background: #fadfe3; color: var(--bad); border: 1px solid #e8a0ac; }
+
+    .footnote { font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem; line-height: 1.6; }
+
+    @media (max-width: 640px) {
+      .page { padding: 1.25rem 0.75rem 2rem; }
+      .page-title { font-size: 1.3rem; }
+      .kpi-value { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="dashboard/hub.html" class="logo">Patagónica · Panel interno</a>
+    <div class="nav">
+      <a href="dashboard/hub.html">Hub</a>
+      <a href="dashboard/index.html">Dashboard</a>
+      <button type="button" class="topbar-logout">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="page-head">
+      <div>
+        <h1 class="page-title">Informe campaña FORM</h1>
+        <div class="page-sub">Funnel de formularios instantáneos (Lead Ads) — Patagónica Propiedades</div>
+        <div class="meta-strip" id="meta-strip">Cargando…</div>
+      </div>
+      <div class="page-actions">
+        <button type="button" class="btn ghost" id="btn-refresh">Refrescar</button>
+      </div>
+    </div>
+
+    <div id="status" class="status loading">Cargando datos desde Meta…</div>
+
+    <div id="content" style="display:none">
+      <div class="kpi-grid" id="kpi-grid"></div>
+
+      <section class="section">
+        <h2 class="section-title">Por ad set <span class="count" id="adset-count"></span></h2>
+        <div class="tabla-wrap">
+          <table id="tbl-adsets">
+            <thead>
+              <tr>
+                <th>Ad Set</th>
+                <th class="num">Impresiones</th>
+                <th class="num">Alcance</th>
+                <th class="num">Form abiertos*</th>
+                <th class="num">Form completos</th>
+                <th class="num">Op/Alc</th>
+                <th class="num">Sub/Alc</th>
+                <th class="num">Sub/Op</th>
+                <th class="num">CPL</th>
+                <th class="num">CPM</th>
+                <th class="num">Spend</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">Por anuncio <span class="count" id="ad-count"></span></h2>
+        <div class="tabla-wrap">
+          <table id="tbl-ads">
+            <thead>
+              <tr>
+                <th>Anuncio</th>
+                <th class="num">Impresiones</th>
+                <th class="num">Alcance</th>
+                <th class="num">Form abiertos*</th>
+                <th class="num">Form completos</th>
+                <th class="num">Op/Alc</th>
+                <th class="num">Sub/Alc</th>
+                <th class="num">Sub/Op</th>
+                <th class="num">CPL</th>
+                <th class="num">CPM</th>
+                <th class="num">Spend</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <p class="footnote">
+        (*) <strong>Form abiertos</strong>: Meta API no expone directamente "Instant Form Opens". Usamos <code>inline_link_clicks</code> como proxy (clicks al link del ad → abre el formulario instantáneo). Puede sobrecontar levemente respecto al valor real que aparece en Ads Manager.<br>
+        Período: histórico desde el inicio de la campaña FORM — Generar oportunidades (<code>120236026777090238</code>). Datos directos de Meta Marketing API v23.0. Moneda: USD.
+      </p>
+    </div>
+  </main>
+
+<script>
+(function() {
+  var API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? 'http://localhost:3000'
+    : 'https://patagonica.onrender.com';
+  var TOKEN_KEY = 'patagonica_dashboard_token';
+  var token = sessionStorage.getItem(TOKEN_KEY);
+  if (!token) { location.replace('dashboard/login.html'); return; }
+
+  var statusEl  = document.getElementById('status');
+  var contentEl = document.getElementById('content');
+  var metaStrip = document.getElementById('meta-strip');
+  var btnRefresh = document.getElementById('btn-refresh');
+
+  function fmtInt(n) { return (n || 0).toLocaleString('es-AR'); }
+  function fmtUSD(n) { return n == null ? '-' : '$' + Number(n).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function fmtPct(n) { return n == null ? '-' : (n * 100).toFixed(2) + '%'; }
+
+  function cplBadge(cpl, median) {
+    if (cpl == null) return '-';
+    var cls = 'pill-warn';
+    if (cpl <= median * 0.6) cls = 'pill-good';
+    else if (cpl > median * 1.6) cls = 'pill-bad';
+    return '<span class="pill ' + cls + '">' + fmtUSD(cpl) + '</span>';
+  }
+
+  function median(arr) {
+    var vals = arr.filter(function(v) { return v != null; }).sort(function(a, b) { return a - b; });
+    if (!vals.length) return 0;
+    var m = Math.floor(vals.length / 2);
+    return vals.length % 2 ? vals[m] : (vals[m - 1] + vals[m]) / 2;
+  }
+
+  function renderKPIs(totals) {
+    var items = [
+      { label: 'Alcance', value: fmtInt(totals.reach) },
+      { label: 'Impresiones', value: fmtInt(totals.imp) },
+      { label: 'Form abiertos*', value: fmtInt(totals.opens) },
+      { label: 'Form completos', value: fmtInt(totals.subs) },
+      { label: 'Tasa completación', value: fmtPct(totals.completionRate), sub: 'subs / opens' },
+      { label: 'CPL promedio', value: fmtUSD(totals.cpl) },
+      { label: 'CPM', value: fmtUSD(totals.cpm) },
+      { label: 'Inversión total', value: fmtUSD(totals.spend) }
+    ];
+    document.getElementById('kpi-grid').innerHTML = items.map(function(k) {
+      return '<div class="kpi"><div class="kpi-label">' + k.label + '</div><div class="kpi-value">' + k.value + '</div>' + (k.sub ? '<div class="kpi-sub">' + k.sub + '</div>' : '') + '</div>';
+    }).join('');
+  }
+
+  function renderTable(rows, totals, tableId) {
+    var tbody = document.querySelector('#' + tableId + ' tbody');
+    var cplMedian = median(rows.map(function(r) { return r.cpl; }));
+    tbody.innerHTML = rows.map(function(r) {
+      return '<tr>' +
+        '<td>' + (r.name || '') + '</td>' +
+        '<td class="num">' + fmtInt(r.imp) + '</td>' +
+        '<td class="num">' + fmtInt(r.reach) + '</td>' +
+        '<td class="num">' + fmtInt(r.opens) + '</td>' +
+        '<td class="num">' + fmtInt(r.subs) + '</td>' +
+        '<td class="num">' + fmtPct(r.openRate) + '</td>' +
+        '<td class="num">' + fmtPct(r.subRate) + '</td>' +
+        '<td class="num">' + fmtPct(r.completionRate) + '</td>' +
+        '<td class="num">' + cplBadge(r.cpl, cplMedian) + '</td>' +
+        '<td class="num">' + fmtUSD(r.cpm) + '</td>' +
+        '<td class="num">' + fmtUSD(r.spend) + '</td>' +
+      '</tr>';
+    }).join('') +
+    '<tr class="totals-row">' +
+      '<td>TOTAL</td>' +
+      '<td class="num">' + fmtInt(totals.imp) + '</td>' +
+      '<td class="num">' + fmtInt(totals.reach) + '</td>' +
+      '<td class="num">' + fmtInt(totals.opens) + '</td>' +
+      '<td class="num">' + fmtInt(totals.subs) + '</td>' +
+      '<td class="num">' + fmtPct(totals.openRate) + '</td>' +
+      '<td class="num">' + fmtPct(totals.subRate) + '</td>' +
+      '<td class="num">' + fmtPct(totals.completionRate) + '</td>' +
+      '<td class="num">' + fmtUSD(totals.cpl) + '</td>' +
+      '<td class="num">' + fmtUSD(totals.cpm) + '</td>' +
+      '<td class="num">' + fmtUSD(totals.spend) + '</td>' +
+    '</tr>';
+  }
+
+  function load(force) {
+    statusEl.className = 'status loading';
+    statusEl.textContent = force ? 'Refrescando desde Meta…' : 'Cargando datos desde Meta…';
+    contentEl.style.display = 'none';
+    btnRefresh.disabled = true;
+    var url = API_BASE + '/api/reportes/meta-form-funnel' + (force ? '?refresh=1' : '');
+    fetch(url, { headers: { Authorization: 'Bearer ' + token } })
+      .then(function(r) {
+        if (r.status === 401) { sessionStorage.removeItem(TOKEN_KEY); location.replace('dashboard/login.html'); return; }
+        if (!r.ok) return r.json().then(function(j) { throw new Error(j.error || 'Error ' + r.status); });
+        return r.json();
+      })
+      .then(function(data) {
+        if (!data) return;
+        renderKPIs(data.totals);
+        renderTable(data.adsets, data.totals, 'tbl-adsets');
+        renderTable(data.ads, data.totals, 'tbl-ads');
+        document.getElementById('adset-count').textContent = '(' + data.adsets.length + ')';
+        document.getElementById('ad-count').textContent = '(' + data.ads.length + ')';
+        var when = new Date(data.generated_at).toLocaleString('es-AR');
+        metaStrip.textContent = 'Campaña: ' + data.campaign_name + ' · Generado ' + when + (data.cached ? ' (cacheado hace ' + data.cached_age_s + 's)' : ' · fresco');
+        statusEl.style.display = 'none';
+        contentEl.style.display = 'block';
+        btnRefresh.disabled = false;
+      })
+      .catch(function(err) {
+        statusEl.className = 'status error';
+        statusEl.textContent = 'Error: ' + err.message;
+        btnRefresh.disabled = false;
+      });
+  }
+
+  // Token verify + first load
+  fetch(API_BASE + '/api/auth/verify', { headers: { Authorization: 'Bearer ' + token } })
+    .then(function(r) {
+      if (!r.ok) throw new Error('invalid');
+      document.body.classList.add('is-auth');
+      load(false);
+    })
+    .catch(function() {
+      sessionStorage.removeItem(TOKEN_KEY);
+      location.replace('dashboard/login.html');
+    });
+
+  btnRefresh.addEventListener('click', function() { load(true); });
+
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.topbar-logout')) {
+      sessionStorage.removeItem(TOKEN_KEY);
+      location.href = 'dashboard/login.html';
+    }
+  });
+})();
+</script>
+</body>
+</html>
