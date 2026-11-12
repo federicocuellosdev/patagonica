@@ -70,10 +70,39 @@ async function getAdCreative({ ad_id, creative_id } = {}) {
   return ad.creative || null;
 }
 
+// Cache del page access token (una vez por proceso; Meta no lo rota solo).
+let pageTokenCache = null;
+async function getPageAccessToken() {
+  if (pageTokenCache) return pageTokenCache;
+  const pid = process.env.META_PAGE_ID;
+  if (!pid) throw new Error('META_PAGE_ID no configurado');
+  const page = await graph(`/${pid}`, { fields: 'access_token' });
+  if (!page.access_token) throw new Error('No se pudo obtener page access token');
+  pageTokenCache = page.access_token;
+  return pageTokenCache;
+}
+
 async function getVideo({ video_id }) {
-  return graph(`/${video_id}`, {
-    fields: 'id,title,description,source,picture,permalink_url,length,created_time,thumbnails{uri}'
+  // El campo `source` (URL del MP4) solo lo devuelve Meta cuando el request va con
+  // page access token, no con el user/system token. Hacemos el swap transparente.
+  const pageToken = await getPageAccessToken();
+  const r = await axios.get(`${BASE()}/${video_id}`, {
+    params: {
+      access_token: pageToken,
+      fields: 'id,title,description,source,picture,permalink_url,length,created_time,embed_html,status,thumbnails{uri}'
+    }
   });
+  return r.data;
+}
+
+async function listAdVideos({ limit = 25 } = {}) {
+  // /act_id/advideos devuelve videos subidos al ad account con sus URLs de descarga.
+  // Útil para inventario visual rápido sin tener que pasar por cada ad.
+  const data = await graph(`/${ACT_ID()}/advideos`, {
+    fields: 'id,title,source,picture,permalink_url,length,created_time',
+    limit
+  });
+  return data.data || [];
 }
 
 async function listForms({ page_id, limit = 25 } = {}) {
@@ -87,4 +116,4 @@ async function listForms({ page_id, limit = 25 } = {}) {
   return r.data.data || [];
 }
 
-module.exports = { listCampaigns, listAdsets, listAds, getInsights, getAdCreative, getVideo, listForms };
+module.exports = { listCampaigns, listAdsets, listAds, getInsights, getAdCreative, getVideo, listAdVideos, listForms };

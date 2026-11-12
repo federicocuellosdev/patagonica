@@ -78,6 +78,17 @@ function register(server) {
     safe(async (args) => asText(await meta.getVideo(args)))
   );
 
+  server.registerTool('meta_list_ad_videos',
+    {
+      title: 'Meta Ads: videos del ad account',
+      description: 'Inventario de videos subidos al ad account con URL de MP4 (source) descargable. Útil para análisis visual sin pasar por cada ad individual.',
+      inputSchema: {
+        limit: z.number().int().min(1).max(100).optional().default(25)
+      }
+    },
+    safe(async (args) => asText(await meta.listAdVideos(args)))
+  );
+
   server.registerTool('meta_list_forms',
     {
       title: 'Meta Ads: formularios Lead Ads',
