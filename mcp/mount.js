@@ -15,8 +15,49 @@ const SERVER_INFO = {
   version: '1.0.0'
 };
 
+const INSTRUCTIONS = `MCP de Patagónica Propiedades. Fuentes conectadas: Meta Ads, Google Analytics 4,
+Kommo CRM y Tokko Broker. Objetivo: analizar rendimiento de campañas y creatividades
+para orientar decisiones de marketing y proceso creativo.
+
+CÓMO OPERAR
+- Para evaluar campañas: empezar por meta_list_campaigns (filtrar ACTIVE) y luego
+  meta_get_insights a nivel ad con date_preset last_30d. Ordenar por CTR, spend o
+  cost_per_action_type.
+- Para análisis de piezas visuales: meta_get_ad_creative devuelve thumbnail_url y
+  video_id. Para la URL descargable del MP4, meta_get_video (ya usa page token).
+  meta_list_ad_videos trae el inventario completo del ad account.
+- Para medir conversión real: cruzar con kommo_list_leads filtrando pipeline/status.
+  Patagónica usa el pipeline "Venta" (13448423) y el embudo "Agente AI" (14708923).
+- Para tráfico del sitio: ga4_run_report con dimensión sessionCampaignName cruza con
+  las campañas Meta.
+- Las URLs de fotos Tokko y videos Meta son fetcheables directamente por el cliente.
+
+LÍMITES
+- Meta Marketing API: tier Standard, 9000 pts/hora, 100 QPS mutaciones, 4 cambios
+  de presupuesto por hora.
+- Kommo: 7 req/seg. Paginar siempre con limit + page.
+- GA4 Data API: 10 QPS por propiedad.
+- Tokko: sin límite documentado, mantener caudal razonable.
+
+NO HACER
+- No sugerir cambios de presupuesto o pausa de campañas sin advertir el riesgo:
+  la cuenta publicitaria de Patagónica ya tuvo bloqueos previos.
+- No violar la política de Housing / Special Ad Category: Patagónica anuncia
+  inmuebles y cae en esa categoría. Antes de proponer targeting por edad, género,
+  código postal o intereses demográficos, advertir que puede disparar sanciones.
+- No proponer scraping masivo ni loops sin paginación.
+- No borrar leads o contactos de Kommo (no está expuesto en tools, pero no sugerirlo
+  como workaround).
+
+CONTEXTO DE NEGOCIO
+- Patagónica Propiedades: inmobiliaria en Villa La Angostura (Patagonia, Argentina).
+- Moneda publicitaria: USD. Mercado local: AR.
+- Producto: propiedades únicas + emprendimientos (desarrollos en pozo).
+- El sitio público es l.patagonicapropiedades.com.ar.
+`;
+
 function buildServer() {
-  const server = new McpServer(SERVER_INFO);
+  const server = new McpServer(SERVER_INFO, { instructions: INSTRUCTIONS });
   kommoTools.register(server);
   metaTools.register(server);
   tokkoTools.register(server);
