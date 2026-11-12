@@ -9,7 +9,13 @@ function getCreds() {
   if (credsCache) return credsCache;
   const raw = process.env.GOOGLE_CREDENTIALS;
   if (!raw) throw new Error('GOOGLE_CREDENTIALS no configurado');
-  credsCache = JSON.parse(raw);
+  // Render guarda env multilínea con \n reales que rompen JSON.parse en el private_key.
+  // Si falla el parse directo, re-intentar escapando newlines.
+  try {
+    credsCache = JSON.parse(raw);
+  } catch (e) {
+    credsCache = JSON.parse(raw.replace(/\r?\n/g, '\\n'));
+  }
   return credsCache;
 }
 
