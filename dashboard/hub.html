@@ -239,6 +239,22 @@
         }
         .card-form .card-eyebrow { background: rgba(58,166,118,0.85); }
 
+        .card-estrategia {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(212,168,90,0.22) 0%, transparent 55%),
+                radial-gradient(circle at 80% 80%, rgba(192,82,106,0.28) 0%, transparent 55%),
+                linear-gradient(135deg, #4a2a3a 0%, #1a1218 70%);
+        }
+        .card-estrategia .card-eyebrow { background: rgba(212,168,90,0.85); }
+
+        .card-calidad {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(74,144,226,0.22) 0%, transparent 55%),
+                radial-gradient(circle at 80% 80%, rgba(5,116,136,0.30) 0%, transparent 55%),
+                linear-gradient(135deg, #1b3146 0%, #0f1a26 70%);
+        }
+        .card-calidad .card-eyebrow { background: rgba(74,144,226,0.85); }
+
         footer {
             background: var(--primary);
             color: rgba(255,255,255,0.6);
@@ -354,6 +370,41 @@
                         <span class="card-eyebrow">Campaña FORM</span>
                         <h2 class="card-title">Informe Formularios</h2>
                         <p class="card-desc">Funnel de lead ads: alcance, abiertos, completados, tasa de completación, CPL y CPM por ad set y anuncio.</p>
+                        <span class="card-cta">Ver informe</span>
+                    </div>
+                </a>
+
+                <a href="dashboard/informe-calidad-anuncios.html" class="card card-calidad">
+                    <div class="card-bg-grid"></div>
+                    <div class="card-overlay"></div>
+                    <div class="card-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="9"/>
+                            <path d="M8 12l3 3 5-6"/>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-eyebrow">Calidad creativa</span>
+                        <h2 class="card-title">Calidad de anuncios</h2>
+                        <p class="card-desc">Hook, hold, CTR al link, tasa de envío y CPL por anuncio, con miniatura del creativo (últimos 3 meses).</p>
+                        <span class="card-cta">Ver informe</span>
+                    </div>
+                </a>
+
+                <a href="dashboard/resumen-estrategia.html" class="card card-estrategia">
+                    <div class="card-bg-grid"></div>
+                    <div class="card-overlay"></div>
+                    <div class="card-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-eyebrow">Estrategia mensual</span>
+                        <h2 class="card-title">Resumen Estrategia</h2>
+                        <p class="card-desc">Vista ejecutiva mensual: campañas activas por objetivo, inversión, pipeline Kommo y principales puntos.</p>
                         <span class="card-cta">Ver informe</span>
                     </div>
                 </a>
