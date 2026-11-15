@@ -193,6 +193,19 @@
             font-size: 0.9rem;
         }
         .card:hover .card-cta::after { transform: translateX(5px); }
+        .card-date {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.4px;
+            color: rgba(255,255,255,0.72);
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 0.25rem 0.65rem;
+            border-radius: 50px;
+            backdrop-filter: blur(2px);
+        }
 
         .card-bg-grid {
             position: absolute;
@@ -319,64 +332,10 @@
         <section class="cards-section">
             <div class="cards-grid">
 
-                <a href="dashboard/index.html" class="card card-dashboard">
-                    <div class="card-bg-grid"></div>
-                    <div class="card-overlay"></div>
-                    <div class="card-icon" aria-hidden="true">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="7" height="9"/>
-                            <rect x="14" y="3" width="7" height="5"/>
-                            <rect x="14" y="12" width="7" height="9"/>
-                            <rect x="3" y="16" width="7" height="5"/>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <span class="card-eyebrow">Performance</span>
-                        <h2 class="card-title">Dashboard</h2>
-                        <p class="card-desc">KPIs, campañas, evolución temporal y desglose por entidad.</p>
-                        <span class="card-cta">Ingresar</span>
-                    </div>
-                </a>
-
-                <a href="dashboard/dispositivo-plaza.html" class="card card-plaza">
-                    <div class="card-bg-grid"></div>
-                    <div class="card-overlay"></div>
-                    <div class="card-icon" aria-hidden="true">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 3v18h18"/>
-                            <path d="M7 14l4-4 4 4 5-6"/>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <span class="card-eyebrow">Análisis Meta Ads</span>
-                        <h2 class="card-title">Dispositivo &amp; Plaza</h2>
-                        <p class="card-desc">Performance por placement, sistema operativo y tipo de dispositivo con drill-down.</p>
-                        <span class="card-cta">Ver informe</span>
-                    </div>
-                </a>
-
-                <a href="dashboard/informe-meta-form.html" class="card card-form">
-                    <div class="card-bg-grid"></div>
-                    <div class="card-overlay"></div>
-                    <div class="card-icon" aria-hidden="true">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                            <polyline points="14 2 14 8 20 8"/>
-                            <line x1="9" y1="13" x2="15" y2="13"/>
-                            <line x1="9" y1="17" x2="15" y2="17"/>
-                        </svg>
-                    </div>
-                    <div class="card-body">
-                        <span class="card-eyebrow">Campaña FORM</span>
-                        <h2 class="card-title">Informe Formularios</h2>
-                        <p class="card-desc">Funnel de lead ads: alcance, abiertos, completados, tasa de completación, CPL y CPM por ad set y anuncio.</p>
-                        <span class="card-cta">Ver informe</span>
-                    </div>
-                </a>
-
                 <a href="dashboard/informe-calidad-anuncios.html" class="card card-calidad">
                     <div class="card-bg-grid"></div>
                     <div class="card-overlay"></div>
+                    <span class="card-date">14 nov 2026</span>
                     <div class="card-icon" aria-hidden="true">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="9"/>
@@ -394,6 +353,7 @@
                 <a href="dashboard/resumen-estrategia.html" class="card card-estrategia">
                     <div class="card-bg-grid"></div>
                     <div class="card-overlay"></div>
+                    <span class="card-date">17 oct 2026</span>
                     <div class="card-icon" aria-hidden="true">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 2L2 7l10 5 10-5-10-5z"/>
@@ -406,6 +366,64 @@
                         <h2 class="card-title">Resumen Estrategia</h2>
                         <p class="card-desc">Vista ejecutiva mensual: campañas activas por objetivo, inversión, pipeline Kommo y principales puntos.</p>
                         <span class="card-cta">Ver informe</span>
+                    </div>
+                </a>
+
+                <a href="dashboard/informe-meta-form.html" class="card card-form">
+                    <div class="card-bg-grid"></div>
+                    <div class="card-overlay"></div>
+                    <span class="card-date">2 oct 2026</span>
+                    <div class="card-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="9" y1="13" x2="15" y2="13"/>
+                            <line x1="9" y1="17" x2="15" y2="17"/>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-eyebrow">Campaña FORM</span>
+                        <h2 class="card-title">Informe Formularios</h2>
+                        <p class="card-desc">Funnel de lead ads: alcance, abiertos, completados, tasa de completación, CPL y CPM por ad set y anuncio.</p>
+                        <span class="card-cta">Ver informe</span>
+                    </div>
+                </a>
+
+                <a href="dashboard/dispositivo-plaza.html" class="card card-plaza">
+                    <div class="card-bg-grid"></div>
+                    <div class="card-overlay"></div>
+                    <span class="card-date">20 jun 2026</span>
+                    <div class="card-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 3v18h18"/>
+                            <path d="M7 14l4-4 4 4 5-6"/>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-eyebrow">Análisis Meta Ads</span>
+                        <h2 class="card-title">Dispositivo &amp; Plaza</h2>
+                        <p class="card-desc">Performance por placement, sistema operativo y tipo de dispositivo con drill-down.</p>
+                        <span class="card-cta">Ver informe</span>
+                    </div>
+                </a>
+
+                <a href="dashboard/index.html" class="card card-dashboard">
+                    <div class="card-bg-grid"></div>
+                    <div class="card-overlay"></div>
+                    <span class="card-date">en vivo</span>
+                    <div class="card-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="9"/>
+                            <rect x="14" y="3" width="7" height="5"/>
+                            <rect x="14" y="12" width="7" height="9"/>
+                            <rect x="3" y="16" width="7" height="5"/>
+                        </svg>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-eyebrow">Performance</span>
+                        <h2 class="card-title">Dashboard</h2>
+                        <p class="card-desc">KPIs, campañas, evolución temporal y desglose por entidad.</p>
+                        <span class="card-cta">Ingresar</span>
                     </div>
                 </a>
 
