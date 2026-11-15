@@ -35,18 +35,22 @@
     .sub{color:var(--muted);font-size:.9rem;margin-bottom:.5rem}
     .meta{color:var(--muted);font-size:.78rem}
 
-    .kpi-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:.5rem;margin-bottom:1.5rem}
-    .kpi{background:#fff;border-radius:var(--br);padding:.7rem .75rem;border:1px solid var(--border);min-width:0}
-    .kpi-l{font-size:.62rem;text-transform:uppercase;letter-spacing:.3px;color:var(--muted);font-weight:600;margin-bottom:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .kpi-v{font-size:1.05rem;font-weight:700;color:var(--primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .kpi-s{font-size:.65rem;color:var(--muted);margin-top:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1rem}
+    .kpi-grid.below{margin-top:1.25rem;margin-bottom:0}
+    .kpi{background:#fff;border-radius:var(--br);padding:.85rem 1rem;border:1px solid var(--border);min-width:0}
+    .kpi-l{font-size:.65rem;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:600;margin-bottom:.25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .kpi-v{font-size:1.15rem;font-weight:700;color:var(--primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .kpi-v .sep{color:var(--muted);font-weight:400;opacity:.5;margin:0 .25rem}
+    .kpi-s{font-size:.68rem;color:var(--muted);margin-top:.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-    .benchmarks{background:#fff;border:1px solid var(--border);border-radius:var(--br);padding:1.1rem 1.25rem;margin-bottom:1.5rem}
-    .benchmarks h3{font-size:.95rem;color:var(--primary);margin-bottom:.6rem}
-    .benchmarks ul{list-style:none;font-size:.85rem}
-    .benchmarks li{color:var(--text);padding:.55rem 0;border-top:1px solid rgba(0,0,0,.06)}
-    .benchmarks li:first-child{border-top:0;padding-top:.1rem}
-    .benchmarks li strong{color:var(--primary)}
+    .intro-quote{font-style:italic;color:var(--primary);font-size:.95rem;line-height:1.45;padding:.9rem 1.25rem;border-left:3px solid var(--secondary);background:rgba(5,116,136,.04);border-radius:0 var(--br) var(--br) 0;margin-bottom:1.75rem;max-width:720px}
+
+    .benchmarks.footnote{background:transparent;border:0;padding:1rem 0 0;margin-top:3rem;border-top:1px solid var(--border)}
+    .benchmarks.footnote h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:.6rem;font-weight:600}
+    .benchmarks.footnote ul{list-style:none;font-size:.75rem;color:var(--muted);line-height:1.55}
+    .benchmarks.footnote li{color:var(--muted);padding:.3rem 0;border-top:1px solid rgba(0,0,0,.05)}
+    .benchmarks.footnote li:first-child{border-top:0}
+    .benchmarks.footnote li strong{color:var(--primary);font-weight:600}
 
     .section{margin-bottom:2rem}
     .section-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:.9rem;flex-wrap:wrap}
@@ -94,8 +98,7 @@
 
     .empty{padding:2rem;text-align:center;color:var(--muted);font-size:.9rem}
 
-    @media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(4,1fr)}}
-    @media(max-width:700px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
   </style>
 </head>
 <body>
@@ -111,40 +114,26 @@
   <main class="page">
     <section class="head">
       <h1 class="title">Calidad de anuncios · Campaña FORM</h1>
-      <div class="sub">Métricas de calidad creativa por anuncio (hook, hold, CTR, envío, CPL) — Patagónica Propiedades</div>
       <div class="meta">Período: 2026-08-13 → 2026-11-13 (últimos 3 meses) · Campaña: FORM - Generar oportunidades (120236026777090238) · Moneda: USD</div>
     </section>
 
-    <div class="kpi-grid">
-      <div class="kpi"><div class="kpi-l">Impresiones</div><div class="kpi-v">714.559</div></div>
-      <div class="kpi"><div class="kpi-l">Gasto</div><div class="kpi-v">$3.832,59</div></div>
-      <div class="kpi"><div class="kpi-l">Clics al link</div><div class="kpi-v">12.202</div><div class="kpi-s">CTR 1.71%</div></div>
-      <div class="kpi"><div class="kpi-l">Leads</div><div class="kpi-v">2.038</div><div class="kpi-s">16.70% envío</div></div>
-      <div class="kpi"><div class="kpi-l">CPL promedio</div><div class="kpi-v">$1,88</div><div class="kpi-s">mediana $1,93</div></div>
-      <div class="kpi"><div class="kpi-l">Leads / 1k imp</div><div class="kpi-v">2.85</div></div>
-      <div class="kpi"><div class="kpi-l">Hook rate medio</div><div class="kpi-v">13.21%</div><div class="kpi-s">solo videos</div></div>
-      <div class="kpi"><div class="kpi-l">Hold rate medio</div><div class="kpi-v">28.48%</div><div class="kpi-s">ThruPlays / 3s</div></div>
-    </div>
-
-    <div class="benchmarks">
-      <h3>Referencias de calidad</h3>
-      <ul>
-        <li><strong>Hook rate</strong> (v3s / impresiones): ≥25% sólido, 20–25% ok, &lt;20% rehacer gancho</li>
-        <li><strong>Hold rate</strong> (ThruPlays / v3s): comparar entre propios — baja = cuerpo largo o aburre</li>
-        <li><strong>CTR link</strong>: ≥1% objetivo</li>
-        <li><strong>Tasa de envío</strong>: 10–30% esperable</li>
-        <li><strong>Leads / 1k impresiones</strong>: KPI compuesto para rankear creatividades</li>
-        <li><strong>CPL</strong>: juzgar junto a calidad del lead (barato ≠ bueno)</li>
-      </ul>
-    </div>
+    <blockquote class="intro-quote">El sistema elige a quién mostrarle cada anuncio leyendo la creatividad.</blockquote>
 
     <section class="section">
       <div class="section-head">
-        <div class="section-title">Anuncios <span class="count">(26 · 10 videos, 16 imágenes)</span></div>
-        <label class="width-ctrl">Ancho columna <input type="range" min="180" max="420" step="10" value="260" id="w-all"> <output for="w-all">260px</output></label>
+        <div class="section-title">Videos <span class="count">(10)</span> <span class="section-badge video">VIDEO</span></div>
+        <label class="width-ctrl">Ancho columna <input type="range" min="180" max="420" step="10" value="260" id="w-video"> <output for="w-video">260px</output></label>
       </div>
+
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-l">Impresiones</div><div class="kpi-v">369.032</div></div>
+        <div class="kpi"><div class="kpi-l">Gasto</div><div class="kpi-v">$2.393,58</div></div>
+        <div class="kpi"><div class="kpi-l">Aperturas form</div><div class="kpi-v">4.366</div><div class="kpi-s">CTR 1.18%</div></div>
+        <div class="kpi"><div class="kpi-l">Leads</div><div class="kpi-v">1.214 <span class="sep">|</span> 27.8%</div></div>
+      </div>
+
       
-    <div class="ageeva-scroll" id="mx-all">
+    <div class="ageeva-scroll" id="mx-video">
       <div class="ageeva-inner">
         
     <aside class="labels">
@@ -156,7 +145,7 @@
       <div class="card">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249451978400238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQOR84WsSSf1-R-_Y4lwTGje-saU3gFrzWKSZLH8dC-KvNVwLlPfcpdPI-3yj6Ig8cIoGYHK6hIOdrReCme0OWj2WmY8xowGUO4gR91v5yMDuA.mp4?_nc_cat=102&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=7Z6pP_qum60Q7kNvwGvhBMD&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE3MzkyMjQ0NTM3OTgxODcsImFzc2V0X2FnZV9kYXlzIjoxMDQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjo0NiwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=bf73e0259b4666c9&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC81QjQ0NDc0OEY0OTE2MUQwMUYwNDUwODgyNjg2NjVBNV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzYwNDI0RTZGMENFNEJBOTlDMTQ5QjZCNzNGQkYwQUI1X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbW5Ib8l_SWBhUCKAJDMywXQEcIcrAgxJwYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=b_0bAttNuUsXtnpW1bbzwA&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQK7s6Roq0R70R4jR49qKBWPzZVMftwbQvKk8alc8zFCFxbfXL0nBZvXYcA-d6QqO3fe-vTJcjjylQ&oh=00_AQTkyDuasbWLyCnO7fXjSTeZ3YMmO-wMAd1ng7G7HkWPRg&oe=6AFF9CBE&bitrate=2269093&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249451978400238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQOR84WsSSf1-R-_Y4lwTGje-saU3gFrzWKSZLH8dC-KvNVwLlPfcpdPI-3yj6Ig8cIoGYHK6hIOdrReCme0OWj2WmY8xowGUO4gR91v5yMDuA.mp4?_nc_cat=102&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=7Z6pP_qum60Q7kNvwGvhBMD&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE3MzkyMjQ0NTM3OTgxODcsImFzc2V0X2FnZV9kYXlzIjoxMDQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjo0NiwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=bf73e0259b4666c9&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC81QjQ0NDc0OEY0OTE2MUQwMUYwNDUwODgyNjg2NjVBNV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzYwNDI0RTZGMENFNEJBOTlDMTQ5QjZCNzNGQkYwQUI1X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbW5Ib8l_SWBhUCKAJDMywXQEcIcrAgxJwYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=spLHvImxy6ZiNuY6wIhSLw&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQIWApdC5jONAVb-geL-XSk-dAMTxLWj90eLE3ZDUpb5Pj5Ipx8TZJWL3iDBCyyP9jHVWYUCU_CKog&oh=00_AQQJUkj_-dVkES0KU5eSDuSsdIYYAr4-r6_j14SopCKjkw&oe=6AFFD4FE&bitrate=2269093&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Emprendimiento - 02/08 - (video) - Reel Península">Emprendimiento - 02/08 - (video) - Reel Península</div>
@@ -167,7 +156,7 @@
       <div class="card">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249244881690238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQNBBcM5kVMcqMDqmLaOAJWbBdAMRV8YGo_QFp_EIIovQqElegvoKekpd8Di08nvaZo13DsK3MoqdnekTdYXvA6rdPYIQDq-xRj9tVxfm1z7VQ.mp4?_nc_cat=110&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=kf5qnSA9mbcQ7kNvwGd58W_&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE4NzI0NjQzMDcwNTE1NTgsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjo1MSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=1cb9547d3ac01cce&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9FMDQ3RDJBNTI2M0JFQUE4QUYyQkM2NDlDNDYwRjk4RF9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzVBNDk3QTIzRDA0RjQ2Mzk1QzA0NEZFQkE0Rjc0Njg0X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbM8IKe4r_TBhUCKAJDMywXQEmEOVgQYk4YGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=0Ya-12nWxYMG015FSG1kWQ&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQJ5c-veRL7OdJayapndy2W7xJOw_umWGebKh-fJ1AxScLW5TtjsdaEaWlpHMiLjcVzNM6-OIa0Kdg&_nc_enc=Uj6nUUtDRTpd6eOKltSBOaSOXD7McG6PZNSIyJINPD_fv1lyWrKiLWtLXqO8io9mpWKFzcSw14OAF1yk4Thetr287zA21A29ubGPTmd65w7Mni9qHrGvMsPekBRCgk2HcxbNsIGoO-BEnFKd&oh=00_AQSACoUeev8YLPe_gi12iYa5U99MQy9VgxQWokVsNO4FbQ&oe=6AFFA512&bitrate=1685401&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249244881690238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQNBBcM5kVMcqMDqmLaOAJWbBdAMRV8YGo_QFp_EIIovQqElegvoKekpd8Di08nvaZo13DsK3MoqdnekTdYXvA6rdPYIQDq-xRj9tVxfm1z7VQ.mp4?_nc_cat=110&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=kf5qnSA9mbcQ7kNvwGd58W_&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE4NzI0NjQzMDcwNTE1NTgsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjo1MSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=1cb9547d3ac01cce&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9FMDQ3RDJBNTI2M0JFQUE4QUYyQkM2NDlDNDYwRjk4RF9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzVBNDk3QTIzRDA0RjQ2Mzk1QzA0NEZFQkE0Rjc0Njg0X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbM8IKe4r_TBhUCKAJDMywXQEmEOVgQYk4YGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=QBOSGqUmz-Uw12O1l4H2Ag&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQIgvcKm0LveblR8XJTxYT4fjArvyxV8lqG5FQFwCZ2PtAB2pArYBkkmML5YmtALQ5mwFmQsBqkZww&_nc_enc=Uva_nyVAdQiXbio-Ic90qcqqfItOT9yCa0pRS3U3AbcQEzVlimCYy4s8XX9CKOkpatDtBAzj4VJEzhdqL55VppES1eW5c3K82V7uFWATYdWihhKmZZzUwy6Frh4eBirHuYqQuxKzz524GNNi&oh=00_AQQzXjMtdHVktt24PXhavOXrJcD6hHMQgYhL_rE93a55IQ&oe=6AFFA512&bitrate=1685401&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Depto - 23/07 - (video) - San Camilo">Depto - 23/07 - (video) - San Camilo</div>
@@ -178,7 +167,7 @@
       <div class="card">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249172418820238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQOxvsEInKUspy0w1IunIsboYzkNSVBk7SYx94bNyCwQQAnO-hORhfrMTWBnL6t7mt-7yWWp-iMIm0dryx_UbhvLSwNOTtdeGCTRRzixY-oP2Q.mp4?_nc_cat=100&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=H96OaK4KaPwQ7kNvwE-CM2-&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjY2MzU1NTUzMzM3ODM3NSwiYXNzZXRfYWdlX2RheXMiOjM0NiwidmlfdXNlY2FzZV9pZCI6MTA3OTksImR1cmF0aW9uX3MiOjU0LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=888d28fdf6fd09ef&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC85MTRFRTBGNDlCMzA1MjZDRTFGMDMxMzQ0RjU0NkY4Q19tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50Lzc5NEQ5QzE3MTI3MzNFRkY0MTBFNkQ3MDVBOTMxRkFDX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACaOzdj9geCtAhUCKAJDMywXQEtZmZmZmZoYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=NOz6z61CPUGWq0SYwZJLuA&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQLW5xK0_SJZJsQl7fQQfiQboaadS-Hqfm_FinCGn4mcf11Rz3bVeiRF1Osiub6-Eck6A9BuhjY0xw&oh=00_AQTFgdLUyiEuurujYmm62cwbH4SLsqGQTL5bxrvJ0V2XXg&oe=6AFFCF88&bitrate=2852809&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249172418820238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQOxvsEInKUspy0w1IunIsboYzkNSVBk7SYx94bNyCwQQAnO-hORhfrMTWBnL6t7mt-7yWWp-iMIm0dryx_UbhvLSwNOTtdeGCTRRzixY-oP2Q.mp4?_nc_cat=100&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=H96OaK4KaPwQ7kNvwE-CM2-&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjY2MzU1NTUzMzM3ODM3NSwiYXNzZXRfYWdlX2RheXMiOjM0NiwidmlfdXNlY2FzZV9pZCI6MTA3OTksImR1cmF0aW9uX3MiOjU0LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=888d28fdf6fd09ef&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC85MTRFRTBGNDlCMzA1MjZDRTFGMDMxMzQ0RjU0NkY4Q19tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50Lzc5NEQ5QzE3MTI3MzNFRkY0MTBFNkQ3MDVBOTMxRkFDX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACaOzdj9geCtAhUCKAJDMywXQEtZmZmZmZoYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=S0gWnhLZIdCxjBnG_9Almw&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQL88lb8OMU3bDREmSBJB9WM0cFcGI9fjUX638xTlaS3T1QIDfRpqbPVLewOAbnAHvpzgicf_CM3Lg&oh=00_AQQHRyKovcNDW8IMvxAQJESRpM2iRZm2z8jed213ILVKVw&oe=6AFFCF88&bitrate=2852809&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Visitante - Paseo Retamas: video - v3 - (voz en off)">Visitante - Paseo Retamas: video - v3 - (voz en off)</div>
@@ -189,7 +178,7 @@
       <div class="card">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249246117720238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQN35wDPalfjAM6ER7zw6W7DmKiG2MnZy7OYZXP7gcaHcPIHxSsJvtO3LYxRFIHbQzVvErI5JrksNDoOBcmLPBuS_1F_6FxY8OdGUUyX8J_RyQ.mp4?_nc_cat=111&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=1ewsyDGifEoQ7kNvwEckznn&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjMxMDAxMTMyODM1MjE1MzAsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjozMCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=d851cec21e158f2d&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC84OTQ3REQ2Q0RCRDA0OTc1NUIwRDUwOEZFNDJFNEI5Ml9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50L0EyNDBGOTBENzFERDA2RDMzREI2OTA3NjA3QzlEM0JEX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACb077jwq-KBCxUCKAJDMywXQD5EGJN0vGoYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=ABoPdZO9RwUKcJV0d1Bk1w&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQJmEahgiXVtCb1JRh45OAeLM7sy4_hRPotYeeVBLhIchgOSSdQO13M92o6f_Nf6jWyshqy_pm4wqA&_nc_enc=UtEQxHjMjChOV6XvcnM-DsBoitvLaS2K6eAk-dqMVRYcEGN_XQ4bEMuk8YvjydqE7-z9oCO9LiHgvVGTuz6oFzAkVKHyJEiLlRlMWa7qvnikd2ySH_yrJ8TskUwjIzkxtzXgWVrbY6PE4z6A&oh=00_AQSoY7V7ra6oYEiJqXP7DUFfedcghVP6lrgvktzlPQMWwg&oe=6AFFBB6D&bitrate=2516727&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249246117720238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQN35wDPalfjAM6ER7zw6W7DmKiG2MnZy7OYZXP7gcaHcPIHxSsJvtO3LYxRFIHbQzVvErI5JrksNDoOBcmLPBuS_1F_6FxY8OdGUUyX8J_RyQ.mp4?_nc_cat=111&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=1ewsyDGifEoQ7kNvwEckznn&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjMxMDAxMTMyODM1MjE1MzAsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjozMCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=d851cec21e158f2d&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC84OTQ3REQ2Q0RCRDA0OTc1NUIwRDUwOEZFNDJFNEI5Ml9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50L0EyNDBGOTBENzFERDA2RDMzREI2OTA3NjA3QzlEM0JEX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACb077jwq-KBCxUCKAJDMywXQD5EGJN0vGoYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=EVsoDj1UsVnUO-KvNPMNOg&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQKcOgAdRSc-P7ZfICu6qDTJSRZlj00W7IMsPsbFUopCYws0rxd2reqKcjYeyp2Bq-ptG-D11WAo_g&_nc_enc=Uj5VEOLIRWf4DAT7RrzBgv3MBq8lJ2w26QNOoIX24ZKkLRwJNED8z3XbcrROsPTRJLjVn1O4Qm30PvCkC-AZSLtap5GfJ5n_4tQxNbpuVGtsuPXV-cjJuyuKiySI1mesaEqReE6sNgrS7Nnq&oh=00_AQTunqImLimwD-4XndVy5dY_CB9M62IN6QO7FXCkwLcVMA&oe=6AFFBB6D&bitrate=2516727&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Lotes - 23/07 - (video) - Tu inversión en Villa...">Lotes - 23/07 - (video) - Tu inversión en Villa...</div>
@@ -200,7 +189,7 @@
       <div class="card">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120245205032040238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQM-vZfnvHaPdLTSNrCqpZCSqT2ruLohHAxgzqsAOquoyOpmp-xY7BR64rp3HwiFx8BbnfAJg4rnM-Q0o2pdvsFbnHMjDCIZ_baLomJ7cUyRjg.mp4?_nc_cat=102&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=9Y6YOer_e20Q7kNvwEou5wb&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE2NTQ0NjcwMTI1MDcyMzgsImFzc2V0X2FnZV9kYXlzIjoxODQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjo0OSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=ea0d0916e398841b&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9EQzRCNjRCRkQ4QkNEMEI4NThBOTc5MTY0RDQxQjk5NF9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50L0Q4NDFFNUNERTREOTM0QUJCNUI4MDI3NzgwMkUxRUJBX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbM2ZXp067wBRUCKAJDMywXQEiVP3ztkWgYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=vyszGRuiaRs3q8P819Ux-g&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQJba3JJMm3XyohgfrHw7IjCSklkjn6WOjSriwkzhyijYurJbpCYz1_P5NnWpsx20IJ12bVqvZsRnA&oh=00_AQTkzrxI2yI9lIbLmahi7rXtPVFWGmqfI2Q-fqNsC9_x0g&oe=6AFFB46E&bitrate=2877485&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120245205032040238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQM-vZfnvHaPdLTSNrCqpZCSqT2ruLohHAxgzqsAOquoyOpmp-xY7BR64rp3HwiFx8BbnfAJg4rnM-Q0o2pdvsFbnHMjDCIZ_baLomJ7cUyRjg.mp4?_nc_cat=102&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=9Y6YOer_e20Q7kNvwEou5wb&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE2NTQ0NjcwMTI1MDcyMzgsImFzc2V0X2FnZV9kYXlzIjoxODQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjo0OSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=ea0d0916e398841b&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9EQzRCNjRCRkQ4QkNEMEI4NThBOTc5MTY0RDQxQjk5NF9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50L0Q4NDFFNUNERTREOTM0QUJCNUI4MDI3NzgwMkUxRUJBX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbM2ZXp067wBRUCKAJDMywXQEiVP3ztkWgYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=iWpkgUUJC35RReFKPpcqHQ&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQLaE1iNT4RSukb1YUU1hiqBViS0vHpPwvZw-AGmWQb94cElUD3WLm4ErcUMkgkGyzy2qsxc91oROg&oh=00_AQTQU7fvkN9a_Bn5KGM5kL0aPAMCJhY0YvJOORIJimKhyg&oe=6AFFB46E&bitrate=2877485&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Cota 1000 - video - (voz off)">Cota 1000 - video - (voz off)</div>
@@ -211,7 +200,7 @@
       <div class="card">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249246054110238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQPlV8cMqWyyovGJ4L9hXgnrQfwFkdBAvEbANxpqX6g85LXXvNcjrV1NxvsYhaLkg-hII8GNp0ebkMV1dtzb6oOw3Gyi7WPJpkDhY0Vz_nNxhw.mp4?_nc_cat=106&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=KBEdEpWbUokQ7kNvwG7bK0Y&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjIwNzc0MDQzNDk2NTQzMzAsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjozMCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=9b89ac761eeb0ff&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC82MzRENTBBOUM5NkM5OUQ3MjQxNkQ2NDA3QTgyRjg4NF9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzkwNDU5M0FFNTdFMUYyQkIwNTI3Nzk5MTU5ODk4RkI5X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACb0lIfF7NiwBxUCKAJDMywXQD5EGJN0vGoYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=XC5P6XVDQeyIpkHvPetTBw&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQIjgpLrF4bctuhX4TsaryP99G4n_1mhpJnjGGZd27G-p3R-TKaEM5yvuIPxpG1Bg7BXh69hXdWC4w&oh=00_AQQFFnHJeSdk0bdMokhaoJwR9JRj7qPG34E1XvqtTRKP9Q&oe=6AFF9D1A&bitrate=2516727&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249246054110238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQPlV8cMqWyyovGJ4L9hXgnrQfwFkdBAvEbANxpqX6g85LXXvNcjrV1NxvsYhaLkg-hII8GNp0ebkMV1dtzb6oOw3Gyi7WPJpkDhY0Vz_nNxhw.mp4?_nc_cat=106&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=KBEdEpWbUokQ7kNvwG7bK0Y&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjIwNzc0MDQzNDk2NTQzMzAsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjozMCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=9b89ac761eeb0ff&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC82MzRENTBBOUM5NkM5OUQ3MjQxNkQ2NDA3QTgyRjg4NF9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzkwNDU5M0FFNTdFMUYyQkIwNTI3Nzk5MTU5ODk4RkI5X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACb0lIfF7NiwBxUCKAJDMywXQD5EGJN0vGoYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=VAIqKaiL5vFQfmf_oRoABA&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQKEtmiFVLLLUkhw351YpbOBIkc-wS9ZYF8hC-l5cfmNkgekU-1q7MokxHSQBbMftmdeGFru80OohA&oh=00_AQQKjjEMSFFjGNefIf3sF4vfUxS-U3tSCBVLkGatOWVcdw&oe=6AFFD55A&bitrate=2516727&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Lotes - 23/07 - (video) - Tu inversión en Villa...">Lotes - 23/07 - (video) - Tu inversión en Villa...</div>
@@ -222,7 +211,7 @@
       <div class="card">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249245719050238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQN6boevenIACMc1rvCDClhQKLnyDBtuvjmuY7ue54WLqgZdKauateconeGPJZnuBM-BaPwaHlirUA52gCNi1jI7kVMbnHJyu0b-BgECLBlqKg.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=rBTvZf-0fkUQ7kNvwERXVGH&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE3MTM1OTEwNjY0NTUyNjEsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjoxNywidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=30d709128733d3f8&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC85NjQyNDUzRUJDNTdBNTg2Njc4OTJGOUY5RTIzMjJBNV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzYyNDExRjExNzJCMDAwMEJBNzAyMEFFNDYyNDk1QkI1X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACa6s_OskKCLBhUCKAJDMywXQDFMzMzMzM0YGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=nMIF7FsKexgTDxDtNPWHKw&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQIeYGCzaOwwJw0_1Owiby5F6-4ehuPameq-11ZEEZsQZv6ck_6Bt7hUjgEbN_WEbRzfYigVQ1bxCg&oh=00_AQS_Jzv70koII_VQqvmLCtlXh_VgpfCshT_xjzayUOtryQ&oe=6AFFB587&bitrate=2482073&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249245719050238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQN6boevenIACMc1rvCDClhQKLnyDBtuvjmuY7ue54WLqgZdKauateconeGPJZnuBM-BaPwaHlirUA52gCNi1jI7kVMbnHJyu0b-BgECLBlqKg.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=rBTvZf-0fkUQ7kNvwERXVGH&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE3MTM1OTEwNjY0NTUyNjEsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjoxNywidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=30d709128733d3f8&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC85NjQyNDUzRUJDNTdBNTg2Njc4OTJGOUY5RTIzMjJBNV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzYyNDExRjExNzJCMDAwMEJBNzAyMEFFNDYyNDk1QkI1X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACa6s_OskKCLBhUCKAJDMywXQDFMzMzMzM0YGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=cw8Ewxfhcm_IgsovVHdsMA&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQLBwVU5u5jMzXN_LGQ6T_CU_UP10UC4QZiUUl07xoLr2gkNGaBmIWSFHP1o3e3ZbcOB3D4Qcm5Ojw&oh=00_AQRUEkCMpfhAmBFt6mEvf9A4qjr9kPKaq5OPplyfzBB36Q&oe=6AFFB587&bitrate=2482073&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Lotes - 23/07 - (video) - lote 55">Lotes - 23/07 - (video) - lote 55</div>
@@ -233,7 +222,7 @@
       <div class="card">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249172236790238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQOUR80hqo-j6BYZXc_FaWU5T51uqA2wEPfOVtN6YVHPeH8EOpKSQz_-LpXsUmw70mdmAjPSI9r3U14jvtAo19gFE5Xwaz6FKmrvpDJpHxycuw.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=m1tZSklsFfcQ7kNvwFEwZB8&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNTc2LmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjEwNzcyMDQwMDgxOTkxNDIsImFzc2V0X2FnZV9kYXlzIjoxMTcsInZpX3VzZWNhc2VfaWQiOjEwMTM5LCJkdXJhdGlvbl9zIjozNSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=cf8d5343dcd31923&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC8xMzQyMDg5NzZBRDQwMEY4QzRFODIyQTlGMjgwMURBNV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzUzNEZGNUFCNjgxNkFERjkwNDJFQzcwRkRGMjBCREEzX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbMj5Okw-3pAxUCKAJDMywXQEHu2RaHKwIYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZbaeAQA&_nc_gid=JaBZd2ZlO73K2o278PWQeg&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQKM8P-U32eYLH-iyEdcpfgwjXt8xoKv25B8-sYTYG-3tvszNeIgGQTqhwVChK7hpY8NaDBg-88S7Q&oh=00_AQQt2hk52MS1leoCBom1N5EllmNPfJuilF0HGZeJA8NgIA&oe=6AFFC1A7&bitrate=1063839&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249172236790238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQOUR80hqo-j6BYZXc_FaWU5T51uqA2wEPfOVtN6YVHPeH8EOpKSQz_-LpXsUmw70mdmAjPSI9r3U14jvtAo19gFE5Xwaz6FKmrvpDJpHxycuw.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=m1tZSklsFfcQ7kNvwFEwZB8&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNTc2LmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjEwNzcyMDQwMDgxOTkxNDIsImFzc2V0X2FnZV9kYXlzIjoxMTcsInZpX3VzZWNhc2VfaWQiOjEwMTM5LCJkdXJhdGlvbl9zIjozNSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=cf8d5343dcd31923&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC8xMzQyMDg5NzZBRDQwMEY4QzRFODIyQTlGMjgwMURBNV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzUzNEZGNUFCNjgxNkFERjkwNDJFQzcwRkRGMjBCREEzX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbMj5Okw-3pAxUCKAJDMywXQEHu2RaHKwIYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZbaeAQA&_nc_gid=3Fl1CSpyG9GgrvNFkfB5GQ&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQJLu2qVQrD2QbNyZXT-9rGFnVzrxKBCaM2RKYau_HOpT2XCvBeAcGQq3r1YGMjAiaEhwUW4AzvBqw&oh=00_AQSMWQ3NupnmFYjRdqB7veJQREzrvmJDYhH9hetc_dOexg&oe=6AFFC1A7&bitrate=1063839&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Visitante - Mirador: Pozos Romanos">Visitante - Mirador: Pozos Romanos</div>
@@ -244,7 +233,7 @@
       <div class="card">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249451966950238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQOajkSbJnPt_xIFTYm5TyTaNFUbdy0NvVviILEmbq3o-57CP62NHRweVseF7MhE0DMTzJML8Br7a4lmNvoNlpf0f8jUgJ4fiOmCuJBDnVWROA.mp4?_nc_cat=108&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=Wj0XeamWG7EQ7kNvwHdUbh9&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjI4MzIwNTg5MTc3NjI5NDAxLCJhc3NldF9hZ2VfZGF5cyI6MTA0LCJ2aV91c2VjYXNlX2lkIjoxMDc5OSwiZHVyYXRpb25fcyI6MjAsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=5c5890460520c801&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9FNTQ3MkU1MENEOUIyNzNDQzZFNEZEN0Y3MkYwQ0U5N19tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50L0EwNDU1MzNEMDhDMjU0QzE1QjUzNDhDQTE2NTZGQUJBX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACayq5mcoNvOZBUCKAJDMywXQDSqfvnbItEYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=Q-ZeRr5KckOGO-yG6zFrng&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQLOiY_CheBqfGpmiSn9RiSK7Iz7TnuAvjfv1iBZg9CiWxL0Zu8OS9vLuZ-lD3cvW8zSPUFoAcLXJA&oh=00_AQR1S4invE5l5QCtiFQ_DhexatQVZItEbzDT8T3tbLQRLQ&oe=6AFF9C74&bitrate=1209785&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249451966950238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQOajkSbJnPt_xIFTYm5TyTaNFUbdy0NvVviILEmbq3o-57CP62NHRweVseF7MhE0DMTzJML8Br7a4lmNvoNlpf0f8jUgJ4fiOmCuJBDnVWROA.mp4?_nc_cat=108&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=Wj0XeamWG7EQ7kNvwHdUbh9&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjI4MzIwNTg5MTc3NjI5NDAxLCJhc3NldF9hZ2VfZGF5cyI6MTA0LCJ2aV91c2VjYXNlX2lkIjoxMDc5OSwiZHVyYXRpb25fcyI6MjAsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=5c5890460520c801&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9FNTQ3MkU1MENEOUIyNzNDQzZFNEZEN0Y3MkYwQ0U5N19tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50L0EwNDU1MzNEMDhDMjU0QzE1QjUzNDhDQTE2NTZGQUJBX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACayq5mcoNvOZBUCKAJDMywXQDSqfvnbItEYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=4v1y_D2wPMtYw6QrSZ4Tyw&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQLgiNzVeqKJNCdLJxyoDKnv-ASE4bvS5KhglnAnvsH098ZQewz9NmJJKcWC4nWtSU7r6tl5eHPi7w&oh=00_AQT_63kHxpbVj_XrbG3zNTH-jotM3hcE3K4h98SVhaxZoA&oe=6AFFD4B4&bitrate=1209785&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Emprendimiento - 02/08 - (video) - Reel Haiku">Emprendimiento - 02/08 - (video) - Reel Haiku</div>
@@ -255,14 +244,48 @@
       <div class="card">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249451987530238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQPTbSQeJ5ovH8lz2sF_fVSN0FqASmuduHpX-hyxUXwcSVEc1A_crPeHDUSTwsgdn1JdmJiqfI0opYeagG6sOeSV4enmB5IdpDVXbUa9JBSCSg.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=aw6x5qADNGAQ7kNvwGnDF6j&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjEzODY4OTY5MjY3NDQ1MzcsImFzc2V0X2FnZV9kYXlzIjoxMDQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjozNCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=e1b2c06f8a404b69&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC85NjQyQzQwRDlBQTVBREJERUNCNzlBNTU1ODJDNjQ4QV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzIxNEY3M0FBQTJGNEUyMTEzRTlEQ0ZCOEIzMTY0QzlEX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACay_8Sqg9j2BBUCKAJDMywXQEEiDEm6XjUYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=VO5WeIigeIapLJ5yTtz6lQ&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQKK7A79IK96jvEtXMxKe_Gp5RDpkNpQNvLI2Yx4Xm350f0yYnv_QcnMVjB71yicIua5iikuwGLRug&oh=00_AQQDmlK4ssqaetPQTPGDiNOLUiM_q4UJkUlekxT9ljMSmQ&oe=6AFFD063&bitrate=2433125&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249451987530238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQPTbSQeJ5ovH8lz2sF_fVSN0FqASmuduHpX-hyxUXwcSVEc1A_crPeHDUSTwsgdn1JdmJiqfI0opYeagG6sOeSV4enmB5IdpDVXbUa9JBSCSg.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=aw6x5qADNGAQ7kNvwGnDF6j&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjEzODY4OTY5MjY3NDQ1MzcsImFzc2V0X2FnZV9kYXlzIjoxMDQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjozNCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=e1b2c06f8a404b69&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC85NjQyQzQwRDlBQTVBREJERUNCNzlBNTU1ODJDNjQ4QV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzIxNEY3M0FBQTJGNEUyMTEzRTlEQ0ZCOEIzMTY0QzlEX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACay_8Sqg9j2BBUCKAJDMywXQEEiDEm6XjUYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=-aUJDukGdBq9YFkK_0Z6Tw&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQIh5cFAj6AbtKQAeLlyaG8S3AMZ3r9wq00OJ3WNXVrn_Rbfx8nkqxM_efVlGnliRD7oxnjoerlGJw&oh=00_AQR2B2t15USa3dB9pO4wb92Ppw5GDYIzEiwEYhm7ibxuTQ&oe=6AFFD063&bitrate=2433125&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Emprendimiento - 02/08 - (video) - Reel Retamas">Emprendimiento - 02/08 - (video) - Reel Retamas</div>
           <div class="ad-set" title="FORM - Emprendimiento - (02/08)">FORM - Emprendimiento - (02/08)</div>
         </div>
         <div class="kv">105</div><div class="kv">$0,61</div><div class="kv">3</div><div class="kv">0 <span class="sep">|</span> 0.0%</div><div class="kv">0.00</div><div class="kv">—</div><div class="kv">26.67%</div><div class="kv">7.14%</div><div class="kv">2.86%</div><div class="kv">0.00%</div>
+      </div></div>
       </div>
+    </div>
+
+      <div class="kpi-grid below">
+        <div class="kpi"><div class="kpi-l">CPL promedio</div><div class="kpi-v">$1,97</div></div>
+        <div class="kpi"><div class="kpi-l">Lead / 1k imp</div><div class="kpi-v">3.29</div></div>
+        <div class="kpi"><div class="kpi-l">Hook rate medio</div><div class="kpi-v">25.58%</div><div class="kpi-s">v3s / impresiones</div></div>
+        <div class="kpi"><div class="kpi-l">Hold rate medio</div><div class="kpi-v">28.48%</div><div class="kpi-s">ThruPlays / v3s</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">Imágenes <span class="count">(16)</span> <span class="section-badge img">IMG</span></div>
+        <label class="width-ctrl">Ancho columna <input type="range" min="180" max="420" step="10" value="260" id="w-image"> <output for="w-image">260px</output></label>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi"><div class="kpi-l">Impresiones</div><div class="kpi-v">345.527</div></div>
+        <div class="kpi"><div class="kpi-l">Gasto</div><div class="kpi-v">$1.439,01</div></div>
+        <div class="kpi"><div class="kpi-l">Aperturas form</div><div class="kpi-v">7.836</div><div class="kpi-s">CTR 2.27%</div></div>
+        <div class="kpi"><div class="kpi-l">Leads</div><div class="kpi-v">824 <span class="sep">|</span> 10.5%</div></div>
+      </div>
+
+      
+    <div class="ageeva-scroll" id="mx-image">
+      <div class="ageeva-inner">
+        
+    <aside class="labels">
+      <div class="l-top"></div>
+      <div class="l-name"></div>
+      <div class="l">Impresiones</div><div class="l">Gasto</div><div class="l">Aperturas form</div><div class="l">Leads</div><div class="l">Lead / 1k imp</div><div class="l">CPL</div><div class="l">Hook 3s</div><div class="l">Hold</div><div class="l">CTR link</div><div class="l">Envío</div>
+    </aside>
+        <div class="cards">
       <div class="card">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
@@ -441,7 +464,26 @@
       </div></div>
       </div>
     </div>
+
+      <div class="kpi-grid below">
+        <div class="kpi"><div class="kpi-l">CPL promedio</div><div class="kpi-v">$1,75</div></div>
+        <div class="kpi"><div class="kpi-l">Lead / 1k imp</div><div class="kpi-v">2.38</div></div>
+        <div class="kpi"><div class="kpi-l">CTR link medio</div><div class="kpi-v">2.27%</div><div class="kpi-s">clicks / impresiones</div></div>
+        <div class="kpi"><div class="kpi-l">Envío medio</div><div class="kpi-v">10.52%</div><div class="kpi-s">leads / aperturas form</div></div>
+      </div>
     </section>
+
+    <aside class="benchmarks footnote">
+      <h3>Referencias de calidad</h3>
+      <ul>
+        <li><strong>Hook rate</strong> (v3s / impresiones): ≥25% sólido, 20–25% ok, &lt;20% rehacer gancho</li>
+        <li><strong>Hold rate</strong> (ThruPlays / v3s): comparar entre propios — baja = cuerpo largo o aburre</li>
+        <li><strong>CTR link</strong>: ≥1% objetivo</li>
+        <li><strong>Tasa de envío</strong>: 10–30% esperable</li>
+        <li><strong>Lead / 1k impresiones</strong>: KPI compuesto para rankear creatividades</li>
+        <li><strong>CPL</strong>: juzgar junto a calidad del lead (barato ≠ bueno)</li>
+      </ul>
+    </aside>
   </main>
 
 <script>
@@ -464,7 +506,8 @@
       out.value=s.value+'px';
     });
   }
-  bindWidth('w-all','mx-all');
+  bindWidth('w-video','mx-video');
+  bindWidth('w-image','mx-image');
 })();
 </script>
 </body>
