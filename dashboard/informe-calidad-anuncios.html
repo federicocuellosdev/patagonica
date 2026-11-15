@@ -80,8 +80,13 @@
     .labels{position:sticky;left:0;z-index:2;display:flex;flex-direction:column;width:var(--label-w);min-width:var(--label-w);background:var(--light);padding-right:.5rem}
     .labels .l-top{height:calc(var(--col-w) - .9rem)}
     .labels .l-name{height:var(--name-h)}
-    .labels .l{height:var(--row-h);display:flex;align-items:center;font-size:.8rem;color:var(--muted);font-weight:500;letter-spacing:.2px;border-top:1px solid rgba(18,28,37,.1)}
+    .labels .l{height:var(--row-h);display:flex;align-items:center;justify-content:space-between;gap:.3rem;font-size:.8rem;color:var(--muted);font-weight:500;letter-spacing:.2px;border-top:1px solid rgba(18,28,37,.1);background:transparent;border-left:0;border-right:0;border-bottom:0;cursor:pointer;font-family:inherit;text-align:left;padding:0 .4rem 0 0;transition:color .1s ease}
     .labels .l:first-of-type{border-top:0}
+    .labels .l:hover{color:var(--primary)}
+    .labels .l::after{content:'↕';font-size:.75rem;opacity:.3}
+    .labels .l[data-sort=desc]::after{content:'↓';opacity:1;color:var(--secondary)}
+    .labels .l[data-sort=asc]::after{content:'↑';opacity:1;color:var(--secondary)}
+    .labels .l[data-sort]{color:var(--primary);font-weight:600}
 
     .cards{display:flex;gap:1rem}
     .card{min-width:var(--col-w);width:var(--col-w);background:#f5f2ec;border-radius:26px;padding:.9rem .9rem 1.2rem;display:flex;flex-direction:column}
@@ -158,118 +163,118 @@
     <aside class="labels">
       <div class="l-top"></div>
       <div class="l-name"></div>
-      <div class="l">Impresiones</div><div class="l">Gasto</div><div class="l">Aperturas form</div><div class="l">Leads</div><div class="l">Lead / 1k imp</div><div class="l">CPL</div><div class="l">Hook 3s</div><div class="l">Hold</div><div class="l">CTR link</div><div class="l">Envío</div>
+      <button class="l" type="button" data-i="0" title="Ordenar por Impresiones">Impresiones</button><button class="l" type="button" data-i="1" title="Ordenar por Gasto">Gasto</button><button class="l" type="button" data-i="2" title="Ordenar por Aperturas form">Aperturas form</button><button class="l" type="button" data-i="3" title="Ordenar por Leads">Leads</button><button class="l" type="button" data-i="4" title="Ordenar por Conversión">Conversión</button><button class="l" type="button" data-i="5" title="Ordenar por Lead / 1k imp">Lead / 1k imp</button><button class="l" type="button" data-i="6" title="Ordenar por CPL">CPL</button><button class="l" type="button" data-i="7" title="Ordenar por Hook 3s">Hook 3s</button><button class="l" type="button" data-i="8" title="Ordenar por Hold">Hold</button><button class="l" type="button" data-i="9" title="Ordenar por CTR link">CTR link</button>
     </aside>
         <div class="cards">
-      <div class="card">
+      <div class="card" data-ad="120249451978400238">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249451978400238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQOR84WsSSf1-R-_Y4lwTGje-saU3gFrzWKSZLH8dC-KvNVwLlPfcpdPI-3yj6Ig8cIoGYHK6hIOdrReCme0OWj2WmY8xowGUO4gR91v5yMDuA.mp4?_nc_cat=102&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=7Z6pP_qum60Q7kNvwGvhBMD&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE3MzkyMjQ0NTM3OTgxODcsImFzc2V0X2FnZV9kYXlzIjoxMDQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjo0NiwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=bf73e0259b4666c9&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC81QjQ0NDc0OEY0OTE2MUQwMUYwNDUwODgyNjg2NjVBNV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzYwNDI0RTZGMENFNEJBOTlDMTQ5QjZCNzNGQkYwQUI1X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbW5Ib8l_SWBhUCKAJDMywXQEcIcrAgxJwYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=_AWEg3vCWqiBvRrT5XSgUA&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQKcVnrJ5TyEupnlK9oBRAOx5MUVnAcksTb6Jkx9E-2owGlogTqKujVdIrTMgXFk3CjVPuIoYGPt1w&oh=00_AQQ8Wvm-ZskMnTcT8RYxP-SzmM9AukmydoIQEPfcjc0TEw&oe=6AFFD4FE&bitrate=2269093&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249451978400238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQOR84WsSSf1-R-_Y4lwTGje-saU3gFrzWKSZLH8dC-KvNVwLlPfcpdPI-3yj6Ig8cIoGYHK6hIOdrReCme0OWj2WmY8xowGUO4gR91v5yMDuA.mp4?_nc_cat=102&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=7Z6pP_qum60Q7kNvwGvhBMD&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE3MzkyMjQ0NTM3OTgxODcsImFzc2V0X2FnZV9kYXlzIjoxMDQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjo0NiwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=bf73e0259b4666c9&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC81QjQ0NDc0OEY0OTE2MUQwMUYwNDUwODgyNjg2NjVBNV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzYwNDI0RTZGMENFNEJBOTlDMTQ5QjZCNzNGQkYwQUI1X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbW5Ib8l_SWBhUCKAJDMywXQEcIcrAgxJwYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=tuZX9JKDCwlqqD5gY30m6A&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQIydgjdE6EjHAQ4pmX3pthrLf0sQPUDLyLyP0H1yYaz-BmCbvjY36yWJTViyZgGTvOJZlFxnGvMmw&oh=00_AQTukkkBSAb5qmsZEQ0y1U383iG4kjHopr7QQIu0fJL5Iw&oe=6AFFD4FE&bitrate=2269093&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Emprendimiento - 02/08 - (video) - Reel Península">Emprendimiento - 02/08 - (video) - Reel Península</div>
           <div class="ad-set" title="FORM - Emprendimiento - (02/08)">FORM - Emprendimiento - (02/08)</div>
         </div>
-        <div class="kv">119.564</div><div class="kv">$799,18</div><div class="kv">1.295</div><div class="kv">534 <span class="sep">|</span> 41.2%</div><div class="kv">4.47</div><div class="kv">$1,50</div><div class="kv">31.76%</div><div class="kv">22.47%</div><div class="kv">1.08%</div><div class="kv">41.24%</div>
+        <div class="kv" data-raw="119564">119.564</div><div class="kv" data-raw="799.18">$799,18</div><div class="kv" data-raw="1295">1.295</div><div class="kv" data-raw="534">534</div><div class="kv" data-raw="41.24">41.24%</div><div class="kv" data-raw="4.47">4.47</div><div class="kv" data-raw="1.5">$1,50</div><div class="kv" data-raw="31.76">31.76%</div><div class="kv" data-raw="22.47">22.47%</div><div class="kv" data-raw="1.08">1.08%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249244881690238">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249244881690238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQNBBcM5kVMcqMDqmLaOAJWbBdAMRV8YGo_QFp_EIIovQqElegvoKekpd8Di08nvaZo13DsK3MoqdnekTdYXvA6rdPYIQDq-xRj9tVxfm1z7VQ.mp4?_nc_cat=110&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=kf5qnSA9mbcQ7kNvwGd58W_&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE4NzI0NjQzMDcwNTE1NTgsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjo1MSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=1cb9547d3ac01cce&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9FMDQ3RDJBNTI2M0JFQUE4QUYyQkM2NDlDNDYwRjk4RF9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzVBNDk3QTIzRDA0RjQ2Mzk1QzA0NEZFQkE0Rjc0Njg0X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbM8IKe4r_TBhUCKAJDMywXQEmEOVgQYk4YGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=NisL4kdoVpusF87AdUQw8w&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQLjefaasErTwUq8ZVaZ_ZD7EhYMQwX4wWn4GJR8vplSyDs_nyB73KyWshZrkhK8Ue7ADI6KAwLryg&_nc_enc=UvT7ny2bLfwOzjdTDAIMstRm06P57qDvEGb793Ai3vNc1wGRVmZgO0TcAfTjclK7qA0Wzi5XSZOdGHo8iIUw7ghcdtx_9xYkeE-oydJ12bGMO6DUV7l8-lQFMb7ckSUDwTkJZAOCsqQUFeyG&oh=00_AQTq_L-4EC5yeQ-PuOwCCxJoAowmNghLF4Vm1edcos9Vxw&oe=6AFFA512&bitrate=1685401&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249244881690238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQNBBcM5kVMcqMDqmLaOAJWbBdAMRV8YGo_QFp_EIIovQqElegvoKekpd8Di08nvaZo13DsK3MoqdnekTdYXvA6rdPYIQDq-xRj9tVxfm1z7VQ.mp4?_nc_cat=110&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=kf5qnSA9mbcQ7kNvwGd58W_&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE4NzI0NjQzMDcwNTE1NTgsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjo1MSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=1cb9547d3ac01cce&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9FMDQ3RDJBNTI2M0JFQUE4QUYyQkM2NDlDNDYwRjk4RF9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzVBNDk3QTIzRDA0RjQ2Mzk1QzA0NEZFQkE0Rjc0Njg0X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbM8IKe4r_TBhUCKAJDMywXQEmEOVgQYk4YGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=OxQu3iYqI_ttM0iHGUnxow&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQJnBktWGZFc80PQuHNa6igcy4TD_csCVkDK9iYau6FFyn7Za4SsVUCIhqOFHzZSYbQqqScECrWmvQ&_nc_enc=UlygvsQW5D2rskB7BhNP2Raipz3UD2A0n_rzCWUvu8XktX7JJRi_H6y-lvHo1BRiE1QOGCtUYuZZzPUYxEgd6qiy2AB3N-AfJCS405LmhBfWFcdwS0gnO3mA1LoYV_6BrzrFgFOAcxNTJgZr&oh=00_AQSFc7aJeLx3e-JVUT16-wl3uVyywHa43Bx4mS1fylzTrA&oe=6AFFA512&bitrate=1685401&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Depto - 23/07 - (video) - San Camilo">Depto - 23/07 - (video) - San Camilo</div>
           <div class="ad-set" title="FORM - Depto - (23/07)">FORM - Depto - (23/07)</div>
         </div>
-        <div class="kv">76.636</div><div class="kv">$589,38</div><div class="kv">1.140</div><div class="kv">334 <span class="sep">|</span> 29.3%</div><div class="kv">4.36</div><div class="kv">$1,76</div><div class="kv">21.69%</div><div class="kv">40.52%</div><div class="kv">1.49%</div><div class="kv">29.30%</div>
+        <div class="kv" data-raw="76636">76.636</div><div class="kv" data-raw="589.38">$589,38</div><div class="kv" data-raw="1140">1.140</div><div class="kv" data-raw="334">334</div><div class="kv" data-raw="29.3">29.30%</div><div class="kv" data-raw="4.36">4.36</div><div class="kv" data-raw="1.76">$1,76</div><div class="kv" data-raw="21.69">21.69%</div><div class="kv" data-raw="40.52">40.52%</div><div class="kv" data-raw="1.49">1.49%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249172418820238">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249172418820238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQOxvsEInKUspy0w1IunIsboYzkNSVBk7SYx94bNyCwQQAnO-hORhfrMTWBnL6t7mt-7yWWp-iMIm0dryx_UbhvLSwNOTtdeGCTRRzixY-oP2Q.mp4?_nc_cat=100&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=H96OaK4KaPwQ7kNvwE-CM2-&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjY2MzU1NTUzMzM3ODM3NSwiYXNzZXRfYWdlX2RheXMiOjM0NiwidmlfdXNlY2FzZV9pZCI6MTA3OTksImR1cmF0aW9uX3MiOjU0LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=888d28fdf6fd09ef&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC85MTRFRTBGNDlCMzA1MjZDRTFGMDMxMzQ0RjU0NkY4Q19tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50Lzc5NEQ5QzE3MTI3MzNFRkY0MTBFNkQ3MDVBOTMxRkFDX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACaOzdj9geCtAhUCKAJDMywXQEtZmZmZmZoYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=iB9Q7oPhcCpP2-zu4am91g&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQKRSEnLKyFpgbz2iie_NFkElwImjseein5IA6KURC8W7wmZz0Csq24hOpeGVtNnn6SYB47IU7Ud1g&oh=00_AQT-IvgLC0V0qt84A07ifSFevSpobuMSOyqd90bd_a_W-Q&oe=6AFFCF88&bitrate=2852809&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249172418820238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQOxvsEInKUspy0w1IunIsboYzkNSVBk7SYx94bNyCwQQAnO-hORhfrMTWBnL6t7mt-7yWWp-iMIm0dryx_UbhvLSwNOTtdeGCTRRzixY-oP2Q.mp4?_nc_cat=100&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=H96OaK4KaPwQ7kNvwE-CM2-&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjY2MzU1NTUzMzM3ODM3NSwiYXNzZXRfYWdlX2RheXMiOjM0NiwidmlfdXNlY2FzZV9pZCI6MTA3OTksImR1cmF0aW9uX3MiOjU0LCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=888d28fdf6fd09ef&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC85MTRFRTBGNDlCMzA1MjZDRTFGMDMxMzQ0RjU0NkY4Q19tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50Lzc5NEQ5QzE3MTI3MzNFRkY0MTBFNkQ3MDVBOTMxRkFDX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACaOzdj9geCtAhUCKAJDMywXQEtZmZmZmZoYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=w4CGLIhPkUFK8i7YAX4vnA&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQIuWidYEy1XF5eQJdhAcY9Ins34n6-dcvZpnj2YJFKysUnQ5kCfYMr_bplY74DGwjn6ezQcRLA9ig&oh=00_AQQonDdgd5rHlAC4NRr4C6aZZzSUseA4SHwfi4lpCrVekw&oe=6AFFCF88&bitrate=2852809&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Visitante - Paseo Retamas: video - v3 - (voz en off)">Visitante - Paseo Retamas: video - v3 - (voz en off)</div>
           <div class="ad-set" title="FORM - Zona (23/07)">FORM - Zona (23/07)</div>
         </div>
-        <div class="kv">65.183</div><div class="kv">$338,02</div><div class="kv">510</div><div class="kv">80 <span class="sep">|</span> 15.7%</div><div class="kv">1.23</div><div class="kv">$4,23</div><div class="kv">23.25%</div><div class="kv">30.57%</div><div class="kv">0.78%</div><div class="kv">15.69%</div>
+        <div class="kv" data-raw="65183">65.183</div><div class="kv" data-raw="338.02">$338,02</div><div class="kv" data-raw="510">510</div><div class="kv" data-raw="80">80</div><div class="kv" data-raw="15.69">15.69%</div><div class="kv" data-raw="1.23">1.23</div><div class="kv" data-raw="4.23">$4,23</div><div class="kv" data-raw="23.25">23.25%</div><div class="kv" data-raw="30.57">30.57%</div><div class="kv" data-raw="0.78">0.78%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249246117720238">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249246117720238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQN35wDPalfjAM6ER7zw6W7DmKiG2MnZy7OYZXP7gcaHcPIHxSsJvtO3LYxRFIHbQzVvErI5JrksNDoOBcmLPBuS_1F_6FxY8OdGUUyX8J_RyQ.mp4?_nc_cat=111&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=1ewsyDGifEoQ7kNvwEckznn&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjMxMDAxMTMyODM1MjE1MzAsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjozMCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=d851cec21e158f2d&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC84OTQ3REQ2Q0RCRDA0OTc1NUIwRDUwOEZFNDJFNEI5Ml9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50L0EyNDBGOTBENzFERDA2RDMzREI2OTA3NjA3QzlEM0JEX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACb077jwq-KBCxUCKAJDMywXQD5EGJN0vGoYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=NM37aJicuSHa3LYk0OX0aA&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQIVVfB1NuMj1D9lfOlSHXqBUJK9NFr0M78hGYFrHWQAdN-x39W7L6D6EoPcHe02L8z2iRU0wUVCoA&_nc_enc=UvU8yajPx6GqvrlatClKY_7lX77MR8feaYxoeB-OUijLIq7p1t1eWfyNFQznKy3wKa8Y2Jbw6sa9di2lhH-N6qHL5TaPPC-BhxQp8c1TpHZUbC58HuVvVU-PqBnrKKLOnpFbaRanphl4Jiv-&oh=00_AQTS9BHV5XQprrHymbj2IwmLcLEi0gLg1d-1Kzb3pxcDOA&oe=6AFFBB6D&bitrate=2516727&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249246117720238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQN35wDPalfjAM6ER7zw6W7DmKiG2MnZy7OYZXP7gcaHcPIHxSsJvtO3LYxRFIHbQzVvErI5JrksNDoOBcmLPBuS_1F_6FxY8OdGUUyX8J_RyQ.mp4?_nc_cat=111&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=1ewsyDGifEoQ7kNvwEckznn&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjMxMDAxMTMyODM1MjE1MzAsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjozMCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=d851cec21e158f2d&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC84OTQ3REQ2Q0RCRDA0OTc1NUIwRDUwOEZFNDJFNEI5Ml9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50L0EyNDBGOTBENzFERDA2RDMzREI2OTA3NjA3QzlEM0JEX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACb077jwq-KBCxUCKAJDMywXQD5EGJN0vGoYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=ThdG17EJAgMV6ID2JjRhxQ&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQJoroNtyFVzeb1tNx7D7apdplpg1IKa_cj7EoD0O0UZYw_jFwQLl7brAh8g4xrmxhBD9Z1k1q6zNw&_nc_enc=UlpZ7K0lhb_Hdu-aAJY6FvUdhycuRBV9MBpH2GE664AzHVMulA-_1DDQdoK5S9pIaysC8jzQ8X0_VoVP5MPSdNYHDqbs2uj-NwG1q4h9PkXjd393Ozr8j1oCL5eguGnBjYjagQhWWKndjETc&oh=00_AQQyz-Pq6xAQz1CtBWPX5g9AjKF-sDD6OnZxwPfR4ncMUw&oe=6AFFBB6D&bitrate=2516727&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Lotes - 23/07 - (video) - Tu inversión en Villa...">Lotes - 23/07 - (video) - Tu inversión en Villa...</div>
           <div class="ad-set" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
         </div>
-        <div class="kv">57.625</div><div class="kv">$216,89</div><div class="kv">726</div><div class="kv">80 <span class="sep">|</span> 11.0%</div><div class="kv">1.39</div><div class="kv">$2,71</div><div class="kv">23.32%</div><div class="kv">24.16%</div><div class="kv">1.26%</div><div class="kv">11.02%</div>
+        <div class="kv" data-raw="57625">57.625</div><div class="kv" data-raw="216.89">$216,89</div><div class="kv" data-raw="726">726</div><div class="kv" data-raw="80">80</div><div class="kv" data-raw="11.02">11.02%</div><div class="kv" data-raw="1.39">1.39</div><div class="kv" data-raw="2.71">$2,71</div><div class="kv" data-raw="23.32">23.32%</div><div class="kv" data-raw="24.16">24.16%</div><div class="kv" data-raw="1.26">1.26%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120245205032040238">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120245205032040238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQM-vZfnvHaPdLTSNrCqpZCSqT2ruLohHAxgzqsAOquoyOpmp-xY7BR64rp3HwiFx8BbnfAJg4rnM-Q0o2pdvsFbnHMjDCIZ_baLomJ7cUyRjg.mp4?_nc_cat=102&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=9Y6YOer_e20Q7kNvwEou5wb&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE2NTQ0NjcwMTI1MDcyMzgsImFzc2V0X2FnZV9kYXlzIjoxODQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjo0OSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=ea0d0916e398841b&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9EQzRCNjRCRkQ4QkNEMEI4NThBOTc5MTY0RDQxQjk5NF9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50L0Q4NDFFNUNERTREOTM0QUJCNUI4MDI3NzgwMkUxRUJBX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbM2ZXp067wBRUCKAJDMywXQEiVP3ztkWgYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=GQNYi1V6o18o_WXH8S4sTA&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQKF--YGr-EvgtDXhwEZL3Ef8WEIcFTHqq2mjYaeOdIGhhvfCz1cdA_zLu1F75IbhU20Y5lC0S0hNA&oh=00_AQTK99a-0_k8cFlOsfGobeEHZt7WKlIaxovx0U1zJ67ohg&oe=6AFFB46E&bitrate=2877485&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120245205032040238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQM-vZfnvHaPdLTSNrCqpZCSqT2ruLohHAxgzqsAOquoyOpmp-xY7BR64rp3HwiFx8BbnfAJg4rnM-Q0o2pdvsFbnHMjDCIZ_baLomJ7cUyRjg.mp4?_nc_cat=102&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=9Y6YOer_e20Q7kNvwEou5wb&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE2NTQ0NjcwMTI1MDcyMzgsImFzc2V0X2FnZV9kYXlzIjoxODQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjo0OSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=ea0d0916e398841b&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9EQzRCNjRCRkQ4QkNEMEI4NThBOTc5MTY0RDQxQjk5NF9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50L0Q4NDFFNUNERTREOTM0QUJCNUI4MDI3NzgwMkUxRUJBX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbM2ZXp067wBRUCKAJDMywXQEiVP3ztkWgYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=pn1jfeTgkILw1sWQRTxUpQ&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQKu9oK7V_nqw7IsIEDwhhPh00DhzjCVEvG3SUmscmhkSs2eSsIlVqbzf6hEbAMzfMMmSmHR4Y33nw&oh=00_AQTnLNsK5lBlJIgmVKBt36OhfXyqXfVGJszbmhC-15lCwA&oe=6AFFB46E&bitrate=2877485&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Cota 1000 - video - (voz off)">Cota 1000 - video - (voz off)</div>
           <div class="ad-set" title="FORM - Cota 1000">FORM - Cota 1000</div>
         </div>
-        <div class="kv">44.154</div><div class="kv">$410,29</div><div class="kv">628</div><div class="kv">174 <span class="sep">|</span> 27.7%</div><div class="kv">3.94</div><div class="kv">$2,36</div><div class="kv">21.34%</div><div class="kv">33.95%</div><div class="kv">1.42%</div><div class="kv">27.71%</div>
+        <div class="kv" data-raw="44154">44.154</div><div class="kv" data-raw="410.29">$410,29</div><div class="kv" data-raw="628">628</div><div class="kv" data-raw="174">174</div><div class="kv" data-raw="27.71">27.71%</div><div class="kv" data-raw="3.94">3.94</div><div class="kv" data-raw="2.36">$2,36</div><div class="kv" data-raw="21.34">21.34%</div><div class="kv" data-raw="33.95">33.95%</div><div class="kv" data-raw="1.42">1.42%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249246054110238">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249246054110238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQPlV8cMqWyyovGJ4L9hXgnrQfwFkdBAvEbANxpqX6g85LXXvNcjrV1NxvsYhaLkg-hII8GNp0ebkMV1dtzb6oOw3Gyi7WPJpkDhY0Vz_nNxhw.mp4?_nc_cat=106&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=KBEdEpWbUokQ7kNvwG7bK0Y&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjIwNzc0MDQzNDk2NTQzMzAsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjozMCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=9b89ac761eeb0ff&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC82MzRENTBBOUM5NkM5OUQ3MjQxNkQ2NDA3QTgyRjg4NF9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzkwNDU5M0FFNTdFMUYyQkIwNTI3Nzk5MTU5ODk4RkI5X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACb0lIfF7NiwBxUCKAJDMywXQD5EGJN0vGoYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=smpU3jcDWs5XTdRtOe5zjg&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQLHh3yupxekYygIUPZYZG-4VPXPC7NyniujS0g5Lbh6C_KkeQdDkSkNtq35whsMgmbXm8tjsAmrCg&oh=00_AQTjQD4kFNRr53Ncc82BbpX3hJuhgjCDrDDKq_KEC74dQA&oe=6AFFD55A&bitrate=2516727&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249246054110238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQPlV8cMqWyyovGJ4L9hXgnrQfwFkdBAvEbANxpqX6g85LXXvNcjrV1NxvsYhaLkg-hII8GNp0ebkMV1dtzb6oOw3Gyi7WPJpkDhY0Vz_nNxhw.mp4?_nc_cat=106&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=KBEdEpWbUokQ7kNvwG7bK0Y&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjIwNzc0MDQzNDk2NTQzMzAsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjozMCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=9b89ac761eeb0ff&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC82MzRENTBBOUM5NkM5OUQ3MjQxNkQ2NDA3QTgyRjg4NF9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzkwNDU5M0FFNTdFMUYyQkIwNTI3Nzk5MTU5ODk4RkI5X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACb0lIfF7NiwBxUCKAJDMywXQD5EGJN0vGoYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=2mPrYXHheNgzMAYZ87eUuA&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQLe1WYTGEdVVvQYSvql56mY2mc_649aQu9AYVeK91W9HRzKTiKkvGwKSWXGlDsqxygzwm4zraXpkg&oh=00_AQSCVUhy8sFj9SpoHKES-mydyjIzGaxyCRAlLhuHihL_0w&oe=6AFFD55A&bitrate=2516727&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Lotes - 23/07 - (video) - Tu inversión en Villa...">Lotes - 23/07 - (video) - Tu inversión en Villa...</div>
           <div class="ad-set" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
         </div>
-        <div class="kv">2.202</div><div class="kv">$15,71</div><div class="kv">29</div><div class="kv">4 <span class="sep">|</span> 13.8%</div><div class="kv">1.82</div><div class="kv">$3,93</div><div class="kv">26.98%</div><div class="kv">29.12%</div><div class="kv">1.32%</div><div class="kv">13.79%</div>
+        <div class="kv" data-raw="2202">2.202</div><div class="kv" data-raw="15.71">$15,71</div><div class="kv" data-raw="29">29</div><div class="kv" data-raw="4">4</div><div class="kv" data-raw="13.79">13.79%</div><div class="kv" data-raw="1.82">1.82</div><div class="kv" data-raw="3.93">$3,93</div><div class="kv" data-raw="26.98">26.98%</div><div class="kv" data-raw="29.12">29.12%</div><div class="kv" data-raw="1.32">1.32%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249245719050238">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249245719050238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQN6boevenIACMc1rvCDClhQKLnyDBtuvjmuY7ue54WLqgZdKauateconeGPJZnuBM-BaPwaHlirUA52gCNi1jI7kVMbnHJyu0b-BgECLBlqKg.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=rBTvZf-0fkUQ7kNvwERXVGH&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE3MTM1OTEwNjY0NTUyNjEsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjoxNywidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=30d709128733d3f8&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC85NjQyNDUzRUJDNTdBNTg2Njc4OTJGOUY5RTIzMjJBNV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzYyNDExRjExNzJCMDAwMEJBNzAyMEFFNDYyNDk1QkI1X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACa6s_OskKCLBhUCKAJDMywXQDFMzMzMzM0YGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=ABxZPNbzaFgVUfM9ExLNrw&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQIC2ykLBXFUFcmizQSaP6gS8As5NVOiYPE6PI0GY6HwN4_kY6tE2a7vseLhOM86wONZeyP1HCSfVQ&oh=00_AQR2VgtiT5Z333c4Yuo1KFm699VmmNTsYarCcuCipe5-7A&oe=6AFFB587&bitrate=2482073&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249245719050238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQN6boevenIACMc1rvCDClhQKLnyDBtuvjmuY7ue54WLqgZdKauateconeGPJZnuBM-BaPwaHlirUA52gCNi1jI7kVMbnHJyu0b-BgECLBlqKg.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=rBTvZf-0fkUQ7kNvwERXVGH&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjE3MTM1OTEwNjY0NTUyNjEsImFzc2V0X2FnZV9kYXlzIjoxMTQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjoxNywidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=30d709128733d3f8&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC85NjQyNDUzRUJDNTdBNTg2Njc4OTJGOUY5RTIzMjJBNV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzYyNDExRjExNzJCMDAwMEJBNzAyMEFFNDYyNDk1QkI1X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACa6s_OskKCLBhUCKAJDMywXQDFMzMzMzM0YGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=0zbDJ5jkYFSWOZwJyB12gg&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQKR6ejjPfpJZW9-DTOxq4ykKYbD2xx5Leat75c5H-Xb0dcuAkMxtQmB9s-yHsp3yxnzBGnO2k9u-g&oh=00_AQRnGfmeC20GOH4VrlcjVbHa6lLFfEVKTweyP_M1bmD16Q&oe=6AFFB587&bitrate=2482073&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Lotes - 23/07 - (video) - lote 55">Lotes - 23/07 - (video) - lote 55</div>
           <div class="ad-set" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
         </div>
-        <div class="kv">1.726</div><div class="kv">$15,47</div><div class="kv">16</div><div class="kv">8 <span class="sep">|</span> 50.0%</div><div class="kv">4.63</div><div class="kv">$1,93</div><div class="kv">26.88%</div><div class="kv">14.44%</div><div class="kv">0.93%</div><div class="kv">50.00%</div>
+        <div class="kv" data-raw="1726">1.726</div><div class="kv" data-raw="15.47">$15,47</div><div class="kv" data-raw="16">16</div><div class="kv" data-raw="8">8</div><div class="kv" data-raw="50">50.00%</div><div class="kv" data-raw="4.63">4.63</div><div class="kv" data-raw="1.93">$1,93</div><div class="kv" data-raw="26.88">26.88%</div><div class="kv" data-raw="14.44">14.44%</div><div class="kv" data-raw="0.93">0.93%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249172236790238">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249172236790238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQOUR80hqo-j6BYZXc_FaWU5T51uqA2wEPfOVtN6YVHPeH8EOpKSQz_-LpXsUmw70mdmAjPSI9r3U14jvtAo19gFE5Xwaz6FKmrvpDJpHxycuw.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=m1tZSklsFfcQ7kNvwFEwZB8&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNTc2LmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjEwNzcyMDQwMDgxOTkxNDIsImFzc2V0X2FnZV9kYXlzIjoxMTcsInZpX3VzZWNhc2VfaWQiOjEwMTM5LCJkdXJhdGlvbl9zIjozNSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=cf8d5343dcd31923&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC8xMzQyMDg5NzZBRDQwMEY4QzRFODIyQTlGMjgwMURBNV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzUzNEZGNUFCNjgxNkFERjkwNDJFQzcwRkRGMjBCREEzX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbMj5Okw-3pAxUCKAJDMywXQEHu2RaHKwIYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZbaeAQA&_nc_gid=_8pcBz-xCyOYieZ2dus-1A&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQKh4i4IFgkbIxtD0GjfcVIzf6KP49AEJK_CWrccmOChBcJKDAuYTMzm0J1jI8gXp3w96QlZlNdyeg&oh=00_AQRNYJxMqKxMurBVME4EObWELgHfPPzS8dVU5i7FGc16vg&oe=6AFFC1A7&bitrate=1063839&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249172236790238.jpg"><source src="https://video-eze1-2.xx.fbcdn.net/o1/v/t2/f2/m366/AQOUR80hqo-j6BYZXc_FaWU5T51uqA2wEPfOVtN6YVHPeH8EOpKSQz_-LpXsUmw70mdmAjPSI9r3U14jvtAo19gFE5Xwaz6FKmrvpDJpHxycuw.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=video-eze1-2.xx.fbcdn.net&_nc_ohc=m1tZSklsFfcQ7kNvwFEwZB8&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNTc2LmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjEwNzcyMDQwMDgxOTkxNDIsImFzc2V0X2FnZV9kYXlzIjoxMTcsInZpX3VzZWNhc2VfaWQiOjEwMTM5LCJkdXJhdGlvbl9zIjozNSwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=cf8d5343dcd31923&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC8xMzQyMDg5NzZBRDQwMEY4QzRFODIyQTlGMjgwMURBNV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzUzNEZGNUFCNjgxNkFERjkwNDJFQzcwRkRGMjBCREEzX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACbMj5Okw-3pAxUCKAJDMywXQEHu2RaHKwIYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZbaeAQA&_nc_gid=en9LbOimJlw3Az2ykAzLYw&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQIEBH5pqcFJ89aAsO2KnmhetiRQ1mzcde5oFTKB3sl-D9CM4jzz0G8KAsn-5HcRy0xYsNqSqjlWKw&oh=00_AQQsClbbcCNlLYN3M36cwVdt0suHalKus7IGvdAXahfB4A&oe=6AFFC1A7&bitrate=1063839&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Visitante - Mirador: Pozos Romanos">Visitante - Mirador: Pozos Romanos</div>
           <div class="ad-set" title="FORM - Zona (23/07)">FORM - Zona (23/07)</div>
         </div>
-        <div class="kv">1.711</div><div class="kv">$7,40</div><div class="kv">18</div><div class="kv">0 <span class="sep">|</span> 0.0%</div><div class="kv">0.00</div><div class="kv">—</div><div class="kv">38.87%</div><div class="kv">44.21%</div><div class="kv">1.05%</div><div class="kv">0.00%</div>
+        <div class="kv" data-raw="1711">1.711</div><div class="kv" data-raw="7.4">$7,40</div><div class="kv" data-raw="18">18</div><div class="kv" data-raw="0">0</div><div class="kv" data-raw="0">0.00%</div><div class="kv" data-raw="0">0.00</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="38.87">38.87%</div><div class="kv" data-raw="44.21">44.21%</div><div class="kv" data-raw="1.05">1.05%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249451966950238">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249451966950238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQOajkSbJnPt_xIFTYm5TyTaNFUbdy0NvVviILEmbq3o-57CP62NHRweVseF7MhE0DMTzJML8Br7a4lmNvoNlpf0f8jUgJ4fiOmCuJBDnVWROA.mp4?_nc_cat=108&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=Wj0XeamWG7EQ7kNvwHdUbh9&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjI4MzIwNTg5MTc3NjI5NDAxLCJhc3NldF9hZ2VfZGF5cyI6MTA0LCJ2aV91c2VjYXNlX2lkIjoxMDc5OSwiZHVyYXRpb25fcyI6MjAsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=5c5890460520c801&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9FNTQ3MkU1MENEOUIyNzNDQzZFNEZEN0Y3MkYwQ0U5N19tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50L0EwNDU1MzNEMDhDMjU0QzE1QjUzNDhDQTE2NTZGQUJBX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACayq5mcoNvOZBUCKAJDMywXQDSqfvnbItEYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=T0bxlG5SMjiIHE_BxFvOHQ&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQLxB2t7pOZRk7Ltq0excqOM2nuvRSNEgdeMIch-IkN608-w2RWuIRVadFfsUmm-h0u2ECMVFwJYMg&oh=00_AQTcdnK8JWs50wFDcl8XSk6KGIl0J1fXP2WUeB22rWpSGA&oe=6AFFD4B4&bitrate=1209785&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249451966950238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQOajkSbJnPt_xIFTYm5TyTaNFUbdy0NvVviILEmbq3o-57CP62NHRweVseF7MhE0DMTzJML8Br7a4lmNvoNlpf0f8jUgJ4fiOmCuJBDnVWROA.mp4?_nc_cat=108&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=Wj0XeamWG7EQ7kNvwHdUbh9&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjI4MzIwNTg5MTc3NjI5NDAxLCJhc3NldF9hZ2VfZGF5cyI6MTA0LCJ2aV91c2VjYXNlX2lkIjoxMDc5OSwiZHVyYXRpb25fcyI6MjAsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=5c5890460520c801&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC9FNTQ3MkU1MENEOUIyNzNDQzZFNEZEN0Y3MkYwQ0U5N19tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50L0EwNDU1MzNEMDhDMjU0QzE1QjUzNDhDQTE2NTZGQUJBX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACayq5mcoNvOZBUCKAJDMywXQDSqfvnbItEYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=HsztJs8WUd2Xnr6becQ94A&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQLP0zsNNV5RbLYUV-Fr5cB9Ga0y2_KRC899L8U_NeOiORFUp-PxXKCWOH7CfMUEkydTYu_-s21exg&oh=00_AQS6XKT9g6SzLWJcMCqiBKGs1klRLGlBM3M671IlieXALw&oe=6AFFD4B4&bitrate=1209785&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Emprendimiento - 02/08 - (video) - Reel Haiku">Emprendimiento - 02/08 - (video) - Reel Haiku</div>
           <div class="ad-set" title="FORM - Emprendimiento - (02/08)">FORM - Emprendimiento - (02/08)</div>
         </div>
-        <div class="kv">126</div><div class="kv">$0,63</div><div class="kv">1</div><div class="kv">0 <span class="sep">|</span> 0.0%</div><div class="kv">0.00</div><div class="kv">—</div><div class="kv">27.78%</div><div class="kv">20.00%</div><div class="kv">0.79%</div><div class="kv">0.00%</div>
+        <div class="kv" data-raw="126">126</div><div class="kv" data-raw="0.63">$0,63</div><div class="kv" data-raw="1">1</div><div class="kv" data-raw="0">0</div><div class="kv" data-raw="0">0.00%</div><div class="kv" data-raw="0">0.00</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="27.78">27.78%</div><div class="kv" data-raw="20">20.00%</div><div class="kv" data-raw="0.79">0.79%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249451987530238">
         <div class="thumb">
           <span class="col-kind video">VIDEO</span>
-          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249451987530238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQPTbSQeJ5ovH8lz2sF_fVSN0FqASmuduHpX-hyxUXwcSVEc1A_crPeHDUSTwsgdn1JdmJiqfI0opYeagG6sOeSV4enmB5IdpDVXbUa9JBSCSg.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=aw6x5qADNGAQ7kNvwGnDF6j&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjEzODY4OTY5MjY3NDQ1MzcsImFzc2V0X2FnZV9kYXlzIjoxMDQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjozNCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=e1b2c06f8a404b69&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC85NjQyQzQwRDlBQTVBREJERUNCNzlBNTU1ODJDNjQ4QV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzIxNEY3M0FBQTJGNEUyMTEzRTlEQ0ZCOEIzMTY0QzlEX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACay_8Sqg9j2BBUCKAJDMywXQEEiDEm6XjUYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=pRH_LOu930UyZSs77nogFg&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQKodQ3qp-9CRRr8RdPj11x3GfwQasfrAF_VRGUXT-zQeGh3zqv-l2cdTJNd371rSS8Ipy9oSkSs9A&oh=00_AQQf4Ga4T1HTv6vbI--HLLRu1rdZjwoB3DKi9mWcB8PviQ&oe=6AFFD063&bitrate=2433125&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
+          <video preload="none" controls playsinline poster="dashboard/thumbs/adq_120249451987530238.jpg"><source src="https://video-eze1-1.xx.fbcdn.net/o1/v/t2/f2/m366/AQPTbSQeJ5ovH8lz2sF_fVSN0FqASmuduHpX-hyxUXwcSVEc1A_crPeHDUSTwsgdn1JdmJiqfI0opYeagG6sOeSV4enmB5IdpDVXbUa9JBSCSg.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=video-eze1-1.xx.fbcdn.net&_nc_ohc=aw6x5qADNGAQ7kNvwGnDF6j&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5GQUNFQk9PSy4uQzMuNzIwLmRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHAiLCJ4cHZfYXNzZXRfaWQiOjEzODY4OTY5MjY3NDQ1MzcsImFzc2V0X2FnZV9kYXlzIjoxMDQsInZpX3VzZWNhc2VfaWQiOjEwNzk5LCJkdXJhdGlvbl9zIjozNCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=e1b2c06f8a404b69&_nc_vs=HBksFQIYRWZiX2VwaGVtZXJhbC85NjQyQzQwRDlBQTVBREJERUNCNzlBNTU1ODJDNjQ4QV9tdF8xX3ZpZGVvX2Rhc2hpbml0Lm1wNBUAAsgBEgAVAhhAZmJfcGVybWFuZW50LzIxNEY3M0FBQTJGNEUyMTEzRTlEQ0ZCOEIzMTY0QzlEX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwOIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRJjb3B5X3NhbXBsZV9ncm91cHMBMRUAACay_8Sqg9j2BBUCKAJDMywXQEEiDEm6XjUYGWRhc2hfaDI2NC1iYXNpYy1nZW4yXzcyMHARAHUCZd6oAQA&_nc_gid=PQfxZEjQS9EjJiy0BCmtGQ&edm=APRAPSkEAAAA&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_tpa=Q5bMBQLECYfFyEJkCOwbuLtB3-okUNnoRO_1mvh7mIvA8PtHxlFyMjO8rhSurtb5_VeKpuls4RDxV17SsA&oh=00_AQTNBGLs7gSwi0DEqNCT6-8d7BV74ow2Itj3UNaV-D7aRQ&oe=6AFFD063&bitrate=2433125&tag=dash_h264-basic-gen2_720p" type="video/mp4"></video>
         </div>
         <div class="name">
           <div class="ad-name" title="Emprendimiento - 02/08 - (video) - Reel Retamas">Emprendimiento - 02/08 - (video) - Reel Retamas</div>
           <div class="ad-set" title="FORM - Emprendimiento - (02/08)">FORM - Emprendimiento - (02/08)</div>
         </div>
-        <div class="kv">105</div><div class="kv">$0,61</div><div class="kv">3</div><div class="kv">0 <span class="sep">|</span> 0.0%</div><div class="kv">0.00</div><div class="kv">—</div><div class="kv">26.67%</div><div class="kv">7.14%</div><div class="kv">2.86%</div><div class="kv">0.00%</div>
+        <div class="kv" data-raw="105">105</div><div class="kv" data-raw="0.61">$0,61</div><div class="kv" data-raw="3">3</div><div class="kv" data-raw="0">0</div><div class="kv" data-raw="0">0.00%</div><div class="kv" data-raw="0">0.00</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="26.67">26.67%</div><div class="kv" data-raw="7.14">7.14%</div><div class="kv" data-raw="2.86">2.86%</div>
       </div></div>
       </div>
     </div>
@@ -302,10 +307,10 @@
     <aside class="labels">
       <div class="l-top"></div>
       <div class="l-name"></div>
-      <div class="l">Impresiones</div><div class="l">Gasto</div><div class="l">Aperturas form</div><div class="l">Leads</div><div class="l">Lead / 1k imp</div><div class="l">CPL</div><div class="l">Hook 3s</div><div class="l">Hold</div><div class="l">CTR link</div><div class="l">Envío</div>
+      <button class="l" type="button" data-i="0" title="Ordenar por Impresiones">Impresiones</button><button class="l" type="button" data-i="1" title="Ordenar por Gasto">Gasto</button><button class="l" type="button" data-i="2" title="Ordenar por Aperturas form">Aperturas form</button><button class="l" type="button" data-i="3" title="Ordenar por Leads">Leads</button><button class="l" type="button" data-i="4" title="Ordenar por Conversión">Conversión</button><button class="l" type="button" data-i="5" title="Ordenar por Lead / 1k imp">Lead / 1k imp</button><button class="l" type="button" data-i="6" title="Ordenar por CPL">CPL</button><button class="l" type="button" data-i="7" title="Ordenar por Hook 3s">Hook 3s</button><button class="l" type="button" data-i="8" title="Ordenar por Hold">Hold</button><button class="l" type="button" data-i="9" title="Ordenar por CTR link">CTR link</button>
     </aside>
         <div class="cards">
-      <div class="card">
+      <div class="card" data-ad="120249452304760238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249452304760238.jpg" alt="Casas - 02/08 - (secuencia)" loading="lazy"/>
@@ -314,9 +319,9 @@
           <div class="ad-name" title="Casas - 02/08 - (secuencia)">Casas - 02/08 - (secuencia)</div>
           <div class="ad-set" title="FORM - Casas - (02/08)">FORM - Casas - (02/08)</div>
         </div>
-        <div class="kv">189.188</div><div class="kv">$735,64</div><div class="kv">5.557</div><div class="kv">414 <span class="sep">|</span> 7.5%</div><div class="kv">2.19</div><div class="kv">$1,78</div><div class="kv">—</div><div class="kv">—</div><div class="kv">2.94%</div><div class="kv">7.45%</div>
+        <div class="kv" data-raw="189188">189.188</div><div class="kv" data-raw="735.64">$735,64</div><div class="kv" data-raw="5557">5.557</div><div class="kv" data-raw="414">414</div><div class="kv" data-raw="7.45">7.45%</div><div class="kv" data-raw="2.19">2.19</div><div class="kv" data-raw="1.78">$1,78</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="2.94">2.94%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249452323930238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249452323930238.jpg" alt="Casas - 02/08 - (universal) - 1" loading="lazy"/>
@@ -325,9 +330,9 @@
           <div class="ad-name" title="Casas - 02/08 - (universal) - 1">Casas - 02/08 - (universal) - 1</div>
           <div class="ad-set" title="FORM - Casas - (02/08)">FORM - Casas - (02/08)</div>
         </div>
-        <div class="kv">100.165</div><div class="kv">$364,37</div><div class="kv">1.478</div><div class="kv">234 <span class="sep">|</span> 15.8%</div><div class="kv">2.34</div><div class="kv">$1,56</div><div class="kv">—</div><div class="kv">—</div><div class="kv">1.48%</div><div class="kv">15.83%</div>
+        <div class="kv" data-raw="100165">100.165</div><div class="kv" data-raw="364.37">$364,37</div><div class="kv" data-raw="1478">1.478</div><div class="kv" data-raw="234">234</div><div class="kv" data-raw="15.83">15.83%</div><div class="kv" data-raw="2.34">2.34</div><div class="kv" data-raw="1.56">$1,56</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="1.48">1.48%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249245976740238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249245976740238.jpg" alt="Lotes - 23/07 - (estático) - 2" loading="lazy"/>
@@ -336,9 +341,9 @@
           <div class="ad-name" title="Lotes - 23/07 - (estático) - 2">Lotes - 23/07 - (estático) - 2</div>
           <div class="ad-set" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
         </div>
-        <div class="kv">21.266</div><div class="kv">$120,04</div><div class="kv">316</div><div class="kv">70 <span class="sep">|</span> 22.1%</div><div class="kv">3.29</div><div class="kv">$1,71</div><div class="kv">—</div><div class="kv">—</div><div class="kv">1.49%</div><div class="kv">22.15%</div>
+        <div class="kv" data-raw="21266">21.266</div><div class="kv" data-raw="120.04">$120,04</div><div class="kv" data-raw="316">316</div><div class="kv" data-raw="70">70</div><div class="kv" data-raw="22.15">22.15%</div><div class="kv" data-raw="3.29">3.29</div><div class="kv" data-raw="1.71">$1,71</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="1.49">1.49%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120242981493310238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120242981493310238.jpg" alt="Lotes Manzano - img 1" loading="lazy"/>
@@ -347,9 +352,9 @@
           <div class="ad-name" title="Lotes Manzano - img 1">Lotes Manzano - img 1</div>
           <div class="ad-set" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
         </div>
-        <div class="kv">9.542</div><div class="kv">$37,68</div><div class="kv">100</div><div class="kv">24 <span class="sep">|</span> 24.0%</div><div class="kv">2.52</div><div class="kv">$1,57</div><div class="kv">—</div><div class="kv">—</div><div class="kv">1.05%</div><div class="kv">24.00%</div>
+        <div class="kv" data-raw="9542">9.542</div><div class="kv" data-raw="37.68">$37,68</div><div class="kv" data-raw="100">100</div><div class="kv" data-raw="24">24</div><div class="kv" data-raw="24">24.00%</div><div class="kv" data-raw="2.52">2.52</div><div class="kv" data-raw="1.57">$1,57</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="1.05">1.05%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249245042080238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249245042080238.jpg" alt="Depto - 23/07 - (secuencia)" loading="lazy"/>
@@ -358,9 +363,9 @@
           <div class="ad-name" title="Depto - 23/07 - (secuencia)">Depto - 23/07 - (secuencia)</div>
           <div class="ad-set" title="FORM - Depto - (23/07)">FORM - Depto - (23/07)</div>
         </div>
-        <div class="kv">5.225</div><div class="kv">$26,22</div><div class="kv">76</div><div class="kv">12 <span class="sep">|</span> 15.8%</div><div class="kv">2.30</div><div class="kv">$2,19</div><div class="kv">—</div><div class="kv">—</div><div class="kv">1.45%</div><div class="kv">15.79%</div>
+        <div class="kv" data-raw="5225">5.225</div><div class="kv" data-raw="26.22">$26,22</div><div class="kv" data-raw="76">76</div><div class="kv" data-raw="12">12</div><div class="kv" data-raw="15.79">15.79%</div><div class="kv" data-raw="2.3">2.30</div><div class="kv" data-raw="2.19">$2,19</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="1.45">1.45%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249245611290238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249245611290238.jpg" alt="Depto - 23/07 - (estático) - 1" loading="lazy"/>
@@ -369,9 +374,9 @@
           <div class="ad-name" title="Depto - 23/07 - (estático) - 1">Depto - 23/07 - (estático) - 1</div>
           <div class="ad-set" title="FORM - Depto - (23/07)">FORM - Depto - (23/07)</div>
         </div>
-        <div class="kv">4.214</div><div class="kv">$36,61</div><div class="kv">65</div><div class="kv">20 <span class="sep">|</span> 30.8%</div><div class="kv">4.75</div><div class="kv">$1,83</div><div class="kv">—</div><div class="kv">—</div><div class="kv">1.54%</div><div class="kv">30.77%</div>
+        <div class="kv" data-raw="4214">4.214</div><div class="kv" data-raw="36.61">$36,61</div><div class="kv" data-raw="65">65</div><div class="kv" data-raw="20">20</div><div class="kv" data-raw="30.77">30.77%</div><div class="kv" data-raw="4.75">4.75</div><div class="kv" data-raw="1.83">$1,83</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="1.54">1.54%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249452340310238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249452340310238.jpg" alt="Casas - 02/08 - (universal) - 2" loading="lazy"/>
@@ -380,9 +385,9 @@
           <div class="ad-name" title="Casas - 02/08 - (universal) - 2">Casas - 02/08 - (universal) - 2</div>
           <div class="ad-set" title="FORM - Casas - (02/08)">FORM - Casas - (02/08)</div>
         </div>
-        <div class="kv">3.691</div><div class="kv">$26,85</div><div class="kv">48</div><div class="kv">12 <span class="sep">|</span> 25.0%</div><div class="kv">3.25</div><div class="kv">$2,24</div><div class="kv">—</div><div class="kv">—</div><div class="kv">1.30%</div><div class="kv">25.00%</div>
+        <div class="kv" data-raw="3691">3.691</div><div class="kv" data-raw="26.85">$26,85</div><div class="kv" data-raw="48">48</div><div class="kv" data-raw="12">12</div><div class="kv" data-raw="25">25.00%</div><div class="kv" data-raw="3.25">3.25</div><div class="kv" data-raw="2.24">$2,24</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="1.3">1.30%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249245988330238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249245988330238.jpg" alt="Lotes - 23/07 - (estático) - 3" loading="lazy"/>
@@ -391,9 +396,9 @@
           <div class="ad-name" title="Lotes - 23/07 - (estático) - 3">Lotes - 23/07 - (estático) - 3</div>
           <div class="ad-set" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
         </div>
-        <div class="kv">2.937</div><div class="kv">$16,78</div><div class="kv">47</div><div class="kv">14 <span class="sep">|</span> 29.8%</div><div class="kv">4.77</div><div class="kv">$1,20</div><div class="kv">—</div><div class="kv">—</div><div class="kv">1.60%</div><div class="kv">29.79%</div>
+        <div class="kv" data-raw="2937">2.937</div><div class="kv" data-raw="16.78">$16,78</div><div class="kv" data-raw="47">47</div><div class="kv" data-raw="14">14</div><div class="kv" data-raw="29.79">29.79%</div><div class="kv" data-raw="4.77">4.77</div><div class="kv" data-raw="1.2">$1,20</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="1.6">1.60%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249245766530238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249245766530238.jpg" alt="Lotes - 23/07 - (secuencia)" loading="lazy"/>
@@ -402,9 +407,9 @@
           <div class="ad-name" title="Lotes - 23/07 - (secuencia)">Lotes - 23/07 - (secuencia)</div>
           <div class="ad-set" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
         </div>
-        <div class="kv">2.314</div><div class="kv">$9,34</div><div class="kv">34</div><div class="kv">0 <span class="sep">|</span> 0.0%</div><div class="kv">0.00</div><div class="kv">—</div><div class="kv">—</div><div class="kv">—</div><div class="kv">1.47%</div><div class="kv">0.00%</div>
+        <div class="kv" data-raw="2314">2.314</div><div class="kv" data-raw="9.34">$9,34</div><div class="kv" data-raw="34">34</div><div class="kv" data-raw="0">0</div><div class="kv" data-raw="0">0.00%</div><div class="kv" data-raw="0">0.00</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="1.47">1.47%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249245649350238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249245649350238.jpg" alt="Depto - 23/07 - (estático) - 3" loading="lazy"/>
@@ -413,9 +418,9 @@
           <div class="ad-name" title="Depto - 23/07 - (estático) - 3">Depto - 23/07 - (estático) - 3</div>
           <div class="ad-set" title="FORM - Depto - (23/07)">FORM - Depto - (23/07)</div>
         </div>
-        <div class="kv">1.971</div><div class="kv">$24,20</div><div class="kv">38</div><div class="kv">6 <span class="sep">|</span> 15.8%</div><div class="kv">3.04</div><div class="kv">$4,03</div><div class="kv">—</div><div class="kv">—</div><div class="kv">1.93%</div><div class="kv">15.79%</div>
+        <div class="kv" data-raw="1971">1.971</div><div class="kv" data-raw="24.2">$24,20</div><div class="kv" data-raw="38">38</div><div class="kv" data-raw="6">6</div><div class="kv" data-raw="15.79">15.79%</div><div class="kv" data-raw="3.04">3.04</div><div class="kv" data-raw="4.03">$4,03</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="1.93">1.93%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120247721715480238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120247721715480238.jpg" alt="Depto - 19/06 - (secuencia) - casa grande" loading="lazy"/>
@@ -424,9 +429,9 @@
           <div class="ad-name" title="Depto - 19/06 - (secuencia) - casa grande">Depto - 19/06 - (secuencia) - casa grande</div>
           <div class="ad-set" title="FORM - Depto - (23/07)">FORM - Depto - (23/07)</div>
         </div>
-        <div class="kv">1.820</div><div class="kv">$12,50</div><div class="kv">32</div><div class="kv">6 <span class="sep">|</span> 18.8%</div><div class="kv">3.30</div><div class="kv">$2,08</div><div class="kv">—</div><div class="kv">—</div><div class="kv">1.76%</div><div class="kv">18.75%</div>
+        <div class="kv" data-raw="1820">1.820</div><div class="kv" data-raw="12.5">$12,50</div><div class="kv" data-raw="32">32</div><div class="kv" data-raw="6">6</div><div class="kv" data-raw="18.75">18.75%</div><div class="kv" data-raw="3.3">3.30</div><div class="kv" data-raw="2.08">$2,08</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="1.76">1.76%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249245630630238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249245630630238.jpg" alt="Depto - 23/07 - (estático) - 2" loading="lazy"/>
@@ -435,9 +440,9 @@
           <div class="ad-name" title="Depto - 23/07 - (estático) - 2">Depto - 23/07 - (estático) - 2</div>
           <div class="ad-set" title="FORM - Depto - (23/07)">FORM - Depto - (23/07)</div>
         </div>
-        <div class="kv">1.206</div><div class="kv">$13,65</div><div class="kv">25</div><div class="kv">8 <span class="sep">|</span> 32.0%</div><div class="kv">6.63</div><div class="kv">$1,71</div><div class="kv">—</div><div class="kv">—</div><div class="kv">2.07%</div><div class="kv">32.00%</div>
+        <div class="kv" data-raw="1206">1.206</div><div class="kv" data-raw="13.65">$13,65</div><div class="kv" data-raw="25">25</div><div class="kv" data-raw="8">8</div><div class="kv" data-raw="32">32.00%</div><div class="kv" data-raw="6.63">6.63</div><div class="kv" data-raw="1.71">$1,71</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="2.07">2.07%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249452213760238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249452213760238.jpg" alt="Emprendimientos - 02/08 - (universal) - Haiku" loading="lazy"/>
@@ -446,9 +451,9 @@
           <div class="ad-name" title="Emprendimientos - 02/08 - (universal) - Haiku">Emprendimientos - 02/08 - (universal) - Haiku</div>
           <div class="ad-set" title="FORM - Emprendimiento - (02/08)">FORM - Emprendimiento - (02/08)</div>
         </div>
-        <div class="kv">820</div><div class="kv">$7,88</div><div class="kv">10</div><div class="kv">2 <span class="sep">|</span> 20.0%</div><div class="kv">2.44</div><div class="kv">$3,94</div><div class="kv">—</div><div class="kv">—</div><div class="kv">1.22%</div><div class="kv">20.00%</div>
+        <div class="kv" data-raw="820">820</div><div class="kv" data-raw="7.88">$7,88</div><div class="kv" data-raw="10">10</div><div class="kv" data-raw="2">2</div><div class="kv" data-raw="20">20.00%</div><div class="kv" data-raw="2.44">2.44</div><div class="kv" data-raw="3.94">$3,94</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="1.22">1.22%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249245901760238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249245901760238.jpg" alt="Lotes - 23/07 - (estático) - 1" loading="lazy"/>
@@ -457,9 +462,9 @@
           <div class="ad-name" title="Lotes - 23/07 - (estático) - 1">Lotes - 23/07 - (estático) - 1</div>
           <div class="ad-set" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
         </div>
-        <div class="kv">724</div><div class="kv">$4,33</div><div class="kv">6</div><div class="kv">0 <span class="sep">|</span> 0.0%</div><div class="kv">0.00</div><div class="kv">—</div><div class="kv">—</div><div class="kv">—</div><div class="kv">0.83%</div><div class="kv">0.00%</div>
+        <div class="kv" data-raw="724">724</div><div class="kv" data-raw="4.33">$4,33</div><div class="kv" data-raw="6">6</div><div class="kv" data-raw="0">0</div><div class="kv" data-raw="0">0.00%</div><div class="kv" data-raw="0">0.00</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="0.83">0.83%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249452183120238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249452183120238.jpg" alt="Emprendimiento - 02/08 - (secuencia)" loading="lazy"/>
@@ -468,9 +473,9 @@
           <div class="ad-name" title="Emprendimiento - 02/08 - (secuencia)">Emprendimiento - 02/08 - (secuencia)</div>
           <div class="ad-set" title="FORM - Emprendimiento - (02/08)">FORM - Emprendimiento - (02/08)</div>
         </div>
-        <div class="kv">347</div><div class="kv">$2,65</div><div class="kv">3</div><div class="kv">0 <span class="sep">|</span> 0.0%</div><div class="kv">0.00</div><div class="kv">—</div><div class="kv">—</div><div class="kv">—</div><div class="kv">0.86%</div><div class="kv">0.00%</div>
+        <div class="kv" data-raw="347">347</div><div class="kv" data-raw="2.65">$2,65</div><div class="kv" data-raw="3">3</div><div class="kv" data-raw="0">0</div><div class="kv" data-raw="0">0.00%</div><div class="kv" data-raw="0">0.00</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="0.86">0.86%</div>
       </div>
-      <div class="card">
+      <div class="card" data-ad="120249452223770238">
         <div class="thumb">
           <span class="col-kind img">IMG</span>
           <img src="dashboard/thumbs/adq_120249452223770238.jpg" alt="Emprendimientos - 02/08 - (universal) - Retamas" loading="lazy"/>
@@ -479,7 +484,7 @@
           <div class="ad-name" title="Emprendimientos - 02/08 - (universal) - Retamas">Emprendimientos - 02/08 - (universal) - Retamas</div>
           <div class="ad-set" title="FORM - Emprendimiento - (02/08)">FORM - Emprendimiento - (02/08)</div>
         </div>
-        <div class="kv">97</div><div class="kv">$0,27</div><div class="kv">1</div><div class="kv">2 <span class="sep">|</span> 200.0%</div><div class="kv">20.62</div><div class="kv">$0,14</div><div class="kv">—</div><div class="kv">—</div><div class="kv">1.03%</div><div class="kv">200.00%</div>
+        <div class="kv" data-raw="97">97</div><div class="kv" data-raw="0.27">$0,27</div><div class="kv" data-raw="1">1</div><div class="kv" data-raw="2">2</div><div class="kv" data-raw="200">200.00%</div><div class="kv" data-raw="20.62">20.62</div><div class="kv" data-raw="0.14">$0,14</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="">—</div><div class="kv" data-raw="1.03">1.03%</div>
       </div></div>
       </div>
     </div>
@@ -527,6 +532,48 @@
   }
   bindWidth('w-video','mx-video');
   bindWidth('w-image','mx-image');
+
+  function enableSort(scrollId){
+    var scroll=document.getElementById(scrollId);
+    if(!scroll) return;
+    var cardsContainer=scroll.querySelector('.cards');
+    if(!cardsContainer) return;
+    var cards=Array.prototype.slice.call(cardsContainer.querySelectorAll('.card'));
+    cards.forEach(function(c,i){c.dataset.origOrder=i;c.style.order=i;});
+    var labels=scroll.querySelectorAll('.labels .l');
+    var state={idx:-1,dir:0}; // 0=none, 1=desc, -1=asc
+    labels.forEach(function(lbl){
+      lbl.addEventListener('click',function(){
+        var i=parseInt(lbl.dataset.i,10);
+        if(state.idx===i){
+          state.dir=state.dir===1?-1:(state.dir===-1?0:1);
+          if(state.dir===0) state.idx=-1;
+        } else {
+          state.idx=i; state.dir=1;
+        }
+        labels.forEach(function(l){l.removeAttribute('data-sort');});
+        if(state.dir!==0) lbl.setAttribute('data-sort', state.dir===1?'desc':'asc');
+        var items=cards.map(function(c){
+          var kv=c.querySelectorAll('.kv')[i];
+          var raw=kv?kv.dataset.raw:'';
+          var v=(raw===''||raw==null)?NaN:parseFloat(raw);
+          return {c:c,v:v,orig:parseInt(c.dataset.origOrder,10)};
+        });
+        if(state.dir===0){
+          items.sort(function(a,b){return a.orig-b.orig;});
+        } else {
+          items.sort(function(a,b){
+            var av=isNaN(a.v)?(state.dir===1?-Infinity:Infinity):a.v;
+            var bv=isNaN(b.v)?(state.dir===1?-Infinity:Infinity):b.v;
+            return state.dir===1?(bv-av):(av-bv);
+          });
+        }
+        items.forEach(function(it,ord){it.c.style.order=ord;});
+      });
+    });
+  }
+  enableSort('mx-video');
+  enableSort('mx-image');
 })();
 </script>
 </body>
