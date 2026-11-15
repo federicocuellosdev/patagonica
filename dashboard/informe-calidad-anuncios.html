@@ -60,26 +60,25 @@
     .width-ctrl input[type=range]{width:160px;accent-color:var(--secondary)}
     .width-ctrl output{font-variant-numeric:tabular-nums;color:var(--primary);font-weight:600;min-width:52px;text-align:right}
 
-    .ads-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--col-w),1fr));gap:1rem;align-items:start}
-    .col{background:#fff;border:1px solid var(--border);border-radius:var(--br);overflow:hidden;display:flex;flex-direction:column;min-width:0}
-    .thumb{width:100%;aspect-ratio:1/1;background:#eee;display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .matrix-wrap{background:#fff;border:1px solid var(--border);border-radius:var(--br);overflow:auto;max-width:100%}
+    table.matrix{border-collapse:separate;border-spacing:0;width:auto}
+    table.matrix th,table.matrix td{padding:0;vertical-align:middle}
+    .kpi-head{position:sticky;left:0;top:0;z-index:5;background:#f0ece6;color:var(--primary);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px;padding:.6rem .85rem;text-align:left;border-right:2px solid var(--border);border-bottom:1px solid var(--border);min-width:130px;width:130px}
+    .ad-col{min-width:var(--col-w);width:var(--col-w);max-width:var(--col-w);background:#faf7f0;border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:.7rem .8rem;text-align:left;vertical-align:top;position:sticky;top:0;z-index:4}
+    .ad-col .thumb{width:100%;aspect-ratio:1/1;background:#eee;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:6px;margin-bottom:.5rem}
+    .ad-col .thumb img{width:100%;height:100%;object-fit:cover;display:block}
     .thumb-missing{color:var(--muted);font-size:.75rem}
-    .col-body{padding:.75rem .85rem .85rem;display:flex;flex-direction:column;gap:.4rem;min-width:0}
     .cname{font-size:.78rem;font-weight:600;color:var(--primary);line-height:1.3;word-break:break-word}
-    .cmeta{font-size:.68rem;color:var(--muted)}
-    .ctitle{font-size:.85rem;font-weight:700;color:var(--primary);margin-top:.3rem;line-height:1.3;word-break:break-word}
-    .cbody{font-size:.72rem;color:var(--muted);line-height:1.4;word-break:break-word}
+    .cmeta{font-size:.68rem;color:var(--muted);margin-top:.15rem}
 
-    .kpis{margin-top:.5rem;display:flex;flex-direction:column;background:#fafaf7;border:1px solid var(--border);border-radius:6px;overflow:hidden}
-    .k{display:flex;align-items:baseline;justify-content:space-between;gap:.6rem;padding:.4rem .6rem;border-top:1px solid rgba(0,0,0,.05);position:relative;min-width:0}
-    .k:first-child{border-top:0}
-    .k .kl{font-size:.63rem;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:600;white-space:nowrap}
-    .k .kv{font-size:.82rem;font-weight:700;color:var(--primary);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .k.good{border-left:3px solid var(--good)}
-    .k.warn{border-left:3px solid var(--warn)}
-    .k.bad{border-left:3px solid var(--bad)}
-    .k.na{border-left:3px solid var(--na);opacity:.85}
+    .kpi-name{position:sticky;left:0;z-index:3;background:#faf7f0;color:var(--primary);font-weight:600;font-size:.76rem;padding:.6rem .85rem;text-align:left;border-right:2px solid var(--border);border-bottom:1px solid var(--border);white-space:nowrap}
+    .kpi-val{padding:.6rem .85rem;text-align:right;font-variant-numeric:tabular-nums;font-size:.9rem;font-weight:600;color:var(--primary);border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:#fff}
+    .kpi-val.tone-good{color:var(--good)}
+    .kpi-val.tone-warn{color:#a07a30}
+    .kpi-val.tone-bad{color:var(--bad)}
+    .kpi-val.tone-na{color:var(--primary)}
+    table.matrix tbody tr:hover .kpi-val{background:#faf7f0}
+    .empty{padding:2rem;text-align:center;color:var(--muted);font-size:.9rem}
 
     .legend{display:flex;gap:1rem;flex-wrap:wrap;font-size:.78rem;color:var(--muted);margin-top:1rem}
     .legend span{display:inline-flex;align-items:center;gap:.35rem}
@@ -136,136 +135,75 @@
         <div class="section-title">Videos <span class="count">(10)</span> <span class="section-badge video">VIDEO</span></div>
         <label class="width-ctrl">Ancho <input type="range" min="180" max="420" step="10" value="260" id="w-video"> <output for="w-video">260px</output></label>
       </div>
-      <div class="ads-grid" id="grid-video">
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249451978400238.jpg" alt="Emprendimiento - 02/08 - (video) - Reel Península" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Emprendimiento - 02/08 - (video) - Reel Península</div>
-        <div class="cmeta">FORM - Emprendimiento - (02/08)</div>
-        <div class="ctitle">Emprendimiento - 02/08 - (video) - Reel Península</div>
-        <div class="cbody">Envíanos un mensaje para obtener más información 💬</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">119.564</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$799,18</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">534</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$1,50</span></div><div class="k good"><span class="kl">Hook 3s</span><span class="kv">31.76%</span></div><div class="k warn"><span class="kl">Hold</span><span class="kv">22.47%</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.08%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">41.24%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">4.47</span></div>
-        </div>
-      </div>
+      
+    <div class="matrix-wrap">
+      <table class="matrix" id="mx-video">
+        <thead>
+          <tr><th class="kpi-head">KPI</th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249451978400238.jpg" alt="Emprendimiento - 02/08 - (video) - Reel Península" loading="lazy"/></div>
+        <div class="cname" title="Emprendimiento - 02/08 - (video) - Reel Península">Emprendimiento - 02/08 - (video) - Reel Península</div>
+        <div class="cmeta" title="FORM - Emprendimiento - (02/08)">FORM - Emprendimiento - (02/08)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249244881690238.jpg" alt="Depto - 23/07 - (video) - San Camilo" loading="lazy"/></div>
+        <div class="cname" title="Depto - 23/07 - (video) - San Camilo">Depto - 23/07 - (video) - San Camilo</div>
+        <div class="cmeta" title="FORM - Depto - (23/07)">FORM - Depto - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249172418820238.jpg" alt="Visitante - Paseo Retamas: video - v3 - (voz en off)" loading="lazy"/></div>
+        <div class="cname" title="Visitante - Paseo Retamas: video - v3 - (voz en off)">Visitante - Paseo Retamas: video - v3 - (voz en off)</div>
+        <div class="cmeta" title="FORM - Zona (23/07)">FORM - Zona (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249246117720238.jpg" alt="Lotes - 23/07 - (video) - Tu inversión en Villa..." loading="lazy"/></div>
+        <div class="cname" title="Lotes - 23/07 - (video) - Tu inversión en Villa...">Lotes - 23/07 - (video) - Tu inversión en Villa...</div>
+        <div class="cmeta" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120245205032040238.jpg" alt="Cota 1000 - video - (voz off)" loading="lazy"/></div>
+        <div class="cname" title="Cota 1000 - video - (voz off)">Cota 1000 - video - (voz off)</div>
+        <div class="cmeta" title="FORM - Cota 1000">FORM - Cota 1000</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249246054110238.jpg" alt="Lotes - 23/07 - (video) - Tu inversión en Villa..." loading="lazy"/></div>
+        <div class="cname" title="Lotes - 23/07 - (video) - Tu inversión en Villa...">Lotes - 23/07 - (video) - Tu inversión en Villa...</div>
+        <div class="cmeta" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249245719050238.jpg" alt="Lotes - 23/07 - (video) - lote 55" loading="lazy"/></div>
+        <div class="cname" title="Lotes - 23/07 - (video) - lote 55">Lotes - 23/07 - (video) - lote 55</div>
+        <div class="cmeta" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249172236790238.jpg" alt="Visitante - Mirador: Pozos Romanos" loading="lazy"/></div>
+        <div class="cname" title="Visitante - Mirador: Pozos Romanos">Visitante - Mirador: Pozos Romanos</div>
+        <div class="cmeta" title="FORM - Zona (23/07)">FORM - Zona (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249451966950238.jpg" alt="Emprendimiento - 02/08 - (video) - Reel Haiku" loading="lazy"/></div>
+        <div class="cname" title="Emprendimiento - 02/08 - (video) - Reel Haiku">Emprendimiento - 02/08 - (video) - Reel Haiku</div>
+        <div class="cmeta" title="FORM - Emprendimiento - (02/08)">FORM - Emprendimiento - (02/08)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249451987530238.jpg" alt="Emprendimiento - 02/08 - (video) - Reel Retamas" loading="lazy"/></div>
+        <div class="cname" title="Emprendimiento - 02/08 - (video) - Reel Retamas">Emprendimiento - 02/08 - (video) - Reel Retamas</div>
+        <div class="cmeta" title="FORM - Emprendimiento - (02/08)">FORM - Emprendimiento - (02/08)</div>
+      </th></tr>
+        </thead>
+        <tbody>
+          <tr><th class="kpi-name">Impresiones</th><td class="kpi-val tone-na">119.564</td><td class="kpi-val tone-na">76.636</td><td class="kpi-val tone-na">65.183</td><td class="kpi-val tone-na">57.625</td><td class="kpi-val tone-na">44.154</td><td class="kpi-val tone-na">2.202</td><td class="kpi-val tone-na">1.726</td><td class="kpi-val tone-na">1.711</td><td class="kpi-val tone-na">126</td><td class="kpi-val tone-na">105</td></tr>
+<tr><th class="kpi-name">Gasto</th><td class="kpi-val tone-na">$799,18</td><td class="kpi-val tone-na">$589,38</td><td class="kpi-val tone-na">$338,02</td><td class="kpi-val tone-na">$216,89</td><td class="kpi-val tone-na">$410,29</td><td class="kpi-val tone-na">$15,71</td><td class="kpi-val tone-na">$15,47</td><td class="kpi-val tone-na">$7,40</td><td class="kpi-val tone-na">$0,63</td><td class="kpi-val tone-na">$0,61</td></tr>
+<tr><th class="kpi-name">Leads</th><td class="kpi-val tone-na">534</td><td class="kpi-val tone-na">334</td><td class="kpi-val tone-na">80</td><td class="kpi-val tone-na">80</td><td class="kpi-val tone-na">174</td><td class="kpi-val tone-na">4</td><td class="kpi-val tone-na">8</td><td class="kpi-val tone-na">0</td><td class="kpi-val tone-na">0</td><td class="kpi-val tone-na">0</td></tr>
+<tr><th class="kpi-name">CPL</th><td class="kpi-val tone-warn">$1,50</td><td class="kpi-val tone-warn">$1,76</td><td class="kpi-val tone-bad">$4,23</td><td class="kpi-val tone-warn">$2,71</td><td class="kpi-val tone-warn">$2,36</td><td class="kpi-val tone-bad">$3,93</td><td class="kpi-val tone-warn">$1,93</td><td class="kpi-val tone-na">—</td><td class="kpi-val tone-na">—</td><td class="kpi-val tone-na">—</td></tr>
+<tr><th class="kpi-name">Hook 3s</th><td class="kpi-val tone-good">31.76%</td><td class="kpi-val tone-warn">21.69%</td><td class="kpi-val tone-warn">23.25%</td><td class="kpi-val tone-warn">23.32%</td><td class="kpi-val tone-warn">21.34%</td><td class="kpi-val tone-good">26.98%</td><td class="kpi-val tone-good">26.88%</td><td class="kpi-val tone-good">38.87%</td><td class="kpi-val tone-good">27.78%</td><td class="kpi-val tone-good">26.67%</td></tr>
+<tr><th class="kpi-name">Hold</th><td class="kpi-val tone-warn">22.47%</td><td class="kpi-val tone-good">40.52%</td><td class="kpi-val tone-good">30.57%</td><td class="kpi-val tone-warn">24.16%</td><td class="kpi-val tone-good">33.95%</td><td class="kpi-val tone-warn">29.12%</td><td class="kpi-val tone-bad">14.44%</td><td class="kpi-val tone-good">44.21%</td><td class="kpi-val tone-warn">20.00%</td><td class="kpi-val tone-bad">7.14%</td></tr>
+<tr><th class="kpi-name">CTR link</th><td class="kpi-val tone-good">1.08%</td><td class="kpi-val tone-good">1.49%</td><td class="kpi-val tone-bad">0.78%</td><td class="kpi-val tone-good">1.26%</td><td class="kpi-val tone-good">1.42%</td><td class="kpi-val tone-good">1.32%</td><td class="kpi-val tone-warn">0.93%</td><td class="kpi-val tone-good">1.05%</td><td class="kpi-val tone-bad">0.79%</td><td class="kpi-val tone-good">2.86%</td></tr>
+<tr><th class="kpi-name">Envío</th><td class="kpi-val tone-good">41.24%</td><td class="kpi-val tone-good">29.30%</td><td class="kpi-val tone-good">15.69%</td><td class="kpi-val tone-good">11.02%</td><td class="kpi-val tone-good">27.71%</td><td class="kpi-val tone-good">13.79%</td><td class="kpi-val tone-good">50.00%</td><td class="kpi-val tone-bad">0.00%</td><td class="kpi-val tone-bad">0.00%</td><td class="kpi-val tone-bad">0.00%</td></tr>
+<tr><th class="kpi-name">L / 1k imp</th><td class="kpi-val tone-na">4.47</td><td class="kpi-val tone-na">4.36</td><td class="kpi-val tone-na">1.23</td><td class="kpi-val tone-na">1.39</td><td class="kpi-val tone-na">3.94</td><td class="kpi-val tone-na">1.82</td><td class="kpi-val tone-na">4.63</td><td class="kpi-val tone-na">0.00</td><td class="kpi-val tone-na">0.00</td><td class="kpi-val tone-na">0.00</td></tr>
+        </tbody>
+      </table>
     </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249244881690238.jpg" alt="Depto - 23/07 - (video) - San Camilo" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Depto - 23/07 - (video) - San Camilo</div>
-        <div class="cmeta">FORM - Depto - (23/07)</div>
-        <div class="ctitle">Depto - 23/07 - (video) - San Camilo</div>
-        <div class="cbody">Completa el formulario para obtener más información</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">76.636</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$589,38</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">334</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$1,76</span></div><div class="k warn"><span class="kl">Hook 3s</span><span class="kv">21.69%</span></div><div class="k good"><span class="kl">Hold</span><span class="kv">40.52%</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.49%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">29.30%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">4.36</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249172418820238.jpg" alt="Visitante - Paseo Retamas: video - v3 - (voz en off)" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Visitante - Paseo Retamas: video - v3 - (voz en off)</div>
-        <div class="cmeta">FORM - Zona (23/07)</div>
-        <div class="ctitle">Visitante - Paseo Retamas: video - v3 - (voz en off)</div>
-        <div class="cbody">Envíanos un mensaje para obtener más información 💬</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">65.183</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$338,02</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">80</span></div><div class="k bad"><span class="kl">CPL</span><span class="kv">$4,23</span></div><div class="k warn"><span class="kl">Hook 3s</span><span class="kv">23.25%</span></div><div class="k good"><span class="kl">Hold</span><span class="kv">30.57%</span></div><div class="k bad"><span class="kl">CTR link</span><span class="kv">0.78%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">15.69%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">1.23</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249246117720238.jpg" alt="Lotes - 23/07 - (video) - Tu inversión en Villa..." loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Lotes - 23/07 - (video) - Tu inversión en Villa...</div>
-        <div class="cmeta">FORM - Lotes - (23/07)</div>
-        <div class="ctitle">Lotes - 23/07 - (video) - Tu inversión en Villa...</div>
-        <div class="cbody">Invertí en lotes en Villa La Angostura</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">57.625</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$216,89</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">80</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$2,71</span></div><div class="k warn"><span class="kl">Hook 3s</span><span class="kv">23.32%</span></div><div class="k warn"><span class="kl">Hold</span><span class="kv">24.16%</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.26%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">11.02%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">1.39</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120245205032040238.jpg" alt="Cota 1000 - video - (voz off)" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Cota 1000 - video - (voz off)</div>
-        <div class="cmeta">FORM - Cota 1000</div>
-        <div class="ctitle">Lotes en Villa la Angostura</div>
-        <div class="cbody">Envíanos un mensaje para obtener más información 💬</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">44.154</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$410,29</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">174</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$2,36</span></div><div class="k warn"><span class="kl">Hook 3s</span><span class="kv">21.34%</span></div><div class="k good"><span class="kl">Hold</span><span class="kv">33.95%</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.42%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">27.71%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">3.94</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249246054110238.jpg" alt="Lotes - 23/07 - (video) - Tu inversión en Villa..." loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Lotes - 23/07 - (video) - Tu inversión en Villa...</div>
-        <div class="cmeta">FORM - Lotes - (23/07)</div>
-        <div class="ctitle">Lotes - 23/07 - (video) - Tu inversión en Villa...</div>
-        <div class="cbody">Invertí en lotes en Villa La Angostura</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">2.202</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$15,71</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">4</span></div><div class="k bad"><span class="kl">CPL</span><span class="kv">$3,93</span></div><div class="k good"><span class="kl">Hook 3s</span><span class="kv">26.98%</span></div><div class="k warn"><span class="kl">Hold</span><span class="kv">29.12%</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.32%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">13.79%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">1.82</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249245719050238.jpg" alt="Lotes - 23/07 - (video) - lote 55" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Lotes - 23/07 - (video) - lote 55</div>
-        <div class="cmeta">FORM - Lotes - (23/07)</div>
-        <div class="ctitle">Lotes - 23/07 - (video) - lote 55</div>
-        <div class="cbody">Invertí en lotes en Villa La Angostura</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">1.726</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$15,47</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">8</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$1,93</span></div><div class="k good"><span class="kl">Hook 3s</span><span class="kv">26.88%</span></div><div class="k bad"><span class="kl">Hold</span><span class="kv">14.44%</span></div><div class="k warn"><span class="kl">CTR link</span><span class="kv">0.93%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">50.00%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">4.63</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249172236790238.jpg" alt="Visitante - Mirador: Pozos Romanos" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Visitante - Mirador: Pozos Romanos</div>
-        <div class="cmeta">FORM - Zona (23/07)</div>
-        <div class="ctitle">Visitante - Mirador: Pozos Romanos</div>
-        <div class="cbody">Envíanos un mensaje para obtener más información 💬</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">1.711</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$7,40</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">0</span></div><div class="k na"><span class="kl">CPL</span><span class="kv">—</span></div><div class="k good"><span class="kl">Hook 3s</span><span class="kv">38.87%</span></div><div class="k good"><span class="kl">Hold</span><span class="kv">44.21%</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.05%</span></div><div class="k bad"><span class="kl">Envío</span><span class="kv">0.00%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">0.00</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249451966950238.jpg" alt="Emprendimiento - 02/08 - (video) - Reel Haiku" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Emprendimiento - 02/08 - (video) - Reel Haiku</div>
-        <div class="cmeta">FORM - Emprendimiento - (02/08)</div>
-        <div class="ctitle">Emprendimiento - 02/08 - (video) - Reel Haiku</div>
-        <div class="cbody">Envíanos un mensaje para obtener más información 💬</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">126</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$0,63</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">0</span></div><div class="k na"><span class="kl">CPL</span><span class="kv">—</span></div><div class="k good"><span class="kl">Hook 3s</span><span class="kv">27.78%</span></div><div class="k warn"><span class="kl">Hold</span><span class="kv">20.00%</span></div><div class="k bad"><span class="kl">CTR link</span><span class="kv">0.79%</span></div><div class="k bad"><span class="kl">Envío</span><span class="kv">0.00%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">0.00</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249451987530238.jpg" alt="Emprendimiento - 02/08 - (video) - Reel Retamas" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Emprendimiento - 02/08 - (video) - Reel Retamas</div>
-        <div class="cmeta">FORM - Emprendimiento - (02/08)</div>
-        <div class="ctitle">Emprendimiento - 02/08 - (video) - Reel Retamas</div>
-        <div class="cbody">Envíanos un mensaje para obtener más información 💬</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">105</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$0,61</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">0</span></div><div class="k na"><span class="kl">CPL</span><span class="kv">—</span></div><div class="k good"><span class="kl">Hook 3s</span><span class="kv">26.67%</span></div><div class="k bad"><span class="kl">Hold</span><span class="kv">7.14%</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">2.86%</span></div><div class="k bad"><span class="kl">Envío</span><span class="kv">0.00%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">0.00</span></div>
-        </div>
-      </div>
-    </div></div>
     </section>
 
     <section class="section">
@@ -273,214 +211,103 @@
         <div class="section-title">Imágenes / Carruseles <span class="count">(16)</span> <span class="section-badge img">IMG</span></div>
         <label class="width-ctrl">Ancho <input type="range" min="180" max="420" step="10" value="260" id="w-image"> <output for="w-image">260px</output></label>
       </div>
-      <div class="ads-grid" id="grid-image">
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249452304760238.jpg" alt="Casas - 02/08 - (secuencia)" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Casas - 02/08 - (secuencia)</div>
-        <div class="cmeta">FORM - Casas - (02/08)</div>
-        <div class="ctitle">Patagonica Propiedades</div>
-        <div class="cbody">Envíanos un mensaje para obtener más información 💬</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">189.188</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$735,64</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">414</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$1,78</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">2.94%</span></div><div class="k warn"><span class="kl">Envío</span><span class="kv">7.45%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">2.19</span></div>
-        </div>
-      </div>
+      
+    <div class="matrix-wrap">
+      <table class="matrix" id="mx-image">
+        <thead>
+          <tr><th class="kpi-head">KPI</th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249452304760238.jpg" alt="Casas - 02/08 - (secuencia)" loading="lazy"/></div>
+        <div class="cname" title="Casas - 02/08 - (secuencia)">Casas - 02/08 - (secuencia)</div>
+        <div class="cmeta" title="FORM - Casas - (02/08)">FORM - Casas - (02/08)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249452323930238.jpg" alt="Casas - 02/08 - (universal) - 1" loading="lazy"/></div>
+        <div class="cname" title="Casas - 02/08 - (universal) - 1">Casas - 02/08 - (universal) - 1</div>
+        <div class="cmeta" title="FORM - Casas - (02/08)">FORM - Casas - (02/08)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249245976740238.jpg" alt="Lotes - 23/07 - (estático) - 2" loading="lazy"/></div>
+        <div class="cname" title="Lotes - 23/07 - (estático) - 2">Lotes - 23/07 - (estático) - 2</div>
+        <div class="cmeta" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120242981493310238.jpg" alt="Lotes Manzano - img 1" loading="lazy"/></div>
+        <div class="cname" title="Lotes Manzano - img 1">Lotes Manzano - img 1</div>
+        <div class="cmeta" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249245042080238.jpg" alt="Depto - 23/07 - (secuencia)" loading="lazy"/></div>
+        <div class="cname" title="Depto - 23/07 - (secuencia)">Depto - 23/07 - (secuencia)</div>
+        <div class="cmeta" title="FORM - Depto - (23/07)">FORM - Depto - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249245611290238.jpg" alt="Depto - 23/07 - (estático) - 1" loading="lazy"/></div>
+        <div class="cname" title="Depto - 23/07 - (estático) - 1">Depto - 23/07 - (estático) - 1</div>
+        <div class="cmeta" title="FORM - Depto - (23/07)">FORM - Depto - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249452340310238.jpg" alt="Casas - 02/08 - (universal) - 2" loading="lazy"/></div>
+        <div class="cname" title="Casas - 02/08 - (universal) - 2">Casas - 02/08 - (universal) - 2</div>
+        <div class="cmeta" title="FORM - Casas - (02/08)">FORM - Casas - (02/08)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249245988330238.jpg" alt="Lotes - 23/07 - (estático) - 3" loading="lazy"/></div>
+        <div class="cname" title="Lotes - 23/07 - (estático) - 3">Lotes - 23/07 - (estático) - 3</div>
+        <div class="cmeta" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249245766530238.jpg" alt="Lotes - 23/07 - (secuencia)" loading="lazy"/></div>
+        <div class="cname" title="Lotes - 23/07 - (secuencia)">Lotes - 23/07 - (secuencia)</div>
+        <div class="cmeta" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249245649350238.jpg" alt="Depto - 23/07 - (estático) - 3" loading="lazy"/></div>
+        <div class="cname" title="Depto - 23/07 - (estático) - 3">Depto - 23/07 - (estático) - 3</div>
+        <div class="cmeta" title="FORM - Depto - (23/07)">FORM - Depto - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120247721715480238.jpg" alt="Depto - 19/06 - (secuencia) - casa grande" loading="lazy"/></div>
+        <div class="cname" title="Depto - 19/06 - (secuencia) - casa grande">Depto - 19/06 - (secuencia) - casa grande</div>
+        <div class="cmeta" title="FORM - Depto - (23/07)">FORM - Depto - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249245630630238.jpg" alt="Depto - 23/07 - (estático) - 2" loading="lazy"/></div>
+        <div class="cname" title="Depto - 23/07 - (estático) - 2">Depto - 23/07 - (estático) - 2</div>
+        <div class="cmeta" title="FORM - Depto - (23/07)">FORM - Depto - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249452213760238.jpg" alt="Emprendimientos - 02/08 - (universal) - Haiku" loading="lazy"/></div>
+        <div class="cname" title="Emprendimientos - 02/08 - (universal) - Haiku">Emprendimientos - 02/08 - (universal) - Haiku</div>
+        <div class="cmeta" title="FORM - Emprendimiento - (02/08)">FORM - Emprendimiento - (02/08)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249245901760238.jpg" alt="Lotes - 23/07 - (estático) - 1" loading="lazy"/></div>
+        <div class="cname" title="Lotes - 23/07 - (estático) - 1">Lotes - 23/07 - (estático) - 1</div>
+        <div class="cmeta" title="FORM - Lotes - (23/07)">FORM - Lotes - (23/07)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249452183120238.jpg" alt="Emprendimiento - 02/08 - (secuencia)" loading="lazy"/></div>
+        <div class="cname" title="Emprendimiento - 02/08 - (secuencia)">Emprendimiento - 02/08 - (secuencia)</div>
+        <div class="cmeta" title="FORM - Emprendimiento - (02/08)">FORM - Emprendimiento - (02/08)</div>
+      </th>
+      <th class="ad-col">
+        <div class="thumb"><img src="dashboard/thumbs/adq_120249452223770238.jpg" alt="Emprendimientos - 02/08 - (universal) - Retamas" loading="lazy"/></div>
+        <div class="cname" title="Emprendimientos - 02/08 - (universal) - Retamas">Emprendimientos - 02/08 - (universal) - Retamas</div>
+        <div class="cmeta" title="FORM - Emprendimiento - (02/08)">FORM - Emprendimiento - (02/08)</div>
+      </th></tr>
+        </thead>
+        <tbody>
+          <tr><th class="kpi-name">Impresiones</th><td class="kpi-val tone-na">189.188</td><td class="kpi-val tone-na">100.165</td><td class="kpi-val tone-na">21.266</td><td class="kpi-val tone-na">9.542</td><td class="kpi-val tone-na">5.225</td><td class="kpi-val tone-na">4.214</td><td class="kpi-val tone-na">3.691</td><td class="kpi-val tone-na">2.937</td><td class="kpi-val tone-na">2.314</td><td class="kpi-val tone-na">1.971</td><td class="kpi-val tone-na">1.820</td><td class="kpi-val tone-na">1.206</td><td class="kpi-val tone-na">820</td><td class="kpi-val tone-na">724</td><td class="kpi-val tone-na">347</td><td class="kpi-val tone-na">97</td></tr>
+<tr><th class="kpi-name">Gasto</th><td class="kpi-val tone-na">$735,64</td><td class="kpi-val tone-na">$364,37</td><td class="kpi-val tone-na">$120,04</td><td class="kpi-val tone-na">$37,68</td><td class="kpi-val tone-na">$26,22</td><td class="kpi-val tone-na">$36,61</td><td class="kpi-val tone-na">$26,85</td><td class="kpi-val tone-na">$16,78</td><td class="kpi-val tone-na">$9,34</td><td class="kpi-val tone-na">$24,20</td><td class="kpi-val tone-na">$12,50</td><td class="kpi-val tone-na">$13,65</td><td class="kpi-val tone-na">$7,88</td><td class="kpi-val tone-na">$4,33</td><td class="kpi-val tone-na">$2,65</td><td class="kpi-val tone-na">$0,27</td></tr>
+<tr><th class="kpi-name">Leads</th><td class="kpi-val tone-na">414</td><td class="kpi-val tone-na">234</td><td class="kpi-val tone-na">70</td><td class="kpi-val tone-na">24</td><td class="kpi-val tone-na">12</td><td class="kpi-val tone-na">20</td><td class="kpi-val tone-na">12</td><td class="kpi-val tone-na">14</td><td class="kpi-val tone-na">0</td><td class="kpi-val tone-na">6</td><td class="kpi-val tone-na">6</td><td class="kpi-val tone-na">8</td><td class="kpi-val tone-na">2</td><td class="kpi-val tone-na">0</td><td class="kpi-val tone-na">0</td><td class="kpi-val tone-na">2</td></tr>
+<tr><th class="kpi-name">CPL</th><td class="kpi-val tone-warn">$1,78</td><td class="kpi-val tone-warn">$1,56</td><td class="kpi-val tone-warn">$1,71</td><td class="kpi-val tone-warn">$1,57</td><td class="kpi-val tone-warn">$2,19</td><td class="kpi-val tone-warn">$1,83</td><td class="kpi-val tone-warn">$2,24</td><td class="kpi-val tone-good">$1,20</td><td class="kpi-val tone-na">—</td><td class="kpi-val tone-bad">$4,03</td><td class="kpi-val tone-warn">$2,08</td><td class="kpi-val tone-warn">$1,71</td><td class="kpi-val tone-bad">$3,94</td><td class="kpi-val tone-na">—</td><td class="kpi-val tone-na">—</td><td class="kpi-val tone-good">$0,14</td></tr>
+<tr><th class="kpi-name">CTR link</th><td class="kpi-val tone-good">2.94%</td><td class="kpi-val tone-good">1.48%</td><td class="kpi-val tone-good">1.49%</td><td class="kpi-val tone-good">1.05%</td><td class="kpi-val tone-good">1.45%</td><td class="kpi-val tone-good">1.54%</td><td class="kpi-val tone-good">1.30%</td><td class="kpi-val tone-good">1.60%</td><td class="kpi-val tone-good">1.47%</td><td class="kpi-val tone-good">1.93%</td><td class="kpi-val tone-good">1.76%</td><td class="kpi-val tone-good">2.07%</td><td class="kpi-val tone-good">1.22%</td><td class="kpi-val tone-warn">0.83%</td><td class="kpi-val tone-warn">0.86%</td><td class="kpi-val tone-good">1.03%</td></tr>
+<tr><th class="kpi-name">Envío</th><td class="kpi-val tone-warn">7.45%</td><td class="kpi-val tone-good">15.83%</td><td class="kpi-val tone-good">22.15%</td><td class="kpi-val tone-good">24.00%</td><td class="kpi-val tone-good">15.79%</td><td class="kpi-val tone-good">30.77%</td><td class="kpi-val tone-good">25.00%</td><td class="kpi-val tone-good">29.79%</td><td class="kpi-val tone-bad">0.00%</td><td class="kpi-val tone-good">15.79%</td><td class="kpi-val tone-good">18.75%</td><td class="kpi-val tone-good">32.00%</td><td class="kpi-val tone-good">20.00%</td><td class="kpi-val tone-bad">0.00%</td><td class="kpi-val tone-bad">0.00%</td><td class="kpi-val tone-warn">200.00%</td></tr>
+<tr><th class="kpi-name">L / 1k imp</th><td class="kpi-val tone-na">2.19</td><td class="kpi-val tone-na">2.34</td><td class="kpi-val tone-na">3.29</td><td class="kpi-val tone-na">2.52</td><td class="kpi-val tone-na">2.30</td><td class="kpi-val tone-na">4.75</td><td class="kpi-val tone-na">3.25</td><td class="kpi-val tone-na">4.77</td><td class="kpi-val tone-na">0.00</td><td class="kpi-val tone-na">3.04</td><td class="kpi-val tone-na">3.30</td><td class="kpi-val tone-na">6.63</td><td class="kpi-val tone-na">2.44</td><td class="kpi-val tone-na">0.00</td><td class="kpi-val tone-na">0.00</td><td class="kpi-val tone-na">20.62</td></tr>
+        </tbody>
+      </table>
     </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249452323930238.jpg" alt="Casas - 02/08 - (universal) - 1" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Casas - 02/08 - (universal) - 1</div>
-        <div class="cmeta">FORM - Casas - (02/08)</div>
-        <div class="ctitle">Casas - 02/08 - (universal) - 1</div>
-        
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">100.165</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$364,37</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">234</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$1,56</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.48%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">15.83%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">2.34</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249245976740238.jpg" alt="Lotes - 23/07 - (estático) - 2" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Lotes - 23/07 - (estático) - 2</div>
-        <div class="cmeta">FORM - Lotes - (23/07)</div>
-        <div class="ctitle">Lotes - 23/07 - (estático) - 2</div>
-        
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">21.266</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$120,04</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">70</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$1,71</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.49%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">22.15%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">3.29</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120242981493310238.jpg" alt="Lotes Manzano - img 1" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Lotes Manzano - img 1</div>
-        <div class="cmeta">FORM - Lotes - (23/07)</div>
-        <div class="ctitle">Obtén más información</div>
-        <div class="cbody">Invertí en lotes en Villa la Angostura 🏔️</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">9.542</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$37,68</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">24</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$1,57</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.05%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">24.00%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">2.52</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249245042080238.jpg" alt="Depto - 23/07 - (secuencia)" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Depto - 23/07 - (secuencia)</div>
-        <div class="cmeta">FORM - Depto - (23/07)</div>
-        <div class="ctitle">Patagonica Propiedades</div>
-        <div class="cbody">Naturaleza y confort en un solo lugar. Departamentos en VLA rodeados de bosque patagonico y a minutos del centro. Completa el formulario</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">5.225</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$26,22</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">12</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$2,19</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.45%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">15.79%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">2.30</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249245611290238.jpg" alt="Depto - 23/07 - (estático) - 1" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Depto - 23/07 - (estático) - 1</div>
-        <div class="cmeta">FORM - Depto - (23/07)</div>
-        <div class="ctitle">Depto - 23/07 - (estático) - 1</div>
-        
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">4.214</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$36,61</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">20</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$1,83</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.54%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">30.77%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">4.75</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249452340310238.jpg" alt="Casas - 02/08 - (universal) - 2" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Casas - 02/08 - (universal) - 2</div>
-        <div class="cmeta">FORM - Casas - (02/08)</div>
-        <div class="ctitle">Casas - 02/08 - (universal) - 2</div>
-        
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">3.691</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$26,85</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">12</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$2,24</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.30%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">25.00%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">3.25</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249245988330238.jpg" alt="Lotes - 23/07 - (estático) - 3" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Lotes - 23/07 - (estático) - 3</div>
-        <div class="cmeta">FORM - Lotes - (23/07)</div>
-        <div class="ctitle">Lotes - 23/07 - (estático) - 3</div>
-        
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">2.937</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$16,78</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">14</span></div><div class="k good"><span class="kl">CPL</span><span class="kv">$1,20</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.60%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">29.79%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">4.77</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249245766530238.jpg" alt="Lotes - 23/07 - (secuencia)" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Lotes - 23/07 - (secuencia)</div>
-        <div class="cmeta">FORM - Lotes - (23/07)</div>
-        <div class="ctitle">Patagonica Propiedades</div>
-        <div class="cbody">Lotes en Villa la Angostura</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">2.314</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$9,34</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">0</span></div><div class="k na"><span class="kl">CPL</span><span class="kv">—</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.47%</span></div><div class="k bad"><span class="kl">Envío</span><span class="kv">0.00%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">0.00</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249245649350238.jpg" alt="Depto - 23/07 - (estático) - 3" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Depto - 23/07 - (estático) - 3</div>
-        <div class="cmeta">FORM - Depto - (23/07)</div>
-        <div class="ctitle">Depto - 23/07 - (estático) - 3</div>
-        
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">1.971</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$24,20</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">6</span></div><div class="k bad"><span class="kl">CPL</span><span class="kv">$4,03</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.93%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">15.79%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">3.04</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120247721715480238.jpg" alt="Depto - 19/06 - (secuencia) - casa grande" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Depto - 19/06 - (secuencia) - casa grande</div>
-        <div class="cmeta">FORM - Depto - (23/07)</div>
-        <div class="ctitle">Patagonica Propiedades</div>
-        <div class="cbody">Naturaleza y confort en un solo lugar. Departamentos en VLA rodeados de bosque patagonico y a minutos del centro. Completa el formulario</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">1.820</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$12,50</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">6</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$2,08</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.76%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">18.75%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">3.30</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249245630630238.jpg" alt="Depto - 23/07 - (estático) - 2" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Depto - 23/07 - (estático) - 2</div>
-        <div class="cmeta">FORM - Depto - (23/07)</div>
-        <div class="ctitle">Depto - 23/07 - (estático) - 2</div>
-        
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">1.206</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$13,65</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">8</span></div><div class="k warn"><span class="kl">CPL</span><span class="kv">$1,71</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">2.07%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">32.00%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">6.63</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249452213760238.jpg" alt="Emprendimientos - 02/08 - (universal) - Haiku" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Emprendimientos - 02/08 - (universal) - Haiku</div>
-        <div class="cmeta">FORM - Emprendimiento - (02/08)</div>
-        <div class="ctitle">Emprendimientos - 02/08 - (universal) - Haiku</div>
-        
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">820</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$7,88</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">2</span></div><div class="k bad"><span class="kl">CPL</span><span class="kv">$3,94</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.22%</span></div><div class="k good"><span class="kl">Envío</span><span class="kv">20.00%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">2.44</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249245901760238.jpg" alt="Lotes - 23/07 - (estático) - 1" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Lotes - 23/07 - (estático) - 1</div>
-        <div class="cmeta">FORM - Lotes - (23/07)</div>
-        <div class="ctitle">Lotes - 23/07 - (estático) - 1</div>
-        
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">724</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$4,33</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">0</span></div><div class="k na"><span class="kl">CPL</span><span class="kv">—</span></div><div class="k warn"><span class="kl">CTR link</span><span class="kv">0.83%</span></div><div class="k bad"><span class="kl">Envío</span><span class="kv">0.00%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">0.00</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249452183120238.jpg" alt="Emprendimiento - 02/08 - (secuencia)" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Emprendimiento - 02/08 - (secuencia)</div>
-        <div class="cmeta">FORM - Emprendimiento - (02/08)</div>
-        <div class="ctitle">Patagonica Propiedades</div>
-        <div class="cbody">Envíanos un mensaje para obtener más información 💬</div>
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">347</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$2,65</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">0</span></div><div class="k na"><span class="kl">CPL</span><span class="kv">—</span></div><div class="k warn"><span class="kl">CTR link</span><span class="kv">0.86%</span></div><div class="k bad"><span class="kl">Envío</span><span class="kv">0.00%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">0.00</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="thumb"><img src="dashboard/thumbs/adq_120249452223770238.jpg" alt="Emprendimientos - 02/08 - (universal) - Retamas" loading="lazy"/></div>
-      <div class="col-body">
-        <div class="cname">Emprendimientos - 02/08 - (universal) - Retamas</div>
-        <div class="cmeta">FORM - Emprendimiento - (02/08)</div>
-        <div class="ctitle">Emprendimientos - 02/08 - (universal) - Retamas</div>
-        
-        <div class="kpis">
-          <div class="k na"><span class="kl">Impresiones</span><span class="kv">97</span></div><div class="k na"><span class="kl">Gasto</span><span class="kv">$0,27</span></div><div class="k na"><span class="kl">Leads</span><span class="kv">2</span></div><div class="k good"><span class="kl">CPL</span><span class="kv">$0,14</span></div><div class="k good"><span class="kl">CTR link</span><span class="kv">1.03%</span></div><div class="k warn"><span class="kl">Envío</span><span class="kv">200.00%</span></div><div class="k na"><span class="kl">L / 1k imp</span><span class="kv">20.62</span></div>
-        </div>
-      </div>
-    </div></div>
     </section>
 
     <div class="legend">
@@ -504,14 +331,15 @@
 
   function bindWidth(sliderId, gridId){
     var s=document.getElementById(sliderId), g=document.getElementById(gridId);
+    if(!g) return;
     var out=document.querySelector('output[for='+sliderId+']');
     s.addEventListener('input',function(){
       g.style.setProperty('--col-w', s.value+'px');
       out.value=s.value+'px';
     });
   }
-  bindWidth('w-video','grid-video');
-  bindWidth('w-image','grid-image');
+  bindWidth('w-video','mx-video');
+  bindWidth('w-image','mx-image');
 })();
 </script>
 </body>
