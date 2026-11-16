@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const waDb = require('../lib/waDb');
+const waMedia = require('../lib/waMedia');
+const fs = require('fs');
+
+const MEDIA_TYPES = new Set(['audio', 'image', 'video', 'document', 'sticker', 'voice']);
 
 const GRAPH_VERSION = process.env.META_GRAPH_VERSION || 'v21.0';
 const GRAPH_BASE = `https://graph.facebook.com/${GRAPH_VERSION}`;
@@ -40,6 +44,22 @@ router.post('/webhook', (req, res) => {
             waDb.saveIncomingMessage({ wabaId, phoneNumberId, businessPhone, message, contact });
           } catch (e) {
             console.error('[wa] saveIncoming error', e.message, message.id);
+          }
+
+          if (MEDIA_TYPES.has(message.type)) {
+            const mediaObj = message[message.type];
+            const mediaId = mediaObj?.id;
+            const mimeType = mediaObj?.mime_type;
+            if (mediaId) {
+              waMedia.downloadMedia({ mediaId, mimeType })
+                .then((r) => {
+                  if (r?.path) {
+                    waDb.updateMediaPath.run(r.path, message.id);
+                    console.log(`[wa] media ${message.type} guardada ${mediaId} (${r.bytes}b)`);
+                  }
+                })
+                .catch((e) => console.error('[wa] download media error', mediaId, e.response?.data || e.message));
+            }
           }
         }
 
@@ -116,6 +136,13 @@ router.get('/messages', (req, res) => {
 router.get('/contacts', (_req, res) => {
   const rows = waDb.db.prepare('SELECT * FROM wa_contacts ORDER BY last_seen DESC LIMIT 500').all();
   res.json({ count: rows.length, contacts: rows });
+});
+
+router.get('/media/:id', (req, res) => {
+  const row = waDb.db.prepare('SELECT media_path, mime_type FROM wa_messages WHERE id = ?').get(req.params.id);
+  if (!row?.media_path || !fs.existsSync(row.media_path)) return res.sendStatus(404);
+  if (row.mime_type) res.setHeader('Content-Type', row.mime_type);
+  fs.createReadStream(row.media_path).pipe(res);
 });
 
 module.exports = router;
