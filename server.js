@@ -15,6 +15,7 @@ const federicoRoutes = require('./routes/federico');
 const tiendanubeRoutes = require('./routes/tiendanube');
 const authRoutes = require('./routes/auth');
 const reportesRoutes = require('./routes/reportes');
+const whatsappRoutes = require('./routes/whatsapp');
 const { mountMcp } = require('./mcp/mount');
 const { generateCatalog } = require('./services/tokkoCatalogService');
 
@@ -70,6 +71,7 @@ app.use('/api/federico', federicoRoutes);
 app.use('/api/tiendanube', tiendanubeRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/reportes', reportesRoutes);
+app.use('/api/whatsapp', whatsappRoutes);
 
 mountMcp(app);
 
