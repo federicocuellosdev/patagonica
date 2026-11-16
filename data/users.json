@@ -10,5 +10,9 @@
   {
     "email": "juandominguez.films@gmail.com",
     "password_hash": "$2b$12$c.qWq3QUdtkZTkLR2Us2MewaS4mWz3lL6hX2srGSrihiiQ4dmx0.C"
+  },
+  {
+    "email": "caamiigonzalez96@gmail.com",
+    "password_hash": "$2b$12$fIEIXmvXY7uJS4ywdYZqXuDrH9TIWzUhImRXfDVH94IexhtOgEOX6"
   }
 ]
