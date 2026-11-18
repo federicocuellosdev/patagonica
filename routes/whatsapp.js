@@ -138,6 +138,26 @@ router.get('/contacts', (_req, res) => {
   res.json({ count: rows.length, contacts: rows });
 });
 
+router.post('/media/backfill', async (req, res) => {
+  const pending = waDb.db.prepare(
+    "SELECT id, media_id, mime_type FROM wa_messages WHERE media_id IS NOT NULL AND media_path IS NULL"
+  ).all();
+
+  const results = { pending: pending.length, ok: 0, errors: [] };
+  for (const row of pending) {
+    try {
+      const r = await waMedia.downloadMedia({ mediaId: row.media_id, mimeType: row.mime_type });
+      if (r?.path) {
+        waDb.updateMediaPath.run(r.path, row.id);
+        results.ok += 1;
+      }
+    } catch (e) {
+      results.errors.push({ id: row.id, error: e.response?.data || e.message });
+    }
+  }
+  res.json(results);
+});
+
 router.get('/media/:id', (req, res) => {
   const row = waDb.db.prepare('SELECT media_path, mime_type FROM wa_messages WHERE id = ?').get(req.params.id);
   if (!row?.media_path || !fs.existsSync(row.media_path)) return res.sendStatus(404);
