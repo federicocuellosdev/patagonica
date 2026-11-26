@@ -109,7 +109,7 @@ window.PROYECTO = {
       "nombre": "Cabaña Ñire",
       "tipologia": "2 dormitorios",
       "total": 90,
-      "precio": 500000,
+      "precio": 600000,
       "estado": "disponible",
       "fotos": [
        "img/nire-0937.webp",
@@ -127,7 +127,7 @@ window.PROYECTO = {
       "nombre": "Cabaña Ciprés",
       "tipologia": "2 dormitorios",
       "total": 90,
-      "precio": 500000,
+      "precio": 600000,
       "estado": "disponible",
       "fotos": [
        "img/cipres-8744.webp",
@@ -145,7 +145,7 @@ window.PROYECTO = {
       "nombre": "Cabaña Maitén",
       "tipologia": "3 dormitorios · 2 baños",
       "total": 120,
-      "precio": 700000,
+      "precio": 850000,
       "estado": "disponible",
       "fotos": [
        "img/maiten-8885.webp",
@@ -178,7 +178,7 @@ window.PROYECTO = {
       "nombre": "Cabaña Coihue",
       "tipologia": "Loft",
       "total": 90,
-      "precio": 600000,
+      "precio": 830000,
       "estado": "disponible",
       "fotos": [
        "img/coihue-8824.webp",
@@ -194,7 +194,7 @@ window.PROYECTO = {
       "nombre": "Cabaña Arrayán",
       "tipologia": "3 dormitorios · 3 baños",
       "total": 180,
-      "precio": 1000000,
+      "precio": 1500000,
       "estado": "disponible",
       "fotos": [
        "img/arrayan-1323.webp",
