@@ -7,7 +7,7 @@ window.PROYECTO = {
  "slug": "loma-guacha",
  "nombre": "Loma Guacha",
  "tipo": "loteo",
- "modoBorrador": true,
+ "modoBorrador": false,
  "logoHero": "img/logo-blanco.png",
  "logoNav": "img/logo-blanco.png",
  "logoNavOscuro": "img/logo-negro.png",
