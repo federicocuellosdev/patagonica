@@ -1,0 +1,49 @@
+RINCÓN DEL LAGO — Web de proyecto
+==================================================
+Para: Fede (publicación)
+Agente responsable: Josefina Gómez (+54 9 221 602-7851) · Guillermo Raffetti (+54 9 294 496-9700) · WhatsApp 5492216027851
+Armado: 24/11/2026 · Plantilla Patagónica v1.0
+Slug sugerido: rincon-del-lago  →  l.patagonicapropiedades.com.ar/rincon-del-lago/
+Estado: LISTA PARA PUBLICAR (datos y condiciones confirmados por Tomás Badía el 25/11/2026) — ver pendientes
+
+CONTENIDO
+- index.html → la web (no editar)
+- datos.js → precios, estados y contacto. ÚNICO archivo que cambia.
+- tema.css → colores y tipografías del proyecto
+- img/ → imágenes
+- og.jpg → imagen para compartir
+
+Depende de internet solo para Google Fonts. Sin claves de API.
+
+LINKS DIRECTOS A UNIDADES (para mandar al cliente)
+- .../rincon-del-lago/#uf-1-nire
+- .../rincon-del-lago/#uf-2-cipres
+- .../rincon-del-lago/#uf-3-maiten
+
+ANTES DE PUBLICAR, FEDE VERIFICA:
+[ ] Autorización de comercialización firmada (la confirma el agente)
+[ ] modoBorrador = false en datos.js (sin marcas [COMPLETAR])
+[ ] Ubicación validada por el agente en el mapa
+[ ] El WhatsApp es el del agente responsable
+
+PENDIENTES (revisión 25/11/2026)
+1. Video: el archivo de Drive está compartido como EDITOR para cualquiera con el link. Pasarlo a LECTOR (o subirlo a YouTube/Vimeo) antes de publicar.
+2. Ubicación: validar el pin -40.808292, -71.594159 en Google Maps.
+3. Tokko: la ficha PHL7417271 sigue ofreciendo el complejo entero. Alinear con esta web.
+
+AGREGADOS FUERA DE PLANTILLA (extras.js + estilos al final de tema.css)
+- Fotos por cabaña: cada ficha tiene su carrusel con las fotos de su carpeta de Drive (campo "fotos" de cada unidad en datos.js).
+- Bloque "Comercializa": logo de Patagónica centrado + Josefina Gómez (+54 9 221 602-7851) y Guillermo Raffetti (+54 9 294 496-9700), cada uno con su WhatsApp.
+- Video "Recorrido": embebido desde Google Drive (archivo compartido con link).
+
+CAMBIOS DE LA REVISIÓN DEL 25/11/2026
+- Tiempos del mapa recalculados por ruta real en auto (OSRM): Cumelén 11, Las Balsas 11, Centro 15, Hospital 17, Cerro Bayo 17, Bahía Mansa 19 min (marcador del mapa), Aeropuerto de Bariloche 79 km · 1 h 13 min.
+- Bosque de Arrayanes: 16 min NAVEGANDO desde el muelle (dato de Tomás Badía). En la lista de tiempos figura así; el marcador de Bahía Mansa en el mapa muestra el tiempo en auto al puerto.
+- "Playa y muelle propios" / "Costa propia" pasaron a "playa y muelle" / "Costa de lago" / "acceso común" (así figura en la propuesta al propietario; la situación del muelle está pendiente).
+- Cabañas: "UF 1 · Ñire" pasó a "Cabaña Ñire" (los links #uf-1-nire, etc. siguen funcionando).
+- Fotos de Radal y Arrayán: los archivos tenían el nombre cruzado; se renombraron. La asignación ya coincidía con las carpetas de Drive.
+- Servicios: se sumó el sauna (figura en la propuesta).
+- Texto legal propio (fotos reales, no renders).
+- index.html (parches sobre plantilla v1.0): vista previa al compartir con URL absoluta, og:url y canonical; fotos ampliadas con flechas, teclado y deslizamiento; mensaje de WhatsApp por cabaña; aviso si falta datos.js.
+- tema.css: mejor lectura de los textos del hero y contadores en celular.
+- OJO: og:image y canonical apuntan a l.patagonicapropiedades.com.ar/rincon-del-lago/. Si se publica en otra dirección, cambiar esas líneas en index.html.

@@ -1,0 +1,77 @@
+:root{
+  --fondo:#f6f4f0;
+  --fondo2:#e9f0f4;
+  --superficie:#ffffff;
+  --texto:#1d2428;
+  --texto2:#5b636a;
+  --titulo:#1c3442;
+  --destacado:#1c3442;
+  --acento:#2b5268;
+  --acento2:#9fc3dc;
+  --linea:rgba(28,52,66,.14);
+  --oscuro:#1c3442;
+  --sobre-oscuro:#ffffff;
+  --sobre-oscuro-2:rgba(255,255,255,.8);
+  --boton:#1c3442;
+  --sobre-boton:#ffffff;
+  --nav-fondo:rgba(246,244,240,.94);
+  --nav-texto:#1c3442;
+  --pie:#132631;
+  --radio:14px;
+  --radio-btn:999px;
+  --sombra:0 18px 50px -20px rgba(16,32,42,.35);
+  --peso-titulo:300;
+  --peso-destacado:700;
+  --estilo-destacado:normal;
+  --peso-hero:800;
+  --tracking-hero:.01em;
+  --nav-logo-claro:none;
+  --nav-logo-oscuro:block;
+  --f-titulos:'Montserrat',system-ui,sans-serif;
+  --f-texto:'Montserrat',system-ui,sans-serif;
+  --m-agua:#10232e;
+  --m-curva:rgba(200,225,240,.09);
+  --m-curva-m:rgba(200,225,240,.2);
+  --m-calle:rgba(220,235,245,.2);
+  --m-calle-m:rgba(230,240,248,.42);
+  --m-ruta:rgba(240,246,250,.85);
+  --m-acento:#d8cfa8;
+  --m-rotulo:rgba(159,195,220,.32);
+  --m-marcador:#1c3442;
+  --m-tarjeta:rgba(16,32,42,.9);
+  --m-halo:rgba(16,32,42,.85);
+}
+.oscura h2 em,.dif h2 em,.cierre h2 em,#video h2 em{color:var(--acento2)}
+
+.uf-fotos{position:relative;margin:-22px -22px 18px;border-radius:var(--radio) var(--radio) 0 0;overflow:hidden;background:#111}
+.uf-fotos .pista{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.uf-fotos .pista::-webkit-scrollbar{display:none}
+.uf-fotos img{flex:0 0 100%;width:100%;aspect-ratio:3/2;object-fit:cover;scroll-snap-align:start;cursor:zoom-in;display:block}
+.uf-fotos button{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.88);color:var(--titulo);font-size:18px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.uf-fotos .a{left:12px}.uf-fotos .s{right:12px}
+.uf-fotos .cont{position:absolute;right:12px;bottom:10px;background:rgba(0,0,0,.55);color:#fff;font-size:.75rem;padding:3px 10px;border-radius:99px}
+.tipos{grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr))!important}
+.tarjetas-nivel{grid-template-columns:1fr!important}
+.tarjetas-nivel>div:first-child{display:none}
+.tipo{border-left:0!important;overflow:hidden}
+#equipo .comer{text-align:center;max-width:760px;margin:0 auto}
+#equipo .comer img{height:64px;width:auto;margin:6px auto 30px;display:block}
+#equipo .agentes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px}
+#equipo .ag{background:var(--superficie);border-radius:var(--radio);padding:22px;box-shadow:var(--sombra)}
+#equipo .ag strong{display:block;font-family:var(--f-titulos);font-size:1.2rem;color:var(--titulo)}
+#equipo .ag a{display:inline-block;margin-top:8px;color:var(--acento);font-weight:600;text-decoration:none;white-space:nowrap}
+
+/* Ajustes 25/11/2026 (con "body" adelante para que pisen los estilos de index.html) */
+body .hero::after{background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,.08) 28%,rgba(0,0,0,.3) 52%,rgba(0,0,0,.8) 100%)}
+body .hero .eyebrow{color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.65)}
+body .hero h1{text-shadow:0 2px 30px rgba(0,0,0,.35)}
+body .hero h1 small{color:#fff;opacity:.95;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+body .hero .claim{text-shadow:0 1px 12px rgba(0,0,0,.55)}
+body .marca b{margin-bottom:4px}
+@media(max-width:600px){
+  body .marca span span{display:none}
+  body .contadores{grid-template-columns:1fr 1.5fr 1fr!important}
+  body .cont{padding:10px 12px}
+  body .cont strong{font-size:1.02rem;white-space:nowrap}
+  body .cont span{font-size:.58rem;letter-spacing:.04em}
+}

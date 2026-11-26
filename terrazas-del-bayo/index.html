@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terrazas del Bayo</title>
+<meta name="description" content="Terrazas del Bayo: barrio privado de 12 hectáreas en el faldeo del Cerro Bayo, Villa La Angostura. Preventa de los lotes 09, 10 y 11 desde USD 52/m².">
+<meta property="og:title" content="Terrazas del Bayo — Barrio privado en el faldeo del Cerro Bayo">
+<meta property="og:description" content="Lotes en preventa desde USD 52/m². Villa La Angostura, Patagonia.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#14261f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Public+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: secciones a todo el ancho que alternan verde bosque y papel, como el brochure; columna de 1180px. */
+:root{
+  color-scheme:light;
+  --deep:#14261f; --forest:#1f3a33; --moss:#2f5046;
+  --paper:#f4f0e7; --card:#fbf9f4; --ink:#1c2a25; --mute:#5f6b65; --rule:#d9d3c5;
+  --gold:#c4a572; --bronze:#8a6540; --sage:#c9d1c8;
+  --on-dark:#f4f0e7; --on-dark-mute:rgba(244,240,231,.68); --rule-dark:rgba(244,240,231,.16);
+  --disp:'Cormorant Garamond','Iowan Old Style',Georgia,serif;
+  --sans:'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{width:min(1180px,calc(100% - 40px));margin:0 auto}
+section{padding:clamp(72px,9vw,128px) 0;scroll-margin-top:60px}
+.dark{background:var(--forest);color:var(--on-dark)}
+.eyebrow{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;font-weight:500;color:var(--bronze)}
+.dark .eyebrow{color:var(--gold)}
+h1,h2,h3{font-family:var(--disp);font-weight:300;line-height:1.04;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:clamp(2.3rem,5vw,4rem);margin-top:14px}
+h2 em,h1 em{font-style:normal;color:var(--bronze)}
+.dark h2 em,.hero h1 em{color:var(--gold)}
+.lead{font-size:clamp(1.02rem,1.3vw,1.16rem);max-width:60ch;margin-top:22px;color:var(--mute)}
+.dark .lead{color:var(--on-dark-mute)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;padding:16px 26px;border:1px solid transparent;transition:.3s var(--ease);white-space:nowrap}
+.btn-gold{background:var(--gold);color:var(--deep)}
+.btn-gold:hover{background:var(--on-dark)}
+.btn-line{border-color:rgba(244,240,231,.45);color:var(--on-dark)}
+.btn-line:hover{background:var(--on-dark);color:var(--deep)}
+.btn-dark{background:var(--forest);color:var(--on-dark)}
+.btn-dark:hover{background:var(--bronze)}
+.wai{width:16px;height:16px;fill:currentColor;flex:none}
+
+/* NAV */
+.nav{position:fixed;inset:0 0 auto 0;z-index:40;background:rgba(20,38,31,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--rule-dark);color:var(--on-dark)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:60px}
+.brand{font-family:var(--disp);font-size:1.3rem;letter-spacing:.02em;margin-right:auto;white-space:nowrap}
+.brand em{font-style:normal;color:var(--gold)}
+.links{display:flex;gap:26px}
+.links a{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--on-dark-mute);transition:.2s}
+.links a:hover{color:var(--on-dark)}
+.nav .btn{padding:10px 16px;font-size:.66rem}
+@media (max-width:900px){.links{display:none}}
+
+/* PORTADA */
+.hero{position:relative;isolation:isolate;color:var(--on-dark);background:var(--deep);padding:0;min-height:min(92vh,860px);min-height:min(92svh,860px);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.hero video,.hero .still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;pointer-events:none;user-select:none;-webkit-user-select:none}
+.hero .still{z-index:-3}
+.hero video{opacity:0;transition:opacity .8s}
+.hero video.live{opacity:1}
+.hero video::-webkit-media-controls,.hero video::-webkit-media-controls-start-playback-button,.hero video::-webkit-media-controls-panel{display:none!important;-webkit-appearance:none;opacity:0}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(20,38,31,.55) 0%,rgba(20,38,31,.15) 30%,rgba(20,38,31,.55) 62%,rgba(20,38,31,.96) 100%)}
+.hero-in{padding:150px 0 clamp(44px,6vw,72px)}
+.hero .eyebrow{color:rgba(244,240,231,.85)}
+.hero h1{font-size:clamp(3.4rem,10vw,8rem);margin:18px 0 20px;line-height:.92}
+.hero h1 em{display:block}
+.hero p.tag{font-size:clamp(1.02rem,1.5vw,1.25rem);max-width:44ch;color:rgba(244,240,231,.9)}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--rule-dark);margin-top:clamp(40px,6vw,72px)}
+.strip div{padding:22px 20px 28px 0}
+.strip small{display:block;font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;color:var(--on-dark-mute)}
+.strip b{display:block;margin-top:8px;font-weight:500;font-size:.9rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+
+
+/* PROYECTO */
+.split{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,6vw,90px);align-items:end}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule);margin-top:clamp(48px,6vw,80px)}
+.kpi{padding:26px 18px 0 0}
+.kpi b{display:block;font-family:var(--disp);font-weight:300;font-size:clamp(2.2rem,4vw,3.3rem);line-height:1;color:var(--forest);font-variant-numeric:lining-nums}
+.kpi b sup{font-size:.36em;margin-left:5px;color:var(--bronze);font-family:var(--sans);letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+.kpi span{display:block;margin-top:10px;font-size:.84rem;color:var(--mute);max-width:22ch}
+@media (max-width:860px){.split{grid-template-columns:1fr;align-items:start}.kpis{grid-template-columns:1fr 1fr}.kpi{padding-bottom:10px}}
+
+/* CONCEPTO */
+.feat-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px;margin-top:clamp(40px,5vw,64px)}
+.ph{position:relative;overflow:hidden;background:var(--deep)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph figcaption{position:absolute;left:12px;bottom:12px;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:6px 10px;background:rgba(20,38,31,.7);color:rgba(244,240,231,.85)}
+.ph.a{grid-column:span 7;aspect-ratio:16/10}
+.ph.b{grid-column:span 5;aspect-ratio:auto}
+.items{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:clamp(40px,5vw,64px);border-top:1px solid var(--rule-dark)}
+.item{padding:28px 26px 30px 0;border-bottom:1px solid var(--rule-dark)}
+.item i{font-style:normal;font-family:var(--disp);font-size:1.3rem;color:var(--gold)}
+.item h3{font-family:var(--sans);font-weight:500;font-size:1rem;letter-spacing:0;line-height:1.3;margin:10px 0 8px}
+.item p{font-size:.9rem;color:var(--on-dark-mute);max-width:34ch}
+@media (max-width:860px){.ph.a,.ph.b{grid-column:span 12;aspect-ratio:16/10}.item{padding-right:0}}
+
+/* VIDEO */
+.film{background:var(--deep);padding:0}
+.film video{width:100%;max-height:86vh;background:#000}
+.film p{padding:14px 20px;text-align:center;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--on-dark-mute)}
+
+/* PREVENTA */
+.terms{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:clamp(36px,4vw,56px)}
+.term{border-left:2px solid var(--bronze);padding:4px 0 4px 18px}
+.term small{display:block;font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.term b{display:block;margin-top:6px;font-family:var(--disp);font-weight:400;font-size:1.6rem;line-height:1.15;color:var(--forest)}
+.lots{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}
+.lot{background:var(--card);border:1px solid var(--rule);border-top:3px solid var(--forest);padding:28px 24px 24px;display:flex;flex-direction:column;transition:.3s var(--ease)}
+.lot.on{border-top-color:var(--bronze);box-shadow:0 18px 40px rgba(28,42,37,.12);transform:translateY(-4px)}
+.lot h3{font-size:2.5rem;color:var(--forest)}
+.lot dl{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0;padding-bottom:18px;border-bottom:1px solid var(--rule)}
+.lot dt,.lot .pl{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.lot dd{font-family:var(--disp);font-size:1.4rem;font-variant-numeric:lining-nums}
+.lot .pl{color:var(--bronze)}
+.lot .price{font-family:var(--disp);font-size:2.1rem;line-height:1.1;color:var(--bronze);margin:6px 0 22px;font-variant-numeric:lining-nums;white-space:nowrap}
+.lot .btn{margin-top:auto;padding:13px 14px;font-size:.66rem}
+.fine{font-size:.76rem;color:var(--mute);margin-top:22px;max-width:90ch}
+@media (max-width:1020px){.lots{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){.terms{grid-template-columns:1fr}}
+
+/* MASTER PLAN */
+.mp-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.5fr);gap:22px;margin-top:clamp(36px,4vw,56px);align-items:start}
+.plan{position:relative;border:1px solid var(--rule-dark);background:var(--deep)}
+.plan img{width:100%;height:auto}
+.pin{position:absolute;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:var(--gold);color:var(--deep);font-family:var(--disp);font-size:1.25rem;font-weight:500;display:grid;place-items:center;box-shadow:0 0 0 4px rgba(20,38,31,.55),0 8px 20px rgba(0,0,0,.4);transition:.25s var(--ease);font-variant-numeric:lining-nums}
+.pin:hover,.pin.on{background:var(--on-dark);transform:translate(-50%,-50%) scale(1.14)}
+.pin.on{box-shadow:0 0 0 4px var(--gold),0 8px 24px rgba(0,0,0,.5)}
+.panel{border:1px solid var(--rule-dark);padding:28px 26px;position:sticky;top:84px}
+.panel .tagp{display:inline-block;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:var(--deep);background:var(--gold);padding:6px 10px}
+.panel h3{font-size:3.4rem;margin:18px 0 6px}
+.panel dl{display:grid;grid-template-columns:1fr 1fr;gap:14px 10px;margin:18px 0 22px;padding:18px 0;border-top:1px solid var(--rule-dark);border-bottom:1px solid var(--rule-dark)}
+.panel dt{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--on-dark-mute)}
+.panel dd{font-family:var(--disp);font-size:1.45rem;font-variant-numeric:lining-nums}
+.panel dd.big{grid-column:span 2;font-size:2.1rem;color:var(--gold)}
+.panel .btn{width:100%}
+.key{display:flex;gap:22px;flex-wrap:wrap;margin-top:18px;font-size:.8rem;color:var(--on-dark-mute)}
+.key span{display:flex;align-items:center;gap:9px}
+.key i{width:14px;height:14px;border-radius:50%;background:var(--gold);flex:none}
+.key i.n{background:none;border:1px solid var(--on-dark-mute)}
+@media (max-width:900px){.mp-grid{grid-template-columns:1fr}.panel{position:static}.pin{width:36px;height:36px;font-size:1.05rem}}
+
+
+/* VALORES */
+.chart{margin-top:clamp(36px,4vw,56px);position:relative}
+.row{display:grid;grid-template-columns:210px 1fr 56px;align-items:center;gap:16px;padding:7px 0}
+.row .n{font-size:.84rem;color:var(--mute)}
+.row.t .n{color:var(--ink);font-weight:600}
+.track{position:relative;height:26px;background:#e8e4d9}
+.bar{position:absolute;inset:0 auto 0 0;background:var(--sage)}
+.row.t .bar{background:var(--bronze)}
+.avg{position:absolute;top:-6px;bottom:-6px;left:78.9%;border-left:1px dashed var(--mute)}
+.row .v{font-family:var(--disp);font-size:1.3rem;text-align:right;font-variant-numeric:lining-nums tabular-nums;color:var(--mute)}
+.row.t .v{color:var(--bronze)}
+.gap{height:18px}
+.avg-l{display:grid;grid-template-columns:210px 1fr 56px;gap:16px;margin-bottom:6px}
+.avg-l span{grid-column:2;position:relative;height:18px}
+.avg-l b{position:absolute;left:78.9%;transform:translateX(-50%);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;white-space:nowrap}
+.verdict{display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,5vw,70px);align-items:center;border-top:1px solid var(--rule);margin-top:44px;padding-top:36px}
+.verdict .num{font-family:var(--disp);font-weight:300;font-size:clamp(4rem,9vw,7rem);line-height:.9;color:var(--bronze);font-variant-numeric:lining-nums}
+.verdict .num small{display:block;font-family:var(--sans);font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--mute);margin-top:12px;font-weight:500}
+.verdict p{max-width:56ch}
+.verdict p b{font-weight:600}
+@media (max-width:760px){.verdict{grid-template-columns:1fr}}
+
+/* UBICACIÓN */
+.loc{padding:0;display:grid;grid-template-columns:1fr 1fr;background:var(--deep);color:var(--on-dark)}
+.loc .ph{min-height:420px}
+.loc .tx{padding:clamp(56px,7vw,110px) clamp(20px,6vw,90px);align-self:center}
+.loc ul{list-style:none;margin-top:30px;border-top:1px solid var(--rule-dark)}
+.loc li{padding:16px 0;border-bottom:1px solid var(--rule-dark);display:flex;gap:18px;align-items:baseline}
+.loc li b{font-family:var(--disp);font-weight:400;font-size:1.5rem;color:var(--gold);min-width:92px;flex:none}
+.loc li span{color:var(--on-dark-mute);font-size:.94rem}
+@media (max-width:860px){.loc{grid-template-columns:1fr}.loc .ph{min-height:0;aspect-ratio:16/10}}
+
+/* CONTACTO */
+.cta{position:relative;isolation:isolate;background:var(--deep);color:var(--on-dark);text-align:center;overflow:hidden}
+.cta .bg{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover}
+.cta::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(20,38,31,.9),rgba(20,38,31,.72) 50%,rgba(20,38,31,.95))}
+.cta h2{font-size:clamp(2.6rem,6.4vw,5rem);max-width:15ch;margin:16px auto 0}
+.cta .lead{margin:22px auto 0;color:var(--on-dark)}
+.cta .btn{margin-top:34px}
+.contact{display:flex;justify-content:center;gap:clamp(20px,5vw,60px);flex-wrap:wrap;margin-top:34px;font-size:.92rem;color:var(--on-dark-mute)}
+.contact b{display:block;font-weight:500;color:var(--on-dark);font-size:1.02rem}
+.devs{margin-top:clamp(48px,6vw,80px);padding-top:36px;border-top:1px solid var(--rule-dark)}
+.devs img{margin:14px auto 0;width:min(440px,84%);mix-blend-mode:screen}
+footer{background:#000;color:rgba(244,240,231,.5);padding:30px 0 40px;font-size:.74rem;line-height:1.7}
+footer p{max-width:110ch}
+footer p+p{margin-top:10px}
+.fab{position:fixed;right:20px;bottom:20px;z-index:45;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 12px 30px rgba(0,0,0,.35);transition:transform .3s}
+.fab:hover{transform:scale(1.08)}
+.fab svg{width:27px;height:27px;fill:#fff}
+
+/* ---------- chips / plano ---------- */
+.chips{display:flex;gap:8px;margin-bottom:14px}
+.chips button{flex:1;max-width:120px;padding:12px 0;border:1px solid var(--rule-dark);font-family:var(--disp);font-size:1.25rem;color:var(--on-dark-mute);font-variant-numeric:lining-nums;transition:.25s var(--ease)}
+.chips button small{display:block;font-family:var(--sans);font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;margin-bottom:2px}
+.chips button.on{background:var(--gold);border-color:var(--gold);color:var(--deep)}
+.plan-in{position:relative}
+.hint{display:none;font-size:.74rem;color:var(--on-dark-mute);margin-top:10px}
+
+.ov{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.lp{cursor:pointer;outline:none}
+.lp polygon{fill:var(--gold);fill-opacity:.3;stroke:#fff;stroke-width:3;stroke-linejoin:round;vector-effect:non-scaling-stroke;animation:blink 1.5s ease-in-out infinite;transition:fill .25s}
+.lp:nth-child(2) polygon{animation-delay:.2s}.lp:nth-child(3) polygon{animation-delay:.4s}.lp:nth-child(4) polygon{animation-delay:.6s}
+@keyframes blink{0%,100%{fill-opacity:.18}50%{fill-opacity:.78}}
+.lp:hover polygon,.lp:focus-visible polygon{fill:#fff;fill-opacity:.7;animation:none}
+.lp.on polygon{fill:var(--gold);fill-opacity:.92;stroke-width:4;animation:none}
+.lp circle{fill:var(--deep);stroke:var(--gold);stroke-width:2}
+.lp.on circle{fill:#fff;stroke:var(--deep)}
+.lp text{font-family:var(--sans);font-weight:600;font-size:21px;fill:#fff;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.lp.on text{fill:var(--deep)}
+.tap{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--gold)}
+.tap i{width:10px;height:10px;border-radius:50%;background:var(--gold);animation:dot 1.5s ease-in-out infinite}
+@keyframes dot{0%,100%{box-shadow:0 0 0 0 rgba(196,165,114,.7)}60%{box-shadow:0 0 0 9px rgba(196,165,114,0)}}
+@media (prefers-reduced-motion:reduce){.lp polygon{animation:none;fill-opacity:.5}.tap i{animation:none}}
+
+.sold{display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center;margin-top:22px;padding:16px 20px;border:1px dashed #b9b2a2}
+.sold span{display:flex;align-items:center;gap:12px;font-size:.92rem;color:var(--mute)}
+.sold span b{font-weight:600;color:var(--ink)}
+.sold em{font-style:normal;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;font-weight:600;color:var(--mute);border:1px solid #b9b2a2;padding:6px 10px}
+.sp polygon{fill:#1b2622;fill-opacity:.72;stroke:rgba(255,255,255,.75);stroke-width:2;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.sp text{font-family:var(--sans);font-weight:600;text-anchor:middle;fill:rgba(244,240,231,.92);pointer-events:none}
+.sp text.a{font-size:21px}.sp text.b{font-size:11px;letter-spacing:.22em}
+.key i.s{background:#1b2622;border:1px solid rgba(255,255,255,.6)}
+@media (max-width:760px){.sold{margin-top:6px;padding:14px 16px}}
+/* ---------- menú y barra móvil ---------- */
+.menu{display:none;width:44px;height:44px;margin-right:-10px;position:relative}
+.menu i{position:absolute;left:11px;right:11px;height:1.5px;background:var(--on-dark);transition:.3s var(--ease)}
+.menu i:first-child{top:18px}.menu i:last-child{top:26px}
+.menu[aria-expanded="true"] i:first-child{top:22px;transform:rotate(45deg)}
+.menu[aria-expanded="true"] i:last-child{top:22px;transform:rotate(-45deg)}
+.sheet{position:fixed;inset:56px 0 0 0;z-index:39;background:var(--deep);display:flex;flex-direction:column;padding:18px 24px 110px;overflow:auto}
+.sheet[hidden]{display:none}
+.sheet a{font-family:var(--disp);font-size:2rem;font-weight:300;color:var(--on-dark);padding:14px 0;border-bottom:1px solid var(--rule-dark)}
+.dock{display:none}
+
+@media (max-width:900px){
+  .menu{display:block}
+  .nav .wrap{height:56px;gap:14px}
+  .nav-cta{display:none}
+  section{scroll-margin-top:56px}
+}
+@media (max-width:760px){
+  body{padding-bottom:68px}
+  .wrap{width:calc(100% - 44px)}
+  section{padding:68px 0}
+  h2{font-size:2.5rem;line-height:1.02}
+  .lead{font-size:1.02rem;margin-top:18px}
+  .eyebrow{font-size:.66rem;letter-spacing:.26em}
+  .btn{padding:17px 20px;font-size:.72rem}
+  .fab{display:none}
+  .dock{display:grid;grid-template-columns:1fr 1.25fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:45;padding:10px 12px;background:rgba(20,38,31,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--rule-dark)}
+  .dock .btn{padding:15px 10px;font-size:.7rem}
+
+  /* portada */
+  .hero{min-height:100vh;min-height:calc(100svh - 68px)}
+  .hero::before{background:linear-gradient(180deg,rgba(20,38,31,.5) 0%,rgba(20,38,31,0) 22%,rgba(20,38,31,.1) 42%,rgba(20,38,31,.82) 70%,rgba(20,38,31,.97) 100%)}
+  .hero-in{padding-top:120px;padding-bottom:36px}
+  .hero h1{font-size:clamp(3.6rem,17.5vw,5rem);margin:14px 0 16px}
+  .hero p.tag{font-size:1.04rem;max-width:30ch}
+  .hero-cta{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .hero-cta .btn{padding:16px 8px;font-size:.66rem;letter-spacing:.16em}
+  .strip{grid-template-columns:1fr 1fr 1fr;margin-top:28px}
+  .strip div{padding:14px 8px 18px 0;border:0!important}
+  .strip small{font-size:.54rem;letter-spacing:.16em;min-height:2.6em}
+  .strip b{font-size:.72rem;letter-spacing:.06em;margin-top:4px;line-height:1.35}
+
+  /* proyecto */
+  .split{gap:0}
+  .kpis{margin-top:36px;border-top:0;gap:10px}
+  .kpi{background:var(--card);border:1px solid var(--rule);padding:20px 16px 18px}
+  .kpi b{font-size:2.9rem}
+  .kpi span{font-size:.8rem;margin-top:8px}
+
+  /* carruseles */
+  .feat-grid,.lots{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:32px -22px 0;padding:6px 22px 22px;scroll-padding:0 22px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .feat-grid::-webkit-scrollbar,.lots::-webkit-scrollbar{display:none}
+  .feat-grid .ph{flex:0 0 84%;aspect-ratio:4/5;scroll-snap-align:start;grid-column:auto}
+  .lots .lot{flex:0 0 80%;scroll-snap-align:start;min-width:0}
+  .lot.on{transform:none;box-shadow:0 10px 24px rgba(28,42,37,.12)}
+  .lot h3{font-size:2.8rem}
+  .lot .price{font-size:2.4rem}
+  .dots{display:flex;justify-content:center;gap:6px;margin-top:2px}
+  .dots i{width:6px;height:6px;border-radius:99px;background:var(--rule);transition:.3s}
+  .dots i.on{width:20px;background:var(--bronze)}
+  .dark .dots i{background:var(--rule-dark)}.dark .dots i.on{background:var(--gold)}
+
+  /* el barrio */
+  .items{grid-template-columns:1fr 1fr;column-gap:20px;margin-top:26px}
+  .item{padding:20px 0 22px}
+  .item h3{font-size:.98rem;margin:6px 0 6px}
+  .item p{font-size:.84rem;max-width:none}
+
+  /* preventa */
+  .terms{gap:0;margin-top:30px;border:1px solid var(--rule);background:var(--card)}
+  .term{border-left:0;border-bottom:1px solid var(--rule);padding:14px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+  .term:last-child{border-bottom:0}
+  .term small{font-size:.6rem;letter-spacing:.18em;flex:none}
+  .term b{margin:0;font-size:1.25rem;text-align:right}
+  .fine{font-size:.74rem;margin-top:16px}
+
+  /* master plan */
+  .chips button{max-width:none}
+  .mp-grid{margin-top:28px;gap:16px}
+  .plan{overflow:auto;aspect-ratio:1/1;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .plan::-webkit-scrollbar{display:none}
+  .plan-in{width:235%}
+  .pin{width:38px;height:38px;font-size:1.1rem}
+  .hint{display:block}
+  .key{gap:8px 18px;font-size:.76rem;margin-top:12px}
+  .panel{padding:22px 20px}
+  .panel h3{font-size:3rem;margin:14px 0 2px}
+
+  /* valores */
+  .row,.avg-l{grid-template-columns:1fr 50px;gap:4px 10px}
+  .row{padding:6px 0}
+  .row .n{grid-column:1/-1;font-size:.78rem}
+  .avg-l span{grid-column:1}
+  .track{height:22px}
+  .verdict{gap:14px;margin-top:32px;padding-top:28px}
+  .verdict .num{font-size:5.4rem}
+
+  /* ubicación / contacto */
+  .loc .tx{padding:56px 22px 64px}
+  .loc li{gap:14px}
+  .loc li b{min-width:78px;font-size:1.35rem}
+  .cta h2{font-size:2.9rem}
+  .cta .btn{width:100%}
+  .contact{flex-direction:column;gap:18px}
+  footer{padding-bottom:34px}
+}
+@media (min-width:761px){.dots{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Principal">
+  <div class="wrap">
+    <a class="brand" href="#portada">Terrazas <em>del Bayo</em></a>
+    <div class="links">
+      <a href="#proyecto">Proyecto</a>
+      <a href="#concepto">El barrio</a>
+      <a href="#preventa">Preventa</a>
+      <a href="#masterplan">Master plan</a>
+      <a href="#valores">Valores</a>
+    </div>
+    <a class="btn btn-gold js-wa nav-cta" href="#contacto">Consultar</a>
+    <button class="menu" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="sheet"><i></i><i></i></button>
+  </div>
+</nav>
+<div class="sheet" id="sheet" hidden>
+  <a href="#proyecto">Proyecto</a>
+  <a href="#concepto">El barrio</a>
+  <a href="#video">Video</a>
+  <a href="#preventa">Preventa</a>
+  <a href="#masterplan">Master plan</a>
+  <a href="#valores">Valores</a>
+  <a href="#ubicacion">Ubicación</a>
+  <a href="#contacto">Contacto</a>
+</div>
+<div class="dock">
+  <a class="btn btn-line" href="#preventa">Ver lotes</a>
+  <a class="btn btn-gold js-wa" href="#"><svg class="wai" viewBox="0 0 24 24"></svg>WhatsApp</a>
+</div>
+
+<!-- PORTADA -->
+<header class="hero" id="portada">
+  <img class="still" id="heroStill" src="assets/portico.webp" alt="" aria-hidden="true">
+  <video id="heroV" autoplay muted loop playsinline webkit-playsinline disablepictureinpicture disableremoteplayback preload="auto" tabindex="-1" aria-hidden="true"></video>
+  <div class="wrap hero-in">
+    <p class="eyebrow">Villa La Angostura · Faldeo del Cerro Bayo</p>
+    <h1>Terrazas <em>del Bayo</em></h1>
+    <p class="tag">Barrio privado de 12 hectáreas sobre el faldeo. Vista a la cordillera y al Nahuel Huapi.</p>
+    <div class="hero-cta">
+      <a class="btn btn-gold" href="#preventa">Ver lotes en preventa</a>
+      <a class="btn btn-line" href="#video">Ver el video</a>
+    </div>
+  </div>
+</header>
+
+<!-- PROYECTO -->
+<section id="proyecto">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <p class="eyebrow">El proyecto</p>
+        <h2>12 hectáreas <em>puestas en valor</em></h2>
+      </div>
+      <p class="lead">Terrazas del Bayo es un loteo con tierra, planos, servicios y calles ya en pie. Grupo Badía Jaspe y SAR Inversiones &amp; Desarrollos lo desarrollan en conjunto y hoy lo reconstruyen para llevarlo a un estándar premium.</p>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b>12<sup>ha</sup></b><span>sobre el faldeo del Cerro Bayo</span></div>
+      <div class="kpi"><b>48</b><span>lotes de 1.500 a 12.000 m²</span></div>
+      <div class="kpi"><b>3<sup>min</sup></b><span>del centro de Villa La Angostura</span></div>
+      <div class="kpi"><b>3</b><span>lotes disponibles en preventa</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTO -->
+<section class="dark" id="concepto">
+  <div class="wrap">
+    <p class="eyebrow">El barrio terminado</p>
+    <h2>Cómo va a quedar <em>Terrazas del Bayo</em></h2>
+    <p class="lead">La obra en curso deja el barrio cerrado, con ingresos automatizados y servicios subterráneos. La finalización se proyecta para marzo de 2027.</p>
+    <div class="feat-grid" id="feat">
+      <figure class="ph a"><img src="assets/portico.webp" alt="Render del acceso al barrio entre el bosque" loading="lazy"><figcaption>Render ilustrativo</figcaption></figure>
+      <figure class="ph b"><img src="assets/acceso.webp" alt="Render del pórtico de ingreso al atardecer" loading="lazy"><figcaption>Render ilustrativo</figcaption></figure>
+    </div>
+    <div class="dots" data-for="feat"></div>
+    <div class="items">
+      <div class="item"><i>01</i><h3>Portones automáticos</h3><p>Ingresos cerrados y automatizados.</p></div>
+      <div class="item"><i>02</i><h3>Cámaras de seguridad</h3><p>En los ingresos al barrio.</p></div>
+      <div class="item"><i>03</i><h3>Calles enripiadas</h3><p>Red vial interna de dominio privado.</p></div>
+      <div class="item"><i>04</i><h3>Luz y gas subterráneos</h3><p>Servicios ya instalados.</p></div>
+      <div class="item"><i>05</i><h3>Administración propia</h3><p>Consorcio con administración propia y reglamento del barrio.</p></div>
+      <div class="item"><i>06</i><h3>Vistas</h3><p>Cordillera de los Andes y lago Nahuel Huapi desde la cota del faldeo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="film" id="video" aria-label="Video del proyecto">
+  <video controls preload="none" playsinline poster="assets/atardecer.webp">
+    <source src="assets/film.mp4" type="video/mp4">
+  </video>
+  <p>Video realizado con renders. Imágenes de carácter ilustrativo.</p>
+</section>
+
+<!-- PREVENTA -->
+<section id="preventa">
+  <div class="wrap">
+    <p class="eyebrow">Preventa</p>
+    <h2>Tres lotes <em>en preventa</em></h2>
+    <p class="lead">Unidades disponibles durante la etapa de puesta en valor del barrio. El resto de los lotes corresponde a próximas etapas.</p>
+    <div class="terms">
+      <div class="term"><small>Boleto</small><b>80 % a la firma</b></div>
+      <div class="term"><small>Saldo</small><b>Contra escritura, abril 2027</b></div>
+      <div class="term"><small>Fin de obra proyectado</small><b>Marzo 2027</b></div>
+    </div>
+    <div class="lots" id="lots"></div>
+    <div class="dots" data-for="lots"></div>
+    <div class="sold" id="sold"></div>
+    <p class="fine">Valores de contado. Superficies según plano de mensura. Disponibilidad sujeta a verificación al momento de la reserva.</p>
+  </div>
+</section>
+
+<!-- MASTER PLAN -->
+<section class="dark" id="masterplan">
+  <div class="wrap">
+    <p class="eyebrow">Master plan</p>
+    <h2>Dónde están <em>los lotes en preventa</em></h2>
+    <p class="lead">Los lotes resaltados están en preventa. Tocá uno para ver su superficie y precio.</p>
+    <div class="mp-grid">
+      <div>
+        <p class="tap"><i></i>Tocá un lote en el plano</p>
+        <div class="chips" id="chips" role="group" aria-label="Elegir lote"></div>
+        <div class="plan" id="plan">
+          <div class="plan-in" id="planIn">
+            <img src="assets/masterplan.webp" alt="Master plan de Terrazas del Bayo con los lotes numerados y las calles internas">
+            <svg class="ov" id="ov" viewBox="0 0 1334 1263" aria-label="Lotes en preventa"></svg>
+          </div>
+        </div>
+        <p class="hint">Deslizá el plano para recorrerlo.</p>
+        <div class="key"><span><i></i>Lote en preventa</span><span><i class="s"></i>Vendido</span><span><i class="n"></i>Resto de los lotes: próximas etapas</span><span>Plano sujeto a aprobación</span></div>
+      </div>
+      <aside class="panel" aria-live="polite">
+        <span class="tagp">En preventa</span>
+        <h3 id="p-name">Lote 09</h3>
+        <dl>
+          <div><dt>Superficie</dt><dd id="p-sup"></dd></div>
+          <div><dt>Valor m²</dt><dd id="p-m2"></dd></div>
+          <div style="grid-column:span 2"><dt>Precio del lote</dt><dd class="big" id="p-price"></dd></div>
+        </dl>
+        <a class="btn btn-gold" id="p-wa" href="#contacto" target="_blank" rel="noopener"><svg class="wai" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.8 14.1c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.8-.7-3.1-1.3-5.1-4.4-5.3-4.6-.2-.2-1.3-1.7-1.3-3.2s.8-2.3 1.1-2.6c.3-.3.6-.4.8-.4h.6c.2 0 .5-.1.7.5l1 2.4c.1.2.1.4 0 .6l-.4.6-.5.6c-.2.2-.3.4-.1.7.2.3.9 1.4 1.9 2.3 1.3 1.1 2.3 1.5 2.7 1.6.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2.3 1.1c.3.2.6.3.6.4.1.2.1.7-.1 1.3z"/></svg>Consultar este lote</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- VALORES -->
+<section id="valores">
+  <div class="wrap">
+    <p class="eyebrow">Valor de mercado</p>
+    <h2>Precios <em>del faldeo</em></h2>
+    <p class="lead">Valor por m² de los lotes publicados en el faldeo del Bayo, con superficies, vistas y servicios equivalentes.</p>
+    <div class="chart" id="chart" role="img" aria-label="Valor por metro cuadrado: comparables del faldeo entre USD 64,8 y 83,3, promedio USD 71. Lotes de Terrazas del Bayo entre USD 52 y 60."></div>
+    <div class="key" style="color:var(--mute)"><span><i style="border-radius:0;background:var(--sage)"></i>Lotes publicados en el faldeo</span><span><i style="border-radius:0;background:var(--bronze)"></i>Terrazas del Bayo</span><span>USD por m²</span></div>
+    <div class="verdict">
+      <div class="num">−22%<small>vs. promedio del faldeo</small></div>
+      <p>Los lotes disponibles de Terrazas del Bayo promedian <b>USD 55,7/m²</b> frente a los <b>USD 71/m²</b> del faldeo.</p>
+    </div>
+    <p class="fine">Comparables: lotes publicados en el faldeo del Bayo, 2026.</p>
+  </div>
+</section>
+
+<!-- UBICACIÓN -->
+<section class="loc" id="ubicacion">
+  <figure class="ph"><img src="assets/ruta.webp" alt="Render aéreo de la ruta junto al lago Nahuel Huapi" loading="lazy"><figcaption>Render ilustrativo</figcaption></figure>
+  <div class="tx">
+    <p class="eyebrow" style="color:var(--gold)">Ubicación</p>
+    <h2>En el faldeo, <em style="color:var(--gold)">cerca del centro</em></h2>
+    <ul>
+      <li><b>3 min</b><span>del centro de Villa La Angostura</span></li>
+      <li><b>Acceso</b><span>Salida directa a la Av. Arrayanes</span></li>
+      <li><b>Entorno</b><span>Faldeo del Cerro Bayo, con vista a la cordillera y al Nahuel Huapi</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="cta" id="contacto">
+  <img class="bg" src="assets/bosque.webp" alt="" loading="lazy">
+  <div class="wrap">
+    <p class="eyebrow">Contacto</p>
+    <h2>Consultá por los lotes <em>en preventa</em></h2>
+    <p class="lead">Escribinos por WhatsApp y te enviamos la información de cada lote.</p>
+    <a class="btn btn-gold js-wa" href="#" target="_blank" rel="noopener"><svg class="wai" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>Escribir por WhatsApp</a>
+    <div class="contact">
+      <div>WhatsApp<b>+54 9 294 423-1321</b></div>
+      <div>Oficina<b>Cerro Bayo 69, Of. 3 · Villa La Angostura, Neuquén</b></div>
+    </div>
+    <div class="devs">
+      <p class="eyebrow">Desarrollan</p>
+      <img src="assets/desarrollan.png" alt="Grupo Badía Jaspe Desarrollos Inmobiliarios y SAR Inversiones &amp; Desarrollos" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Las imágenes y el video de este sitio son renders de carácter ilustrativo y no representan el estado actual del predio ni construcciones existentes. Plano sujeto a aprobación.</p>
+    <p>Valores de contado. Superficies según plano de mensura. Disponibilidad y precios sujetos a verificación al momento de la reserva. Material de carácter informativo; no constituye oferta vinculante.</p>
+  </div>
+</footer>
+
+<a class="fab js-wa" href="#" target="_blank" rel="noopener" aria-label="Consultar por WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2 0-.1-.2-.2-.5-.3z"/></svg></a>
+
+<script>
+// Datos tomados del brochure "Venta de Lotes" (sep 2026), confirmados el 24-11-2026.
+var WA='5492944231321';
+var LOTS=[
+  {n:'09',sup:3287,m2:55,price:180700,x:62.8,y:62.7,c:[838,792],p:'753.75,706.25 816,659.5 826,667.5 840,685 856,710 872.5,760 891,810 905,855 916,907.5 826,852.5 812.5,849'},
+  {n:'10',sup:3314,m2:60,price:198800,x:61.7,y:73.7,c:[826,940],p:'812.5,869 822.5,871 902.5,927.5 905,950 922,965 837,1073 778,984 779,968 757,950 758,938'},
+  {n:'11',sup:3365,m2:52,price:174900,x:55.2,y:64.7,c:[735,822],p:'753.75,706.25 812.5,849 799,853 741,928 647.5,789'}
+];
+var SOLD=[
+  {n:'07',sup:2507,c:[922,722],p:'850,654 877.5,626 901,624.5 994,719 909.5,812.5 892.5,760 876,720 861,690 849,662.5'},
+  {n:'08',sup:2956,c:[978,812],p:'994,719 1074,797.5 957.5,926 940,915 935,905 925,872 915,835 909.5,812.5'}
+];
+var COMP=[['Comparable G',83.3],['Comparable D',73.6],['Comparable E',73.4],['Comparable C',71.4],['Comparable A',67.5],['Comparable B',65.8],['Comparable F',64.8]];
+var MAX=90, AVG=71;
+function miles(v){return String(v).replace(/\B(?=(\d{3})+(?!\d))/g,'.')}
+function wa(msg){return 'https://wa.me/'+WA+'?text='+encodeURIComponent(msg)}
+var ICON='<svg class="wai" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg>';
+
+document.querySelectorAll('.js-wa').forEach(function(a){a.href=wa('Hola, quiero consultar por los lotes en preventa de Terrazas del Bayo.');a.target='_blank';a.rel='noopener'});
+document.querySelectorAll('.btn .wai').forEach(function(s){s.outerHTML=ICON});
+
+// tarjetas
+var lotsEl=document.getElementById('lots');
+LOTS.forEach(function(l){
+  var d=document.createElement('article');d.className='lot';d.id='lote-'+l.n;
+  d.innerHTML='<h3>Lote '+l.n+'</h3><dl><div><dt>Superficie</dt><dd>'+miles(l.sup)+' m²</dd></div><div><dt>Valor m²</dt><dd>USD '+l.m2+'</dd></div></dl><span class="pl">Precio del lote</span><p class="price">USD '+miles(l.price)+'</p><a class="btn btn-dark" target="_blank" rel="noopener" href="'+wa('Hola, quiero consultar por el lote '+l.n+' de Terrazas del Bayo.')+'">'+ICON+'Consultar</a>';
+  lotsEl.appendChild(d);
+});
+
+// video de portada: siempre en reproducción, sin controles
+(function(){
+  var v=document.getElementById('heroV'),st=document.getElementById('heroStill');
+  var m=window.matchMedia('(max-width:760px) and (orientation:portrait)').matches;
+  if(m)st.src='assets/portico-m.webp';
+  v.muted=true;v.defaultMuted=true;v.loop=true;v.playsInline=true;v.controls=false;
+  v.setAttribute('muted','');v.setAttribute('playsinline','');
+  v.src=m?'assets/hero-m.mp4':'assets/hero.mp4';
+  var live=false;
+  function go(){if(live)return;var p=v.play();if(p&&p.catch)p.catch(function(){})}
+  // El video solo se muestra cuando realmente avanza: así nunca aparece un botón de reproducir.
+  v.addEventListener('timeupdate',function(){if(!live&&v.currentTime>0.15&&!v.paused){live=true;v.classList.add('live')}});
+  // Si el navegador o la app bloquean la reproducción automática, corre la misma secuencia como imagen animada.
+  setTimeout(function(){if(!live)st.src=m?'assets/hero-m.webp':'assets/hero.webp'},1600);
+  v.addEventListener('loadeddata',go);v.addEventListener('canplay',go);
+  v.addEventListener('pause',function(){if(!document.hidden)setTimeout(function(){var p=v.play();if(p&&p.catch)p.catch(function(){})},60)});
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)go()});
+  ['touchstart','pointerdown','scroll'].forEach(function(e){window.addEventListener(e,go,{passive:true})});
+  v.addEventListener('contextmenu',function(e){e.preventDefault()});
+  go();
+})();
+
+// menú móvil
+(function(){
+  var b=document.getElementById('menuBtn'),s=document.getElementById('sheet');
+  function set(o){s.hidden=!o;b.setAttribute('aria-expanded',o?'true':'false');b.setAttribute('aria-label',o?'Cerrar menú':'Abrir menú')}
+  b.addEventListener('click',function(){set(s.hidden)});
+  s.addEventListener('click',function(e){if(e.target.tagName==='A')set(false)});
+})();
+
+// plano
+var plan=document.getElementById('plan'),planIn=document.getElementById('planIn'),chips=document.getElementById('chips');
+function center(l,smooth){
+  if(plan.scrollWidth<=plan.clientWidth+2)return;
+  var x=planIn.offsetWidth*l.c[0]/1334-plan.clientWidth/2,y=planIn.offsetHeight*l.c[1]/1263-plan.clientHeight/2;
+  try{plan.scrollTo({left:x,top:y,behavior:smooth?'smooth':'auto'})}catch(e){plan.scrollLeft=x;plan.scrollTop=y}
+}
+function sel(n){
+  var l=LOTS.filter(function(x){return x.n===n})[0];
+  document.getElementById('p-name').textContent='Lote '+l.n;
+  document.getElementById('p-sup').textContent=miles(l.sup)+' m²';
+  document.getElementById('p-m2').textContent='USD '+l.m2;
+  document.getElementById('p-price').textContent='USD '+miles(l.price);
+  document.getElementById('p-wa').href=wa('Hola, quiero consultar por el lote '+l.n+' de Terrazas del Bayo.');
+  plan.querySelectorAll('.lp').forEach(function(p){p.classList.toggle('on',p.dataset.n===n)});
+  chips.querySelectorAll('button').forEach(function(p){p.classList.toggle('on',p.dataset.n===n)});
+  center(l,arguments[1]);
+  document.querySelectorAll('.lot').forEach(function(c){c.classList.toggle('on',c.id==='lote-'+n)});
+}
+LOTS.forEach(function(l){
+  var NS='http://www.w3.org/2000/svg',g=document.createElementNS(NS,'g');g.setAttribute('class','lp');g.dataset.n=l.n;
+  g.setAttribute('tabindex','0');g.setAttribute('role','button');g.setAttribute('aria-label','Lote '+l.n+', '+miles(l.sup)+' metros cuadrados, USD '+miles(l.price));
+  g.innerHTML='<polygon points="'+l.p+'"/><circle cx="'+l.c[0]+'" cy="'+l.c[1]+'" r="21"/><text x="'+l.c[0]+'" y="'+l.c[1]+'">'+l.n+'</text>';
+  g.addEventListener('click',function(){sel(l.n,true)});
+  g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();sel(l.n,true)}});
+  document.getElementById('ov').appendChild(g);
+  var c=document.createElement('button');c.dataset.n=l.n;c.innerHTML='<small>Lote</small>'+l.n;c.addEventListener('click',function(){sel(l.n,true)});chips.appendChild(c);
+});
+// vendidos
+SOLD.forEach(function(l){
+  var NS='http://www.w3.org/2000/svg',g=document.createElementNS(NS,'g');g.setAttribute('class','sp');
+  g.innerHTML='<title>Lote '+l.n+' vendido</title><polygon points="'+l.p+'"/><text class="a" x="'+l.c[0]+'" y="'+(l.c[1]-4)+'">'+l.n+'</text><text class="b" x="'+l.c[0]+'" y="'+(l.c[1]+16)+'">VENDIDO</text>';
+  var ov=document.getElementById('ov');ov.insertBefore(g,ov.firstChild);
+});
+document.getElementById('sold').innerHTML='<em>Vendidos</em>'+SOLD.map(function(l){return '<span><b>Lote '+l.n+'</b>'+miles(l.sup)+' m²</span>'}).join('');
+sel('09');
+planIn.querySelector('img').addEventListener('load',function(){center(LOTS[0])});
+window.addEventListener('load',function(){center(LOTS[0])});
+
+// puntos de los carruseles
+document.querySelectorAll('.dots').forEach(function(d){
+  var sc=document.getElementById(d.dataset.for),n=sc.children.length;
+  for(var i=0;i<n;i++)d.appendChild(document.createElement('i'));
+  function up(){var w=sc.children[0].offsetWidth+12,k=Math.min(n-1,Math.round(sc.scrollLeft/w));
+    if(sc.scrollLeft+sc.clientWidth>=sc.scrollWidth-4)k=n-1;
+    d.querySelectorAll('i').forEach(function(x,j){x.classList.toggle('on',j===k)})}
+  sc.addEventListener('scroll',up,{passive:true});up();
+});
+
+// gráfico
+var ch=document.getElementById('chart');
+function row(name,v,t){return '<div class="row'+(t?' t':'')+'"><span class="n">'+name+'</span><div class="track"><div class="bar" style="width:'+(v/MAX*100).toFixed(1)+'%"></div><div class="avg"></div></div><span class="v">'+v.toFixed(1).replace('.',',')+'</span></div>'}
+var h='<div class="avg-l"><span><b>Promedio del faldeo · USD '+AVG+'</b></span></div>';
+COMP.forEach(function(c){h+=row(c[0],c[1],false)});
+h+='<div class="gap"></div>';
+LOTS.slice().sort(function(a,b){return b.m2-a.m2}).forEach(function(l){h+=row('Terrazas del Bayo — Lote '+l.n,l.m2,true)});
+ch.innerHTML=h;
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+LOMA GUACHA — Web de proyecto (versión 2, rediseño)
+==================================================
+Para: Fede (publicación)
+Agente responsable: Guillermo Raffetti · WhatsApp 5492944969700
+Rediseño: 19/11/2026 · Última revisión: 25/11/2026 · sobre el contenido de la versión del 13/11/2026
+Slug sugerido: loma-guacha  →  l.patagonicapropiedades.com.ar/loma-guacha/
+Estado: BORRADOR — NO PUBLICAR
+
+CONTENIDO
+- index.html → la web (no editar)
+- datos.js → textos, precios, estados y contacto. ÚNICO archivo que cambia.
+- plano.js → geometría del plano comercial (calles, borde, espacios verdes). No editar.
+- mapa.js → mapa de ubicación (el mismo de la versión anterior; no editar)
+- fonts/ → tipografías (Cormorant Garamond y Montserrat, licencia abierta OFL)
+- img/ → imágenes (las mismas de la versión anterior)
+- og.jpg → imagen para compartir
+- favicon.png → ícono de la pestaña
+
+No depende de internet: sin Google Fonts, sin mapas externos, sin claves de API.
+
+QUÉ CAMBIA RESPECTO DE LA VERSIÓN ANTERIOR
+- Masterplan nuevo, con el mismo lenguaje que el de COTA MIL: fondo oscuro,
+  lotes en tonos naturales por manzana, vista al lago en celeste, vendidos
+  apagados, espacio verde y reservas fiscales con arbolado, calles con eje
+  punteado. Filtros, zoom, etiqueta al pasar el mouse, lista ordenable y ficha
+  por lote con consulta por WhatsApp. Un link alterna con el plano de mensura.
+  Los colores salen de la manzana, el estado y el dato "Vista" de datos.js.
+- Las tipografías van dentro de la carpeta.
+- Todos los textos, cifras, lotes y precios salen de datos.js, sin cambios.
+
+AGREGADOS EN datos.js
+- "pin": ubicación exacta que abre el botón "Abrir en Google Maps"
+  (pin pasado por Tomás: -40.815310, -71.574676).
+- "contactos" y "comercializa": los datos del pie, que antes estaban escritos
+  dentro de index.html.
+
+CAMBIOS DEL 25/11/2026 (pedidos por Guillermo, vía Tomás)
+- Vista al lago: se quitó de B5, B6, B7 y B13; se agregó a A11 y A12.
+  Quedan 8 lotes con vista (A11, A12, B8, B12, B14, B18, B20, B21).
+- Por ese cambio se actualizaron los textos que decían "diez": ahora dicen
+  "Ocho lotes miran el lago", "Vista al lago en 8 lotes" y "8 de ellas con
+  vista al lago". En "Espacio verde" se quitó la frase "tienen bosque de un
+  lado y lago del otro" (hablaba de B4, B5 y B6).
+- Servicios subterráneos: ahora dice "En proceso, a cargo del desarrollador".
+- Revisión final: contrastes de textos chicos, menú en celulares, ícono de
+  pestaña y dirección completa de la imagen para compartir.
+
+LINKS DIRECTOS A LOTES (para mandar al cliente)
+- .../loma-guacha/#a2   .../loma-guacha/#b12   (id del lote en minúscula)
+
+ANTES DE PUBLICAR, FEDE VERIFICA:
+[ ] Autorización de comercialización firmada (la confirma el agente)
+[ ] modoBorrador = false en datos.js (saca el aviso "Borrador · no publicar")
+[ ] Ubicación validada por el agente (ver pendiente 1)
+[ ] El WhatsApp es el del agente responsable
+
+PENDIENTES DETECTADOS
+0. La imagen para compartir (og:image) apunta a
+   l.patagonicapropiedades.com.ar/loma-guacha/og.jpg. Si el slug cambia,
+   corregir esa dirección en el <head> de index.html.
+1. Dos coordenadas distintas: el pin de Tomás (-40.815310, -71.574676) se usa
+   en el botón de Google Maps; el mapa de ubicación sigue
+   dibujado con la coordenada original (-40.817642, -71.572676), a unos 300 m.
+2. Tiempos de viaje ESTIMADOS por distancia (viene de la versión anterior).
+   Revisarlos o cargarlos a mano en ubicacion.tiempos.
+3. 14 lotes sin precio: 9 vendidos y 5 "a confirmar" (se muestra "Consultar").
