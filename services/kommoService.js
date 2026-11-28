@@ -8,11 +8,13 @@ function getHeaders() {
   return { Authorization: `Bearer ${process.env.KOMMO_TOKEN}` };
 }
 
-async function createContact({ name, email, phone, phoneForm }) {
+async function createContact({ name, firstName, lastName, email, phone, phoneForm }) {
   const body = {
     name: name || 'Sin nombre',
     custom_fields_values: []
   };
+  if (firstName) body.first_name = firstName;
+  if (lastName) body.last_name = lastName;
 
   // Armar valores de teléfono: nativo Meta + respuesta del form (si son distintos)
   const phoneValues = [];
@@ -52,7 +54,7 @@ async function getLeadFieldIdByName(name) {
   return leadFieldIdCache[name] || null;
 }
 
-async function createLead({ title, contactId, note, whatsappNote, tags = [], customFields = {}, stageId = null }) {
+async function createLead({ title, contactId, note, tags = [], customFields = {}, stageId = null }) {
   const leadBody = {
     name: title,
     pipeline_id: PIPELINE_ID,
@@ -81,46 +83,15 @@ async function createLead({ title, contactId, note, whatsappNote, tags = [], cus
   const res = await axios.post(`${KOMMO_BASE_URL}/leads`, [leadBody], { headers: getHeaders() });
   const lead = res.data._embedded.leads[0];
 
-  const notes = [];
-  if (note) notes.push({ note_type: 'common', params: { text: note } });
-  if (whatsappNote) notes.push({ note_type: 'common', params: { text: whatsappNote } });
-
-  if (notes.length) {
+  if (note) {
     await axios.post(
       `${KOMMO_BASE_URL}/leads/${lead.id}/notes`,
-      notes,
+      [{ note_type: 'common', params: { text: note } }],
       { headers: getHeaders() }
     );
   }
 
   return lead;
-}
-
-// Normaliza un numero para wa.me (solo digitos, formato movil internacional).
-// Asume Argentina por defecto cuando falta codigo de pais.
-function normalizeWhatsApp(raw) {
-  if (!raw) return null;
-  let n = String(raw).replace(/\D/g, '');
-  if (!n) return null;
-
-  // Prefijo internacional '00' -> quitar
-  if (n.startsWith('00')) n = n.slice(2);
-
-  if (n.startsWith('54')) {
-    // Ya tiene codigo de pais Argentina
-    let rest = n.slice(2);
-    if (rest.startsWith('0')) rest = rest.slice(1);
-    if (!rest.startsWith('9')) rest = '9' + rest;
-    n = '54' + rest;
-  } else {
-    // Sin codigo de pais: asumir Argentina movil (549 + numero)
-    if (n.startsWith('0')) n = n.slice(1);
-    n = '549' + n;
-  }
-
-  // Validar longitud razonable para un movil internacional
-  if (n.length < 11 || n.length > 15) return null;
-  return n;
 }
 
 async function processLead(leadData, formLabel = 'General', tags = []) {
@@ -129,14 +100,17 @@ async function processLead(leadData, formLabel = 'General', tags = []) {
     leadData.field_data.forEach(f => { fieldData[f.name] = f.values[0]; });
   }
 
-  const STANDARD = ['full_name', 'nombre_completo', 'first_name', 'last_name', 'email', 'phone', 'phone_number'];
+  const STANDARD = ['full_name', 'nombre_completo', 'first_name', 'last_name', 'nombre', 'apellido', 'email', 'correo_electrónico', 'phone', 'phone_number', 'número_de_teléfono'];
   const PHONE_KEYWORDS = ['teléfono', 'telefono', 'número', 'numero', 'celular', 'contacto'];
 
+  const firstName = fieldData.first_name || fieldData.nombre || null;
+  const lastName = fieldData.last_name || fieldData.apellido || null;
   const name = fieldData.full_name || fieldData.nombre_completo ||
-    [fieldData.first_name, fieldData.last_name].filter(Boolean).join(' ') || 'Sin nombre';
-  const email = fieldData.email || '';
+    [firstName, lastName].filter(Boolean).join(' ') ||
+    'Sin nombre';
+  const email = fieldData.email || fieldData['correo_electrónico'] || fieldData.correo_electronico || '';
   // Teléfono nativo de Meta
-  const phone = fieldData.phone || fieldData.phone_number || '';
+  const phone = fieldData.phone || fieldData.phone_number || fieldData['número_de_teléfono'] || fieldData.numero_de_telefono || '';
   // Teléfono respondido en el formulario (pregunta personalizada)
   const phoneFormEntry = leadData.field_data?.find(f =>
     !STANDARD.includes(f.name) && PHONE_KEYWORDS.some(k => f.name.toLowerCase().includes(k))
@@ -161,28 +135,11 @@ async function processLead(leadData, formLabel = 'General', tags = []) {
   note += `• Ad Set: ${leadData.adset_name || 'N/A'}\n`;
   note += `• Ad: ${leadData.ad_name || 'N/A'}`;
 
-  // Nota de WhatsApp con enlaces clickeables por cada numero distinto
-  const phonesForWa = [];
-  if (phone) phonesForWa.push({ label: 'Teléfono', raw: phone });
-  if (phoneForm && phoneForm !== phone) phonesForWa.push({ label: 'Teléfono del formulario', raw: phoneForm });
-
-  const waLines = phonesForWa
-    .map(p => {
-      const wa = normalizeWhatsApp(p.raw);
-      return wa ? `• ${p.label} (${p.raw}): https://web.whatsapp.com/send/?phone=${wa}&text&type=phone_number&app_absent=0` : null;
-    })
-    .filter(Boolean);
-
-  const whatsappNote = waLines.length
-    ? 'Para hablar por WhatsApp, hacé clic en el enlace:\n--\n' + waLines.join('\n--\n')
-    : null;
-
-  const contact = await createContact({ name, email, phone, phoneForm });
+  const contact = await createContact({ name, firstName, lastName, email, phone, phoneForm });
   const lead = await createLead({
     title: `${formLabel} - ${name}`,
     contactId: contact.id,
     note,
-    whatsappNote,
     tags
   });
 

@@ -207,6 +207,13 @@ const FORMS = {
     name: 'FORM - Visitantes',
     tags: ['FORM - Visitantes', 'Meta Ads'],
     publication_id: null
+  },
+
+  // === ANGULOS PUBLICITARIOS (CBO) ===
+  '1455521609383913': {
+    name: 'FORM - Angulos',
+    tags: ['FORM - Angulos', 'Meta Ads'],
+    publication_id: null
   }
 };
 
